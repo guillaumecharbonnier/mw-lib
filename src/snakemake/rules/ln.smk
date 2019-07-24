@@ -79,7 +79,7 @@ rule ln_srf_project_dir:
     Created:
         2018-10-14 03:06:07
     Aim:
-       
+
     """
     input:
         "{filler}"
@@ -148,24 +148,6 @@ rule ln_broadPeak_to_bed:
     shell:
         "ln -srf {input} {output}"
 
-localrules: ln_renamed_blueprint_fastq
-rule ln_renamed_blueprint_fastq:
-    """
-    Created:
-        2018-04-17 21:32:28
-    Aim:
-        Rename blueprint fastq according to Salva's need.
-    Test:
-        expand("out/ln/renamed_blueprint_fastq/{alias_id}", alias_id=BLUEPRINT_ALIAS_SALVA)
-    """
-    input:
-        input_ln_renamed_blueprint_fastq
-    output:
-        alias="out/ln/renamed_blueprint_fastq/{alias_id}"
-    conda:
-        "../envs/coreutils.yaml"
-    shell:
-        "ln -srf {input} {output.alias}"
 
 localrules: ln_pe_remove_mate_prefix
 rule ln_pe_remove_mate_prefix:
@@ -186,4 +168,3 @@ rule ln_pe_remove_mate_prefix:
         "../envs/coreutils.yaml"
     shell:
         "ln -srf {input.fastq} {output.fastq}"
-
