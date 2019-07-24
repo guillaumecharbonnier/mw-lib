@@ -48,12 +48,3 @@ TAR_CONTENT_HMCAN_DIFF_TEST_EXAMPLE=[
     "data/hg19-blacklist.bed",
     "data/GC_profile_100KbWindow_Mapp76_hg19.cnp",
     "control_C2.sam"]
-
-#samples_collapsed_{file},file=CHROMDET_OUTPUT_FILES
-CHROMDET_OUTPUT_FILES=[
-    "_filtered_CDRs.tsv",
-    "_filtered_chromatin_space.tsv",
-    "_filtered.fa",
-    "_filtered.s3",
-    "_filtered.tab",
-    ".tab"]
