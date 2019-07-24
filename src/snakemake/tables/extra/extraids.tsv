@@ -1,0 +1,35 @@
+tool	id	extra
+# You can use any characters as id, except '_' because they are first parsed in params_extra and replaced by ' '. If you have no short keyword to define your extra argument list, you can try some hashing function on it like in the examples below.		
+# Currently, id for a tool should be in the table in an order ensuring that the first is the most specific. e.g. 'unique-coordinates-bed' should be before 'bed' else params_extra will output 'unique-coordinates- -k1,1 -k2,2n'. Think about an elegant solution.		
+snakemake/stdout	test.dot	out/graphviz/dot/snakemake/stdout_--rulegraph_test.pdf
+snakemake/stdout	broad-analysis.dot	r_chen_test_clusterprofiler
+snakemake/stdout	thymus-mca.dot	out/r/thymus_article_mca_draft/fviz_mca_ind_arrange_7x14.pdf
+snakemake/stdout	ci-sst.dot	config_targets
+snakemake/stdout	gcthesis-example1.dot	gcthesis_task3
+deepTools/plotHeatmap	47aa	--whatToShow heatmap
+deepTools/plotHeatmap	74b0	--sortRegions no --interpolationMethod nearest --heatmapHeight 10 --heatmapWidth 1 --missingDataColor 1 --colorList '#313695,#B6DFEC,#FFF6B1,#F67C4A,#A70226' --whatToShow 'plot, heatmap and colorbar' --legendLocation upper-center --xAxisLabel ' ' --refPointLabel 0 --samplesLabel CD34 EC LC SP4 SP8
+deepTools/plotHeatmap	a860	--sortRegions no --heatmapHeight 10 --heatmapWidth 1 --colorList '#313695,#B6DFEC,#FFF6B1,#F67C4A,#A70226' --whatToShow 'plot, heatmap and colorbar' --legendLocation upper-center --xAxisLabel ' ' --refPointLabel 0 --samplesLabel HSC CD34 EC LC SP4 SP8
+deepTools/plotHeatmap	thymus-fig-3-D	--sortRegions keep --heatmapWidth 2 --heatmapHeight 9 --colorList '#313695,#B6DFEC,#FFF6B1,#F67C4A,#A70226' --whatToShow 'plot, heatmap and colorbar' --legendLocation upper-center --xAxisLabel ' ' --refPointLabel 0 --samplesLabel tCD34 EC
+deepTools/plotHeatmap	thymus-fig-2-E	--heatmapHeight 40 --heatmapWidth 3 --interpolationMethod nearest --sortRegions no --zMax 60 --colorList '#313695,#B6DFEC,#FFF6B1,#F67C4A,#A70226' --whatToShow 'plot, heatmap and colorbar' --legendLocation upper-center --xAxisLabel ' ' --refPointLabel 0 --samplesLabel tCD34 EC LC SP4 SP8
+deepTools/plotProfile	thymus-fig-3-E	--perGroup --yMax '200 700 300' --plotWidth 6
+gs/compress	prepress	-dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dPDFSETTINGS="/prepress"
+gs/compress	ebook	-dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dPDFSETTINGS="/ebook"
+gs/compress	screen	-dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dPDFSETTINGS="/screen"
+sort/	unique-coordinates-bed	-u -k1,3
+sort/	rseg-bed	-k1,1 -k2,2n -k3,3n -k6,6
+sort/	coordinates-bed	-k1,1 -k2,2n
+sort/	bed	-k1,1 -k2,2n
+gunzip/	to-stdout	--to-stdout
+gzip/	to-stdout	--to-stdout
+bowtie2/se	vsl	--very-sensitive-local
+wget/	hg38-knownGene.bed	'https://genome.ucsc.edu/cgi-bin/hgTables?hgsid=709973581_ZCGTPs1mYBVNXPJvU9o0TABHdvIj&boolshad.hgta_printCustomTrackHeaders=0&hgta_ctName=tb_knownGene&hgta_ctDesc=table+browser+query+on+knownGene&hgta_ctVis=pack&hgta_ctUrl=&fbQual=whole&fbUpBases=200&fbExonBases=0&fbIntronBases=0&fbDownBases=200&hgta_doGetBed=get+BED'
+wget/	hg38-GENCODE-knownGene.bed	'https://genome.ucsc.edu/cgi-bin/hgTables?hgsid=709973581_ZCGTPs1mYBVNXPJvU9o0TABHdvIj&boolshad.hgta_printCustomTrackHeaders=0&hgta_ctName=tb_knownGene&hgta_ctDesc=table+browser+query+on+knownGene&hgta_ctVis=pack&hgta_ctUrl=&fbQual=whole&fbUpBases=200&fbExonBases=0&fbIntronBases=0&fbDownBases=200&hgta_doGetBed=get+BED'
+phantompeakqualtools/bam_ctrl	idr	-npeak=300000 -savr -savp
+mysql/	ucsc-cpgIslandExt-mm10.bed	--user=genome -N --host=genome-mysql.cse.ucsc.edu -A -D mm10 -e "select chrom,chromStart,chromEnd,name,length,cpgNum,gcNum,perCpg,perGc,obsExp from cpgIslandExt"
+star/se	standard	--outFilterMismatchNoverLmax 0.08 --outFilterMultimapNmax 1 --genomeLoad NoSharedMemory
+star/pe	standard	--outFilterMismatchNoverLmax 0.08 --outFilterMultimapNmax 1 --genomeLoad NoSharedMemory
+sed/	rm-chr-in-fa	's/^>chr/>/'
+sed/	add-chr	'/^#/! s/^/chr/g'
+bbmap/reformat	nuc-length	minlength=130 maxlength=200
+bbmap/reformat	ss-length	minlength=30 maxlength=100
+gtftk/ologram	tfbs	--no-basic-feature --more-keys tf_id

@@ -1,0 +1,14 @@
+name:
+  snakemake
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - conda
+  - snakemake
+  - rpy2
+  - pandas
+  - numpy
+  - biopython
+  - xlrd

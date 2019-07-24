@@ -1,0 +1,7 @@
+channels:
+  - guillaumecharbonnier
+  - conda-forge
+  - bioconda
+dependencies:
+  - sample
+

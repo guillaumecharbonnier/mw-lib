@@ -1,0 +1,8 @@
+name:
+  fastx_toolkit
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - fastx_toolkit

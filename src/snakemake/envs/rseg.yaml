@@ -1,0 +1,9 @@
+name:
+  rseg
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - rseg
+

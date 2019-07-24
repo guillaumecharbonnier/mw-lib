@@ -1,0 +1,15 @@
+tmp/
+out/
+sst/
+opt/
+log/
+bkp/
+shr/
+inp/me/
+.snakemake/
+.DS_Store
+.RData
+.Rhistory
+*~
+*.swp
+*.aux

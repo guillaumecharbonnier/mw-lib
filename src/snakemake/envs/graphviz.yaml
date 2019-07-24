@@ -1,0 +1,7 @@
+name:
+  graphviz
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - graphviz

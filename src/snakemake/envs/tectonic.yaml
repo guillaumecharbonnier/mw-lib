@@ -1,0 +1,9 @@
+name:
+  tectonic
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - tectonic
+  - coreutils
+

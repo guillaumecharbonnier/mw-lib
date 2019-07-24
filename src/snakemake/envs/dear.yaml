@@ -1,0 +1,26 @@
+name: dear
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - guillaumecharbonnier
+dependencies:
+  - r-argparser
+  - bioconductor-biocparallel
+  - bioconductor-biomart
+  - bioconductor-deseq2
+  - r-dplyr
+  - bioconductor-edger
+  - bioconductor-ensdb.hsapiens.v86
+  - bioconductor-genefilter
+  - r-ggplot2
+  - r-ggrepel
+  - r-ggfortify
+  - bioconductor-limma
+  #- parallel
+  - r-pheatmap
+  - r-rcolorbrewer
+  - r-readr
+  - bioconductor-rsubread
+  - bioconductor-tximport
+  - r-venndiagram

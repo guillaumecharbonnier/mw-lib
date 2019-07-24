@@ -1,0 +1,11 @@
+# Created: 2018-08-24 18:17:02
+# Bedops to convert wig to bed
+name:
+  bedops
+channels:
+  - bioconda
+  - conda-forge
+  - nodefaults
+dependencies:
+  - bedops
+

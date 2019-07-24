@@ -1,0 +1,7 @@
+name:
+  latexmk
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - latexmk

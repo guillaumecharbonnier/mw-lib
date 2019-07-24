@@ -1,0 +1,10 @@
+assembly	bowtie2_index_parts
+mm10	expand('out/ln/dynamic/unzip/d/wget/ftp/ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/mm10/dirdynsep/mm10.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])
+mm9	expand('out/ln/dynamic/unzip/d/wget/ftp/ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/mm9/dirdynsep/mm9.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])
+dm6	expand('out/ln/dynamic/tar/xvzf/wget/ftp/igenome:G3nom3s4u@ussd-ftp.illumina.com/Drosophila_melanogaster/UCSC/dm6/Drosophila_melanogaster_UCSC_dm6/dirdynsep/Drosophila_melanogaster/UCSC/dm6/Sequence/Bowtie2Index/genome.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])
+GRCm38	expand('out/ln/dynamic/tar/xvzf/wget/ftp/igenome:G3nom3s4u@ussd-ftp.illumina.com/Mus_musculus/Ensembl/GRCm38/Mus_musculus_Ensembl_GRCm38/dirdynsep/Mus_musculus/Ensembl/GRCm38/Sequence/Bowtie2Index/genome.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])
+sacCer3	expand('out/ln/dynamic/tar/xvzf/wget/ftp/igenome:G3nom3s4u@ussd-ftp.illumina.com/Saccharomyces_cerevisiae/UCSC/sacCer3/Saccharomyces_cerevisiae_UCSC_sacCer3/dirdynsep/Saccharomyces_cerevisiae/UCSC/sacCer3/Sequence/Bowtie2Index/genome.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])
+hg38	expand('out/ln/dynamic/tar/xvzf/wget/ftp/igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/UCSC/hg38/Homo_sapiens_UCSC_hg38/dirdynsep/Homo_sapiens/UCSC/hg38/Sequence/Bowtie2Index/genome.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])
+hg19	expand('out/ln/dynamic/tar/xvzf/wget/ftp/igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/UCSC/hg19/Homo_sapiens_UCSC_hg19/dirdynsep/Homo_sapiens/UCSC/hg19/Sequence/Bowtie2Index/genome.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])
+GRCh38	expand('out/ln/dynamic/tar/xvzf/wget/ftp/igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/NCBI/GRCh38/Homo_sapiens_NCBI_GRCh38/dirdynsep/Homo_sapiens/NCBI/GRCh38/Sequence/Bowtie2Index/genome.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])
+

@@ -1,0 +1,11 @@
+# Created: 2018-10-20 13:26:47
+# A R environment to do run Pasha package.
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - guillaumecharbonnier
+dependencies:
+  - r-pasha 
+  - r-docopt
+

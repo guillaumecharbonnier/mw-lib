@@ -1,0 +1,8 @@
+name: sickle
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - sickle-trim
+

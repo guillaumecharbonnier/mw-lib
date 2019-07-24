@@ -1,0 +1,9 @@
+name:
+    stow
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - freckles
+dependencies:
+  - stow

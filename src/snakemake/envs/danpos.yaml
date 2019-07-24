@@ -1,0 +1,10 @@
+name:
+  danpos
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+  - guillaumecharbonnier
+dependencies:
+  - danpos
+  - coreutils

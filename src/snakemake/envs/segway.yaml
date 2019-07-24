@@ -1,0 +1,8 @@
+name: segway
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - segway
+

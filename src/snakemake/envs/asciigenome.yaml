@@ -1,0 +1,9 @@
+name:
+  asciigenome
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - asciigenome
+

@@ -1,0 +1,27 @@
+tool	arg	id	value
+deepTools/plotHeatmap	--samplesLabel	thymus-stages	CD34 EC LC SP4 SP8
+deepTools/plotHeatmap	--samplesLabel	mhsc-thmus-stages	mHSC CD34 EC LC SP4 SP8
+deepTools/plotProfile	--samplesLabel	thymus-stages	CD34 EC LC SP4 SP8
+deepTools/plotProfile	--samplesLabel	mhsc-thmus-stages	mHSC CD34 EC LC SP4 SP8
+deepTools/plotHeatmap	--colorList	whiteRed	'#FFFFFF,#EF0214'
+deepTools/plotHeatmap	--colorList	yellowOrangeRed	'#FFF6B1,#F67C4A,#A70226'
+deepTools/plotHeatmap	--colorList	blueCyanYellowOrangeRed	'#313695,#B6DFEC,#FFF6B1,#F67C4A,#A70226'
+deepTools/plotHeatmap	--colorList	bcyor	'#313695,#B6DFEC,#FFF6B1,#F67C4A,#A70226'
+deepTools/plotHeatmap	--colorList	blueYellowRed	"blue,yellow,red"
+deepTools/plotHeatmap	--colorList	blueLightyellowRed	"blue,lightyellow,red"
+deepTools/plotHeatmap	--colorList	cornflowerblueLightyellowIndianred	"cornflowerblue,lightyellow,indianred"
+deepTools/plotHeatmap	--colorList	whiteIndianred	"white,indianred"
+deepTools/plotHeatmap	--colorList	blueYRed	"blue,y,red"
+deepTools/plotHeatmap	--whatToShow	phc	'plot, heatmap and colorbar'
+deepTools/plotHeatmap	--whatToShow	ph	'plot and heatmap'
+deepTools/plotHeatmap	--whatToShow	h	'heatmap only'
+deepTools/plotHeatmap	--whatToShow	hc	'heatmap and colorbar'
+deepTools/plotHeatmap	--xAxisLabel	empty	' '
+deepTools/plotHeatmap	--xAxisLabel	tss	'TSS'
+deepTools/plotHeatmap	--xAxisLabel	gene-distance-bp	'gene distance'
+deepTools/plotHeatmap	--xAxisLabel	nuc-center	'nuc. center'
+deepTools/plotHeatmap	--xAxisLabel	peak-center	'peak center'
+deepTools/plotHeatmap	--xAxisLabel	distance-to-nucleosome-center-bp	'nuc. distance to nucleosome center'
+
+
+

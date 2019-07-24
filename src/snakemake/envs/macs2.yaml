@@ -1,0 +1,8 @@
+# Created: 2018-10-22 13:06:05
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - macs2
+

@@ -1,0 +1,10 @@
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - guillaumecharbonnier
+dependencies:
+  - r-ggrepel
+  #- r-docopt
+  - r-argparse
+

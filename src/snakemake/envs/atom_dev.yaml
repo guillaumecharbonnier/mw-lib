@@ -1,0 +1,35 @@
+name:
+  atom_dev
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - gwerbin
+  - dan_blanchard
+  - guillaumecharbonnier
+dependencies:
+  - r-essentials
+  - r-formatr
+  - r-igraph
+  - r-languageserver
+  - r-irkernel
+  - ipykernel
+  - r-data.table
+  - r-gplots
+  - r-ggplot2
+  - r-ggrepel
+  - r-yaml
+  - r-docopt
+  - r-rcolorbrewer
+  - r-ggpubr
+  - r-reshape
+  - r-fastcluster
+  - r-factoextra
+  - r-fpc
+  - bioconductor-deseq2
+  - bioconductor-edger
+  - bioconductor-biomart
+  - bioconductor-rgreat
+  - bioconductor-rtracklayer
+  - perl-log-log4perl # needed for latex indent
+  - perl-log-dispatch

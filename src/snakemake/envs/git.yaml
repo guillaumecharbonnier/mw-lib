@@ -1,0 +1,7 @@
+# Created: 2018-10-18 13:20:05
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - git-annex
+  - uncommitted

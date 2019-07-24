@@ -1,0 +1,16 @@
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - guillaumecharbonnier
+dependencies:
+  - r-greatr
+  - r-gprofiler 
+  - r-yaml
+  - r-docopt
+  - r-rcolorbrewer
+  - r-ggpubr
+  - r-reshape
+  - bioconductor-rtracklayer
+  - bioconductor-rgreat
+

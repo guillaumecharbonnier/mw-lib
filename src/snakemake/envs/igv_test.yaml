@@ -1,0 +1,10 @@
+name:
+  igv_test
+channels:
+  - guillaumecharbonnier
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - igv
+  - openjdk>=11

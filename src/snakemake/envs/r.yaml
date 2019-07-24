@@ -1,0 +1,8 @@
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-rcolorbrewer
+  - r-beanplot
+  - r-docopt

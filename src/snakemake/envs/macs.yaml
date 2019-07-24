@@ -1,0 +1,9 @@
+name:
+  macs
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - auto
+dependencies:
+  - macs

@@ -1,0 +1,9 @@
+name:
+  r_ggplot2
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-ggplot2
+  - r-data.table

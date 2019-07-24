@@ -1,0 +1,22 @@
+name: r_deseq2_edger
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - guillaumecharbonnier
+dependencies:
+  - r-data.table
+  - r-gplots
+  - r-ggplot2
+  - r-ggrepel
+  - r-yaml
+  - r-docopt
+  - r-rcolorbrewer
+  - r-ggpubr
+  - r-reshape
+  - bioconductor-deseq2
+  - bioconductor-edger
+  - bioconductor-biomart
+  - bioconductor-rgreat
+  - bioconductor-rtracklayer
+

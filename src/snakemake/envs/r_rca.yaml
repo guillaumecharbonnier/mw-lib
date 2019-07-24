@@ -1,0 +1,18 @@
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-factominer
+  - r-factoextra
+  - r-reshape
+  - r-flexclust
+  - r-fastcluster # provides a replacement to R-base hclust to cluster more than 65536 rows.
+  - r-fpc # I want to try pamk
+  - r-ggplot2
+  - r-ggrepel
+  - r-docopt
+  - r-devtools
+  - r-roxygen2
+  - r-rcolorbrewer
+

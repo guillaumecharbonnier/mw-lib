@@ -1,0 +1,29 @@
+# Created: 2018-08-24 11:40:15
+# Modified: 2018-10-17 14:41:36
+# Modiffied: 2018-12-25 18:41:43
+# A R environment to do component analysis (PCA, MCA, ...)
+name:
+  r_component_analysis
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-rcolorbrewer
+  - r-ggpubr
+  - r-fastcluster # provides a replacement to R-base hclust to cluster more than 65536 rows.
+  - r-fpc # I want to try pamk
+  - r-ggplot2
+  - r-ggrepel
+  - r-reshape
+  - r-rcolorbrewer
+  - r-factominer 
+  - r-factoextra
+  - r-flexclust
+  - r-docopt
+  - r-rtsne
+  - r-caret
+  - bioconductor-rtracklayer
+  - r-devtools
+  - r-roxygen2
+

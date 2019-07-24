@@ -1,0 +1,9 @@
+id	path
+# STAR index files
+staridx-GRCh38-ensembl	out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-ensembl/Genome
+staridx-GRCh38-BP-ensembl	out/star/build_index/fa-genome-GRCh38-Blueprint_gtf-GRCh38-ensembl/Genome
+staridx-GRCh37-ensembl	out/star/build_index/fa-genome-GRCh37_gtf-GRCh37-ensembl/Genome
+staridx-hg19-ensembl	out/star/build_index/fa-genome-GRCh37_gtf-GRCh37-ensembl/Genome
+staridx-GRCm38-ensembl	out/star/build_index/fa-genome-GRCm38_gtf-GRCm38-ensembl/Genome
+staridx-NCBIM37-ensembl	out/star/build_index/fa-genome-NCBIM37_gtf-NCBIM37-ensembl/Genome
+staridx-mm9-ensembl	out/star/build_index/fa-genome-NCBIM37_gtf-NCBIM37-ensembl/Genome

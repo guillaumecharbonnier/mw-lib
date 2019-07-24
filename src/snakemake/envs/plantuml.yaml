@@ -1,0 +1,9 @@
+name:
+  plantuml
+channels:
+  - conda-forge
+  - defaults
+  - guillaumecharbonnier
+dependencies:
+  - plantuml
+  - coreutils

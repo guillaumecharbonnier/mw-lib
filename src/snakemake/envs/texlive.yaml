@@ -1,0 +1,12 @@
+# Created: 2018-08-28 13:40:44
+# I need a texlive environment to run pdfcrop (tectonic does not provide this command)
+name:
+  texlive
+channels:
+  #- bioconda
+  - conda-forge
+    #  - defaults
+  - nodefaults
+dependencies:
+  - texlive-core 
+

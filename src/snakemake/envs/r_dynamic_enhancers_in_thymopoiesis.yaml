@@ -1,0 +1,32 @@
+name:
+  r_dynamic_enhancers_in_thymopoiesis
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  #- r-dbscan # I want to try optics clustering.
+  #- r-crayon # Trying colored output in terminal.
+  #- bioconductor-scater # calculateTPM
+  - r-rmarkdown
+  - pandoc=1.19 #requirement to render R Markdown.
+  - r-codetools #requirement to avoid error after first R chunk during R Markdown rendering.
+  - r-rcolorbrewer
+  - r-ggpubr
+  - r-reshape
+  - bioconductor-rtracklayer
+  - bioconductor-edger
+  - bioconductor-rgreat
+  - r-data.table
+  - r-stringr
+  - r-fastcluster # provides a replacement to R-base hclust to cluster more than 65536 rows.
+  - r-factoextra
+  - r-fpc # I want to try pamk
+  - r-devtools
+  - r-roxygen2
+  - r-rcolorbrewer
+  - r-cairo # then: options(unzip = "internal"); devtools::install_github('VPetukhov/ggrastr')
+  # waiting for: https://github.com/VPetukhov/ggrastr/issues/5
+
+
+

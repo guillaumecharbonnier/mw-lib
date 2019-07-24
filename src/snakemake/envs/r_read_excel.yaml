@@ -1,0 +1,8 @@
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - r-xlsx
+  - r-gdata
+  - r-docopt
+

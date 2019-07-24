@@ -1,0 +1,8 @@
+name: 
+  gembs
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - gembs

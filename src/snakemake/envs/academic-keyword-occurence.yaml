@@ -1,0 +1,8 @@
+name:
+  academic-keyword-occurrence
+channels:
+  - conda-forge
+  - guillaumecharbonnier
+  - nodefaults
+dependencies:
+  - academic-keyword-occurrence

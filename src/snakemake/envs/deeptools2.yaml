@@ -1,0 +1,9 @@
+name:
+  deeptools2
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - deeptools >=2,<3
+

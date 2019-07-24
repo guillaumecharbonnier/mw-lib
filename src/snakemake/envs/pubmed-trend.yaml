@@ -1,0 +1,9 @@
+name:
+  pubmed-trend
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - r-xml
+  - r-plyr
+  - r-rcurl

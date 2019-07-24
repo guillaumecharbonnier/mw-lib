@@ -1,0 +1,24 @@
+# Created: 2018-10-21 18:00:59
+# Modified: 2018-10-24 11:34:29 - add tmux, snakemake and deps for mw
+name:
+  dev
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - ActivisionGameScience
+dependencies:
+  - git-annex
+  - uncommitted
+  - tmux
+  - vim
+  - htop
+  # Related to snakemake below:
+  - snakemake
+  - rpy2
+  - pandas
+  - xlrd # needed to load excel file with pandas
+  - numpy
+  - biopython
+  - conda
+

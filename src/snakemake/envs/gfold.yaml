@@ -1,0 +1,9 @@
+name: gfold
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - gfold
+  - samtools
+

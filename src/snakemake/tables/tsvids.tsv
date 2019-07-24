@@ -1,0 +1,4 @@
+id	path
+# tsv-gfold-count	
+tsv-gfold-GRCh38-casero2016-thy3	expand("out/gfold/count_gtf-GRCh38-ensembl/star/pe_staridx-GRCh38-BP-ensembl_gtf-GRCh38-ensembl/sickle/pe_-t_sanger_-q_30/sra-tools/fastq-dump_pe/{srr}.tsv",srr=["SRR2040277","SRR2040278"])
+tsv-gfold-GRCh38-casero2016-thy4	expand("out/gfold/count_gtf-GRCh38-ensembl/star/pe_staridx-GRCh38-BP-ensembl_gtf-GRCh38-ensembl/sickle/pe_-t_sanger_-q_30/sra-tools/fastq-dump_pe/{srr}.tsv",srr=["SRR2040279","SRR2040280"])
