@@ -72,3 +72,4 @@ onerror:
 #print(dir()) #will give you the list of in scope variables:
 #print(globals()) #will give you a dictionary of global variables
 #print(locals())
+
