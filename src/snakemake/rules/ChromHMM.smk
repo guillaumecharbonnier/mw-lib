@@ -1,7 +1,7 @@
 def input_bed_ChromHMM_BinarizeBed_dependencies(wildcards):
     """
     Created:
-        2017-06-14 16:42:12 
+        2017-06-14 16:42:12
     Aim:
         A function retrieving the third column of 'cellmarkfiletable' to return the list of bed files needed by ChromHMM BinarizeBed and ensure bed files are created by Snakemake before being used by ChromHMM.
     """
@@ -63,7 +63,7 @@ rule ChromHMM_BinarizeBed:
         Trying using wdir for inputbeddir.
         This can allow to use a function to parse 'cellmarkfiletable' for the paths of bed files needed.
     Test:
-        "out/ChromHMM/BinarizeBed_test2/done" 
+        "out/ChromHMM/BinarizeBed_test2/done"
     """
     input:
         chromosomelengthfile="out/awk/extract_main_chr/gunzip/to-stdout/rsync/ucsc/goldenPath/mm10/database/chromInfo.txt",
@@ -99,7 +99,7 @@ rule ChromHMM_BinarizeBed_b:
     Aim:
         I want to try to use bin size smaller than 200~bp.
     Test:
-        "out/ChromHMM/BinarizeBed_b-50_test19/done" 
+        "out/ChromHMM/BinarizeBed_b-50_test19/done"
     """
     input:
         chromosomelengthfile="out/awk/extract_main_chr/gunzip/to-stdout/rsync/ucsc/goldenPath/mm10/database/chromInfo.txt",
@@ -151,7 +151,7 @@ rule ChromHMM_LearnModel_numstates_assembly:
         webpage     = "out/ChromHMM{_custom_features}/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}/webpage_{numstates}.html",
         # If any stage-dependent file are needed for downstream analysis, they have to be explicitely defined in "ln_gather_dynamic" rule
     params:
-        inputdir="out/ChromHMM/BinarizeBed_{cellmarkfiletable_id}", 
+        inputdir="out/ChromHMM/BinarizeBed_{cellmarkfiletable_id}",
         outputdir="out/ChromHMM{_custom_features}/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}"
     wildcard_constraints:
         numstates="[0-9]+",
@@ -191,7 +191,7 @@ rule ChromHMM_LearnModel_numstates_assembly_seed:
         png_transition="out/ChromHMM/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}_seed-{seed}/transitions_{numstates}.png",
         #bed_segments="out/ChromHMM/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}/PARSETHETABLEFORSTAGEHERE_{numstates}.png"
     params:
-        inputdir="out/ChromHMM/BinarizeBed_{cellmarkfiletable_id}", 
+        inputdir="out/ChromHMM/BinarizeBed_{cellmarkfiletable_id}",
         outputdir="out/ChromHMM/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}_seed-{seed}",
         memory="65536m" # previously 32768 but not enough for test9
     wildcard_constraints:
@@ -234,7 +234,7 @@ rule ChromHMM_MakeSegments_model_binarization_done:
         png_transition="out/ChromHMM{_custom_features}/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}/transitions_{numstates}.png",
         #bed_segments="out/ChromHMM{_custom_features}/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}/PARSETHETABLEFORSTAGEHERE_{numstates}.png"
     params:
-        inputdir="out/ChromHMM/BinarizeBed_{cellmarkfiletable_id}", 
+        inputdir="out/ChromHMM/BinarizeBed_{cellmarkfiletable_id}",
         outputdir="out/ChromHMM{_custom_features}/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}"
     params:
         inpdir="out/ChromHMM/BinarizeBed_b-200_chrominfo-hg19-main-chr_Blueprint-thymic-populations-with-input-as-control-hg19",
@@ -250,65 +250,6 @@ rule ChromHMM_MakeSegments_model_binarization_done:
             {params.outdir}
         """
 
-rule ChromHMM_MakeSegments_our_thymic_samples_into_chromdet_original_paper:
-    """
-    Created:
-        2018-04-17 15:11:30
-    Note:
-        out/ChromHMM/BinarizeBed_b-200_chrominfo-hg19-main-chr_Blueprint-thymic-populations-with-input-as-control-hg19/done 
-        out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/
-    """
-    input:
-        #chromhmm="opt/miniconda/envs/chromhmm/bin/ChromHMM.sh",
-        model="out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/model_11_All_cell_types.txt",
-        binarisation_done="out/ChromHMM/BinarizeBed_b-200_chrominfo-hg19-main-chr_Blueprint-thymic-populations-with-input-as-control-hg19/done"
-    output:
-        segments=expand("out/ChromHMM/MakeSegments_our_thymic_samples_into_chromdet_original_paper/{sample}_11_segments.bed",sample=OUR_COMPLETE_THYMIC_SAMPLES_INTO_CHROMDET_ORIGINAL_PAPER)
-    params:
-        inpdir="out/ChromHMM/BinarizeBed_b-200_chrominfo-hg19-main-chr_Blueprint-thymic-populations-with-input-as-control-hg19",
-        outdir="out/ChromHMM/MakeSegments_our_thymic_samples_into_chromdet_original_paper",
-        memory="65536m" # previously 32768 but not enough for test9
-    conda:
-        "../envs/chromhmm.yaml"
-    shell:
-        """
-        ChromHMM.sh\
-            -Xmx{params.memory}\
-            MakeSegmentation\
-            {input.model}\
-            {params.inpdir}\
-            {params.outdir}
-        """
-
-rule ChromHMM_MakeSegments_our_thymic_merged_samples_into_chromdet_original_paper:
-    """
-    Created:
-        2018-05-10 23:52:21
-    Note:
-        out/ChromHMM/BinarizeBed_b-200_chrominfo-hg19-main-chr_merged-Blueprint-thymic-populations-with-input-as-control-hg19/done 
-        out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/
-    """
-    input:
-        #chromhmm="opt/miniconda/envs/chromhmm/bin/ChromHMM.sh",
-        model="out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/model_11_All_cell_types.txt",
-        binarisation_done="out/ChromHMM/BinarizeBed_b-200_chrominfo-hg19-main-chr_merged-Blueprint-thymic-populations-with-input-as-control-hg19/done"
-    output:
-        segments=expand("out/ChromHMM/MakeSegments_our_merged_thymic_samples_into_chromdet_original_paper/{sample}_11_segments.bed", sample=THYMIC_STAGES)
-    params:
-        inpdir="out/ChromHMM/BinarizeBed_b-200_chrominfo-hg19-main-chr_merged-Blueprint-thymic-populations-with-input-as-control-hg19",
-        outdir="out/ChromHMM/MakeSegments_our_merged_thymic_samples_into_chromdet_original_paper",
-        memory="65536m" # previously 32768 but not enough for test9
-    conda:
-        "../envs/chromhmm.yaml"
-    shell:
-        """
-        ChromHMM.sh\
-            -Xmx{params.memory}\
-            MakeSegmentation\
-            {input.model}\
-            {params.inpdir}\
-            {params.outdir}
-        """
 
 rule ChromHMM_MakeBrowserFiles:
     """
@@ -358,7 +299,7 @@ rule ChromHMM_BinarizeBed_test1:
     output:
     params:
         inputbeddir="out/ln/make_ChromHMM_inputbeddir_test1",
-        outputbinarydir="out/ChromHMM/BinarizeBed_test1" 
+        outputbinarydir="out/ChromHMM/BinarizeBed_test1"
     shell:
         """
         {input.chromhmm} \
@@ -454,4 +395,3 @@ rule tmp_test1_flagstat:
         band3="out/samtools/flagstat/samtools/sort/samtools/view_bSh/java/select_subpopulations_from_bam_lmin-130_lmax-170/samtools/merge/samtools/sort/samtools/view_bSh/bowtie2/pe_mm10/ln/paired_end_remove_mate_prefix/fastx_toolkit/fastx_trimmer_l-30/gunzip/merge_lanes_nextseq500_paired_end/inp/fastq/run163_run167/MNase_Spm_WT_band3.tsv",
         band4="out/samtools/flagstat/samtools/sort/samtools/view_bSh/java/select_subpopulations_from_bam_lmin-100_lmax-130/samtools/merge/samtools/sort/samtools/view_bSh/bowtie2/pe_mm10/ln/paired_end_remove_mate_prefix/fastx_toolkit/fastx_trimmer_l-30/gunzip/merge_lanes_nextseq500_paired_end/inp/fastq/run163_run167/MNase_Spm_WT_band4.tsv",
         band5="out/samtools/flagstat/samtools/sort/samtools/view_bSh/java/select_subpopulations_from_bam_lmin-30_lmax-100/samtools/merge/samtools/sort/samtools/view_bSh/bowtie2/pe_mm10/ln/paired_end_remove_mate_prefix/fastx_toolkit/fastx_trimmer_l-30/gunzip/merge_lanes_nextseq500_paired_end/inp/fastq/run163_run167/MNase_Spm_WT_band5.tsv"
-    
