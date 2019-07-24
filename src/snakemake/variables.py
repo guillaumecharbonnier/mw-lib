@@ -32,4 +32,20 @@ MOUSE_MAIN_CHR=[
     "chrY",
     "chrM"]
 
+TAR_CONTENT_HMCAN_DIFF_TEST_EXAMPLE=[
+    "control_C1.sam",
+    "chip_C2_rep_3.sam",
+    "chip_C1_rep_3.sam",
+    "C1_files.txt",
+    "C2_files.txt",
+    "chip_C1_rep_2.sam",
+    "C2_control.txt",
+    "chip_C2_rep_2.sam",
+    "C1_control.txt",
+    "chip_C1_rep_1.sam",
+    "chip_C2_rep_1.sam",
+    "reference/chr1.fa",
+    "data/hg19-blacklist.bed",
+    "data/GC_profile_100KbWindow_Mapp76_hg19.cnp",
+    "control_C2.sam"]
 
