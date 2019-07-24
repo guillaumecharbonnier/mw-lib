@@ -70,24 +70,6 @@ rule coreutils_extract_min_dist_from_great:
         done < {input.txt}
         """
 
-rule coreutils_join_cpg_matrix:
-    input:
-        txt=expand("out/gunzip/to-stdout/ln/alias/experiments/thymus_BS/{sample}.txt", sample=BLUEPRINT_THYMUS_BS_CPG)
-    output:
-        txt="out/coreutils/join_cpg_matrix.txt"
-    conda:
-        "../envs/coreutils.yaml"
-    shell:
-        """
-        FIRST_TXT=`echo '{input.txt}' | cut -f1 -d ' '`
-
-        head $FIRST_TXT | cut -f1,2,6 | sed 's/\\t/-/' > {output.txt}
-
-        for TXT in `echo {input.txt} | cut -f2- -d ' '`;
-        do
-            cut -f1,2,6 $TXT | sed 's/\\t/-/' | head | join {output.txt} -
-        done
-        """
 
 rule coreutils_subsample:
     """
