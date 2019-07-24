@@ -17,7 +17,12 @@ def usermail(user):
             if row['user'] in d:
                 print(row['user'] + ' from ' + path + ' is replacing previous value')
             d[row['user']] = row['email']
-    return d[user]
+            res=d[user]
+
+            else:
+                res="fillemailids.tsv"
+
+    return res
 
 
 
