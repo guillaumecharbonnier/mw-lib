@@ -49,9 +49,11 @@ rule target:
     input:
         #Maybe add here the compilated doc for metaworkflow?
 
-MAILAPP="mail" #or "mutt" for laptop if configured with password. Test that later.
-USER=getpass.getuser()
-USERMAIL = usermail(USER)
+# Note: sending email onsucess and onerror like this could be done adding your own
+# onsuccess and onerror hook in on of the globbed directories.
+#MAILAPP="mail" #or "mutt" for laptop if configured with password. Test that later.
+#USER=getpass.getuser()
+#USERMAIL = usermail(USER)
 
 paths_onstart = glob.glob('../mw*/src/snakemake/hooks/onstart/*')
 onstart:
@@ -60,13 +62,13 @@ onstart:
 paths_onsuccess = glob.glob('../mw*/src/snakemake/hooks/onsuccess/*')
 onsuccess:
     shell("for path in {paths_onsuccess}; do . $path; done")
-    shell("{MAILAPP} -s 'workflow finished' {USERMAIL} < {log}")
-# mutt -s "Test from mutt" {USERMAIL} < {log}
+    #shell("{MAILAPP} -s 'workflow finished' {USERMAIL} < {log}")
+    # mutt -s "Test from mutt" {USERMAIL} < {log}
 
 paths_onerrror = glob.glob('../mw*/src/snakemake/hooks/onerror/*')
 onerror:
     shell("for path in {paths_onerror}; do . $path; done")
-    shell("{MAILAPP} -s 'an error occurred' {USERMAIL} < {log}")
+    #shell("{MAILAPP} -s 'an error occurred' {USERMAIL} < {log}")
 
 #Uncomment these for debugging:
 #print(dir()) #will give you the list of in scope variables:
