@@ -64,6 +64,25 @@ samtools/view_bSh/java/select_subpopulations_from_bam_lmin-130_lmax-170/samtools
         "cat {input.fastq_mate1} > {output.fastq_mate1}; "
         "cat {input.fastq_mate2} > {output.fastq_mate2}"
 
+rule cat_merge_lanes_nextseq500_pe_L00N_RM_001:
+    """
+    Created:
+        2019-09-03 16:02:42
+    Aim:
+        Merge the 4 lanes produced by Illumina NextSeq500.·
+    Test:
+        out/cat/merge_lanes_nextseq500_pe_L00N_RM_001/ln/updir/mw-sk/inp/fastq/tgml/run192/S001979_1-61061/1_S1__R1.fastq.gz
+    """
+    input:
+        fastq_mate1 = expand("out/{{filler}}L00{lane}_R1_001.fastq.gz", lane=["1","2","3","4"]),
+        fastq_mate2 = expand("out/{{filler}}L00{lane}_R2_001.fastq.gz", lane=["1","2","3","4"])
+    output:
+        fastq_mate1="out/cat/merge_lanes_nextseq500_pe_L00N_RM_001/{filler}_R1.fastq.gz",
+        fastq_mate2="out/cat/merge_lanes_nextseq500_pe_L00N_RM_001/{filler}_R2.fastq.gz"
+    shell:
+        "cat {input.fastq_mate1} > {output.fastq_mate1}; "
+        "cat {input.fastq_mate2} > {output.fastq_mate2}"
+
 
 rule cat_nico:
     """

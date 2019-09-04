@@ -5,9 +5,9 @@ def input_bed_ChromHMM_BinarizeBed_dependencies(wildcards):
     Aim:
         A function retrieving the third column of 'cellmarkfiletable' to return the list of bed files needed by ChromHMM BinarizeBed and ensure bed files are created by Snakemake before being used by ChromHMM.
     """
-    id=wildcards['cellmarkfiletable_id']
+    cellmarkfiletable = config['ids'][wildcards['cellmarkfiletable_id']]
 
-    df = pandas.read_table("src/chromhmm/cellmarkfiletable/"+id+".tsv", header=None, comment='#')
+    df = pandas.read_table(cellmarkfiletable, header=None, comment='#')
     # Column 3 should contain samples
     paths=df[2].tolist()
     # Column 4 may contain inputs
@@ -16,6 +16,140 @@ def input_bed_ChromHMM_BinarizeBed_dependencies(wildcards):
 
     return(paths)
 
+rule ChromHMM_BinarizeBed_cellmarkfiletable_chrominfo_extra:
+    """
+    Created:
+        2018-05-02 23:18:38
+    Aim:
+        General purpose binarisation function.
+    #IDée: archive le contenu de l'output, déclarer l'archive, puis open l'archive dans la règle suivante.
+
+    Test:
+        
+        out/ChromHMM/BinarizeBed_b-200_chrominfo-hg19-main-chr_merged-Blueprint-thymic-populations-with-input-as-control-hg19/done
+        out/ChromHMM/BinarizeBed_b-200_chrominfo-hg38-main-chr_Blueprint-thymic-populations-with-input-as-control/done
+        out/ChromHMM/developBinarizeExtra_chrominfo-mm10_cellmarkfiletable-test-srr.tar.gz
+    """
+    input:
+        #chromhmm="opt/miniconda/envs/chromhmm/bin/ChromHMM.sh",
+        chromosomelengthfile = lambda wildcards: config['ids'][wildcards.chrominfo_id],
+        cellmarkfiletable = lambda wildcards: config['ids'][wildcards.cellmarkfiletable_id],
+        bed = input_bed_ChromHMM_BinarizeBed_dependencies
+    output:
+        binarizedbedtar = "out/{tool}{extra}_{chrominfo_id}_{cellmarkfiletable_id}.tar.gz"
+        #files = directory("out/{tool}{extra}_{chrominfo_id}_{cellmarkfiletable_id}")
+    params:
+        inputbeddir=".",
+        outputbinarydir="out/{tool}{extra}_{chrominfo_id}_{cellmarkfiletable_id}",
+        extra = params_extra
+    wildcard_constraints:
+        tool="ChromHMM/developBinarizeExtra",
+        cellmarkfiletable_id="[a-zA-Z0-9-]+",
+    conda:
+        "../envs/chromhmm.yaml"
+    shell:
+        """
+        ChromHMM.sh\
+            -Xmx32768m\
+            BinarizeBed\
+            {params.extra}\
+            {input.chromosomelengthfile}\
+            {params.inputbeddir}\
+            {input.cellmarkfiletable}\
+            {params.outputbinarydir}
+        
+        tar zcvf {output.binarizedbedtar} -C {params.outputbinarydir} .
+        """
+
+
+#rule test_aggregate_checkpoint:
+#    input:
+#        checkpoints.ChromHMM_BinarizeBed_cellmarkfiletable_chrominfo_extra.get(tool="ChromHMM/developBinarizeExtra", extra=
+#    output:
+#        "test_aggregate_checkpoint.txt"
+#    shell:
+#        "touch {output}"
+#        
+
+rule ChromHMM_LearnModel_extra:
+    """
+    Created:
+        2019-09-04 17:47:48
+    Test:
+        out/ChromHMM/LearnModel_numstates-2_assembly-mm10/ChromHMM/developBinarizeExtra_chrominfo-mm10_cellmarkfiletable-test-srr/model_2.txt
+    """
+    input:
+        binarizedbedtar = "out/{filler}.tar.gz"
+    output:
+        #done = touch("out/{tool}{extra}_numstates-{numstates}_assembly-{assembly}/{filler}/done"),
+        trans_emiss = expand("out/{{tool}}{{extra}}_numstates-{{numstates}}_assembly-{{assembly}}/{{filler}}/{trans_emiss}_{{numstates}}.{ext}", trans_emiss = ["transitions","emissions"], ext=["png","svg","txt"]),
+        model       = "out/{tool}{extra}_numstates-{numstates}_assembly-{assembly}/{filler}/model_{numstates}.txt",
+        #webpage     = "out/ChromHMM{_custom_features}/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}/webpage_{numstates}.html",
+        # If any stage-dependent file are needed for downstream analysis, they have to be explicitely defined in "ln_gather_dynamic" rule
+    params:
+        extra = params_extra
+    wildcard_constraints:
+        numstates="[0-9]+",
+        assembly="mm10|hg38",
+        tool="ChromHMM/LearnModel" #|_custom_features" Add custom features if needed 
+#    benchmark:
+#        "log/snakemake/benchmark/out/ChromHMM{_custom_features}/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}.txt"
+    conda:
+        "../envs/chromhmm.yaml"
+    threads:
+        16
+    shell:
+        """
+        OUTPUTDIR=`dirname {output.model}`
+        rm -rf $OUTPUTDIR/input
+        mkdir $OUTPUTDIR/input
+        tar zxvf {input.binarizedbedtar} -C $OUTPUTDIR/input
+
+        ChromHMM.sh -Xmx32768m \
+            LearnModel \
+            -p {threads} \
+            $OUTPUTDIR/input \
+            $OUTPUTDIR \
+            {wildcards.numstates} \
+            {wildcards.assembly}
+        """
+
+#rule ChromHMM_MakeSegments_model_binarization_done:
+#    """
+#    Created:
+#        2018-05-10 20:13:59
+#    Note:
+#        out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/
+#    """
+#    input:
+#        model="out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/model_11_All_cell_types.txt",
+#        binarization_done="out/ChromHMM/BinarizeBed_{cellmarkfiletable_id}/done"
+#    output:
+#        done="out/ChromHMM{_custom_features}/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}/done",
+#        png_emission="out/ChromHMM{_custom_features}/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}/emissions_{numstates}.png",
+#        png_transition="out/ChromHMM{_custom_features}/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}/transitions_{numstates}.png",
+#        #bed_segments="out/ChromHMM{_custom_features}/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}/PARSETHETABLEFORSTAGEHERE_{numstates}.png"
+#    params:
+#        inputdir="out/ChromHMM/BinarizeBed_{cellmarkfiletable_id}",
+#        outputdir="out/ChromHMM{_custom_features}/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}"
+#    params:
+#        inpdir="out/ChromHMM/BinarizeBed_b-200_chrominfo-hg19-main-chr_Blueprint-thymic-populations-with-input-as-control-hg19",
+#        outdir="out/ChromHMM/MakeSegments_our_thymic_samples_into_chromdet_original_paper",
+#        memory="65536m" # previously 32768 but not enough for test9
+#    shell:
+#        """
+#        {input.chromhmm}\
+#            -Xmx{params.memory}\
+#            MakeSegmentation\
+#            {input.model}\
+#            {params.inpdir}\
+#            {params.outdir}
+#        """
+#
+
+
+
+# Legacy rules below
 
 rule ChromHMM_BinarizeBed_b_chrominfo:
     """

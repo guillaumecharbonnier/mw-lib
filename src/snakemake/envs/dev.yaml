@@ -6,7 +6,6 @@ channels:
   - conda-forge
   - bioconda
   - defaults
-  - ActivisionGameScience
 dependencies:
   - git-annex
   - uncommitted

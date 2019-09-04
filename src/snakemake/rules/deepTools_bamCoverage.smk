@@ -80,8 +80,8 @@ rule deepTools_bamCoverage_binSize_minMappingQuality_normalizeUsingRPKM_legacy:
         bai="out/{filler}.bam.bai"
     output:
         bw="out/deepTools/bamCoverage_binSize-{binSize}_minMappingQuality-{minMappingQuality}_normalizeUsingRPKM/{filler}.bw"
-    #conda:
-    #    "../envs/deeptools.yaml"
+    conda:
+        "../envs/deeptools.yaml"
     wildcard_constraints:
         binSize="[0-9]+",
         minMappingQuality="[0-9]+"

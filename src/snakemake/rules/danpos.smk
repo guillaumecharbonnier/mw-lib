@@ -6,6 +6,18 @@ rule danpos_dtriple_extra:
           -m , --paired         set to 1 if the input data is mate-pair (paired-end) reads.  (default: 0)
     Test:
         out/danpos/dtriple/ln/alias/experiments/hg38_H3K27ac_LAL-T/CD34.wig -fn
+        bed-mm9-ss-c-wtA
+        bSh/bowtie2/pe_mm10/ln/paired_end_remove_mate_prefix/fastx_toolkit/fastx_trimmer_l-30/gunzip/merge_lanes_nextseq500_paired_end/inp/fastq/run113_run119_run124/s1-MNS-R-WT_s2-MNS-R-KO.bed
+
+        out/awk/extract_main_chr/awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_bedpe/samtools/sort_n/samtools/merge_two_samples/samtools/merge/samtools/sort/samtools/view_bSh/bowtie2/pe_mm10/ln/paired_end_remove_mate_prefix/fastx_toolkit/fastx_trimmer_l-30/gunzip/merge_lanes_nextseq500_paired_end/inp/fastq/run113_run119_run124/s1-MNS-R-WT_s2-MNS-R-KO.bed
+
+out/samtools/merge_three_runs/samtools/sort/samtools/view_bSh/bowtie2/pe_mm10/ln/paired_end_remove_mate_prefix/fastx_toolkit/fastx_trimmer_l-30/gunzip/merge_lanes_nextseq500_paired_end/ln/updir/mw-sk/inp/fastq/tgml/run113_run119_run124/MNS-R-WT.bam
+
+
+out/samtools/merge_three_runs/samtools/sort/samtools/view_bSh/bowtie2/pe_mm10/ln/pe_remove_mate_prefix/fastx_toolkit/fastx_trimmer_l-30/cat/merge_lanes_nextseq500_pe_LN_RM/ln/updir/mw-sk/inp/fastq/tgml/run113_run119_run124/MNS-R-WT.bam
+
+../mw-sk/inp/fastq/tgml/run119/
+
     """
     input:
         bam="out/{filler}.bam"#,

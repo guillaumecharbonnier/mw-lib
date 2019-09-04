@@ -47,6 +47,31 @@ rule samtools_view_bam_to_bam_extra:
     shell:
         "samtools view -bh {params.extra} {input.bam} -o {output.bam} &> {log}"
 
+rule samtools_view_bam_to_sam_extra:
+    """
+    Created:
+        2019-02-10 20:04:32
+    Aim:
+        Allow to apply filter on bam files.
+    Test:
+    """
+    input:
+        bam = "out/{filler}.bam",
+        bai = "out/{filler}.bam.bai",
+    output:
+        sam = "out/{tool}{extra}/{filler}.sam"
+    log:
+        "out/{tool}{extra}/{filler}.log"
+    wildcard_constraints:
+        tool="samtools/view_bam_to_sam"
+    params:
+        extra = params_extra
+    conda:
+        "../envs/samtools.yaml"
+    shell:
+        "samtools view -h {params.extra} {input.bam} -o {output.sam} &> {log}"
+
+
 rule samtools_view_bam_to_txt_extra:
     """
     Created:
