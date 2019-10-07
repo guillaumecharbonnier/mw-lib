@@ -1,2 +1,2 @@
 # mw-lib
-Metaworkflow library of generalised rules
+Metaworkflow library of generalised Snakemake rules
