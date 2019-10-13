@@ -14,8 +14,12 @@ rule gtftk_select_most_5p_tx:
         gtf="out/{filler}.gtf"
     output:
         gtf="out/gtftk/select_most_5p_tx/{filler}.gtf"
+    log:
+        "out/gtftk/select_most_5p_tx/{filler}.log"
+    benchmark:
+        "out/gtftk/select_most_5p_tx/{filler}.benchmark.tsv"
     conda:
         "../envs/pygtftk.yaml"
     shell:
-        "gtftk select_most_5p_tx --inputfile {input.gtf} > {output.gtf}"
+        "gtftk select_most_5p_tx --inputfile {input.gtf} > {output.gtf} 2> {log}"
 

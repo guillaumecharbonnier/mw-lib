@@ -6,6 +6,7 @@ rule samtools_merge:
         This rule use Samtools merge samples as define in salva_runs.tsv by sample_merge_list value.
     Test:
         out/samtools/merge/bam-hg38-Casero2016-thy3-thy4.bam
+        out/samtools/merge/bam-hg19-CapStarr_K562_IFN_rep1-merged.bam
     """
     input:
         bam = lambda wildcards: eval(config['ids'][wildcards.bam_list_id])

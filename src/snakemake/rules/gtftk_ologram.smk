@@ -10,6 +10,11 @@ rule gtftk_ologram:
         out/gtftk/ologram_tfbs_chrominfo-hg19_gtf-hg19-tfbs/bedtools/merge_-d_5/sort/_-k1,1_-k2,2n/crossmap/chain-hg38-to-hg19/cp/alias/experiments/hg38_atac_peaks_from_wilson/CD34/00_ologram_diagrams.pdf
         out/gtftk/ologram_tfbs_chrominfo-hg19_gtf-hg19-tfbs/bedtools/merge_-d_5/sort/_-k1,1_-k2,2n/crossmap/chain-hg38-to-hg19/r/dynamic_enhancers_in_thymopoiesis/dClust/rowFeature-all_cpg_hypo_meth_call__no_rmsk_mxy__no_donor_effect__distal/sortingMethod-kmeans_centers-8_nstart-100_itermax-200000_algorithm-Lloyd/sortingFeature-H3K27ac_peaks/subSortingMethod-kmeans_centers-32_nstart-100_itermax-200000_algorithm-Lloyd/subSortingFeature-ATAC_peaks/cluster-1/00_ologram_diagrams.pdf
         out/gtftk/ologram_tfbs_chrominfo-hg19_gtf-hg19-tfbs/bedtools/merge_-d_5/sort/_-k1,1_-k2,2n/crossmap/chain-hg38-to-hg19/r/dynamic_enhancers_in_thymopoiesis/dClust/rowFeature-no_rmsk_mxy__no_donor_effect__distal/sortingMethod-kmeans_centers-8_nstart-100_itermax-200000_algorithm-Lloyd/sortingFeature-cpg_meth_call/subSortingMethod-kmeans_centers-32_nstart-100_itermax-200000_algorithm-Lloyd/subSortingFeature-H3K27ac_peaks.ATAC_peaks/cluster-1/00_ologram_diagrams.pdf
+
+        out/gtftk/ologram_tfbs_chrominfo-hg19_gtf-hg19-tfbs/bedtools/merge_-d_5/sort/_-k1,1_-k2,2n/crossmap/chain-hg38-to-hg19/r/order_cd34_ec_common_atac_peaks_according_to_h3k27ac_ratio/tCD34-high-top110/00_ologram_diagrams.pdf
+
+bed-cd34-ec-common-atac-peaks-classes-according-to-h3k27ac-top110
+out/r/order_cd34_ec_common_atac_peaks_according_to_h3k27ac_ratio/{sample}", sample=['tCD34-high-top110.bed
     """
     input:
         chromInfo = lambda wildcards: config['ids'][wildcards.chrominfo_id],
@@ -18,6 +23,10 @@ rule gtftk_ologram:
     output:
         pdf       = "out/{tool}{extra}_{chrominfo_id}_{gtf_id}/{filler}/00_ologram_diagrams.pdf",
         stats     = "out/{tool}{extra}_{chrominfo_id}_{gtf_id}/{filler}/00_ologram_stats.tsv"
+    log:
+                    "out/{tool}{extra}_{chrominfo_id}_{gtf_id}/{filler}/log"
+    benchmark:
+                    "out/{tool}{extra}_{chrominfo_id}_{gtf_id}/{filler}/benchmark.tsv"
     params:
         extra = params_extra,
         outputdir = "out/{tool}{extra}_{chrominfo_id}_{gtf_id}/{filler}"
@@ -37,5 +46,5 @@ rule gtftk_ologram:
             --chrom-info {input.chromInfo} \
             --peak-file {input.bed} \
             --nb-threads {threads} \
-            --no-date {params.extra}
+            --no-date {params.extra} &> {log}
         """

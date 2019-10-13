@@ -1,3 +1,35 @@
+rule awk_extract_rows_matching_col_content:
+    """
+    out/awk/extract_rows_matching_col13_content/deepTools/plotHeatmap_--kmeans_40_--boxAroundHeatmaps_no/deepTools/computeMatrix_reference-point_--referencePoint_center_-bs_5_-b_150_-a_150_bed-mm10-nuc-prcs-maxfuzz-40-minsmt-30-only-high-qual-fragments_bw-mnase-prcs-naked-nuc-ss/cluster_1.bed
+    """
+    input:
+        "out/{filler}.bed"
+    output:
+        "out/awk/extract_rows_matching_col{col}_content/{filler}/{content}.bed"
+    wildcard_constraints:
+        col="[0-9]+",
+        content="[\w_-]+"
+    shell:
+        """
+        awk '${wildcards.col} == "{wildcards.content}"' {input} > {output}
+        """
+
+rule awk_extract_cluster:
+    """
+    out/awk/extract_cluster/deepTools/plotHeatmap_--kmeans_40_--boxAroundHeatmaps_no/deepTools/computeMatrix_reference-point_--referencePoint_center_-bs_5_-b_150_-a_150_bed-mm10-nuc-prcs-maxfuzz-40-minsmt-30-only-high-qual-fragments_bw-mnase-prcs-naked-nuc-ss/1.bed
+    """
+    input:
+        "out/{filler}.bed"
+    output:
+        "out/awk/extract_cluster/{filler}/{cluster}.bed"
+    wildcard_constraints:
+        cluster="[0-9]+"
+    shell:
+        """
+        awk '$13 == "cluster_{wildcards.cluster}"' {input} > {output}
+        """
+
+
 rule awk_tfbsConsSites_to_gtf:
     """
     """
@@ -12,6 +44,23 @@ rule awk_tfbsConsSites_to_gtf:
     shell:
         """
         awk -v q='"' 'BEGIN{{FS=OFS="\\t"}} {{gsub("V.", "", $5); gsub("_.+$", "", $5); print $2, "tfbsConsSites", "gene", $3, $4, $8, $7, ".", "gene_id " q NR q "; tf_id " q $5 q}}' {input} > {output} 2> {log}
+        """
+
+rule awk_fix_bed9_thick_cols:
+    """
+    Created:
+        2019-10-13 23:39:19
+    Aim:
+        When using crossmap, thick start and end coordinates are strangely converted.
+        For segmentation tracks, I only need to have the same coordinates as start and end so I replicate these columns.
+    """
+    input:
+        bed="out/{filler}.bed"
+    output:
+        bed="out/awk/fix_bed9_thick_cols/{filler}.bed"
+    shell:
+        """
+        awk 'BEGIN{{FS=OFS="\\t"}} {{print $1,$2,$3, $4, $5, $6, $2, $3, $9}}' {input.bed} > {output.bed}
         """
 
 rule awk_rename_bed_name:

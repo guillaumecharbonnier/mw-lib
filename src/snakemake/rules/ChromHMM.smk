@@ -22,29 +22,34 @@ rule ChromHMM_BinarizeBed_cellmarkfiletable_chrominfo_extra:
         2018-05-02 23:18:38
     Aim:
         General purpose binarisation function.
-    #IDée: archive le contenu de l'output, déclarer l'archive, puis open l'archive dans la règle suivante.
-
+        #IDée: archive le contenu de l'output, déclarer l'archive, puis open l'archive dans la règle suivante.
+    Doc:
+        -b binsize  The number of base pairs in a bin determining the resolution of the model learning and segmentation.  By default this parameter value is set to 200base pairs
     Test:
-        
         out/ChromHMM/BinarizeBed_b-200_chrominfo-hg19-main-chr_merged-Blueprint-thymic-populations-with-input-as-control-hg19/done
         out/ChromHMM/BinarizeBed_b-200_chrominfo-hg38-main-chr_Blueprint-thymic-populations-with-input-as-control/done
         out/ChromHMM/developBinarizeExtra_chrominfo-mm10_cellmarkfiletable-test-srr.tar.gz
+    Doc:
+        usage BinarizeBed [-b binsize][-c controldir][-center][-colfields chromosome,start,end[,strand]][-e offsetend][-f foldthresh][-g signalthresh][-n shift][-o outputcontroldir][-p poissonthresh][-peaks][-s offsetstart][-strictthresh][-t outputsignaldir][-u pseudocountcontrol][-w flankwidthcontrol] chromosomelengthfile inputbeddir cellmarkfiletable outputbinarydir
     """
     input:
-        #chromhmm="opt/miniconda/envs/chromhmm/bin/ChromHMM.sh",
         chromosomelengthfile = lambda wildcards: config['ids'][wildcards.chrominfo_id],
         cellmarkfiletable = lambda wildcards: config['ids'][wildcards.cellmarkfiletable_id],
         bed = input_bed_ChromHMM_BinarizeBed_dependencies
     output:
-        binarizedbedtar = "out/{tool}{extra}_{chrominfo_id}_{cellmarkfiletable_id}.tar.gz"
-        #files = directory("out/{tool}{extra}_{chrominfo_id}_{cellmarkfiletable_id}")
+        done=touch("out/{tool}{extra}_{chrominfo_id}_{cellmarkfiletable_id}/done")
+        #binarizedbedtar = "out/{tool}{extra}_{chrominfo_id}_{cellmarkfiletable_id}.tar.gz"
+    log:
+        "out/{tool}{extra}_{chrominfo_id}_{cellmarkfiletable_id}/log"
+    benchmark:
+        "out/{tool}{extra}_{chrominfo_id}_{cellmarkfiletable_id}/benchmark.tsv"
     params:
         inputbeddir=".",
         outputbinarydir="out/{tool}{extra}_{chrominfo_id}_{cellmarkfiletable_id}",
         extra = params_extra
     wildcard_constraints:
-        tool="ChromHMM/developBinarizeExtra",
-        cellmarkfiletable_id="[a-zA-Z0-9-]+",
+        tool="ChromHMM/BinarizeBed",
+        cellmarkfiletable_id="[\w-]+",
     conda:
         "../envs/chromhmm.yaml"
     shell:
@@ -56,10 +61,9 @@ rule ChromHMM_BinarizeBed_cellmarkfiletable_chrominfo_extra:
             {input.chromosomelengthfile}\
             {params.inputbeddir}\
             {input.cellmarkfiletable}\
-            {params.outputbinarydir}
-        
-        tar zcvf {output.binarizedbedtar} -C {params.outputbinarydir} .
+            {params.outputbinarydir} &> {log}
         """
+        #tar zcvf {output.binarizedbedtar} -C {params.outputbinarydir} .
 
 
 #rule test_aggregate_checkpoint:
@@ -114,6 +118,42 @@ rule ChromHMM_LearnModel_extra:
             {wildcards.assembly}
         """
 
+rule ChromHMM_MakeBrowserFiles:
+    """
+    Created:
+        2018-07-26 11:56:21
+    Aim:
+        Create files to browse states in IGV
+    Test:
+    sm\
+        out/ChromHMM/MakeBrowserFiles/ChromHMM/MakeSegments_our_merged_thymic_samples_into_chromdet_original_paper/CD34_11_segments.done\
+        out/ChromHMM/MakeBrowserFiles/ChromHMM/MakeSegments_our_merged_thymic_samples_into_chromdet_original_paper/EC_11_segments.done\
+        out/ChromHMM/MakeBrowserFiles/ChromHMM/MakeSegments_our_merged_thymic_samples_into_chromdet_original_paper/LC_11_segments.done\
+        out/ChromHMM/MakeBrowserFiles/ChromHMM/MakeSegments_our_merged_thymic_samples_into_chromdet_original_paper/SP4_11_segments.done\
+        out/ChromHMM/MakeBrowserFiles/ChromHMM/MakeSegments_our_merged_thymic_samples_into_chromdet_original_paper/SP8_11_segments.done
+    """
+    input:
+        segments = "out/{filler}/{filename}.bed"
+    output:
+        dense    = "out/ChromHMM/MakeBrowserFiles/{filler}/{filename}_dense.bed",
+        expanded = "out/ChromHMM/MakeBrowserFiles/{filler}/{filename}_expanded.bed"
+    params:
+        memory="65536m" # previously 32768 but not enough for test9
+    conda:
+        "../envs/chromhmm.yaml"
+    shell:
+        """
+        outputfileprefix="out/ChromHMM/MakeBrowserFiles/{wildcards.filler}/{wildcards.filename}"
+
+        ChromHMM.sh\
+            -Xmx{params.memory}\
+            MakeBrowserFiles\
+            {input.segments}\
+            {wildcards.filename}\
+            $outputfileprefix
+        """
+
+
 #rule ChromHMM_MakeSegments_model_binarization_done:
 #    """
 #    Created:
@@ -150,44 +190,46 @@ rule ChromHMM_LearnModel_extra:
 
 
 # Legacy rules below
-
-rule ChromHMM_BinarizeBed_b_chrominfo:
-    """
-    Created:
-        2018-05-02 23:18:38
-    Aim:
-        General purpose binarisation function.
-    Test:
-        out/ChromHMM/BinarizeBed_b-200_chrominfo-hg19-main-chr_merged-Blueprint-thymic-populations-with-input-as-control-hg19/done
-        out/ChromHMM/BinarizeBed_b-200_chrominfo-hg38-main-chr_Blueprint-thymic-populations-with-input-as-control/done
-    """
-    input:
-        #chromhmm="opt/miniconda/envs/chromhmm/bin/ChromHMM.sh",
-        chromosomelengthfile = lambda wildcards: config['ids'][wildcards.chrominfo_id],
-        cellmarkfiletable="src/chromhmm/cellmarkfiletable/{cellmarkfiletable_id}.tsv",
-        bed=input_bed_ChromHMM_BinarizeBed_dependencies
-    output:
-        done=touch("out/ChromHMM/BinarizeBed_b-{binSize}_{chrominfo_id}_{cellmarkfiletable_id}/done")
-    params:
-        inputbeddir=".",
-        outputbinarydir="out/ChromHMM/BinarizeBed_b-{binSize}_chrominfo-{chrominfo_id}_{cellmarkfiletable_id}"
-    wildcard_constraints:
-        cellmarkfiletable_id="[a-zA-Z0-9-]+",
-        binSize="[0-9]+"
-    conda:
-        "../envs/chromhmm.yaml"
-    shell:
-        """
-        ChromHMM.sh\
-            -Xmx32768m\
-            BinarizeBed\
-            -b {wildcards.binSize}\
-            -center\
-            {input.chromosomelengthfile}\
-            {params.inputbeddir}\
-            {input.cellmarkfiletable}\
-            {params.outputbinarydir}
-        """
+#
+#rule ChromHMM_BinarizeBed_b_chrominfo_broken:
+#    """
+#    BROKEN by_the_rewritten_input_bed_ChromHMM_BinarizeBed_dependencies_function:
+#    
+#    Created:
+#        2018-05-02 23:18:38
+#    Aim:
+#        General purpose binarisation function.
+#    Test:
+#        out/ChromHMM/BinarizeBed_b-200_chrominfo-hg19-main-chr_merged-Blueprint-thymic-populations-with-input-as-control-hg19/done
+#        out/ChromHMM/BinarizeBed_b-200_chrominfo-hg38-main-chr_Blueprint-thymic-populations-with-input-as-control/done
+#    """
+#    input:
+#        #chromhmm="opt/miniconda/envs/chromhmm/bin/ChromHMM.sh",
+#        chromosomelengthfile = lambda wildcards: config['ids'][wildcards.chrominfo_id],
+#        cellmarkfiletable="src/chromhmm/cellmarkfiletable/{cellmarkfiletable_id}.tsv",
+#        bed=input_bed_ChromHMM_BinarizeBed_dependencies
+#    output:
+#        done=touch("out/ChromHMM/BinarizeBed_b-{binSize}_{chrominfo_id}_{cellmarkfiletable_id}/done")
+#    params:
+#        inputbeddir=".",
+#        outputbinarydir="out/ChromHMM/BinarizeBed_b-{binSize}_chrominfo-{chrominfo_id}_{cellmarkfiletable_id}"
+#    wildcard_constraints:
+#        cellmarkfiletable_id="[a-zA-Z0-9-]+",
+#        binSize="[0-9]+"
+#    conda:
+#        "../envs/chromhmm.yaml"
+#    shell:
+#        """
+#        ChromHMM.sh\
+#            -Xmx32768m\
+#            BinarizeBed\
+#            -b {wildcards.binSize}\
+#            -center\
+#            {input.chromosomelengthfile}\
+#            {params.inputbeddir}\
+#            {input.cellmarkfiletable}\
+#            {params.outputbinarydir}
+#        """
 
 rule ChromHMM_BinarizeBed:
     """
@@ -357,9 +399,10 @@ rule ChromHMM_MakeSegments_model_binarization_done:
         2018-05-10 20:13:59
     Note:
         out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/
+    Test:
+        out/MakeSegments_our_merged_thymic_samples_into_chromdet_original_paper/EC_11_segments_dense.bed
     """
     input:
-        chromhmm="opt/miniconda/envs/chromhmm/bin/ChromHMM.sh",
         model="out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/model_11_All_cell_types.txt",
         binarization_done="out/ChromHMM/BinarizeBed_{cellmarkfiletable_id}/done"
     output:
@@ -374,9 +417,11 @@ rule ChromHMM_MakeSegments_model_binarization_done:
         inpdir="out/ChromHMM/BinarizeBed_b-200_chrominfo-hg19-main-chr_Blueprint-thymic-populations-with-input-as-control-hg19",
         outdir="out/ChromHMM/MakeSegments_our_thymic_samples_into_chromdet_original_paper",
         memory="65536m" # previously 32768 but not enough for test9
+    conda:
+        "../envs/chromhmm.yaml"
     shell:
         """
-        {input.chromhmm}\
+        ChromHMM.sh\
             -Xmx{params.memory}\
             MakeSegmentation\
             {input.model}\
@@ -384,42 +429,6 @@ rule ChromHMM_MakeSegments_model_binarization_done:
             {params.outdir}
         """
 
-
-rule ChromHMM_MakeBrowserFiles:
-    """
-    Created:
-        2018-07-26 11:56:21
-    Aim:
-        Create files to browse states in IGV
-    Test:
-    sm\
-        out/ChromHMM/MakeBrowserFiles/ChromHMM/MakeSegments_our_merged_thymic_samples_into_chromdet_original_paper/CD34_11_segments.done\
-        out/ChromHMM/MakeBrowserFiles/ChromHMM/MakeSegments_our_merged_thymic_samples_into_chromdet_original_paper/EC_11_segments.done\
-        out/ChromHMM/MakeBrowserFiles/ChromHMM/MakeSegments_our_merged_thymic_samples_into_chromdet_original_paper/LC_11_segments.done\
-        out/ChromHMM/MakeBrowserFiles/ChromHMM/MakeSegments_our_merged_thymic_samples_into_chromdet_original_paper/SP4_11_segments.done\
-        out/ChromHMM/MakeBrowserFiles/ChromHMM/MakeSegments_our_merged_thymic_samples_into_chromdet_original_paper/SP8_11_segments.done
-    """
-    input:
-        chromhmm="opt/miniconda/envs/chromhmm/bin/ChromHMM.sh",
-        segments="out/{filler}/{filename}.bed"
-    output:
-        done="out/ChromHMM/MakeBrowserFiles/{filler}/{filename}.done"
-        #segments=expand("out/ChromHMM/MakeSegments_our_merged_thymic_samples_into_chromdet_original_paper/{sample}_11_segments.bed", sample=THYMIC_STAGES)
-    params:
-        memory="65536m" # previously 32768 but not enough for test9
-    shell:
-        """
-        outputfileprefix="out/ChromHMM/MakeBrowserFiles/{wildcards.filler}/{wildcards.filename}"
-
-        {input.chromhmm}\
-            -Xmx{params.memory}\
-            MakeBrowserFiles\
-            {input.segments}\
-            {wildcards.filename}\
-            $outputfileprefix
-
-        touch {output.done}
-        """
 
 rule ChromHMM_BinarizeBed_test1:
     """

@@ -7,6 +7,7 @@ rule deepTools_multiBigwigSummary_BED_extra:
     Test:
         out/deepTools/multiBigwigSummary_BED-hg38-methylation-filtered-sites-in-thymus/Blueprint-thymic-populations-BS.npz
         out/deepTools/multiBigwigSummary_BED-hg38-atac-peaks-from-wilson-cd34-ec/hg38-h3k27ac-cd34-ec-quantile-normalized.tsv
+        out/deepTools/multiBigwigSummary_BED_bed-hg38-ensembl-r95-ealpha/bw-hg38-tall-h3k27ac-qnorm.tsv
     """
     input:
         bw_list = lambda wildcards: eval(config['ids'][wildcards.bw_list_id]),

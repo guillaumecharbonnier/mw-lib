@@ -22,13 +22,18 @@ rule gtftk_convert:
 
     Test:
         out/gtftk/convert/gtftk/select_by_key_key-gene_id_file-with-values-upreg-ko-nut-r-threshold-1/gunzip/to-stdout/wget/ftp_ensembl/pub/release-87/gtf/mus_musculus/Mus_musculus.GRCm38.87.bed
+        out/sed/add_chr/gtftk/convert_-n_gene_id_-f_bed6/gtftk/select_by_key_key-feature_value-gene/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/homo_sapiens/Homo_sapiens.GRCh38.95.bed
     """
     input:
         gtf="out/{filler}.gtf"
     output:
-        bed="out/gtftk/convert/{filler}.bed"
+        bed="out/{tool}{extra}/{filler}.bed"
+    params:
+        extra = params_extra
+    wildcard_constraints:
+        tool = "gtftk/convert"
     conda:
         "../envs/pygtftk.yaml"
     shell:
-        "gtftk convert --inputfile {input.gtf} --outputfile {output.bed}"
+        "gtftk convert {params.extra} --inputfile {input.gtf} --outputfile {output.bed}"
 

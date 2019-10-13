@@ -46,7 +46,7 @@ rule subread_featureCounts_extra:
         16
     shell:
         """
-        featureCounts -a {input.gtf_saf} {params.extra} -T {threads} -o {output.tsv} {input.bam}
+        featureCounts -a {input.gtf_saf} {params.extra} -T {threads} -o {output.tsv} {input.bam} &> {log}
         """
 
 

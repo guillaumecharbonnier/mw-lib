@@ -7,6 +7,8 @@ rule gtftk_select_by_key_key_value:
     Test:
         out/gtftk/select_by_key_key-gene_biotype_value-protein_coding/gunzip/to-stdout/wget/ftp_ensembl/pub/release-87/gtf/mus_musculus/Mus_musculus.GRCm38.87.gtf
         out/sort/coordinates_bed/gtftk/5p_3p_coord/sed/add_chr/gtftk/select_by_key_key-transcript_biotype_value-protein_coding/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-93/gtf/homo_sapiens/Homo_sapiens.GRCh38.93.bed
+        out/sed/add_chr/gtftk/convert_-n_gene_id_-f_bed6/gtftk/select_by_key_key-feature_value-gene/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/homo_sapiens/Homo_sapiens.GRCh38.95.bed
+
     """
     input:
         gtf="out/{filler}.gtf"
