@@ -1,23 +1,3 @@
-rule bedtools_multiinter_bed:
-    """
-    Created:
-        2018-04-23 15:31:26
-    Aim:
-        Default bedtools multiinter rule
-    Note:
-        Requires that each interval file is sorted by chrom/start.
-    Test:
-        Never tested
-    """
-    input:
-        bed_list = lambda wildcards: eval(config['ids'][wildcards.bed_list_id])
-    output:
-        bed_multiinter = "out/bedtools/multiinter/{bed_list_id}.bed"
-    conda:
-        "../envs/bedtools.yaml"
-    shell:
-        "bedtools multiinter -i {input.bed_list} > {output.bed_multiinter}"
-
 rule bedtools_intersect_extra:
     """
     Created:

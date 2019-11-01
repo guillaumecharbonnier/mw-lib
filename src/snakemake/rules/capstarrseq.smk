@@ -36,8 +36,18 @@ EXT_IGMM = "437"
 
 
 
-ID_BAM_TO_BED = "bedtools/bamtobed|awk/extend_reads_[0-9]+/bedtools/bamtobed|awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_bedpe/samtools/sort_n|awk/extend_reads_[0-9]+/awk/keep_first_mate_for_pe_bedtools_bamtobed/bedtools/bamtobed|awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_-bedpe/samtools/sort_-n"
-CRM_TYPE = "mTDHS|hProm|hProm_posEprom|hSE_RPMI_JURKAT_DND41_hg19_Alex"
+ID_BAM_TO_BED = "|".join([
+    "bedtools/bamtobed|awk/extend_reads_[0-9]+/bedtools/bamtobed/samtools/sort_-n",
+    "awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_bedpe/samtools/sort_-n",
+    "awk/extend_reads_[0-9]+/awk/keep_first_mate_for_pe_bedtools_bamtobed/bedtools/bamtobed/sort_-n",
+    "awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_-bedpe/samtools/sort_-n"])
+
+CRM_TYPE = "mTDHS|hProm|hProm_posEprom|IGMM|hSE_RPMI_JURKAT_DND41_hg19_Alex"
+
+#rule capstarrseq_coverage_fpkm_input_v2:
+#    input:
+#        
+#
 
 rule capstarrseq_coverage_fpkm_input:
     """
@@ -65,7 +75,7 @@ rule capstarrseq_coverage_fpkm_input:
         tsv_fpkm_unfiltered="out/capstarrseq/coverage_fpkm_input_{crm_type}/{id_bam_to_bed}/{id}.FPKM_unfiltered.tsv",
         bed_crms="out/capstarrseq/coverage_fpkm_input_{crm_type}/{id_bam_to_bed}/{id}.filtered_CRMs.bed"
     params:
-        fpkm_threshold='0'
+        fpkm_threshold='1'
     wildcard_constraints:
         id_bam_to_bed = ID_BAM_TO_BED, 
         crm_type = CRM_TYPE
@@ -341,23 +351,22 @@ rule capstarrseq_merge_all_data:
 
         out/capstarrseq/merge_all_data_hProm/awk/extend_reads_314/bedtools/bamtobed/samtools/merge/bam-hg19-CapStarr-K562-IFN-rep1-merged_over_RAJOUTERIDCONTROLMERGED.allData.tsv
 
-        out/capstarrseq/merge_all_data_mTDHS/awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_-bedpe/samtools/sort_-n/ln/alias/sst/all_samples/mm9/bam/capSTARR-seq_P5424_rep1_over_capSTARR-seq_P5424_Input.allData.tsv
-
-capSTARR-seq_P5424_rep2
-capSTARR-seq_P5424_Input
-
-
+    Ahmad 2019-10-15 00:34:22
+        out/capstarrseq/merge_all_data_IGMM/awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_-bedpe/samtools/sort_-n/ln/alias/sst/all_samples/mm9/bam/capSTARR-seq_P5424_rep1_over_capSTARR-seq_P5424_Input.allData.tsv out/capstarrseq/merge_all_data_IGMM/awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_-bedpe/samtools/sort_-n/ln/alias/sst/all_samples/mm9/bam/capSTARR-seq_P5424_rep2_over_capSTARR-seq_P5424_Input.allData.tsv
     """
     input:
         bed_crm="out/capstarrseq/coverage_fpkm_input_{crm_type}/{id}/{id_input}.filtered_CRMs.bed",
         fpkm = "out/capstarrseq/coverage_fpkm_sample_{crm_type}/{id}/{id_sample}_on_{id_input}_filtered_CRMs.FPKM.tsv",
         fpkm_input = "out/capstarrseq/coverage_fpkm_input_{crm_type}/{id}/{id_input}.FPKM.tsv",
         fc = "out/capstarrseq/fold_change_{crm_type}/{id}/{id_sample}_over_{id_input}.foldChange.tsv",
-        group = "out/capstarrseq/grouping_crms/capstarrseq/fold_change_{crm_type}/{id}/{id_sample}_over_{id_input}.inflexionPointGroups.tsv"
+        group = "out/capstarrseq/grouping_crms/capstarrseq/fold_change_{crm_type}/{id}/{id_sample}_over_{id_input}.inflexionPointGroups.tsv",
+        pdf = "out/capstarrseq/grouping_crms/capstarrseq/fold_change_{crm_type}/{id}/{id_sample}_over_{id_input}.inflexionPointGroups.pdf",
     output:
-        "out/capstarrseq/merge_all_data_{crm_type}/{id}/{id_sample}_over_{id_input}.allData.tsv"
+        tsv = "out/capstarrseq/merge_all_data_{crm_type}/{id}/{id_sample}_over_{id_input}.allData.tsv",
+        pdf = "out/capstarrseq/merge_all_data_{crm_type}/{id}/{id_sample}_over_{id_input}.inflexionPointGroups.pdf"
     params:
     run:
+        shell("cp {input.pdf} {output.pdf}")
         R("""
         bed_crm <- read.table('{input.bed_crm}', stringsAsFactors=F, sep="\t")
         fpkm <- read.table('{input.fpkm}', stringsAsFactors=F)
@@ -384,7 +393,7 @@ capSTARR-seq_P5424_Input
         #    dat <- data.frame(dat, genes=genes[,4], location=genes[,5])
         #}}
 
-        write.table(dat, file='{output}', quote=F, row.names=F, col.names=T, sep='\t')
+        write.table(dat, file='{output.tsv}', quote=F, row.names=F, col.names=T, sep='\t')
         """)
 
 #localrules: targets, ln_seq_id_to_sample_id_bam

@@ -5,6 +5,8 @@ rule sra_tools_fastq_dump_se_extra:
     Aim:
         I have just realized that my url in src/snakemake/table/spermiogenesis_samples.tsv are broken.
         But fastq-dump is able to directly download sra given an id so let's try it!
+    Note:
+        I have tested to query a SRX instead of a SRR but it does not work.
     Test:
         out/sra-tools/fastq-dump_se/SRR1202037.fastq
         out/sra-tools/fastq-dump_se/SRR2096391.fastq
@@ -12,6 +14,10 @@ rule sra_tools_fastq_dump_se_extra:
     """
     output:
         fastq="out/{tool}{extra}/{srr}.{ext}"
+    log:
+        "out/{tool}{extra}/{srr}.{ext}.log"
+    benchmark:
+        "out/{tool}{extra}/{srr}.{ext}.benchmark.tsv"
     params:
         #outdir="out/{tool}{extra}/",
         extra = params_extra,
@@ -25,9 +31,7 @@ rule sra_tools_fastq_dump_se_extra:
     threads:
         1
     shell:
-        "fastq-dump {params} --outdir `dirname {output.fastq}` {wildcards.srr}"
-
-
+        "fastq-dump {params} --outdir `dirname {output.fastq}` {wildcards.srr} &> {log}"
 
 rule sra_tools_fastq_dump_pe_extra:
     """
@@ -46,12 +50,17 @@ rule sra_tools_fastq_dump_pe_extra:
     """
     output:
         mates=expand("out/{{tool}}{{extra}}/{{srr}}_{mate}.{{ext}}", mate=["1","2"])
+    log:
+        "out/{tool}{extra}/{srr}.{ext}.log"
+    benchmark:
+        "out/{tool}{extra}/{srr}.{ext}.benchmark.tsv"
     params:
         extra= params_extra,
         gz = lambda wildcards: "--gzip" if wildcards.ext == 'fastq.gz' else ""
     wildcard_constraints:
         tool="sra-tools/fastq-dump_pe",
         srr="SRR[0-9]+",
+        #srr="SRR[0-9]+",
         ext="fastq|fastq.gz"
     conda:
         "../envs/sra-tools.yaml"

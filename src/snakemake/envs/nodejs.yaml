@@ -1,0 +1,7 @@
+name:
+  nodejs
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - nodejs

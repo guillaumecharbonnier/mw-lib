@@ -14,6 +14,9 @@ def input_bed_ChromHMM_BinarizeBed_dependencies(wildcards):
     if len(df.columns) ==4:
         paths = paths + df[3].tolist()
 
+    print('debug')
+    print(paths)
+
     return(paths)
 
 rule ChromHMM_BinarizeBed_cellmarkfiletable_chrominfo_extra:
@@ -29,6 +32,8 @@ rule ChromHMM_BinarizeBed_cellmarkfiletable_chrominfo_extra:
         out/ChromHMM/BinarizeBed_b-200_chrominfo-hg19-main-chr_merged-Blueprint-thymic-populations-with-input-as-control-hg19/done
         out/ChromHMM/BinarizeBed_b-200_chrominfo-hg38-main-chr_Blueprint-thymic-populations-with-input-as-control/done
         out/ChromHMM/developBinarizeExtra_chrominfo-mm10_cellmarkfiletable-test-srr.tar.gz
+        out/ChromHMM/BinarizeBed_chrominfo-hg19-main-chr_cellmarkfiletable-hg19-blueprint-tall/done
+
     Doc:
         usage BinarizeBed [-b binsize][-c controldir][-center][-colfields chromosome,start,end[,strand]][-e offsetend][-f foldthresh][-g signalthresh][-n shift][-o outputcontroldir][-p poissonthresh][-peaks][-s offsetstart][-strictthresh][-t outputsignaldir][-u pseudocountcontrol][-w flankwidthcontrol] chromosomelengthfile inputbeddir cellmarkfiletable outputbinarydir
     """

@@ -1,3 +1,16 @@
+"""
+Interested in using some content of a multiple file archive in your workflow?
+Here is how it can be done with snakemake:
+1. Use 'rule tar_xvzf' to get an idea of the whole content of your archive.
+2. Use 'ls' or 'find' to get the list of output files inside a text file:
+    find $EXTRACTED_ARCHIVE -type f > src/snakemake/lists/archive_content.txt
+3. Use this text file to define the output of a dedicated rule for your archive
+4. Adjust paths in archive_content.txt to match the output directory of your dedicated rule.
+sed 's|out/tar/xvzf/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/BLUEPRINT_cell_lines|out/tar/xvzf_Carrillo2017_blueprint_cell_lines|' ../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_blueprint_cell_lines.txt -i
+
+See for example 'rule tar_xvzf_Carrillo2017_roadmap'
+"""
+
 rule tar_xvzf:
     """
     Created:
@@ -7,11 +20,15 @@ rule tar_xvzf:
     Test:
         out/tar/xvzf/input/atlas-latest-data
         out/tar/xvzf/wget/ftp_ncbi/genomes/archive/old_genbank/Eukaryotes/vertebrates_mammals/Homo_sapiens/GRCh38/seqs_for_alignment_pipelines/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.bowtie_index
-
         out/tar/xvzf/wget/ftp_igenome/Saccharomyces_cerevisiae/UCSC/sacCer3/Saccharomyces_cerevisiae_UCSC_sacCer3
         out/tar/xvzf/wget/ftp_igenome/Drosophila_melanogaster/UCSC/dm6/Drosophila_melanogaster_UCSC_dm6
         out/tar/xvzf/wget/http/www.regulatory-genomics.org/wp-content/uploads/2015/07/THOR-tools
         out/tar/xvzf/wget/http/www.cbrc.kaust.edu.sa/hmcan/hmcan-diff_example
+        out/tar/xvzf/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/ROADMAP/done
+        out/tar/xvzf/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/BLUEPRINT_healthy/done
+        out/tar/xvzf/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/BLUEPRINT_cell_lines/done
+        out/tar/xvzf/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/BLUEPRINT_disease/done
+        out/tar/xvzf/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/ENCODE/done
     """
     input:
         "out/{filler}.tar.gz"
@@ -20,9 +37,50 @@ rule tar_xvzf:
     params:
         outdir="out/tar/xvzf/{filler}"
     shell:
-        """
-        tar -xvzf {input} --directory {params.outdir}
-        """
+        "tar -xvzf {input} --directory {params.outdir}"
+
+rule tar_xvzf_Carrillo2017_roadmap:
+    input:
+        "out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/ROADMAP.tar.gz"
+    output:
+        [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_roadmap.txt","r")]
+    shell:
+        "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_roadmap"
+
+rule tar_xvzf_Carrillo2017_encode:
+    input:
+        "out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/ENCODE.tar.gz"
+    output:
+        [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_encode.txt","r")]
+    shell:
+        "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_encode"
+
+rule tar_xvzf_Carrillo2017_blueprint_healthy:
+    input:
+        "out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/BLUEPRINT_healthy.tar.gz"
+    output:
+        [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_blueprint_healthy.txt","r")]
+    shell:
+        "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_blueprint_healthy"
+
+rule tar_xvzf_Carrillo2017_blueprint_cell_lines:
+    input:
+        "out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/BLUEPRINT_cell_lines.tar.gz"
+    output:
+        [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_blueprint_cell_lines.txt","r")]
+    shell:
+        "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_blueprint_cell_lines"
+
+rule tar_xvzf_Carrillo2017_blueprint_disease:
+    input:
+        "out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/BLUEPRINT_disease.tar.gz"
+    output:
+        [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_blueprint_disease","r")]
+    shell:
+        "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_blueprint_disease"
+
+
+
 
 rule tar_xvzf_igenome:
     """

@@ -1,0 +1,10 @@
+name: pbgzip_tabix
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - pbgzip
+  - tabix
+  - coreutils
+

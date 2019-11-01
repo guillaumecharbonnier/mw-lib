@@ -44,8 +44,9 @@ rule fastq_screen_filter:
         fastq = "out/{filler}.fastq.gz",
         conf = "out/sed/edit_fastq_screen_conf/fastq_screen/get_genomes/FastQ_Screen_Genomes/fastq_screen.conf"
     output:
-        "out/{tool}{extra}/{filler}_screen.txt"
-        #touch("out/{tool}{extra}/{filler}/done")
+        txt="out/{tool}{extra}/{filler}_screen.txt",
+        png="out/{tool}{extra}/{filler}_screen.png",
+        html="out/{tool}{extra}/{filler}_screen.html"
     log:
         "out/{tool}{extra}/{filler}/log"
     benchmark:
@@ -61,6 +62,6 @@ rule fastq_screen_filter:
     shell:
         "fastq_screen {params.extra} "
         "--conf {input.conf} --threads {threads} "
-        "--outdir `dirname {output}` {input.fastq} &> {log}"
+        "--outdir `dirname {output.txt}` {input.fastq} &> {log}"
 
 

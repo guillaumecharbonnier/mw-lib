@@ -1,0 +1,8 @@
+name: sradb
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bioconductor-sradb
+

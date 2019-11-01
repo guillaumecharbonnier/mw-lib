@@ -48,3 +48,8 @@ TAR_CONTENT_HMCAN_DIFF_TEST_EXAMPLE=[
     "data/hg19-blacklist.bed",
     "data/GC_profile_100KbWindow_Mapp76_hg19.cnp",
     "control_C2.sam"]
+
+
+#f = open('../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_roadmap.txt', 'r')
+#OUTPUTS_TAR_XVZF_CARILLO2017_ROADMA = f.readlines()
+#f.close()

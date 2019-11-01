@@ -129,25 +129,43 @@ rule ln_srf_abspath:
     shell:
         "ln -srf '{input}' '{output}'"
 
-localrules: ln_broadPeak_to_bed
-rule ln_broadPeak_to_bed:
+localrules: ln_broadpeak_to_bed
+rule ln_broadpeak_to_bed:
     """
-    Created:
+    created:
         2018-11-23 15:00:41
-    Aim:
-        For most usages, broadPeak are like bed so here is a simple alias to be able to use all bed related rules.
-    Test:
-        out/ln/broadPeak_to_bed/gunzip/to-stdout/wget/ftp/hgdownload.cse.ucsc.edu/apache/htdocs/goldenPath/hg19/encodeDCC/wgEncodeBroadHistone/wgEncodeBroadHistoneOsteoH3k04me3Pk.bed
+    aim:
+        for most usages, broadpeak are like bed so here is a simple alias to be able to use all bed related rules.
+    test:
+        out/ln/broadpeak_to_bed/gunzip/to-stdout/wget/ftp/hgdownload.cse.ucsc.edu/apache/htdocs/goldenpath/hg19/encodedcc/wgencodebroadhistone/wgencodebroadhistoneosteoh3k04me3pk.bed
     """
     input:
-        "out/{filler}.broadPeak"
+        "out/{filler}.broadpeak"
     output:
-        "out/ln/broadPeak_to_bed/{filler}.bed"
+        "out/ln/broadpeak_to_bed/{filler}.bed"
     conda:
         "../envs/coreutils.yaml"
     shell:
         "ln -srf {input} {output}"
 
+localrules: ln_bed_to_bg
+rule ln_bed_to_bg:
+    """
+    created:
+        2019-10-25 00:18:02
+    Aim:
+        Expected use as a workaround for Bedtools unionbedg is not working.
+        FALSE: Bedtools unionbedg correctly handle header only if input files are bedgraph (.bg) and not bed.
+    test:
+    """
+    input:
+        "out/{filler}.bed"
+    output:
+        "out/ln/bed_to_bg/{filler}.bg"
+    conda:
+        "../envs/coreutils.yaml"
+    shell:
+        "ln -srf {input} {output}"
 
 localrules: ln_pe_remove_mate_prefix
 rule ln_pe_remove_mate_prefix:
