@@ -29,6 +29,40 @@ rule awk_extract_cluster:
         awk '$13 == "cluster_{wildcards.cluster}"' {input} > {output}
         """
 
+rule awk_collapse_Carrillo2017_11_states_to_2:
+    """
+    Aim:
+        Take a segmentation file from ChromHMM and collapse the 11 states into 2 states
+    Note:
+        Segmentation model correspond to:
+        1   I
+        2   
+        3
+        4
+        5
+        6
+        7
+        8
+        9
+        10
+        11
+    Test:
+        out/awk/collapse_Carrillo2017_11_states_to_2/ChromHMM/MakeSegments_blueprint_tall_samples_into_chromdet_original_paper/T11C_11_segments.bed
+    """
+    input:
+        "out/{filler}.bed"
+    output:
+        "out/awk/collapse_Carrillo2017_11_states_to_2/{filler}.bed"
+    shell:
+        """
+        awk '
+            BEGIN{{FS=OFS="\\t"}}
+            {{
+            if ($4 == "E10") {{ $4 = "A" }}
+            else {{ $4 = "I" }}
+            print $0 }}
+        ' {input} > {output}
+        """
 
 rule awk_tfbsConsSites_to_gtf:
     """

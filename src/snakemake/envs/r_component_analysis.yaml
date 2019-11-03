@@ -26,4 +26,6 @@ dependencies:
   - bioconductor-rtracklayer
   - r-devtools
   - r-roxygen2
+  - r-iotools
+  - r-mltools
 

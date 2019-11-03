@@ -1,0 +1,8 @@
+name:
+  datamash
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - datamash
+
