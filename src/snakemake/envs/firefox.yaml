@@ -1,0 +1,7 @@
+name:
+  firefox
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - firefox
