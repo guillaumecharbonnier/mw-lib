@@ -1,0 +1,21 @@
+name: 
+  indel_dev
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - guillaumecharbonnier
+dependencies:
+  - bowtie2
+  - bowtie
+  - bedtools
+  - samtools
+  - edena
+  - perl
+  - gawk
+  - coreutils
+  - blat      # no idea which one is the best 
+  - ucsc-blat # between these 4 tools.
+  - razers3   # Test to do.
+  - pblat     # this one needs guillaumecharbonnier channel
+
