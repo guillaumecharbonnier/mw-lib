@@ -15,7 +15,7 @@ rule r_greatr_yaml_new:
         yaml = "out/{filler}.yaml",
         bed_list = lambda wildcards: eval(config['ids'][wildcards.bed_list_id])
     output:
-        done=touch("out/r/greatr_{bed_list_id}/{filler}/done")
+        done=touch("out/r/new_greatr_{bed_list_id}/{filler}/done")
     conda:
         "../envs/r_greatr.yaml"
     shell:
@@ -64,23 +64,26 @@ rule r_greatr_extra:
             out/r/greatr_bed-hg19-h3k27ac-on-all-cpg-hypometh-call-clusters/done
             out/r/greatr_bed-hg19-test-coord-cor-with-mca-dims/done
             out/r/greatr_bed-hg19-atac-thymus/done
+        Note: I moved the "bed-" prefix from output to wildcard bed_list_id so examples above may only work in bed_list_id is modified in accordance.
+            out/r/greatr_bed-hg19-active-enhancers-thymopoiesis-tall-samples/done
+            out/r/greatr_bed-hg19-active-enhancers-interesting-classes/done
     """
     input:
         bed_list = lambda wildcards: eval(config['ids'][wildcards.bed_list_id])
     output:
         #tables="out/r/great_heatmap{extra}_bed-{bed_list_id}/enrichment_tables.Rdata"
-        done=touch("out/{tool}{extra}_bed-{bed_list_id}/done"),
-        pdf=expand("out/{{tool}}{{extra}}_bed-{{bed_list_id}}/{plot}.pdf", plot=["ont_all__met_filters"])
+        done=touch("out/{tool}{extra}_{bed_list_id}/done"),
+        pdf=expand("out/{{tool}}{{extra}}_{{bed_list_id}}/{plot}.pdf", plot=["multiple_samples_clustermTermsBy_Binom_Fold_Enrichment/heatmaps/ont_all__met_all"])
     params:
         extra = params_extra
     wildcard_constraints:
         tool = "r/greatr",
-        extra = "[^yaml].*"
+        #extra = "[^yaml].*"
     conda:
         "../envs/r_greatr.yaml"
     shell:
         """
-        FILES=`echo {input.beds} | sed 's/ /,/g'`
+        FILES=`echo {input.bed_list} | sed 's/ /,/g'`
         OUTDIR=`dirname {output.done}`
         echo "OUTDIR: $OUTDIR"
         greatr -f $FILES -o $OUTDIR {params.extra}

@@ -1,9 +1,9 @@
 name:
-  r_greatr
+  bowtie
 channels:
   - conda-forge
   - bioconda
   - defaults
-  - guillaumecharbonnier
 dependencies:
-  - r-greatr
+  - bowtie
+  - coreutils

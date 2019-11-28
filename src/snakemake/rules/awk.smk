@@ -29,39 +29,63 @@ rule awk_extract_cluster:
         awk '$13 == "cluster_{wildcards.cluster}"' {input} > {output}
         """
 
-rule awk_collapse_Carrillo2017_11_states_to_2:
+rule awk_collapse_Carrillo2017_11_states_to_5:
     """
     Aim:
         Take a segmentation file from ChromHMM and collapse the 11 states into 2 states
     Note:
         Segmentation model correspond to:
-        1   I
-        2   
-        3
-        4
-        5
-        6
-        7
-        8
-        9
-        10
-        11
+        1   T
+        2   T
+        3   H
+        4   H
+        5   H
+        6   H
+        7   R
+        8   E
+        9   E
+        10  A
+        11  A
     Test:
-        out/awk/collapse_Carrillo2017_11_states_to_2/ChromHMM/MakeSegments_blueprint_tall_samples_into_chromdet_original_paper/T11C_11_segments.bed
+        out/awk/collapse_Carrillo2017_11_states_to_5/ChromHMM/MakeSegments_blueprint_tall_samples_into_chromdet_original_paper/T11C_11_segments.bed
     """
     input:
         "out/{filler}.bed"
     output:
-        "out/awk/collapse_Carrillo2017_11_states_to_2/{filler}.bed"
+        "out/awk/collapse_Carrillo2017_11_states_to_5/{filler}.bed"
     shell:
         """
         awk '
             BEGIN{{FS=OFS="\\t"}}
             {{
-            if ($4 == "E10") {{ $4 = "A" }}
-            else {{ $4 = "I" }}
+            if ($4 == "E1" || $4 == "E2") {{ $4 = "T" }}
+            if ($4 == "E3" || $4 == "E4" || $4 == "E5" || $4 == "E6") {{ $4 = "H" }}
+            if ($4 == "E7") {{ $4 = "R" }}
+            if ($4 == "E8" || $4 == "E9") {{ $4 = "E" }}
+            if ($4 == "E10" || $4 == "E11") {{ $4 = "A" }}
             print $0 }}
         ' {input} > {output}
+        """
+
+rule awk_merge_book_ended_features_in_bed_if_same_name:
+    """
+    From:
+        https://bioinformatics.stackexchange.com/questions/3523/bed-file-merge-book-end-features-only-if-same-name-in-column-4
+    Test:
+        out/awk/merge_book_ended_features_in_bed_if_same_name/awk/collapse_Carrillo2017_11_states_to_5/ChromHMM/MakeSegments_blueprint_tall_samples_into_chromdet_original_paper/T11C_11_segments.bed
+    """
+    input:
+        "out/{filler}"
+    output:
+        "out/awk/merge_book_ended_features_in_bed_if_same_name/{filler}"
+    shell:
+        """
+        awk 'BEGIN{{OFS="\t"}}
+        {{
+            if($1==lchrom && $4==lname && $2 == lend) {{lend = $3}}
+            else{{
+                if(lchrom) {{print lchrom, lstart, lend, lname;}}; lchrom=$1; lstart=$2; lend=$3; lname=$4}}
+        }}END{{print lchrom, lstart, lend, lname}}' {input} > {output}
         """
 
 rule awk_tfbsConsSites_to_gtf:

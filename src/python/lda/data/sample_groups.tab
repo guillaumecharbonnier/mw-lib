@@ -1,0 +1,49 @@
+CD4+_Naive_1	peripheral CD4
+CD4+_Naive_2	peripheral CD4
+CD8+_Naive_1	peripheral CD8
+MONO_CB_1	monocyte
+MONO_CB_2	monocyte
+MONO_PB	monocyte
+NE1_CB	neutrophile
+NE1_PB	neutrophile
+NE2_CB	neutrophile
+NE2_PB	neutrophile
+NE3_PB	neutrophile
+IM_1	macrophage
+IM_2	macrophage
+IM_3	macrophage
+B_VB_1	peripheral B-cell
+B_VB_2	peripheral B-cell
+AAM	macrophage
+B_TGC	tonsil B-cell
+B_VB_3	peripheral B-cell
+B_VB_4	peripheral B-cell
+B_TGC_1	tonsil B-cell
+B_TGC_2	tonsil B-cell
+MONO_ENCODE_1	monocyte
+MONO_ENCODE_2	monocyte
+CD4+_CD25+_CD127-_Treg	peripheral CD4
+CD4+_CD25-_CD45RA+_Naive 	peripheral CD4
+CD4+_CD25-_CD45RO+_Memory	peripheral CD4
+CD4+_CD25-_IL17+_PMA-Ionomycin	peripheral CD4
+CD4+_CD25int_CD127+_Tmem_1	peripheral CD4
+CD4+_CD25int_CD127+_Tmem_2	peripheral CD4
+CD4+_CD25-	peripheral CD4
+CD4+_Memory_1	peripheral CD4
+CD4+_Memory_2	peripheral CD4
+CD4+_Naive_3	peripheral CD4
+CD4+_Naive_4	peripheral CD4
+CD8+_Memory	peripheral CD8
+CD8+_Naive_2	peripheral CD8
+CD8+_Naive_3	peripheral CD8
+HSC_1	hematopoietic stem cell
+HSC_2	hematopoietic stem cell
+HSC_3	hematopoietic stem cell
+MONO_ROADMAP	monocyte
+CD34	thymic CD34
+EC	thymic EC
+LC	thymic LC
+SP4	thymic CD4
+SP8	thymic CD8
+
+

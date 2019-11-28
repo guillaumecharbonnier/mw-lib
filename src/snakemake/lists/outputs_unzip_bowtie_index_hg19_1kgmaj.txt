@@ -1,0 +1,7 @@
+out/unzip/d_bowtie_index_hg19_1kgmaj/hg19_1kgmaj.1.ebwt
+out/unzip/d_bowtie_index_hg19_1kgmaj/hg19_1kgmaj.2.ebwt
+out/unzip/d_bowtie_index_hg19_1kgmaj/hg19_1kgmaj.3.ebwt
+out/unzip/d_bowtie_index_hg19_1kgmaj/hg19_1kgmaj.4.ebwt
+out/unzip/d_bowtie_index_hg19_1kgmaj/hg19_1kgmaj.rev.1.ebwt
+out/unzip/d_bowtie_index_hg19_1kgmaj/hg19_1kgmaj.rev.2.ebwt
+out/unzip/d_bowtie_index_hg19_1kgmaj/README.md

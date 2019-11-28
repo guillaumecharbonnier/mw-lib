@@ -1,0 +1,3 @@
+id	path
+ebwt-hg19	expand("out/unzip/d_bowtie_index_hg19_1kgmaj/hg19_1kgmaj.{part}.ebwt", part=["1","2","3","4","rev.1","rev.2"])
+

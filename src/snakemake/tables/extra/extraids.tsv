@@ -26,6 +26,8 @@ wget/	hg38-knownGene.bed	'https://genome.ucsc.edu/cgi-bin/hgTables?hgsid=7099735
 wget/	hg38-GENCODE-knownGene.bed	'https://genome.ucsc.edu/cgi-bin/hgTables?hgsid=709973581_ZCGTPs1mYBVNXPJvU9o0TABHdvIj&boolshad.hgta_printCustomTrackHeaders=0&hgta_ctName=tb_knownGene&hgta_ctDesc=table+browser+query+on+knownGene&hgta_ctVis=pack&hgta_ctUrl=&fbQual=whole&fbUpBases=200&fbExonBases=0&fbIntronBases=0&fbDownBases=200&hgta_doGetBed=get+BED'
 phantompeakqualtools/bam_ctrl	idr	-npeak=300000 -savr -savp
 mysql/	ucsc-cpgIslandExt-mm10.bed	--user=genome -N --host=genome-mysql.cse.ucsc.edu -A -D mm10 -e "select chrom,chromStart,chromEnd,name,length,cpgNum,gcNum,perCpg,perGc,obsExp from cpgIslandExt"
+mysql/	ucsc-refgene-hg19.tsv	--user=genome -N --host=genome-mysql.cse.ucsc.edu -A -D hg19 -e "select * from refGene"
+mysql/	ucsc-desc-refgene-hg19.tsv	--user=genome -N --host=genome-mysql.cse.ucsc.edu -A -D hg19 -e "desc refGene"
 star/se	standard	--outFilterMismatchNoverLmax 0.08 --outFilterMultimapNmax 1 --genomeLoad NoSharedMemory
 star/pe	standard	--outFilterMismatchNoverLmax 0.08 --outFilterMultimapNmax 1 --genomeLoad NoSharedMemory
 sed/	rm-chr-in-fa	's/^>chr/>/'

@@ -12,10 +12,10 @@ deepTools/plotHeatmap	--colorList	blueLightyellowRed	"blue,lightyellow,red"
 deepTools/plotHeatmap	--colorList	cornflowerblueLightyellowIndianred	"cornflowerblue,lightyellow,indianred"
 deepTools/plotHeatmap	--colorList	whiteIndianred	"white,indianred"
 deepTools/plotHeatmap	--colorList	blueYRed	"blue,y,red"
-deepTools/plotHeatmap	--whatToShow	phc	'plot, heatmap and colorbar'
+deepTools/plotHeatmap	--whatToShow	cph	'plot, heatmap and colorbar'
 deepTools/plotHeatmap	--whatToShow	ph	'plot and heatmap'
 deepTools/plotHeatmap	--whatToShow	h	'heatmap only'
-deepTools/plotHeatmap	--whatToShow	hc	'heatmap and colorbar'
+deepTools/plotHeatmap	--whatToShow	ch	'heatmap and colorbar'
 deepTools/plotHeatmap	--xAxisLabel	empty	' '
 deepTools/plotHeatmap	--xAxisLabel	tss	'TSS'
 deepTools/plotHeatmap	--xAxisLabel	gene-distance-bp	'gene distance'

@@ -10,6 +10,8 @@ expand("out/bedtools/genomecov/bed/danpos/dtriple_v2/samtools/merge/samtools/sam
 
         out/bedtools/intersect_-wa_-u_-b_hg38-fastkd1-run229-peaks-merge/gunzip/to-stdout/chromstar/fastkd1_h4k5ac_run229_g3_g5_as_ko/BROWSERFILES/mode-differential_mark-H4K5ac_binsize1000_stepsize500_combinations.bed
         bedtools intersect -a out/macs2/callpeak_--broad/samtools/index/samtools/sort/samtools/view_sam_to_bam_-q_30/bowtie2/se_mm10/sickle/se_-t_sanger_-q_30/sra-tools/fastq-dump_se/SRR3126243_over_SRR3126242_peaks.bed -b out/samtools/index/samtools/sort/samtools/view_sam_to_bam_-q_30/bowtie2/se_mm10/sickle/se_-t_sanger_-q_30/sra-tools/fastq-dump_se/SRR3126243.bam
+
+        out/bedtools/intersect_-wa_-b_bed-hg19-active-enhancers-thymopoiesis-tall-samples/sort/_-k1,1_-k2,2n/cat/cat-hg19-active-enhancers-thymopoiesis-tall-samples.bed
     """
     input:
         features_a = "out/{filler}.{ext}",

@@ -2,6 +2,8 @@ rule bowtie2_single_end_extra:
     """
     Modified:
         2017-05-06 14:53:46 - Tool is now installed with conda.
+    Doc:
+        http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml
     Test:
         out/bowtie2/se_mm10/sra-tools/fastq-dump/SRR1202037.sam
         out/bowtie2/se_vsl_mm10/sra-tools/fastq-dump/SRR1202037.sam

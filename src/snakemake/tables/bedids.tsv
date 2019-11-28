@@ -6,6 +6,7 @@ bed-hg19-main-chr	out/awk/chromInfo_to_bed3/awk/extract_main_chr/gunzip/to-stdou
 bed-GRCm38-main-chr	out/sed/remove_chr/awk/chromInfo_to_bed3/awk/extract_main_chr/gunzip/to-stdout/rsync/ucsc/goldenPath/mm10/database/chromInfo.bed
 bed-mm10-main-chr	out/awk/chromInfo_to_bed3/awk/extract_main_chr/gunzip/to-stdout/rsync/ucsc/goldenPath/mm10/database/chromInfo.bed
 bed-mm9-main-chr	out/awk/chromInfo_to_bed3/awk/extract_main_chr/gunzip/to-stdout/rsync/ucsc/goldenPath/mm9/database/chromInfo.bed
+bed-hg19-refgene-exons	["out/perl/extract_exons/refgene-hg19.bed"]
 bed-hg38-atac-peaks-from-wilson-cd34-ec	out/ln/alias/experiments/hg38_atac_peaks_from_wilson/CD34-EC.bed
 # does not work because of error 2002 :(	
 bed-mm10-genes	out/mysql/ucsc_get_ensGene_D-mm10/ensGene.bed

@@ -2,9 +2,9 @@ rule unzip_d:
     """
     Created:
         2017-02-20 15:08:04
-    Old test:
-        "out/unzip/wget/ftp_ccb_jhu/pub/data/bowtie2_indexes/mm9"
-        
+    Test:
+        "out/unzip/d/wget/ftp_ccb_jhu/pub/data/bowtie2_indexes/mm9/done"
+        "out/unzip/d/wget/ftp/ftp.ccb.jhu.edu/pub/data/bowtie_indexes/hg19_1kgmaj_bt/done
     """
     input:
         "out/{filler}.zip"
@@ -16,6 +16,17 @@ rule unzip_d:
         """
         unzip {input} -d {params.outdir}
         """
+
+
+rule unzip_d_bowtie_index_hg19_1kgmaj:
+    input:
+        "out/wget/ftp/ftp.ccb.jhu.edu/pub/data/bowtie_indexes/hg19_1kgmaj_bt.zip"
+    output:
+         [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_unzip_bowtie_index_hg19_1kgmaj.txt","r")]
+    params:
+        outdir="out/unzip/d_bowtie_index_hg19_1kgmaj"
+    shell:
+        "unzip {input} -d {params.outdir}"
 
 rule unzip_d_picard_tools_legacy:
     """

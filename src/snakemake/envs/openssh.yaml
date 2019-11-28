@@ -1,0 +1,7 @@
+name:
+    openssh
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - openssh

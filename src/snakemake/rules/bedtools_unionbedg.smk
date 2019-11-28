@@ -14,6 +14,7 @@ rule bedtools_unionbedg:
     Test:
         out/bedtools/unionbedg/bed-hg19-segments-merged-thymic-samples.bed
         out/bedtools/unionbedg_-header/bed-hg19-segments-blueprint-tall-samples.bg
+        out/bedtools/unionbedg_-header/bed-hg19-5-states-collapsed-segments-thymopoiesis-tall-samples.bg
     """
     input:
         bed_list = lambda wildcards: eval(config['ids'][wildcards.bg_list_id])

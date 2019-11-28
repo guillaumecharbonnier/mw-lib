@@ -8,6 +8,26 @@ rule coreutils_format_list_of_rules:
         ls -1 ../mw/src/snakemake/rules/ | sed 's/.smk//' > {output}
         """
 
+rule coreutils_make ucsc_table_with_header:
+    """
+    Created:
+        2019-11-28 13:13:56
+    Test:
+        out/coreutils/make_ucsc_table_with_header/refgene-hg19.tsv
+    """
+    input:
+        table="out/mysql/ucsc-{id}",
+        desc="out/mysql/ucsc-desc-{id}"
+    output:
+        "out/coreutils/make_ucsc_table_with_header/{id}"
+    conda:
+        "../envs/coreutils.yaml"
+    shell:
+        """
+        cut -f1 {input.desc} | paste -s > {output}
+        cat {input.table} >> {output}
+        """
+
 rule coreutiles_yaml_to_gprofiler_list:
     """
     Created:

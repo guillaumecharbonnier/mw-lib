@@ -12,17 +12,14 @@ rule python_xlsx2tsv:
         src/python/xlsx2tsv.py
     """
     input:
-        xlsx2tsv="src/python/xlsx2tsv.py",
+        xlsx2tsv="../mw-lib/src/python/xlsx2tsv.py",
         xlsx="out/{filler}.xlsx"
     output:
         tsv="out/python/xlsx2tsv/{filler}.tsv"
     conda:
         "../envs/openpyxl.yaml"
     shell:
-        """
-        {input.xlsx2tsv} {input.xlsx} > {output.tsv}
-        """
-
+        "{input.xlsx2tsv} {input.xlsx} > {output.tsv}"
 
 rule python_xls2tsv:
     """
@@ -35,14 +32,12 @@ rule python_xls2tsv:
         out/python/xls2tsv/wget/https/media.nature.com/original/nature-assets/ng/journal/v47/n10/extref/ng.3385-S4.tsv
     """
     input:
-        xls2tsv="src/python/xls2tsv.py",
+        xls2tsv="../mw-lib/src/python/xls2tsv.py",
         xls="out/{filler}.xls"
     output:
         tsv="out/python/xls2tsv/{filler}.tsv"
     conda:
         "../envs/xlrd.yaml"
     shell:
-        """
-        {input.xls2tsv} {input.xls} > {output.tsv}
-        """
+        "{input.xls2tsv} {input.xls} > {output.tsv}"
 

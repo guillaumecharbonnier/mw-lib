@@ -15,6 +15,8 @@ wildcard_constraints:
     bw_id  = "bw-[a-zA-Z0-9-]+",
     gff_id = "gff-[a-zA-Z0-9-]+",
     gtf_id = "gtf-[a-zA-Z0-9-]+",
+    ebwt_id = "ebwt-[a-zA-Z0-9-]+",
+    ref_id = "[a-zA-Z0-9-]+",
     chrominfo_id  = "chrominfo-[a-zA-Z0-9-]+",
     fa_genome_id = "fa-[a-zA-Z0-9-]+",
     chain_id = "chain-[a-zA-Z0-9-]+",

@@ -1,2 +1,3 @@
 id	path
 2bit-mm10	out/rsync/_-aP/hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/mm10.2bit
+2bit-hg19-chr1	out/ucsc/faToTwoBit/gunzip/to-stdout/wget/http/hgdownload.cse.ucsc.edu/goldenPath/hg19/chromosomes/chr1.2bit

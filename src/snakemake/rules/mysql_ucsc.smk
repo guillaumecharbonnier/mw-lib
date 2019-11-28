@@ -6,6 +6,7 @@ rule mysql_extra:
         Use mysql to download various tabulated files
     Test:
         out/mysql/ucsc-cpgIslandExt-mm10.bed
+        out/mysql/ucsc-hg19.tsv
     """
     output:
         "out/{tool}{extra}"

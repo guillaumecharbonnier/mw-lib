@@ -28,4 +28,5 @@ dependencies:
   - r-roxygen2
   - r-iotools
   - r-mltools
+  - r-dbscan
 

@@ -78,7 +78,7 @@ rule tectonic_softlink:
         tectonic --outdir $OUTDIR -p {input.tex}) &> {log}
         """
 
-rule tectonic_softlink_no_dep:
+rule tectonic_softlink_nodep:
     """
     Created:
         2018-03-06 14:18:05
@@ -91,7 +91,7 @@ rule tectonic_softlink_no_dep:
     Test:
         "out/tectonic/beamer/nut_spike.pdf"
     """
-    input:
+    params:
         tex="out/{filler}.tex"
     output:
         pdf="out/tectonic_nodep/{filler}.pdf",
@@ -107,12 +107,11 @@ rule tectonic_softlink_no_dep:
         ln -srf doc/ $OUTDIR/doc
         ln -srf inp/ $OUTDIR/inp
         ln -srf out/ $OUTDIR/out
-        cp {input.tex} {output.tex}
+        cp {params.tex} {output.tex}
         cd $OUTDIR
         tectonic `basename {output.tex}`
-
-        #{input.tectonic} --outdir $OUTDIR {input.tex}
         """
+        #{input.tectonic} --outdir $OUTDIR {input.tex}
 
 rule tectonic_hardlink:
     """
