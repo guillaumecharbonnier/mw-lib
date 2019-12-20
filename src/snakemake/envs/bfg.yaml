@@ -1,0 +1,7 @@
+name:
+  bfg
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - bfg
