@@ -14,9 +14,6 @@ def input_bed_ChromHMM_BinarizeBed_dependencies(wildcards):
     if len(df.columns) ==4:
         paths = paths + df[3].tolist()
 
-    print('debug')
-    print(paths)
-
     return(paths)
 
 rule ChromHMM_BinarizeBed_cellmarkfiletable_chrominfo_extra:
@@ -106,7 +103,7 @@ rule ChromHMM_LearnModel_extra:
     conda:
         "../envs/chromhmm.yaml"
     threads:
-        16
+        MAX_THREADS
     shell:
         """
         OUTPUTDIR=`dirname {output.model}`
@@ -341,7 +338,7 @@ rule ChromHMM_LearnModel_numstates_assembly:
     benchmark:
         "log/snakemake/benchmark/out/ChromHMM{_custom_features}/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}.txt"
     threads:
-        16
+        MAX_THREADS
     shell:
         """
         {input.chromhmm} -Xmx32768m \
@@ -382,7 +379,7 @@ rule ChromHMM_LearnModel_numstates_assembly_seed:
     benchmark:
         "log/snakemake/benchmark/out/ChromHMM/LearnModel_{cellmarkfiletable_id}_numstates-{numstates}_assembly-{assembly}_seed-{seed}.txt"
     threads:
-        16
+        MAX_THREADS
     shell:
         """
         {input.chromhmm} -Xmx{params.memory} \

@@ -1,0 +1,8 @@
+name:
+  edena
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - edena

@@ -28,6 +28,18 @@ rule unzip_d_bowtie_index_hg19_1kgmaj:
     shell:
         "unzip {input} -d {params.outdir}"
 
+rule unzip_d_bowtie_index_hg19:
+    input:
+        #"out/wget/ftp/ftp.ccb.jhu.edu/pub/data/bowtie_indexes/hg19_{1kgmaj}_bt.zip"
+        "out/wget/ftp/ftp.ccb.jhu.edu/pub/data/bowtie_indexes/hg19.ebwt.zip"
+    output:
+         #[x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_unzip_bowtie_index_hg19_1kgmaj.txt","r")]
+         expand("out/unzip/d_bowtie_index_hg19/hg19.{part}.ebwt", part=["1","2","3","4","rev.1","rev.2"])
+    params:
+        outdir="out/unzip/d_bowtie_index_hg19"
+    shell:
+        "unzip {input} -d {params.outdir}"
+
 rule unzip_d_picard_tools_legacy:
     """
     Created:

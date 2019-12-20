@@ -72,8 +72,7 @@ rule samtools_view_bam_to_sam_extra:
     conda:
         "../envs/samtools.yaml"
     shell:
-        "samtools view -h {params.extra} {input.bam} -o {output.sam} &> {log}"
-
+        "samtools view {params.extra} {input.bam} -o {output.sam} &> {log}"
 
 rule samtools_view_bam_to_txt_extra:
     """

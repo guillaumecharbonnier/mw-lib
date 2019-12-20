@@ -14,6 +14,26 @@ rule awk_extract_rows_matching_col_content:
         awk '${wildcards.col} == "{wildcards.content}"' {input} > {output}
         """
 
+rule awk_trim_sam_query_name:
+    """
+    Created:
+        2019-11-29 11:14:07
+    Aim:
+        SAM format limit query name to 254 characters.
+        Sometimes this query can overcome this limit, 
+        especially using Metaworkflow paradigm.
+        This rule trim the query to make sam file
+        in compliance with the standard.
+    """
+    input:
+        "out/{filler}.sam"
+    output:
+        "out/awk/trim_sam_query_name/{filler}.sam"
+    shell:
+        """
+        awk 'BEGIN{{OFS=FS="\\t"}} {{$1=substr($1,1,250)}}1' {input} > {output}
+        """
+
 rule awk_extract_cluster:
     """
     out/awk/extract_cluster/deepTools/plotHeatmap_--kmeans_40_--boxAroundHeatmaps_no/deepTools/computeMatrix_reference-point_--referencePoint_center_-bs_5_-b_150_-a_150_bed-mm10-nuc-prcs-maxfuzz-40-minsmt-30-only-high-qual-fragments_bw-mnase-prcs-naked-nuc-ss/1.bed

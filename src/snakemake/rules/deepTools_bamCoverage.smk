@@ -25,8 +25,7 @@ rule deepTools_bamCoverage_extra:
         extra = params_extra
     conda:
         "../envs/deeptools.yaml"
-    threads:
-        16
+    threads: MAX_THREADS
     shell:
         "bamCoverage --bam {input.bam} --numberOfProcessors {threads} {params.extra} -o {output.bw} &> {log}"
 
@@ -55,8 +54,7 @@ rule deepTools_bamCoverage_binSize_minMappingQuality_legacy:
     wildcard_constraints:
         binSize="[0-9]+",
         minMappingQuality="[0-9]+"
-    threads:
-        16
+    threads: MAX_THREADS
     shell:
         """
         {input.bamCoverage} \
@@ -85,8 +83,7 @@ rule deepTools_bamCoverage_binSize_minMappingQuality_normalizeUsingRPKM_legacy:
     wildcard_constraints:
         binSize="[0-9]+",
         minMappingQuality="[0-9]+"
-    threads:
-        16
+    threads: MAX_THREADS
     shell:
         """
         {input.bamCoverage} \
@@ -116,8 +113,7 @@ rule deepTools_bamCoverage_binSize_extendReads_legacy:
     wildcard_constraints:
         binSize="[0-9]+",
         extendReads="|[0-9]+", # empty argument is for paired-end data.
-    threads:
-        16
+    threads: MAX_THREADS
     shell:
         """
         {input.bamCoverage}\
@@ -149,8 +145,7 @@ rule deepTools_bamCoverage_binSize_normalizeUsing_extendReads_legacy:
         binSize="[0-9]+",
         normalizeUsing="RPKM|CPM|BPM|RPGC|None",
         extendReads="|[0-9]+", # empty argument is for paired-end data.
-    threads:
-        16
+    threads: MAX_THREADS
     shell:
         """
         {input.bamCoverage} \
@@ -185,8 +180,7 @@ rule deepTools_bamCoverage_binSize_minMappingQuality_normalizeUsingRPKM_extendRe
         binSize="[0-9]+",
         minMappingQuality="[0-9]+",
         extendReads="|[0-9]+", # empty argument is for paired-end data.
-    threads:
-        16
+    threads: MAX_THREADS
     shell:
         """
         {input.bamCoverage} \
@@ -224,8 +218,7 @@ rule deepTools_version_bamCoverage_binSize_minMappingQuality_normalizeUsingRPKM_
         binSize="[0-9]+",
         minMappingQuality="[0-9]+",
         extendReads="|[0-9]+", # empty argument is for paired-end data.
-    threads:
-        16
+    threads: MAX_THREADS
     shell:
         """
         export PATH="opt/miniconda/envs/deeptools_{wildcards.version}/bin:$PATH"

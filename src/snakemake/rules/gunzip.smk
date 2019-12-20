@@ -10,13 +10,17 @@ rule gunzip_extra:
         "out/{filler}.gz"
     output:
         "out/{tool}{extra}/{filler}"
+    log:
+        "out/{tool}{extra}/{filler}.log"
+    benchmark:
+        "out/{tool}{extra}/{filler}.benchmark.tsv"
     params:
         extra = params_extra
     wildcard_constraints:
         tool="gunzip/",
         #extra= Maybe I should add here exclusion if extra start with 'merge' so other rules below are not ambiguous
     shell:
-        "gunzip {params.extra} {input} > {output}"
+        "gunzip {params.extra} {input} > {output} 2> {log}"
 
 rule gzip_extra:
     """
@@ -29,13 +33,17 @@ rule gzip_extra:
         "out/{filler}"
     output:
         "out/{tool}{extra}/{filler}.gz"
+    log:
+        "out/{tool}{extra}/{filler}.log"
+    benchmark:
+        "out/{tool}{extra}/{filler}.benchmark.tsv"
     params:
         extra = params_extra
     wildcard_constraints:
         tool="gzip/",
         #extra= Maybe I should add here exclusion if extra start with 'merge' so other rules below are not ambiguous
     shell:
-        "gzip {params.extra} {input} > {output}"
+        "gzip {params.extra} {input} > {output} 2> {log}"
 
 rule gunzip_merge_lanes_nextseq500_paired_end_legacy:
     """

@@ -1,0 +1,13 @@
+# This environment can not be solved at this time:
+# 2019-12-19 17:25:24 
+# ResolvePackageNotFound: 
+#   - boost[version='>=1.57.0,<1.57.1.0a0']
+name:
+  gapfiller
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - gapfiller
+

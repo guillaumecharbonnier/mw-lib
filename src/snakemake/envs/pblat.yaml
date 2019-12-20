@@ -1,0 +1,9 @@
+name:
+  pblat
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - guillaumecharbonnier
+dependencies:
+  - pblat

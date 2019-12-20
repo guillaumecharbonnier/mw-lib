@@ -21,7 +21,7 @@ rule samtools_sort_extra:
     wildcard_constraints:
         tool="samtools/sort"
     threads:
-        16 # -@, --threads INT    Number of additional threads to use [0] TODO: Check if I need to give {threads}-1 to samtools '-@'.
+        MAX_THREADS
     conda:
         "../envs/samtools.yaml"
     shell:

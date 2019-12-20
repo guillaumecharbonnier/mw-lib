@@ -1,0 +1,8 @@
+name:
+  scalpel
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - scalpel

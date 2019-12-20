@@ -40,7 +40,9 @@ rule dear:
     Doc:
         https://github.com/wdecoster/DEA.R
     Test:
-        out/dear/dear-hg38-casero2016-thy3-thy4_gtf-hg38-ensembl_bam-hg38-casero2016-thy3-thy4/done
+        out/dear/dear-hg38-casero2016-thy3-thy4_gtf-hg38-ensembl_bam-hg38-casero2016-thy3-thy4/DESeq2_CONvsTRT_DEG.txt
+        out/dear/dear-hg38-hhex_gtf-hg38-ensembl_bam-hg38-hhex/DESeq2_CONvsTRT_DEG.txt
+        out/dear/dear-hg38-hhex-sep-trt_gtf-hg38-ensembl_bam-hg38-hhex/DESeq2_CONvsTRT_DEG.txt
     """
     input:
         dear="../DEA.R/DEA/DEA.R",
@@ -49,9 +51,11 @@ rule dear:
         gtf = lambda wildcards: config['ids'][wildcards.gtf_id]
     output:
         expand("out/dear/{{dear_id}}_{{gtf_id}}_{{bam_list_id}}/{file}", file=DEAR_OUTFILES)
+    log:
+        "out/dear/{dear_id}_{gtf_id}_{bam_list_id}/log"
     params:
         outdir="out/dear/{dear_id}_{gtf_id}_{bam_list_id}"
     conda:
         "../envs/dear.yaml"
     shell:
-        "{input.dear} {input.tsv} {input.gtf} --output {params.outdir}"
+        "{input.dear} {input.tsv} {input.gtf} --output {params.outdir} &> {log}"

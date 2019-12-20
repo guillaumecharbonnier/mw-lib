@@ -3,6 +3,9 @@ name:
 channels:
   - bioconda
   - conda-forge
-  - nodefaults
+  - defaults
 dependencies:
   - picard
+  - coreutils # need for ln -r
+  - samtools # nedd for samtools faidx
+

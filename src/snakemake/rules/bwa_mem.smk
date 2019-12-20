@@ -16,7 +16,7 @@ rule bwa_mem_pe:
     conda:
         "../envs/bwa.yaml"
     threads:
-        16
+        MAX_THREADS
     shell:
         """
         bwa \
@@ -26,6 +26,34 @@ rule bwa_mem_pe:
             {input.mate1} \
             {input.mate2} > {output.sam}
         """
+
+rule bwa_mem_se:
+    """
+    Created:
+        2019-12-01 23:22:39
+    Test:
+        out/bwa/mem_se_fa-genome-GRCh38/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/Jurkat_SRR1057274_H3K27ac.sam
+    """
+    input:
+        index=expand("out/bwa/index/{{fa_genome_id}}.{ext}", ext=["amb","ann","bwt","pac","sa"]),
+        fastq="out/{filler}.fastq",
+    output:
+        sam="out/bwa/mem_se_{fa_genome_id}/{filler}.sam"
+    params:
+        idxbase="out/bwa/index/{fa_genome_id}"
+    conda:
+        "../envs/bwa.yaml"
+    threads:
+        MAX_THREADS
+    shell:
+        """
+        bwa \
+            mem \
+            -t {threads} \
+            {params.idxbase} \
+            {input.fastq} > {output.sam}
+        """
+
 
 """
         sam="out/bowtie2/pe_{index}/{filler}.sam",

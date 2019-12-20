@@ -107,7 +107,7 @@ rule chipseqspike_gff_csv:
             "plotProfile",
             "plotTransform"])
     threads:
-        16 #using only one but huge memory consumption.
+        MAX_THREADS #using only one but huge memory consumption.
     shell:
         """
         # Extracting genome name from gff_id

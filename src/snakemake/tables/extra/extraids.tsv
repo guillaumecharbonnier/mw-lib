@@ -32,6 +32,7 @@ star/se	standard	--outFilterMismatchNoverLmax 0.08 --outFilterMultimapNmax 1 --g
 star/pe	standard	--outFilterMismatchNoverLmax 0.08 --outFilterMultimapNmax 1 --genomeLoad NoSharedMemory
 sed/	rm-chr-in-fa	's/^>chr/>/'
 sed/	add-chr	'/^#/! s/^/chr/g'
+sed/	rm-first-exclam-in-fq	's/^!//'
 bbmap/reformat	nuc-length	minlength=130 maxlength=200
 bbmap/reformat	ss-length	minlength=30 maxlength=100
 gtftk/ologram	tfbs	--no-basic-feature --more-keys tf_id

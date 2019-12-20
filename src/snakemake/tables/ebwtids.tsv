@@ -1,3 +1,4 @@
 id	path
-ebwt-hg19	expand("out/unzip/d_bowtie_index_hg19_1kgmaj/hg19_1kgmaj.{part}.ebwt", part=["1","2","3","4","rev.1","rev.2"])
-
+ebwt-hg19-1kgmaj	expand("out/unzip/d_bowtie_index_hg19_1kgmaj/hg19_1kgmaj.{part}.ebwt", part=["1","2","3","4","rev.1","rev.2"])
+ebwt-hg19	expand("out/unzip/d_bowtie_index_hg19/hg19.{part}.ebwt", part=["1","2","3","4","rev.1","rev.2"])
+ebwt-hg19-main-chr	expand("out/bowtie/build/fa-genome-hg19-main-chr.{part}.ebwt", part=["1","2","3","4","rev.1","rev.2"])

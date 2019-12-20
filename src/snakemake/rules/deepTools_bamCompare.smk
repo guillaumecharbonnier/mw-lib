@@ -18,7 +18,7 @@ rule deepTools_bamCompare_extra:
     params:
         extra = params_extra
     threads:
-        16
+        MAX_THREADS
     wildcard_constraints:
         tool='deepTools/bamCompare'
     conda:
@@ -63,7 +63,7 @@ rule deepTools_bamCompare_scaleFactorsMethod_ratio_binsize_extendReads:
     output:
         bw="out/deepTools/bamCompare_scaleFactorsMethod-{scaleFactorsMethod}_ratio-{ratio}_binSize-{binSize}_extendReads-{extendReads}/{filler}/{id_bam1}_vs_{id_bam2}.bw"
     threads:
-        16
+        MAX_THREADS
     wildcard_constraints:
         ratio="log2|ratio|subtract|add|reciprocal_ratio",
         scaleFactorsMethod="readCount|SES",
@@ -146,7 +146,8 @@ rule deepTools_bamCompare_scaleFactorsMethod_ratio_binSize_minMappingQuality:
         bai2="out/{filler}/{id_bam2}.bam.bai"
     output:
         bw="out/deepTools/bamCompare_scaleFactorsMethod-{scaleFactorsMethod}_ratio-{ratio}_binSize-{binSize}_minMappingQuality-{minMappingQuality}/{filler}/{id_bam1}_vs_{id_bam2}.bw"
-    threads: 16
+    threads: 
+        MAX_THREADS
     wildcard_constraints:
         ratio="log2|ratio|subtract|add|reciprocal_ratio",
         scaleFactorsMethod="readCount|SES",
@@ -182,7 +183,8 @@ rule deepTools_bamCompare_scaleFactorsMethod_ratio_binSize_smoothLength_minMappi
         bai2="out/{filler}/{id_bam2}.bam.bai"
     output:
         bw="out/deepTools/bamCompare_scaleFactorsMethod-{scaleFactorsMethod}_ratio-{ratio}_binSize-{binSize}_smoothLength-{smoothLength}_minMappingQuality-{minMappingQuality}/{filler}/{id_bam1}_vs_{id_bam2}.bw"
-    threads: 16
+    threads: 
+        MAX_THREADS
     wildcard_constraints:
         ratio="log2|ratio|subtract|add|reciprocal_ratio",
         scaleFactorsMethod="readCount|SES",
@@ -219,7 +221,8 @@ rule deepTools_bamCompare_scaleFactorsMethod_ratio_binSize_blackListFileName_smo
         bai2="out/{filler}/{id_bam2}.bam.bai"
     output:
         bw="out/deepTools/bamCompare_scaleFactorsMethod-{scaleFactorsMethod}_ratio-{ratio}_binSize-{binSize}_blackListFileName-no-super-enhancers-hg38_smoothLength-{smoothLength}_minMappingQuality-{minMappingQuality}/{filler}/{id_bam1}_vs_{id_bam2}.bw"
-    threads: 16
+    threads:
+        MAX_THREADS
     wildcard_constraints:
         ratio="log2|ratio|subtract|add|reciprocal_ratio",
         scaleFactorsMethod="readCount|SES",
@@ -258,7 +261,7 @@ rule deepTools_bamCompare_scaleFactorsMethod_ratio_binSize_smoothLength_extendRe
         bai2="out/{filler}/{id_bam2}.bam.bai"
     output:
         bw="out/deepTools/bamCompare_scaleFactorsMethod-{scaleFactorsMethod}_ratio-{ratio}_binSize-{binSize}_smoothLength-{smoothLength}_extendReads-{extendReads}/{filler}/{id_bam1}_vs_{id_bam2}.bw"
-    threads: 16
+    threads: MAX_THREADS
     wildcard_constraints:
         ratio="log2|ratio|subtract|add|reciprocal_ratio",
         scaleFactorsMethod="readCount|SES",

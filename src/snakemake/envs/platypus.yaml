@@ -1,0 +1,8 @@
+name:
+  platypus
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - platypus-variant

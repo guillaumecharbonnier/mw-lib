@@ -29,7 +29,7 @@ rule cuffmerge:
     wildcard_constraints:
         outFilterMultimapNmax="[0-9]+"
     threads:
-        4
+        MAX_THREADS
     conda:
         "../envs/cufflinks.yaml"
     shell:

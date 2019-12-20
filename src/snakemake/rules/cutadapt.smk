@@ -28,7 +28,7 @@ rule cutadapt_single_end_extra:
     conda:
         "../envs/cutadapt.yaml"
     threads:
-        16
+        MAX_THREADS
     shell:
         "cutadapt {params.extra} -j {threads} -o {output} {input} &> {log}"
 

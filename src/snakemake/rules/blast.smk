@@ -56,7 +56,7 @@ rule blastn:
         strand="plus|minus|both",
         outfmt="[0-9]+"
     threads:
-        16
+        MAX_THREADS
     conda:
         "../envs/blast.yaml"
     shell:

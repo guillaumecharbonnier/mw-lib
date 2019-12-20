@@ -20,7 +20,7 @@ rule cuffnorm:
     wildcard_constraints:
         libraryType="fr-unstranded|fr-firststrand|ff-firststrand|ff-secondstrand|fr-secondstrand|ff-unstranded|transfrags"
     threads:
-        4
+        MAX_THREADS
     conda:
         "../envs/cufflinks.yaml"
     shell:

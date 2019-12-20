@@ -1,0 +1,14 @@
+name:
+  imsindel
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - guillaumecharbonnier
+dependencies:
+  - imsindel
+    #  - ruby
+    #  - samtools
+    #  - mafft
+    #  - fasta3
+    #  - rb-bio

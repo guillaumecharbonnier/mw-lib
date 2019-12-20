@@ -28,7 +28,7 @@ rule bowtie_single_end_extra:
     conda:
         "../envs/bowtie.yaml"
     threads:
-        16
+        MAX_THREADS
     shell:
         """
         ( UN=`echo {output.unmapped} | sed 's/.gz$//'`
@@ -38,6 +38,20 @@ rule bowtie_single_end_extra:
         #bowtie {params.extra} -p {threads} -S  {params.index_basepath} --un  {output.unmapped_single} --max /dev/null {input.fastq} > {output.sam}"
         #"bowtie --chunkmbs 256 --best --strata -m 1 -n 2 -p {threads} -S  {params.index_basepath} --un  {output.unmapped_single} --max /dev/null {input.fastq} > {output.sam}"
 
+rule bowtie_build:
+    """
+    out/bowtie/build/fa-genome-hg19-main-chr.1.ebwt
+    """
+    input:
+        fa=lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+    output:
+        expand("out/bowtie/build/{{fa_genome_id}}.{part}.ebwt", part=["1","2","3","4","rev.1","rev.2"])
+    conda:
+        "../envs/bowtie.yaml"
+    shell:
+        """
+        bowtie-build {input.fa} out/bowtie/build/{wildcards.fa_genome_id}
+        """
 
 #rule bowtie2_paired_end_extra:
 #    """

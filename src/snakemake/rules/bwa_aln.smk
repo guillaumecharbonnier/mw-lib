@@ -31,7 +31,7 @@ rule bwa_aln_blueprint_GRCh38:
     conda:
         "../envs/bwa.yaml"
     threads:
-        16
+        MAX_THREADS
     shell:
         """
         bwa\

@@ -4,6 +4,9 @@ rule sed_extra:
         2019-03-15 08:43:31
     Test:
         out/sed/rm-chr-in-fa/cat/assembly_ensembl/NCBIM37.fa
+        Fastq from SOLID and converted by TGML workflow have a ! at the begining of qual line.
+        I can remove it with this rule to match fastq produced by xsqtools+bbfast solid2fastq:
+        out/sed/rm-first-exclam-in-fq/ln/abspath/gpfs/tagc/home/sadouni/reads/fastq/Run_75/Library_1/Run_75_L01_Library_1_F3.fastq
     """
     input:
         "out/{filler}"

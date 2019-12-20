@@ -1,0 +1,8 @@
+name:
+  breakdancer
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - breakdancer

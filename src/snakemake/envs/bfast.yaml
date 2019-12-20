@@ -1,0 +1,9 @@
+name:
+  bfast
+channels:
+  - BioBuilds
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bfast
