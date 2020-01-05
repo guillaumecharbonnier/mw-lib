@@ -33,7 +33,7 @@ rule abyss_debug_pe:
     Created:
         2019-12-19 17:50:15
     Test:
-        out/abyss/debug_pe_fastq.gz/ln/alias/sst/all_samples/fastq/489_H3K27ac-contigs.fa
+        out/abyss/debug_pe_fastq.gz/bbmap/reformat_fastq_pe_addslash/ln/alias/sst/all_samples/fastq/489_H3K27ac-contigs.fa
     """
     input:
         mate1="out/{filler}_1.{ext}",

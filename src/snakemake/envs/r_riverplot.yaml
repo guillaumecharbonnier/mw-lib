@@ -1,0 +1,33 @@
+# Created: 2020-01-03 10:01:50
+# Modiffied: 2018-12-25 18:41:43
+# A R environment to test ggalluvial package
+name:
+  r_riverplot
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-rcolorbrewer
+  - r-ggplot2
+  - r-ggpubr
+  - r-ggalluvial
+  - r-ggrepel
+  - r-riverplot
+  - r-fastcluster # provides a replacement to R-base hclust to cluster more than 65536 rows.
+  - r-reshape
+  - r-data.table
+    #- r-fpc # I want to try pamk
+    #- r-factominer 
+    #- r-factoextra
+    #- r-flexclust
+    #- r-docopt
+    #- r-rtsne
+    #- r-caret
+    #- bioconductor-rtracklayer
+    #- r-devtools
+    #- r-roxygen2
+    #- r-iotools
+    #- r-mltools
+    #- r-dbscan
+

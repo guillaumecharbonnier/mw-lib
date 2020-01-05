@@ -46,6 +46,10 @@ rule r_greatr_yaml:
     shell:
         "greatr -y {input.yaml}"
 
+
+#GREATR_OUTPUTS=[x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_greatr.txt","r")]
+GREATR_OUTPUTS=[x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_greatr_2019-12-30_pdf_subset.txt","r")]
+
 rule r_greatr_extra:
     """
     Created:
@@ -73,7 +77,7 @@ rule r_greatr_extra:
     output:
         #tables="out/r/great_heatmap{extra}_bed-{bed_list_id}/enrichment_tables.Rdata"
         done=touch("out/{tool}{extra}_{bed_list_id}/done"),
-        pdf=expand("out/{{tool}}{{extra}}_{{bed_list_id}}/{plot}.pdf", plot=["multiple_samples_clustermTermsBy_Binom_Fold_Enrichment/heatmaps/ont_all__met_all"])
+        pdf=touch(expand("out/{{tool}}{{extra}}_{{bed_list_id}}/{outfile}", outfile=GREATR_OUTPUTS))
     params:
         extra = params_extra
     wildcard_constraints:
