@@ -8,13 +8,15 @@ rule bbmap_se:
         https://www.biostars.org/p/225198/
     Note:
     Test:
-        out/bbmap/se_fa-genome-GRCh38-r94-chr1/ln/alias/sst/all_samples/fastq/Jurkat_SRR1057274_H3K27ac.sam.gz
+        out/bbmap/se_fastq.gz_fa-genome-hg19-contigs-with-insert-in-T11C-H3K27ac/ln/alias/sst/all_samples/fastq/T11C_H3K27ac.sam
+        Old:
+            out/bbmap/se_fa-genome-GRCh38-r94-chr1/ln/alias/sst/all_samples/fastq/Jurkat_SRR1057274_H3K27ac.sam.gz
     """
     input:
         fq="out/{filler}.{ext}",
         fa= lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
     output:
-        sam="out/{tool}_{ext}{extra}_{fa_genome_id}/{filler}.sam.gz"
+        sam="out/{tool}_{ext}{extra}_{fa_genome_id}/{filler}.sam"
     log:
         "out/{tool}_{ext}{extra}_{fa_genome_id}/{filler}.log"
     benchmark:

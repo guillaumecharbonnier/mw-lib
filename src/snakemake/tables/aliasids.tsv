@@ -819,4 +819,7 @@ experiments/mm10_H4K5K8acbu/R-H4K5ac.bam	out/samtools/sort/samtools/view_sam_to_
 experiments/mm10_H4K5K8acbu/R-H4K5bu.bam	out/samtools/sort/samtools/view_sam_to_bam_-q_30/bowtie2/se_mm10/sra-tools/fastq-dump_se/SRR3126244.bam
 experiments/mm10_H4K5K8acbu/R-H4K8ac.bam	out/samtools/sort/samtools/view_sam_to_bam_-q_30/bowtie2/se_mm10/sra-tools/fastq-dump_se/SRR3126245.bam
 experiments/mm10_H4K5K8acbu/R-H4K8bu.bam	out/samtools/sort/samtools/view_sam_to_bam_-q_30/bowtie2/se_mm10/sra-tools/fastq-dump_se/SRR3126246.bam
+# Test gathering sam for alternative contigs and fasta genome file for bwa index
+#genome_with_alt_contigs/hg19_with_T11C_H3K27ac_contigs/hg19_with_T11C_H3K27ac_contigs.fa	
+#genome_with_alt_contigs/hg19_with_T11C_H3K27ac_contigs/hg19_with_T11C_H3K27ac_contigs.sam
 

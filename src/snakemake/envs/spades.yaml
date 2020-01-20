@@ -1,8 +1,8 @@
-name: bwa
+name: spades
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - bwa
+  - spades
   - coreutils

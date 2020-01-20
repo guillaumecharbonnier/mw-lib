@@ -21,7 +21,9 @@ rule edena_overlapping:
     wildcard_constraints:
         tool="edena/overlapping"
     threads:
-        MAX_THREADS
+        1
+        # Actually only use one thread even if more are provided
+        #MAX_THREADS
     conda:
         "../envs/edena.yaml"
     shell:

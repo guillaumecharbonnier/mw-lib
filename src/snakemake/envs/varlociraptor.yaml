@@ -1,8 +1,8 @@
-name: bwa
+name:
+  varlociraptor
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - bwa
-  - coreutils
+  - varlociraptor

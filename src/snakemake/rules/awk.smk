@@ -14,6 +14,88 @@ rule awk_extract_rows_matching_col_content:
         awk '${wildcards.col} == "{wildcards.content}"' {input} > {output}
         """
 
+rule awk_filter_only_indel_in_vcf:
+    """
+    Created:
+        2020-01-20 11:27:58
+    Aim:
+        Filter only Indel in vcf after using bcftools mpileup
+    Test:
+        out/awk/filter_only_indel_in_vcf/bcftools/mpileup_fa-genome-hg19-main-chr/samtools/index/samtools/sort/samtools/view_sam_to_bam/bowtie2/se_fasta_Abraham2017_hg19/edena/assembling_-d_20_-c_20_-minCoverage_5/edena/overlapping/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/T11C_H3K27ac_contigs.vcf
+    """
+    input:
+        "out/{filler}.vcf"
+    output:
+        "out/awk/filter_only_indel_in_vcf/{filler}.vcf"
+    shell:
+        """
+        awk '/^#|INDEL/' {input} > {output}
+        """
+
+rule awk_extract_n_reads_supporting_indel_from_idxstat:
+    """
+    Created:
+        2020-01-20 12:34:15
+    Aim:
+    Test:
+        out/awk/extract_n_reads_supporting_indel_from_idxstat/samtools/idxstats/samtools/index/picard/MarkDuplicates_REMOVE_DUPLICATES=true/samtools/index/samtools/sort/samtools/view_sam_to_bam_-q_1/bwa/mem2_se_bwa-index-hg19-main-chr-and-contigs-with-inserts-gt-3bp-in-T11C-H3K27ac/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/T11C_H3K27ac.idxstat.tsv
+    """
+    input:
+        "out/{filler}"
+    output:
+        "out/awk/extract_n_reads_supporting_indel_from_idxstat/{filler}"
+    shell:
+        """
+        echo "contig	length	n_reads_supporting_indel" > {output}
+        awk 'BEGIN{{FS=OFS="\\t"}}{{ if ($1 ~ "_alt$") {{print $1, $2, $3}} }}' {input} >> {output}
+        """
+
+rule awk_indel_workflow_sam_to_fasta:
+    """
+    Created:
+    2020-01-04 11:20:27
+    Aim:
+    Need to reformat this as fasta to use as reference input for GATK HaplotypeCaller:
+    out/bowtie2/se_fasta_--rfg_1,1_-k_1_-q_-f_hg19/edena/assembling_-d_20_-c_20_-minCoverage_5/edena/overlapping/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/T11C_H3K27ac_contigs.sam
+    But actually does not work as expected because it use only the first column as fasta sequence name whereas I would be more interested in naming using all columns excepted the sequence one. e.g.:
+    out/edena/assembling_-d_20_-c_20_-minCoverage_5/edena/overlapping/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/T11C_H3K27ac_647339   16      chr20   33262100        255     42M     *       0       0       AGTGAGCCGAGATCGCGCCATTGCACTCCAGCCTGGGCAACA IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII      AS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:42 YT:Z:UU
+    TODO: Write awk script to do that.
+    But first check if there are arguments to do that with bbmap reformat.
+    Test:
+    out/awk/indel_workflow_sam_to_fasta/bowtie2/se_fasta_--rfg_1,1_-k_1_-q_-f_hg19/edena/assembling_-d_20_-c_20_-minCoverage_5/edena/overlapping/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/T11C_H3K27ac_contigs.fasta
+
+    Weirdly, there is one contig present two times in the sam file "chr10_38804293_5M11I27M".
+    This cause further bug when trying to load bam in IGV:
+    Error loading /home/gcharbonnier/mw/out/samtools/index/samtools/sort/samtools/view_sam_to_bam/bwa/mem_se_fa-genome-hg19-contigs-with-insert-in-T11C-H3K27ac/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/T11C_H3K27ac.bam: An error occurred while accessing: /home/gcharbonnier/mw/out/samtools/index/samtools/sort/samtools/view_sam_to_bam/bwa/mem_se_fa-genome-hg19-contigs-with-insert-in-T11C-H3K27ac/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/T11C_H3K27ac.bam Error loading BAM file: java.lang.IllegalArgumentException: Cannot add sequence that already exists in SAMSequenceDictionary: chr10_38804293_
+    
+    The currently tested workaround is to 'sort -u' the sam file from bowtie2:
+
+    Note: Sometimes the same contig can be created by edena with only 1 nucleotide mismatch, hence the need to have the whole sequence in the need to add the nrow
+
+    """
+    input:
+        "out/{filler}.sam"
+    output:
+        "out/{tool}/{filler}.fa"
+    log:
+        "out/{tool}/{filler}.log"
+    benchmark:
+        "out/{tool}/{filler}.benchmark.tsv"
+    wildcard_constraints:
+        tool = "awk/indel_workflow_sam_to_fasta",
+        #conda:
+        #"../envs/bbmap.yaml"
+    shell:
+        """
+        #awk 'BEGIN{{FS=OFS="\\t"}}{{if ($1 !/^@/ && $6 ~ /I/ ) {{print $3, $4, $6, $10 }} }} ' {input} | \
+        #sort -u | awk 'BEGIN{{FS=OFS="\\t"}}{{print ">" $1 "_" $2 "_" $3 "\\n" $4}}' > {output} 2> {log}
+        awk '{{if ($1 !/^@/ && $6 ~ /I/ ) {{print ">" $3 "_" $4 "_" $6 "_" NR "_alt\\n" $10 }} }} ' {input} > {output} 2> {log}
+        """
+
+#if line do not start with '@',
+#print ">" $1 $2 $3 $4 $5 $6 $11
+#line return $10
+
 rule awk_trim_sam_query_name:
     """
     Created:
@@ -1205,8 +1287,6 @@ rule awk_filter_bedpe_by_size:
     Test:
         "out/awk/filter_bedpe_by_size/min40_max80/samtools/view/bampe_to_bed3_nodup/samtools/merge/samtools/sam_to_bam/bowtie2/pe_mm9/fastx-toolkit/fastx_trimmer/len30/merge_lanes/run113_run125_run126/PSK-SC-KO.bed"
         "out/awk/filter_bedpe_by_size/min40_max80/samtools/view/bampe_to_bed3_nodup/samtools/merge/samtools/sam_to_bam/bowtie2/pe_mm9/fastx-toolkit/fastx_trimmer/len30/merge_lanes/run113_run125_run126/PSK-SC-KO.bed"
-
-
     """
     input:
         bed="out/{filler}.bed"

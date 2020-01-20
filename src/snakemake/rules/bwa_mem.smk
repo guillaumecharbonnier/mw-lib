@@ -29,6 +29,40 @@ rule bwa_mem_pe:
 
 rule bwa_mem_se:
     """
+    Aim:
+        Currently rewriting this rule in order to be able to ask for bowtie index with alt haplotype on demand.
+    Created:
+        2019-12-01 23:22:39
+    Test:
+        out/bwa/mem2_se_bwa-index-hg19-main-chr-and-contigs-with-inserts-from-T11C-H3K27ac/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/T11C_H3K27ac.sam
+    """
+    input:
+        fastq="out/{filler}.fastq",
+        index_files=lambda wildcards: eval(config['ids'][wildcards.bwa_index_id])
+    output:
+        sam="out/bwa/mem2_se_{bwa_index_id}/{filler}.sam"
+    #params:
+        #extra=params_extra,
+        #idxbase=params_bwa_index_base_path
+    conda:
+        "../envs/bwa.yaml"
+    threads:
+        MAX_THREADS
+    shell:
+        """
+        the_first_index_file=`echo {input.index_files} | cut -f1 -d' ' `
+
+        echo $the_first_index_file
+
+        the_first_index_file_without_ext=${{the_first_index_file%.*}}
+
+        echo $the_first_index_file_without_ext
+
+        bwa mem -t {threads} $the_first_index_file_without_ext {input.fastq} > {output.sam}
+        """
+
+rule bwa_mem_se_legacy:
+    """
     Created:
         2019-12-01 23:22:39
     Test:
