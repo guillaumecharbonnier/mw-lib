@@ -2,7 +2,7 @@ id	path
 bed-hg38-macs2-peaks-H3K27ac-thymus	out/bedtools/merge/sort/coordinates_bed/cat/hg38-macs2-peaks-H3K27ac-thymus.bed
 bed-GRCh38-main-chr	out/awk/chromInfo_to_bed3/awk/extract_main_chr/gunzip/to-stdout/rsync/ucsc/goldenPath/hg38/database/chromInfo.bed
 bed-hg38-main-chr	out/awk/chromInfo_to_bed3/awk/extract_main_chr/gunzip/to-stdout/rsync/ucsc/goldenPath/hg38/database/chromInfo.bed
-bed-hg19-main-chr	out/awk/chromInfo_to_bed3/awk/extract_main_chr/gunzip/to-stdout/rsync/ucsc/goldenPath/hg19/database/chromInfo.bed
+bed-hg19-main-chr	["out/awk/chromInfo_to_bed3/awk/extract_main_chr/gunzip/to-stdout/rsync/ucsc/goldenPath/hg19/database/chromInfo.bed"]
 bed-GRCm38-main-chr	out/sed/remove_chr/awk/chromInfo_to_bed3/awk/extract_main_chr/gunzip/to-stdout/rsync/ucsc/goldenPath/mm10/database/chromInfo.bed
 bed-mm10-main-chr	out/awk/chromInfo_to_bed3/awk/extract_main_chr/gunzip/to-stdout/rsync/ucsc/goldenPath/mm10/database/chromInfo.bed
 bed-mm9-main-chr	out/awk/chromInfo_to_bed3/awk/extract_main_chr/gunzip/to-stdout/rsync/ucsc/goldenPath/mm9/database/chromInfo.bed

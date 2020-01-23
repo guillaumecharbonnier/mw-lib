@@ -1,8 +1,9 @@
 name:
-  scalpel
+  vcftoolz
 channels:
   - conda-forge
   - bioconda
   - defaults
+  - guillaumecharbonnier
 dependencies:
-  - scalpel 0.5.3
+  - vcftoolz

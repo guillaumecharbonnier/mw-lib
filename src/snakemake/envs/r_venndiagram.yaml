@@ -1,0 +1,28 @@
+# Created: 2020-01-21 13:50:15
+# A R environment to test venndiagram package
+name:
+  r_venndiagram
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-venndiagram
+  - r-upsetr
+  - r-rcolorbrewer
+  - r-data.table
+  - r-scales
+    #- r-fpc # I want to try pamk
+    #- r-factominer 
+    #- r-factoextra
+    #- r-flexclust
+    #- r-docopt
+    #- r-rtsne
+    #- r-caret
+    #- bioconductor-rtracklayer
+    #- r-devtools
+    #- r-roxygen2
+    #- r-iotools
+    #- r-mltools
+    #- r-dbscan
+

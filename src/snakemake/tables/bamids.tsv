@@ -41,3 +41,5 @@ bed-mm10-test-srr-peaks	"[""out/macs2/callpeak_--broad/samtools/index/samtools/s
 bed-mm10-test-srr-peaks-fluff-clusts	"[""out/fluff/heatmap_-C_k_-k_5_-g_-M_Pearson/bed-mm10-test-srr-peaks_bam-mm10-test-srr.png_clusters.bed""]"
 bam-hg19-CapStarr-K562-IFN-rep2-merged	"[""out/samtools/view_bam_to_bam_-f_67/ln/alias/sst/all_samples/hg19/bam/CapStarr_K562_IFN_rep2_Seq2.bam"", ""out/ln/alias/sst/all_samples/hg19/bam/CapStarr_K562_IFN_rep2.bam""]"
 bam-hg19-CapStarr-K562-IFN-control-merged	"[""out/samtools/view_bam_to_bam_-f_67/ln/alias/sst/all_samples/hg19/bam/CapStarr_K562_IFN_control.bam"",""out/ln/alias/sst/all_samples/hg19/bam/CapStarr_K562_IFN_control.bam""]"
+# Test indel
+bam-hg19-T11C-H3K27ac-dev1	["out/samtools/index/samtools/sort/samtools/view_sam_to_bam/bowtie2/se_fasta_--rfg_1,1_-k_1_-q_-f_hg19/edena/assembling_-d_20_-c_20_-minCoverage_5/edena/overlapping/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/T11C_H3K27ac_contigs.bam", "out/samtools/index/samtools/sort/samtools/view_sam_to_bam/bwa/mem2_se_bwa-index-hg19-main-chr-and-contigs-with-inserts-gt-3bp-in-T11C-H3K27ac/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/T11C_H3K27ac.bam"]

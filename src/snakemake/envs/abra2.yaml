@@ -1,8 +1,8 @@
 name:
-  scalpel
+  abra2
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - scalpel 0.5.3
+  - abra2

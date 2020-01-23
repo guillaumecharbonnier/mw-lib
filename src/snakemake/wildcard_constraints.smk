@@ -11,11 +11,13 @@ wildcard_constraints:
     # By convention, all wildcards ending with '_id' should be used as key for python functions.
     # To prevent the hassle of defining them individually like for chrominfo_id and fa_genome_id, I have decided they have to follow these constraints below:
     bed_id = "bed-[a-zA-Z0-9-]+",
+    b_id = "[a-zA-Z0-9-]+",
     bed_list_id = "bed-[a-zA-Z0-9-]+",
     bw_id  = "bw-[a-zA-Z0-9-]+",
     gff_id = "gff-[a-zA-Z0-9-]+",
     gtf_id = "gtf-[a-zA-Z0-9-]+",
     vcfgz_id = "vcfgz-[a-zA-Z0-9-]+",
+    vcf_id = "vcf-[a-zA-Z0-9-]+",
     ebwt_id = "ebwt-[a-zA-Z0-9-]+",
     ref_id = "[a-zA-Z0-9-]+",
     chrominfo_id  = "chrominfo-[a-zA-Z0-9-]+",

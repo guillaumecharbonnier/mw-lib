@@ -1,8 +1,8 @@
 name:
-  scalpel
+  deepvariant
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - scalpel 0.5.3
+  - deepvariant
