@@ -1,0 +1,8 @@
+name:
+  bamutil
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bamutil

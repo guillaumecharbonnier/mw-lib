@@ -27,7 +27,7 @@ rule freebayes_fa_bam:
         1
     shell:
         """
-        freebayes {params.extra} -f {input.fa} {input.bam} > {output.vcf} &> {log}
+        freebayes {params.extra} -f {input.fa} {input.bam} 1> {output.vcf} 2> {log}
         """
 
 rule freebayes_fa_vcf_bam:
@@ -61,7 +61,7 @@ rule freebayes_fa_vcf_bam:
         1
     shell:
         """
-        freebayes {params.extra} -f {input.fa} -@ {input.vcfgz} {input.bam} > {output.vcf} &> {log}
+        freebayes {params.extra} -f {input.fa} -@ {input.vcfgz} {input.bam} 1> {output.vcf} 2> {log}
         """
 
 

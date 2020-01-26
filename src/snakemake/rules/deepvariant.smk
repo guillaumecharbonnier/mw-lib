@@ -32,16 +32,17 @@ rule deepvariant_fa_bam_dev_only:
         1
     shell:
         """
+        mkdir -p `dirname {output.vcf}`
         BIN_VERSION="0.9.0"
         sudo docker run -v "`pwd`":"/mw/" \
-          google/deepvariant:"${BIN_VERSION}" \
+          google/deepvariant:"${{BIN_VERSION}}" \
           /opt/deepvariant/bin/run_deepvariant \
           --model_type=WGS \
-          --ref={input.fa} \
-          --reads={input.bam} \
+          --ref=/mw/{input.fa} \
+          --reads=/mw/{input.bam} \
           --regions "chr1:4,7670,000-4,780,000" \
-          --output_vcf={output.vcf} \
-          --output_gvcf={output.gvcf} \
+          --output_vcf=/mw/{output.vcf} \
+          --output_gvcf=/mw/{output.gvcf} \
           --num_shards={threads}
         """
 
