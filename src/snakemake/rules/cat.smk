@@ -49,7 +49,8 @@ rule cat_merge_lanes_nextseq500_pe_LN_RM:
     Aim:
         Merge the 4 lanes produced by Illumina NextSeq500.·
     Test:
-        out/cat/merge_lanes_nextseq500_pe_LN_RMln/updir/mw-sk/inp/fastq/tgml/run187/MNase_Spm_WT_band1_R1.fastq.gz
+        out/cat/merge_lanes_nextseq500_pe_LN_RM/ln/updir/mw-sk/inp/fastq/tgml/run187/MNase_Spm_WT_band1_R1.fastq.gz
+        out/cat/merge_lanes_nextseq500_pe_LN_RM/ln/updir/mw-sk/inp/fastq/tgml/run176/RNA-C-H2AL2-KO-Rep1_R1.fastq.gz
 
 samtools/view_bSh/java/select_subpopulations_from_bam_lmin-130_lmax-170/samtools/merge_three_samples/samtools/merge/samtools/sort/samtools/view_bSh/bowtie2/pe_mm10/ln/paired_end_remove_mate_prefix/fastx_toolkit/fastx_trimmer_l-30/cat/merge_lanes_nextseq500_pe_LN_RM/ln/updir/mw-sk/inp/fastq/run163_run167_run184_run187_run205/s1-MNase_Spm_WT_band1_s2-MNase_Spm_WT_band3_s3-MNase_Spm_WT_band6.bed
 

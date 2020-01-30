@@ -23,6 +23,7 @@ wildcard_constraints:
     chrominfo_id  = "chrominfo-[a-zA-Z0-9-]+",
     fa_genome_id = "fa-[a-zA-Z0-9-]+",
     bwa_index_id = "bwa-index-[a-zA-Z0-9-]+",
+    kallisto_idx_id = "kallisto-idx-[a-zA-Z0-9-]+",
     chain_id = "chain-[a-zA-Z0-9-]+",
     basename = "[a-zA-Z0-9-_]+",
     filename = "[a-zA-Z0-9_-]+",

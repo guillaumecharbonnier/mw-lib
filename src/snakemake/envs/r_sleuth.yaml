@@ -1,0 +1,8 @@
+name:
+  r_sleuth
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-sleuth

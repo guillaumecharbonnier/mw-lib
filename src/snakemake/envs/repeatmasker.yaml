@@ -1,0 +1,8 @@
+name:
+  repeatmasker
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - repeatmasker

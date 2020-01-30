@@ -1,6 +1,6 @@
 """
 Important note:
-    Have a look at dear.rules for differential expression analysis with DESeq2, EdgeR and more.
+    Have a look at dear.rules for differential expression analysis with DESeq2, EdgeR and Limma-voom.
 """
 
 rule r_deseq2_edger:
