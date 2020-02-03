@@ -681,7 +681,7 @@ rule awk_convert_bedpe_to_bed6_insert_size:
 #
 #        """
 
-rule awk_select_subpopulations_from_bed_lmin_lmax:
+rule awk_select_subpopulations_from_bed_or_sam_lmin_lmax:
     """
     Created:
         2017-05-24 16:31:39

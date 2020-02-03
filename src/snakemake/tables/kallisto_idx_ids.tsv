@@ -1,2 +1,7 @@
 id	path
 kallisto-idx-rnaspades-pe-test-h2al2	out/kallisto/index/rnaspades/pe_test_h2al2/transcripts.idx
+kallisto-idx-rnaspades-pe-test1-h2al2	"out/kallisto/index/rnaspades/pe_test1_c_h2al2_ko_rep1/transcripts.idx"
+kallisto-idx-rnaspades-pe-test2-c-h2al2-ko	"out/kallisto/index/rnaspades/pe_test2_c_h2al2_ko/transcripts.idx"
+kallisto-idx-rnaspades-pe-test3-c-h2al2	"out/kallisto/index/rnaspades/pe_test3_c_h2al2/transcripts.idx"
+kallisto-idx-rnaspades-pe-test4-h2al2	"out/kallisto/index/rnaspades/pe_test4_h2al2/transcripts.idx"
+kallisto-idx-rnaspades-pe-test5-h2al2	"out/kallisto/index/rnaspades/pe_test5_h2al2/sickle/pe_-t_sanger_-q_20/transcripts.idx"

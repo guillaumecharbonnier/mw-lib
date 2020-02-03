@@ -156,6 +156,9 @@ rule rnaspades_pe_test4_h2al2:
         2020-01-30 01:12:54
     Doc:
         http://cab.spbu.ru/files/release3.14.0/rnaspades_manual.html
+    Warning:
+        Does not work because RNASpades accepts a maximum of 9 pe libraries...
+        Concatenation seems mandatory first.
     Test:
         out/rnaspades/pe_test4_h2al2/transcripts.fasta
     """
@@ -313,5 +316,43 @@ rule rnaspades_pe_test5_h2al2_filler:
             -o {params.outdir}
         """
 
+
+rule rnaspades_1_pe_lib:
+    """
+    Created:
+        2020-01-30 01:12:54
+    Aim:
+        Testing RNASpades with our without read prefiltering
+    Doc:
+        http://cab.spbu.ru/files/release3.14.0/rnaspades_manual.html
+    Test:
+        cat-h2al2-rna_1.fastq.gz    expand("sickle/pe_-t_sanger_-q_20/ln/pe_remove_mate_prefix/cat/merge_lanes_nextseq500_pe_LN_RM/ln/updir/mw-sk/inp/fastq/tgml/run176/RNA-{stage}-H2AL2-{condition}-Rep{replicate}_1.fastq.gz", stage=["P","R","C"], condition=["WT","KO"], replicate=["1","2","3"])
+        cat-h2al2-rna_2.fastq.gz    expand("sickle/pe_-t_sanger_-q_20/ln/pe_remove_mate_prefix/cat/merge_lanes_nextseq500_pe_LN_RM/ln/updir/mw-sk/inp/fastq/tgml/run176/RNA-{stage}-H2AL2-{condition}-Rep{replicate}_2.fastq.gz", stage=["P","R","C"], condition=["WT","KO"], replicate=["1","2","3"])
+
+        out/rnaspades/1_pe_lib/cat/cat-h2al2-rna/transcripts.fasta
+    """
+    input:
+        pe1_1 ="out/{filler}_1.fastq.gz",
+        pe1_2 ="out/{filler}_2.fastq.gz"
+    output:
+        "out/{tool}{extra}/{filler}/transcripts.fasta"
+        #expand("out/{{tool}}{{extra}}/{{filler}}/{filename}",filename=["transcripts.fasta"]) # Many more files here
+    benchmark:
+        "out/{tool}{extra}/{filler}/transcripts.benchmark.tsv"
+    params:
+        outdir = "out/{tool}{extra}/{filler}",
+        extra = params_extra
+    wildcard_constraints:
+        tool="rnaspades/1_pe_lib"
+    conda:
+        "../envs/spades.yaml"
+    threads:
+        16
+    shell:
+        """
+        rnaspades.py -t {threads} -m 100 {params.extra} \
+            --pe1-1  {input.pe1_1}  --pe1-2  {input.pe1_2} \
+            -o {params.outdir}
+        """
 
 

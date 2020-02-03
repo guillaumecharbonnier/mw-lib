@@ -10,6 +10,7 @@ rule r_greatr_yaml_new:
 
     Test:
         out/r/greatr_bed-hg19-cpg-meth-call-clusters/ln/updir/mw-thymus/src/greatr/hg19-cpg-meth-call-clusters/done
+        out/r/new_greatr_bed-hg19-thymus-mca-cor-dims-1-2-mixed-thresholds/ln/updir/mw-thymus/src/greatr/hg19-thymus-mca-cor-dims-1-2-mixed-thresholds/done
     """
     input:
         yaml = "out/{filler}.yaml",
@@ -21,7 +22,7 @@ rule r_greatr_yaml_new:
     shell:
         "greatr -y {input.yaml}"
 
-rule r_greatr_yaml:
+rule r_greatr_yaml_old:
     """
     Created:
         2019-01-08 11:42:16
