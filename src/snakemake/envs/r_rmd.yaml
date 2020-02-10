@@ -1,3 +1,5 @@
+name:
+  r_rmd
 channels:
   - conda-forge
   - bioconda
@@ -6,6 +8,7 @@ dependencies:
   - r-rmarkdown
   - pandoc=1.19 #requirement to render R Markdown.
   - r-codetools #requirement to avoid error after first R chunk during R Markdown rendering.
+  - r-revealjs
   - r-docopt
   - r-devtools
   - r-roxygen2
@@ -24,3 +27,17 @@ dependencies:
   - r-fastcluster # provides a replacement to R-base hclust to cluster more than 65536 rows.
   - r-factoextra
   - r-fpc # I want to try pamk
+  - r-plotly
+  - r-rcolorbrewer
+  - r-ggpubr
+  - r-ggplot2
+  - r-data.table
+  - r-ggrepel
+  - r-reshape
+  - r-factominer
+  - r-factoextra
+  - r-flexclust
+  - r-fastcluster # provides a replacement to R-base hclust to cluster more than 65536 rows.
+  - r-fpc # I want to try pamk
+  - r-rtsne
+
