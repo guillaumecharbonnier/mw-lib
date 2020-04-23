@@ -1,0 +1,17 @@
+name:
+  pygtftk_doc
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+    #- auto
+dependencies:
+  - pygtftk
+  - sphinx
+  - sphinxcontrib-programoutput
+    #- sphinxcontrib-googleanalytics
+  - sphinx_bootstrap_theme
+  - pycodestyle
+  - make
+  - coreutils
+

@@ -31,6 +31,7 @@ dependencies:
   - r-rcolorbrewer
   - r-ggpubr
   - r-ggplot2
+  - r-ggally
   - r-data.table
   - r-ggrepel
   - r-reshape

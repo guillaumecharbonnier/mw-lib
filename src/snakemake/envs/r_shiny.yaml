@@ -1,0 +1,16 @@
+name:
+  r_shiny
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-shiny
+  - r-biocmanager
+  - r-rsconnect
+  - r-ggplot2
+  - r-reshape2
+  - r-fastcluster
+  - r-cairo
+  - r-svglite
+
