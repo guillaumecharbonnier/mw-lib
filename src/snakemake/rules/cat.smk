@@ -85,6 +85,31 @@ rule cat_merge_lanes_nextseq500_pe_L00N_RM_001:
         "cat {input.fastq_mate2} > {output.fastq_mate2}"
 
 
+rule cat_merge_illumina_fastq_sets:
+    """
+    Created:
+		2020-04-26 12:56:40
+    Aim:
+        Merge all samples with same name but different sets by Illumina sequencers.
+        These sets are variables depending on samples so the rule is looking for the first one and concatenate all those with the same sample prefix.
+    Note:
+        Illumina FASTQ files use the following naming scheme:
+        <sample name>_<barcode sequence>_L<lane>_R<read number>_<set number>.fastq.gz
+    Test:
+        out/cat/merge_illumina_fastq_sets/ln/updir/mw/inp/fastq/blueprint/8580_LC_TH101_H3K27ac/lane2_8580_ACAGTG_L002_R1.fastq.gz
+    """
+    input:
+        fastq = "out/{filler}_001.fastq.gz",
+    output:
+        fastq = "out/cat/merge_illumina_fastq_sets/{filler}.fastq.gz",
+    threads:
+        1
+    shell:
+        """
+        SAMPLE_PREFIX=`echo {input} | sed 's/_001.fastq.gz//'`
+        cat $SAMPLE_PREFIX*.fastq.gz > {output}
+        """
+
 rule cat_nico:
     """
     Created:

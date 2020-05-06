@@ -6,6 +6,7 @@ rule deepTools_plotHeatmap_extra:
         out/deepTools/plotHeatmap_--sortRegions_keep_-colorList_blueCyanYellowOrangeRed_-whatToShow_phc_-xAxisLabel_peak-center_-refPointLabel_0/deepTools/computeMatrix_reference-point_--referencePoint_center_-b_2000_-a_2000_-bs_200_--sortRegions-keep_-R_hg38-dClust-rowFeature-ealpha-and-20-random-regions_-S_hg38-H3K27ac-thymus-merged-wiq.pdf
         out/deepTools/plotHeatmap_--sortRegions_keep_--samplesLabel_test_-colorList_blueCyanYellowOrangeRed_--whatToShow_phc_--xAxisLabel_peak-center_--refPointLabel_0/deepTools/computeMatrix_reference-point_--referencePoint_center_-b_2000_-a_2000_-bs_200_--sortRegions_keep_-R_hg38-dClust-rowFeature-ealpha-and-20-random-regions_-S_hg38-H3K27ac-thymus-merged-wiq.pdf
         out/deepTools/plotHeatmap_47aa/deepTools/computeMatrix_reference-point_--referencePoint_center_-b_2000_-a_2000_-bs_200_--sortRegions_keep_-R_hg38-dClust-rowFeature-ealpha-and-20-random-regions_-S_hg38-H3K27ac-thymus-merged-wiq.pdf
+        out/deepTools/plotHeatmap_-colorList_blueCyanYellowOrangeRed_-whatToShow_phc/deepTools/plotHeatmap/deepTools/computeMatrix_reference-point_--referencePoint_center_-b_5000_-a_5000/
     Note:
         Force interpolationMethod as nearest for BS.
     """

@@ -12,10 +12,11 @@ rule gtftk_coverage_extra_chrominfo_bed_bw:
         https://dputhier.github.io/pygtftk/coverage.html#coverage
     Test:
         out/gtftk/coverage_u-100000_d-100000_p-0_w-1000_n-10_x_chrominfo-hg38-main-chr_bed-hg38-bs-hypometh-thymus-union-all_bw-hg38-RNA-thymus.txt
+        out/gtftk/coverage_-x_chrominfo-mm10_bed-mm10-ikE120-peak_bw-mm10-immgen-atac.txt
     """
     input:
         inputfile = lambda wildcards: eval(config['ids'][wildcards.bed_list_id]),
-        chrominfo = lambda wildcards: config['ids'][wildcards.chrominfo_id],
+        chrominfo = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id]),
         bw        = lambda wildcards: eval(config['ids'][wildcards.bw_list_id])
     output:
         txt="out/{tool}{extra}_{chrominfo_id}_{bed_list_id}_{bw_list_id}.txt"
@@ -44,8 +45,8 @@ rule gtftk_coverage_extra_chrominfo_gtf_bw:
         out/gtftk/coverage_p-0_x_f-exon_chrominfo-hg38-main-chr_gtf-hg38-ensembl_bw-hg38-RNA-thymus.txt
     """
     input:
-        gtf       = lambda wildcards: config['ids'][wildcards.gtf_id],
-        chrominfo = lambda wildcards: config['ids'][wildcards.chrominfo_id],
+        gtf       = lambda wildcards: eval(config['ids'][wildcards.gtf_id]),
+        chrominfo = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id]),
         bw        = lambda wildcards: eval(config['ids'][wildcards.bw_list_id])
     output:
         txt="out/{tool}{extra}_chrominfo-{chrominfo_id}_gtf-{gtf_id}_{bw_list_id}.txt"

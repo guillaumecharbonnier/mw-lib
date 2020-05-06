@@ -1,4 +1,3 @@
-
 rule danpos_wiq:
     """
     Created:
@@ -19,10 +18,14 @@ rule danpos_wiq:
     input:
         wig_reference = "out/{filler}/{reference}.wig",
         wig_to_wiq = "out/{filler}/{wig_to_wiq}.wig",
-        chrominfo = lambda wildcards: config['ids'][wildcards.chrominfo_id]
+        chrominfo = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id])
     output:
         #wig = "out/danpos/wiq_{chrominfo_id}/{filler}/{wig_to_wiq}_qnorVS_{reference}/{wig_to_wiq}.wig"
         wig = "out/danpos/wiq_{chrominfo_id}/{filler}/{wig_to_wiq}_qnorVS_{reference}.wig"
+    log:
+        "out/danpos/wiq_{chrominfo_id}/{filler}/{wig_to_wiq}_qnorVS_{reference}.log"
+    benchmark:
+        "out/danpos/wiq_{chrominfo_id}/{filler}/{wig_to_wiq}_qnorVS_{reference}.benchmark.tsv"
     params:
         outdir = "out/danpos/wiq_{chrominfo_id}/{filler}/{wig_to_wiq}_qnorVS_{reference}"
     conda:
@@ -39,7 +42,7 @@ rule danpos_wiq:
         # Danpos include input file name in the output directory, which is ugly.
         # Link is used here so Danpos see clean input file.
         # Note: hardlink is bad with snakemake because when the hardlink is done on the bam there is a 'touch' on file, thus every rules using the bam have to be done again.
-        WDIR=`pwd`
+        ( WDIR=`pwd`
         mkdir -p {params.outdir}
         ln -srf {input.wig_to_wiq} {params.outdir}/wig_to_wiq.wig
         ln -srf {input.wig_reference} {params.outdir}/reference.wig
@@ -50,5 +53,5 @@ rule danpos_wiq:
         ln -f wiq_result/wig_to_wiq.qnor.wig $WDIR/{output.wig}
 
         #TODO: remove this comment when the rule is working:
-        rm -rf $WDIR/{params.outdir}
+        rm -rf $WDIR/{params.outdir} ) &> {log}
         """

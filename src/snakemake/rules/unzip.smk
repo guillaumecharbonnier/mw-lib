@@ -1,7 +1,25 @@
+rule unzip_c:
+    """
+    Created:
+        2020-02-19 09:12:23
+    Aim:
+        Unzip only one zipped file.
+    Test:
+        out/unzip/c/wget/https/www.proteinatlas.org/download/proteinatlas.tsv
+    """
+    input:
+        "out/{filler}.zip"
+    output:
+        "out/unzip/c/{filler}"
+    shell:
+        "unzip -c {input} > {output}"
+
 rule unzip_d:
     """
     Created:
         2017-02-20 15:08:04
+    Aim:
+        Unzip zipped folder
     Test:
         "out/unzip/d/wget/ftp_ccb_jhu/pub/data/bowtie2_indexes/mm9/done"
         "out/unzip/d/wget/ftp/ftp.ccb.jhu.edu/pub/data/bowtie_indexes/hg19_1kgmaj_bt/done

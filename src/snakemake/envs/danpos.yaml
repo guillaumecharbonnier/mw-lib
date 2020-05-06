@@ -7,4 +7,5 @@ channels:
   - guillaumecharbonnier
 dependencies:
   - danpos
+  - samtools < 1
   - coreutils

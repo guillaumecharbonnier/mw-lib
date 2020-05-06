@@ -1,22 +1,31 @@
-rule multiqc:
+rule multiqc_dir:
     """
     Created:
         2017-03-23 11:20:51
     Aim:
         Aggregate results from bioinformatics analyses across many samples into a single report
+        This version crawls available log file in the *filler* directory.
+    Note:
+        Remove first output directory because else output html has a different name (with suffix)
     Test:
-        out/multiqc/out/multiqc_report.html
+        out/multiqc/dir/out/multiqc_report.html
+        out/multiqc/dir/ln/alias/sst/by_customer/Salva_Vahid/logs/multiqc_report.html
     """
     output:
-        "out/{tool}{extra}/multiqc_report.html"
+        "out/{tool}{extra}/{filler}multiqc_report.html"
+    log:
+        "out/{tool}{extra}/{filler}multiqc_report.log"
+    benchmark:
+        "out/{tool}{extra}/{filler}multiqc_report.benchmark.tsv"
     params:
         extra = params_extra
     wildcard_constraints:
-        tool = "multiqc/out"
+        tool = "multiqc/dir"
     conda:
         "../envs/multiqc.yaml"
     shell:
-        "multiqc --outdir `dirname {output}` {params.extra} out"
+        "rm -rf `dirname {output}`/multiqc_data; "
+        "multiqc --outdir `dirname {output}` {params.extra} out/{wildcards.filler} &> {log}"
 
 rule create_multiqc_filelist:
     """

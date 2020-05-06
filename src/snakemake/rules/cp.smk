@@ -5,7 +5,7 @@ rule cp_alias:
     Test:
     """
     input:
-        lambda wildcards: config['ids'][wildcards.id]
+        lambda wildcards: eval(config['ids'][wildcards.id])
         #input_ln_alias
     output:
         alias="out/cp/alias/{id}"

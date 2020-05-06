@@ -12,7 +12,7 @@ rule bedtools_slop_extra:
     """
     input:
         bed_gff_vcf = "out/{filler}",
-        chromInfo = lambda wildcards: config['ids'][wildcards.chrominfo_id]
+        chromInfo = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id])
     output:
         bed_gff_vcf = "out/{tool}{extra}_{chrominfo_id}/{filler}"
     params:

@@ -1,22 +1,26 @@
-#rule ln_extra:
-#    """
-#    Created:
-#        2018-11-07 01:54:53
-#        tectonic/ln/_-srf/src/tex/
-#    """
-#    input:
-#        "{filler}"
-#    output:
-#        "out/{tool}{extra}/{filler}"
-#    wildcard_constraints:
-#        tool="ln/"
-#    params:
-#        extra = params_extra
-#    conda:
-#        "../envs/coreutils.yaml"
-#    shell:
-#        "ln {extra} {input} {output}"
-#
+localrules: ln_extra
+rule ln_extra:
+    """
+    Created:
+        2018-11-07 01:54:53
+    Aim:
+        Extra version of ln tool.
+    """
+    input:
+        "{filler}"
+    output:
+        "out/{tool}{extra}/{filler}"
+    wildcard_constraints:
+        tool="ln/extra"
+    params:
+        extra = params_extra
+    conda:
+        "../envs/coreutils.yaml"
+    priority:
+        10
+    shell:
+        "ln {params.extra} {input} {output}"
+
 localrules: ln_alias
 rule ln_alias:
     """
@@ -36,12 +40,34 @@ rule ln_alias:
         alias="out/ln/alias/{id}"
     #wildcard_constraints:
     #    alias_id=".*"
+    priority:
+        10
     conda:
         "../envs/coreutils.yaml"
     shell:
         # quotes around {input} is mandatory to be able
         # to have files with special characters in input.
         "ln -srf '{input}' {output.alias}"
+
+localrules: ln_alias_hardlink
+rule ln_alias_hardlink:
+    """
+    Created:
+        2020-02-07 14:42:29
+    Aim:
+        Alias rule but with hardlink that can be used to upload files to sftp using sftp command line (no support for dereferencing softlink...)
+        Softlink version should be preferred for usage within Snakemake when possible.
+    """
+    input:
+        lambda wildcards: config['ids'][wildcards.id]
+    output:
+        alias="out/ln/alias_hardlink/{id}"
+    priority:
+        10
+    conda:
+        "../envs/coreutils.yaml"
+    shell:
+        "ln '{input}' {output.alias}"
 
 localrules: ln_dynamic
 rule ln_dynamic:

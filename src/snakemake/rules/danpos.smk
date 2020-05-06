@@ -29,6 +29,10 @@ out/samtools/merge_three_runs/samtools/sort/samtools/view_bSh/bowtie2/pe_mm10/ln
         xls_positions="out/{tool}{extra}/{filler}/danpos.smooth.positions.xls",
         xls_peaks =   "out/{tool}{extra}/{filler}/danpos.smooth.peaks.xls",
         xls_regions = "out/{tool}{extra}/{filler}/danpos.smooth.regions.xls"
+    log:
+                      "out/{tool}{extra}/{filler}.log"
+    benchmark:
+                      "out/{tool}{extra}/{filler}.benchmark.tsv"
     params:
         extra = params_extra,
         ln_bam =      "out/{tool}{extra}/{filler}/danpos.bam",
@@ -47,7 +51,8 @@ out/samtools/merge_three_runs/samtools/sort/samtools/view_bSh/bowtie2/pe_mm10/ln
         # Link is used here so Danpos see clean input file.
         # Note: hardlink is bad with snakemake because when the hardlink is done on the bam there is a 'touch' on file, thus every rules using the bam have to be done again.
         WDIR=`pwd`
-        ln -s --force $WDIR/{input.bam} $WDIR/{params.ln_bam}
+        
+        (ln -s --force $WDIR/{input.bam} $WDIR/{params.ln_bam}
         cd {params.outdir}
 
         INPUT_SAMPLE=`basename {params.ln_bam}`
@@ -57,6 +62,6 @@ out/samtools/merge_three_runs/samtools/sort/samtools/view_bSh/bowtie2/pe_mm10/ln
         # Danpos put output files in './result/pooled/' when given '.' as '--out'.
         mv result/pooled/* ./
         rm -rf result
-        ln $WDIR/{output.wig} $WDIR/{output.ln_wig}
+        ln $WDIR/{output.wig} $WDIR/{output.ln_wig} ) &> {log}
         """
 

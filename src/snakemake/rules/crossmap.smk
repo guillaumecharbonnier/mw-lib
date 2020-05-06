@@ -75,7 +75,7 @@ rule crossmap_bed_sam_gff_gtf_vcf:
         out/crossmap/chain-mm10-to-mm9/cut/_-f1-6/macs2/callpeak_--broad/samtools/index/samtools/sort/samtools/view_sam_to_bam_-q_30/bowtie2/se_mm10/sickle/se_-t_sanger_-q_30/sra-tools/fastq-dump_se/SRR3126243_over_SRR3126242_peaks.bed
     """
     input:
-        chain = lambda wildcards: config['ids'][wildcards.chain_id],
+        chain = lambda wildcards: eval(config['ids'][wildcards.chain_id]),
         coord = "out/{filler}.{ext}"
     output:
         coord = "out/crossmap/{chain_id}/{filler}.{ext}"
@@ -96,7 +96,7 @@ rule crossmap_wig:
         out/crossmap/wig_hg19_to_hg38/gunzip/to-stdout/wget/https/www.genboree.org/EdaccData/Current-Release/experiment-sample/Bisulfite-Seq/Mobilized_CD34_Primary_Cells/BI.Mobilized_CD34_Primary_Cells.Bisulfite-Seq.RO_01549.bw
     """
     input:
-        chain = lambda wildcards: config['ids'][wildcards.chain_id],
+        chain = lambda wildcards: eval(config['ids'][wildcards.chain_id]),
         coord = "out/{filler}.wig"
     output:
         coord = "out/crossmap/wig_{chain_id}/{filler}.bw"
@@ -118,7 +118,7 @@ rule crossmap_bam:
     Test:
     """
     input:
-        chain = lambda wildcards: config['ids'][wildcards.chain_id],
+        chain = lambda wildcards: eval(config['ids'][wildcards.chain_id]),
         bam="out/{filler}.bam"
     output:
         bam="out/crossmap/{chain_id}/{filler}.bam",

@@ -1,0 +1,11 @@
+# Created for rule deepTools_spikeIn_bamCoverage
+name:
+  deeptools_samtools
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - deeptools
+  - samtools
+    #- openssl <1.1 # Temporary workaround (https://github.com/bioconda/bioconda-recipes/issues/17212https://github.com/bioconda/bioconda-recipes/issues/17212)

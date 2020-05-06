@@ -20,12 +20,13 @@ rule subread_featureCounts_extra:
         -O argument has to be used for transcript quantification as if a gene has multiple overlapping transcripts, reads shared by multiple genes will not be counted without. Maybe also for gene quantification...
     Tests:
         out/subread/featureCounts_-O_-t_exon_-g_gene_id_gtf-GRCh38-ensembl_bam-hg38-Casero2016-thy3-thy4.tsv
+        out/subread/featureCounts_-O_-t_exon_-g_gene_id_gtf-GRCh38-ensembl_bam-hg38-TGML-UMI-RNA.tsv
         out/subread/featureCounts_-O_-t_exon_-g_gene_id_gtf-GRCh38-ensembl_bam-hg38-RNA-thymus.tsv
         out/subread/featureCounts_-F_SAF_saf-mm10-test-macs2-peaks_bam-mm10-test-srr.tsv
         out/subread/featureCounts_-F_SAF_saf-mm10-tss-pm1kb_bam-mnase-cs-spm-nuc-ss.tsv
     """
     input:
-        gtf_saf = lambda wildcards: config['ids'][wildcards.gtf_saf_id],
+        gtf_saf = lambda wildcards: eval(config['ids'][wildcards.gtf_saf_id]),
         bam     = lambda wildcards: eval(config['ids'][wildcards.bam_list_id])
     output:
         tsv = "out/{tool}{extra}_{gtf_saf_id}_{bam_list_id}.tsv",

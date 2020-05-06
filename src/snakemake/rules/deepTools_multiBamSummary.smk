@@ -14,7 +14,7 @@ rule deepTools_multiBamSummary_BED_extra:
     input:
         bam = lambda wildcards: eval(config['ids'][wildcards.bam_list_id]),
         bai = lambda wildcards: [path + '.bai' for path in eval(config['ids'][wildcards.bam_list_id])],
-        bed = lambda wildcards: config['ids'][wildcards.bed_id]
+        bed = lambda wildcards: eval(config['ids'][wildcards.bed_id])
     output:
         npz="out/{tool}{extra}/{bed_id}/{bam_list_id}.npz"
     log:

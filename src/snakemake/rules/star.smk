@@ -9,7 +9,7 @@ rule star_pe_extra:
         fwd = "out/{filler}_1.{extin}",
         rev = "out/{filler}_2.{extin}",
         index = lambda wildcards: config['ids'][wildcards.index_id],
-        gtf   = lambda wildcards: config['ids'][wildcards.gtf_id]
+        gtf   = lambda wildcards: eval(config['ids'][wildcards.gtf_id])
     output:
         bam    = "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}.{extout}",
         log    = "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}/Log.final.out"
@@ -59,7 +59,7 @@ rule star_se_extra:
     input:
         fwd="out/{filler}.{extin}",
         index = lambda wildcards: config['ids'][wildcards.index_id],
-        gtf   = lambda wildcards: config['ids'][wildcards.gtf_id]
+        gtf   = lambda wildcards: eval(config['ids'][wildcards.gtf_id])
     output:
         bam    = "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}.{extout}",
         log    = "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}/Log.final.out"
@@ -235,7 +235,7 @@ rule star_build_index:
         out/star/build_index/fa-genome-GRCh38-Blueprint_gtf-GRCh38-ensembl/Genome
     """
     input:
-        gtf  = lambda wildcards: config['ids'][wildcards.gtf_id],
+        gtf  = lambda wildcards: eval(config['ids'][wildcards.gtf_id]),
         fa   = lambda wildcards: eval(config['ids'][wildcards.fa_id])
     output:
         genomeParameters = "out/star/build_index/{fa_id}_{gtf_id}/genomeParameters.txt",

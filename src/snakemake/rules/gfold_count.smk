@@ -18,7 +18,7 @@ rule gfold_count_bed:
     """
     input:
         bam = "out/{filler}.bam",
-        bed = lambda wildcards: config['ids'][wildcards.bed_id]
+        bed = lambda wildcards: eval(config['ids'][wildcards.bed_id])
     output:
         tsv="out/gfold/count_{bed_id}/{filler}.tsv"
     wildcard_constraints:
@@ -59,7 +59,7 @@ rule gfold_count_gtf:
     """
     input:
         bam = "out/{filler}.bam",
-        gtf = lambda wildcards: config['ids'][wildcards.gtf_id]
+        gtf = lambda wildcards: eval(config['ids'][wildcards.gtf_id])
     output:
         tsv="out/gfold/count_{gtf_id}/{filler}.tsv"
     wildcard_constraints:

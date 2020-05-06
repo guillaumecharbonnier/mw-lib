@@ -2,6 +2,8 @@ rule picard_SortSam_sortOrder:
     """
     Created:
         2018-03-16 17:24:03
+    Doc:
+        https://gatk.broadinstitute.org/hc/en-us/articles/360036510732-SortSam-Picard
     Test:
         out/picard/SortSam_sortOrder-coordinate/samtools/view_bSh/bwa/samse_q-5_fa-GRCh38-Blueprint/gunzip/merge_lanes_nextseq500_se_raw/inp/fastq/run170/S001580_TH125_EC_K27ac-41046/TH125-EC-K27ac_S6.bam
     Note:
@@ -20,10 +22,7 @@ rule picard_SortSam_sortOrder:
 
     """
     input:
-        #picard="opt/miniconda/envs/picard/bin/picard",
-        #samtools="opt/samtools-1.3.1/samtools",
         bam="out/{id}.bam",
-        #bai="out/{id}.bam.bai"
     output:
         bam = "out/picard/SortSam_sortOrder-{sortOrder}/{id}.bam",
     wildcard_constraints:

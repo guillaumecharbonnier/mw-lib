@@ -32,6 +32,7 @@ rule rsync_extra:
         out/rsync/ucsc/goldenPath/hg19/database/tfbsConsSites.txt.gz
         out/rsync/_-aP/hgdownload.cse.ucsc.edu/goldenPath/hg19/database/tfbsConsSites.txt.gz
         out/rsync/_-aP/hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/mm10.2bit
+        out/rsync/_-aP/hgdownload.cse.ucsc.edu/goldenPath/hg38/database/chromInfo.txt
     """
     output:
         "out/{tool}{extra}/{url}"

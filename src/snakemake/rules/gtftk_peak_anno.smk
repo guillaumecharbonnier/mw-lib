@@ -16,7 +16,7 @@
 #    """
 #    input:
 #        chrominfo=input_chrominfo,
-#        gtf = lambda wildcards: config['ids'][wildcards.gtf_id],
+#        gtf = lambda wildcards: eval(config['ids'][wildcards.gtf_id]),
 #        bed="out/{filler}.bed"
 #    output:
 #        pdf       = "out/gtftk/peak_anno_chrominfo-{chrominfo_id}_{gtf_id}/{filler}/00_peak_anno_diagrams.pdf"

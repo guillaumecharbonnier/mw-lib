@@ -7,7 +7,7 @@ rule stow_extra:
         out/stow/r/associate_atac_peaks_to_nearest_genes/done
     """
     input:
-        lambda wildcards: config['ids'][wildcards.id]
+        lambda wildcards: eval(config['ids'][wildcards.id])
     output:
         "out/stow/{id}"
         #"out/{tool}{extra}/{filler}/done"

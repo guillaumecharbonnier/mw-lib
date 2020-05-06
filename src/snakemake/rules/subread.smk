@@ -218,9 +218,9 @@ rule subread_align_extra:
         out/subread/buildindex_-c/GRCh38-r94-main-chr.done
     """
     input:
-        fasta = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id]), 
+        fasta = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id]),
         index = lambda wildcards: eval(config['ids'][wildcards.subread_index_id]),
-        gtf   = lambda wildcards: config['ids'][wildcards.gtf_id]
+        gtf   = lambda wildcards: eval(config['ids'][wildcards.gtf_id])
         #genome="out/{filler}.fa"
     output:
         done="out/{tool}{extra}_-i_{index_id}_-t_{t}/{fa_genome_id}.done"

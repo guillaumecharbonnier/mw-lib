@@ -29,6 +29,30 @@ rule deepTools_bamCoverage_extra:
     shell:
         "bamCoverage --bam {input.bam} --numberOfProcessors {threads} {params.extra} -o {output.bw} &> {log}"
 
+rule deepTools_spikeIn_bamCoverage:
+    input:
+        bam_endo="out/{filler1}{assembly_endo}{filler2}.bam",
+        bam_exo ="out/{filler1}{assembly_exo}{filler2}.bam"
+    output:
+        bw="out/{tool}_{assembly_exo}{extra}/{filler1}{assembly_endo}{filler2}.bw"
+    params:
+        extra = params_extra,
+    wildcard_constraints:
+        tool="deepTools/spikeIn_bamCoverage",
+        assembly_exo="dm6",
+        assembly_endo="GRCm38|mm9|GRCh38|hg19"
+    conda:
+        "../envs/deeptools.yaml"
+    threads:
+        MAX_THREADS
+    shell:
+        """
+        nb_reads_in_exo=`samtools view -c {input.bam_exo}`
+        sf=`bc -l <<<"100000/$nb_reads_in_exo"`
+        bamCoverage -b {input.bam_endo} --numberOfProcessors {threads} {params.extra} --normalizeUsing None --scaleFactor $sf -o {output.bw}
+        """
+
+
 #####################
 # ONLY LEGACY BELOW #
 #####################

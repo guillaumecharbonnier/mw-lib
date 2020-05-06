@@ -9,7 +9,7 @@ rule picard_MarkDuplicates_extra:
     """
     input:
         bam="out/{filler}.bam",
-        bai="out/{filler}.bam.bai"
+        #bai="out/{filler}.bam.bai" # bai may be not needed for this function. Testing this assumption on 2020-02-11 17:27:49
     output:
         bam =     "out/{tool}{extra}/{filler}.bam",
         metrics = "out/{tool}{extra}/{filler}.metrics.txt"

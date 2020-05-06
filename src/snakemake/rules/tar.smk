@@ -39,37 +39,68 @@ rule tar_xvzf:
     shell:
         "tar -xvzf {input} --directory {params.outdir}"
 
-rule tar_xvzf_Carrillo2017_roadmap:
+rule tar_xvzf_igenome:
+    """
+    Created:
+        2017-05-23 11:18:05
+    Aim:
+        Extract gzipped tar archive. This rule is used for igenome archive where we expect index files in specific directories regardless of the species and assemblies.
+        These archives also contain species- and assemblies- specific files (e.g. sequence of each chromosome) which can not be referenced by such generic rule.
+        If you need to reference these specific files in your workflow, please see rule tar_xvzf_igenome_NCBI_GRCh38 below.
+    Test:
+        out/tar/xvzf_igenome/Mus_musculus/UCSC/mm10/Sequence/Bowtie2Index/genome.1.bt2
+        out/tar/xvzf_igenome/Homo_sapiens/UCSC/hg38/Sequence/WholeGenomeFasta/genome.fa"
+        out/tar/xvzf_igenome/Homo_sapiens/NCBI/GRCh38/Sequence/Bowtie2Index/genome.1.bt2
+    """
     input:
-        "out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/ROADMAP.tar.gz"
+        # Testing for deprecation on 2018-01-10 12:18:41
+        #"out/wget/ftp_igenome/{specie}/{source}/{index}/{specie}_{source}_{index}.tar.gz"
+        "out/wget/ftp/igenome:G3nom3s4u@ussd-ftp.illumina.com/{specie}/{source}/{index}/{specie}_{source}_{index}.tar.gz"
     output:
-        [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_roadmap.txt","r")]
+        #expand("out/tar/xvzf_igenome/{{specie}}/{{source}}/{{index}}/{igenome_files}", igenome_files=["Sequence/Bowtie2Index/genome.1.bt2", "Sequence/WholeGenomeFasta/genome.fa", "Annotation/Genes/genes.gtf"])
+        expand("out/tar/xvzf_igenome/{{specie}}/{{source}}/{{index}}/{igenome_files}", igenome_files=[x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_igenome.txt", "r")])
+    params:
+        outdir="out/tar/xvzf_igenome"
+    wildcard_constraints:
+        specie="[A-Za-z_]+",
+        source="UCSC|Ensembl|NCBI"
     shell:
-        "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_roadmap"
+        """
+        tar -xvzf {input} --directory {params.outdir}
+        touch {output} # Without this touch the timestamp on the file makes it always older than the input tar archive, leading Snakemake to redo this rule every time.
+        """
+
+rule test_multiple_tar_xvzf_igenome:
+    input:
+        expand("out/tar/xvzf_igenome/{specie}/{source}/{index}/Sequence/Bowtie2Index/genome.1.bt2", zip, 
+        specie=["Saccharomyces_cerevisiae","Drosophila_melanogaster","Mus_musculus","Mus_musculus","Homo_sapiens"],
+        source=["UCSC"                    ,"UCSC"                   ,"Ensembl"     ,"UCSC"        ,"NCBI"],
+        index =["sacCer3"                 ,"dm6"                    ,"GRCm38"      ,"mm9"         ,"GRCh38"])
+
+rule tar_xvzf_igenome_NCBI_GRCh38:
+    input: "out/wget/ftp/igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/NCBI/GRCh38/Homo_sapiens_NCBI_GRCh38.tar.gz"
+    output: [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_igenome_NCBI_GRCh38.txt", "r")]
+    shell: "tar -xvzf {input} --directory out/tar/xvzf_igenome_NCBI_GRCh38"
+
+rule tar_xvzf_Carrillo2017_roadmap:
+    input: "out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/ROADMAP.tar.gz"
+    output: [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_roadmap.txt","r")]
+    shell: "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_roadmap"
 
 rule tar_xvzf_Carrillo2017_encode:
-    input:
-        "out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/ENCODE.tar.gz"
-    output:
-        [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_encode.txt","r")]
-    shell:
-        "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_encode"
+    input: "out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/ENCODE.tar.gz"
+    output: [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_encode.txt","r")]
+    shell: "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_encode"
 
 rule tar_xvzf_Carrillo2017_blueprint_healthy:
-    input:
-        "out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/BLUEPRINT_healthy.tar.gz"
-    output:
-        [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_blueprint_healthy.txt","r")]
-    shell:
-        "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_blueprint_healthy"
+    input: "out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/BLUEPRINT_healthy.tar.gz"
+    output: [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_blueprint_healthy.txt","r")]
+    shell: "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_blueprint_healthy"
 
 rule tar_xvzf_Carrillo2017_blueprint_cell_lines:
-    input:
-        "out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/BLUEPRINT_cell_lines.tar.gz"
-    output:
-        [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_blueprint_cell_lines.txt","r")]
-    shell:
-        "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_blueprint_cell_lines"
+    input: "out/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/BLUEPRINT_cell_lines.tar.gz"
+    output: [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_blueprint_cell_lines.txt","r")]
+    shell: "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_blueprint_cell_lines"
 
 rule tar_xvzf_Carrillo2017_blueprint_disease:
     input:
@@ -78,45 +109,6 @@ rule tar_xvzf_Carrillo2017_blueprint_disease:
         [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_blueprint_disease","r")]
     shell:
         "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_blueprint_disease"
-
-
-
-
-rule tar_xvzf_igenome:
-    """
-    Created:
-        2017-05-23 11:18:05
-    Aim:
-        Extract gzipped tar archive. This rule is used for igenome archive where we expect bowtie index in specific directories.
-    Test:
-        out/tar/xvzf_igenome/Drosophila_melanogaster/UCSC/dm6/Sequence/Bowtie2Index
-        out/tar/xvzf_igenome/Mus_musculus/UCSC/mm10/Sequence/Bowtie2Index/genome.1.bt2
-        input:
-            out/wget/ftp/igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/UCSC/hg38/Homo_sapiens_UCSC_hg38.tar.gz
-        output:
-            out/tar/xvzf_igenome/Homo_sapiens/UCSC/hg38/Sequence/WholeGenomeFasta/genome.fa"
-    Note:
-        More output files could be explicited here if needed.
-    """
-    input:
-        # Testing for deprecation on 2018-01-10 12:18:41
-        #"out/wget/ftp_igenome/{specie}/{source}/{index}/{specie}_{source}_{index}.tar.gz"
-        "out/wget/ftp/igenome:G3nom3s4u@ussd-ftp.illumina.com/{specie}/{source}/{index}/{specie}_{source}_{index}.tar.gz"
-    output:
-        "out/tar/xvzf_igenome/{specie}/{source}/{index}/Sequence/Bowtie2Index/genome.1.bt2",
-        "out/tar/xvzf_igenome/{specie}/{source}/{index}/Sequence/WholeGenomeFasta/genome.fa",
-        "out/tar/xvzf_igenome/{specie}/{source}/{index}/Annotation/Genes/genes.gtf"
-    params:
-        outdir="out/tar/xvzf_igenome"
-    wildcard_constraints:
-        specie="[A-Za-z_]+",
-        source="UCSC|Ensembl|NCBI"
-    shell:
-        """
-        mkdir -p {output}
-        tar -xvzf {input} --directory {params.outdir}
-        touch {output} # Without this touch the timestamp on the file makes it always older than the input tar archive, leading Snakemake to redo this rule every time.
-        """
 
 rule tar_xvzf_danpos:
     """

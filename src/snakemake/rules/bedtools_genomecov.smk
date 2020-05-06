@@ -58,7 +58,7 @@ rule bedtools_genomecov_bed_to_bga:
     """
     input:
         bam = "out/{filler}.bed",
-        chromInfo = lambda wildcards: config['ids'][wildcards.chrominfo_id]
+        chromInfo = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id])
     output:
         bedgraph="out/{tool}{extra}_{chrominfo_id}/{filler}.bg"
     params:

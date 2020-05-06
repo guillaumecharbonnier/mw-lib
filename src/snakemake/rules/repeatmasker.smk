@@ -1,6 +1,5 @@
 rule repeatmasker_test1:
     """
-    out/repeatmasker/test2_-species_mouse_-a_-html/rnaspades/pe_test_h2al2/transcripts/transcripts.fasta.out
 
     $ ll out/repeatmasker/test1_-species_mouse_-a_-html/rnaspades/pe_test_h2al2/transcripts/
     -rw-rw-r-- 1 Charbonnier thymus  82M 31 janv. 01:10 transcripts.fasta.cat.gz
@@ -10,8 +9,10 @@ rule repeatmasker_test1:
     -rw-rw-r-- 1 Charbonnier thymus  49M 31 janv. 01:10 transcripts.fasta.out
     -rw-rw-r-- 1 Charbonnier thymus 201M 31 janv. 01:10 transcripts.fasta.masked
     -rw-rw-r-- 1 Charbonnier thymus 2,0K 31 janv. 01:10 transcripts.fasta.tbl
-
-
+    
+    Test:
+        out/repeatmasker/test2_-species_mouse_-a_-html/rnaspades/pe_test_h2al2/transcripts/transcripts.fasta.out
+        out/repeatmasker/test2_-species_mouse_-a_-html/gunzip/to-stdout/ln/updir/mw-sk/inp/transcripts/transcripts.fasta.out
     """
     input:
         fasta="out/{filler}/{filename}.fasta"

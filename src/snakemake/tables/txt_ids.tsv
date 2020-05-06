@@ -14,4 +14,4 @@ txt-gtf-values-protein-coding-TR-IG	["src/gtftk/file-with-values/gtf-ensembl-r93
 # refgene for ceas
 refgene-mm9	["out/gunzip/to-stdout/wget/http/liulab.dfci.harvard.edu/CEAS/src/mm9.refGene"]
 bed-mm9-test-macs2-peaks	["out/cut/_-f1-6/macs2/callpeak_--broad/samtools/index/samtools/sort/samtools/view_sam_to_bam_-q_30/bowtie2/se_mm9/sickle/se_-t_sanger_-q_30/sra-tools/fastq-dump_se/SRR3126243_over_SRR3126242_peaks.bed"]
-saf-mm10-test-macs2-peaks	out/awk/convert_bed_to_saf/macs2/callpeak_--broad/samtools/index/samtools/sort/samtools/view_sam_to_bam_-q_30/bowtie2/se_mm10/sickle/se_-t_sanger_-q_30/sra-tools/fastq-dump_se/SRR3126243_over_SRR3126242_peaks.saf
+saf-mm10-test-macs2-peaks	"out/awk/convert_bed_to_saf/macs2/callpeak_--broad/samtools/index/samtools/sort/samtools/view_sam_to_bam_-q_30/bowtie2/se_mm10/sickle/se_-t_sanger_-q_30/sra-tools/fastq-dump_se/SRR3126243_over_SRR3126242_peaks.saf"

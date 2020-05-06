@@ -150,7 +150,7 @@ rule gemBS_cpg_bigwig:
         txt="out/{filler}_cpg.txt.gz",
         gemBS="opt/miniconda/envs/gembs/bin/gemBS",
         samtools="opt/miniconda/envs/gembs/bin/samtools",
-        chrominfo = lambda wildcards: config['ids'][wildcards.chrominfo_id]
+        chrominfo = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id])
     output:
         bw_call = "out/gemBS/cpg-bigwig_l-{chrominfo_id}/{filler}.bs_call.bw",
         bw_cov  = "out/gemBS/cpg-bigwig_l-{chrominfo_id}/{filler}.bs_cov.bw"

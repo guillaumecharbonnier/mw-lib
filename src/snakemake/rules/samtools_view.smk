@@ -80,7 +80,9 @@ rule samtools_view_bam_to_txt_extra:
         2019-02-10 20:04:32
     Aim:
         For some combinations of arguments, samtools view outputs text file.
+
     Test:
+        out/samtools/view_bam_to_txt_-c/samtools/index/samtools/sort/samtools/view_sam_to_bam_-q_30/bowtie2/pe_dm6/sickle/pe_-t_sanger_-q_20/ln/alias/sst/all_samples/fastq/P5424_WT_H3K27ac.txt
     """
     input:
         bam = "out/{filler}.bam",
@@ -110,7 +112,7 @@ rule samtools_view_filter_bam_with_bed:
     input:
         bam = "out/{filler}.bam",
         bai = "out/{filler}.bam.bai",
-        bed = lambda wildcards: config['ids'][wildcards.bed_id],
+        bed = lambda wildcards: eval(config['ids'][wildcards.bed_id]),
     output:
         bam="out/{tool}{extra}_{bed_id}/{filler}.bam"
     wildcard_constraints:
@@ -394,7 +396,7 @@ rule samtools_view_bh_L:
     input:
         bam = "out/{filler}.bam",
         bai = "out/{filler}.bam.bai",
-        bed = lambda wildcards: config['ids'][wildcards.bed_id],
+        bed = lambda wildcards: eval(config['ids'][wildcards.bed_id]),
         samtools="opt/miniconda/envs/samtools/bin/samtools"
     output:
         bam="out/samtools/view_bh_L-{bed_id}/{filler}.bam"

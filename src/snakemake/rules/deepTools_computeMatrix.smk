@@ -9,7 +9,7 @@ rule deepTools_computeMatrix_extra:
     Test:
         out/deepTools/plotHeatmap_sortRegions-descend_sortUsing-region_length_averageTypeSummaryPlot-mean_colorList-blueCyanYellowOrangeRed_heatmapHeight-28_heatmapWidth-1_whatToShow-h_xAxisLabel-peak-center_refPointLabel-0_boxAroundHeatmaps-no/
        out/deepTools/computeMatrix_reference-point_--referencePoint_center_-b_2000_-a_2000_-bs_200_--sortRegions_keep_-R_hg38-dClust-rowFeature-ealpha-and-20-random-regions_-S_hg38-H3K27ac-thymus-merged-wiq.txt.gz
-       out/deepTools/plotHeatmap/deepTools/computeMatrix_reference-point_--referencePoint_center_-b_5000_-a_5000_--sortRegions_keep_-R_hg38-atac-peaks-from-wilson_-S_hg38-h3k27ac-cd34-ec-quantile-normalized.pdf
+       out/deepTools/plotHeatmap/deepTools/computeMatrix_reference-point_--referencePoint_center_-b_5000_-a_5000_--sortRegions_keep_bed-hg38-atac-peaks-from-wilson_bw-hg38-h3k27ac-cd34-ec-quantile-normalized.pdf
        out/deepTools/plotHeatmap/deepTools/compute_Matrix_scale-regions_bed-cd34-ec-common-atac-peaks-sorted-according-to-h3k27ac_bw-hg38-h3k27ac-cd34-ec-quantile-normalized.pdf
     """
     input:

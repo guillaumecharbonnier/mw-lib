@@ -7,11 +7,15 @@ rule sed_extra:
         Fastq from SOLID and converted by TGML workflow have a ! at the begining of qual line.
         I can remove it with this rule to match fastq produced by xsqtools+bbfast solid2fastq:
         out/sed/rm-first-exclam-in-fq/ln/abspath/gpfs/tagc/home/sadouni/reads/fastq/Run_75/Library_1/Run_75_L01_Library_1_F3.fastq
+        _g887656_i0
+        out/sed/trim-fasta-header-from-rnaspades/gunzip/to-stdout/ln/updir/mw-sk/inp/transcripts.fasta
     """
     input:
         "out/{filler}"
     output:
         temp("out/{tool}{extra}/{filler}")
+    log:
+        "out/{tool}{extra}/{filler}.log"
     params:
         extra = params_extra
     conda:
@@ -19,7 +23,7 @@ rule sed_extra:
     wildcard_constraints:
         tool="sed/"
     shell:
-        "sed {params} {input} > {output}"
+        "sed {params} {input} > {output} 2> {log}"
 
 
 ruleorder: sed_add_chr_legacy > sed_extra

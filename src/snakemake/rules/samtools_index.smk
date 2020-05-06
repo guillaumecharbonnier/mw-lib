@@ -48,9 +48,13 @@ rule samtools_index_legacy:
         bam="out/{filler}.bam",
     output:
         bai="out/{filler}.bam.bai"
+    log:
+        "out/{filler}.bam.bai.log"
+    benchmark:
+        "out/{filler}.bam.bai.benchmark.tsv"
     conda:
         "../envs/samtools.yaml"
     threads:
         1
     shell:
-        "samtools index {input.bam}"
+        "samtools index {input.bam} &> {log}"
