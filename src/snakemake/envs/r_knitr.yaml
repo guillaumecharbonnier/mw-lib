@@ -1,0 +1,23 @@
+# Deprecated, use r_rmd instead
+name:
+  r_knitr
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-knitr
+  - r-plotly
+  - r-rcolorbrewer
+  - r-ggpubr
+  - r-ggplot2
+  - r-data.table
+  - r-ggrepel
+  - r-reshape
+  - r-factominer 
+  - r-factoextra
+  - r-flexclust
+  - r-fastcluster # provides a replacement to R-base hclust to cluster more than 65536 rows.
+  - r-fpc # I want to try pamk
+  - r-rtsne
+
