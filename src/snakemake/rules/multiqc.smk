@@ -27,6 +27,24 @@ rule multiqc_dir:
         "rm -rf `dirname {output}`/multiqc_data; "
         "multiqc --outdir `dirname {output}` {params.extra} out/{wildcards.filler} &> {log}"
 
+rule find_md5sum:
+    """
+    Created:
+        2020-05-07 00:37:50
+    Aim:
+        Produce a file containing md5sum for all files (and symlinks) in a directory.
+    Test:
+        out/find/md5sum/ln/alias/sst/by_customer/Salva_Vahid/md5sum.txt
+    """
+    output:
+        "out/find/md5sum/{filler}/md5sum.txt"
+    shell:
+        """
+        WDIR=`pwd`
+        cd out/{wildcards.filler}
+        find * -type f -o -type l -exec md5sum '{{}}' + > $WDIR/{output}
+        """
+
 rule create_multiqc_filelist:
     """
     Test:

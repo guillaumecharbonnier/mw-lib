@@ -20,3 +20,7 @@ gtf-longs-merge-attr-GRCm38	["out/gtftk/short_long_longs/gtftk/merge_attr_gene_i
 gtf-longs-protein-coding-merge-attr-GRCm38	["out/gtftk/short_long_longs/gtftk/select_by_key_key-gene_biotype_value-protein_coding/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/wget/ftp_ensembl/pub/release-87/gtf/mus_musculus/Mus_musculus.GRCm38.87.gtf"]
 gtf-longs-protein-coding-no-blacklist-merge-attr-GRCm38	["out/gtftk/select_by_loc_f-GRCm38-blacklist_invert-match/gtftk/short_long_longs/gtftk/select_by_key_key-gene_biotype_value-protein_coding/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/wget/ftp_ensembl/pub/release-87/gtf/mus_musculus/Mus_musculus.GRCm38.87.gtf"]
 gtf-hg19-tfbs	["out/awk/tfbsConsSites_to_gtf.gtf"]
+#gtf-sacCer3-ucsc	["NO_GTF_FOR_SACCER3_FIND_ALTERNATIVE_out/tar/xvzf_igenome/Drosophila_melanogaster/UCSC/dm6/Annotation/Genes/genes.gtf"]
+#gtf-dm6-ensembl	["out/tar/xvzf_igenome/Drosophila_melanogaster/UCSC/dm6/Annotation/Genes/genes.gtf"]
+gtf-BDGP6-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-100/gtf/drosophila_melanogaster/Drosophila_melanogaster.BDGP6.28.100.gtf"]
+gtf-R64-1-1-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-100/gtf/saccharomyces_cerevisiae/Saccharomyces_cerevisiae.R64-1-1.100.gtf"]

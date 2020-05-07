@@ -1,4 +1,6 @@
 id	path
+fa-genome-BDGP6	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-100/fasta/drosophila_melanogaster/dna/Drosophila_melanogaster.BDGP6.28.dna_sm.toplevel.fa"]
+fa-genome-R64-1-1	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-100/fasta/saccharomyces_cerevisiae/dna/Saccharomyces_cerevisiae.R64-1-1.dna_sm.toplevel.fa"]
 fa-genome-mm9	["out/tar/xvzf_igenome/Mus_musculus/UCSC/mm9/Sequence/WholeGenomeFasta/genome.fa"]
 fa-genome-mm10	["out/tar/xvzf_igenome/Mus_musculus/UCSC/mm10/Sequence/WholeGenomeFasta/genome.fa"]
 fa-genome-GRCm38	["out/cat/assembly_ensembl/GRCm38.fa"]
