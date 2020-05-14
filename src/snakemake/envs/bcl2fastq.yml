@@ -1,0 +1,5 @@
+name: bcl2fastq
+channels:
+  - dranew
+dependencies:
+  - bcl2fastq
