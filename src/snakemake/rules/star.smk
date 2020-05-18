@@ -13,6 +13,8 @@ rule star_pe_extra:
     output:
         bam    = "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}.{extout}",
         log    = "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}/Log.final.out"
+    log:
+                 "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}.log"
     params:
         outdir = "out/star/pe_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}",
         extra = params_extra,
@@ -31,7 +33,7 @@ rule star_pe_extra:
         8
     shell:
         """
-        WDIR=`pwd`
+        ( WDIR=`pwd`
         mkdir -p {params.outdir}
         cd {params.outdir}
         STAR \
@@ -40,7 +42,7 @@ rule star_pe_extra:
             --sjdbGTFfile $WDIR/{input.gtf} \
             --runThreadN {threads} \
             {params.extin} {params.extout} {params.extra}
-        mv Aligned.sortedByCoord.out.bam $WDIR/{output.bam}
+        mv Aligned.sortedByCoord.out.bam $WDIR/{output.bam} ) &> {log}
         """
 
 rule star_se_extra:

@@ -25,7 +25,8 @@ rule multiqc_dir:
         "../envs/multiqc.yaml"
     shell:
         "rm -rf `dirname {output}`/multiqc_data; "
-        "multiqc --outdir `dirname {output}` {params.extra} out/{wildcards.filler} &> {log}"
+        "multiqc --outdir `dirname {output}` {params.extra} out/{wildcards.filler} &> {log}; "
+        "cd `dirname {output}`; rm -f index.html; ln -s multiqc_report.html index.html"
 
 rule find_md5sum:
     """
