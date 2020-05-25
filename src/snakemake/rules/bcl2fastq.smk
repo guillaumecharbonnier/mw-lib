@@ -34,11 +34,11 @@ rule bcl2fastq:
         Maybe checkpoints ?
 
     Test:
-        out/bcl2fastq/gpfs/projects/spicuglia/mw/inp/bcl/Run_310_200225_NS500637_0217_AH2JLTBGXF/Reports/html/tree.html
+        out/bcl2fastq/_--barcode-mismatches_1/gpfs/projects/spicuglia/mw/inp/bcl/Run_310_200225_NS500637_0217_AH2JLTBGXF/Reports/html/tree.html out/bcl2fastq/_--barcode-mismatches_1_--no-lane-splitting/gpfs/projects/spicuglia/mw/inp/bcl/Run_310_200225_NS500637_0217_AH2JLTBGXF/Reports/html/tree.html
     """
     input:
-        #"/{filler}/RunInfo.xml",
-        "/{filler}/SampleSheet.csv"
+        xml="/{filler}/RunInfo.xml",
+        csv="/{filler}/SampleSheet.csv"
         #"inp/bcl/Run_310_200225_NS500637_0217_AH2JLTBGXF/RunInfo.xml"
         #bcl2fastq_input
     output:
@@ -46,20 +46,28 @@ rule bcl2fastq:
         #directory("out/bcl2fastq/{filler}")
         #"out/bcl2fastq/{accession}/{experiment}/
         #clustering/{sample}")
-        "out/bcl2fastq/{filler}/Reports/html/tree.html"
+        xml="out/{tool}{extra}/{filler}/RunInfo.xml",
+        csv="out/{tool}{extra}/{filler}/SampleSheet.csv",
+        html="out/{tool}{extra}/{filler}/Reports/html/tree.html"
         #int_list
+    params:
+        extra = params_extra
+    wildcard_constraints:
+        tool="bcl2fastq/"
     threads:
-        1
+        8
     conda:
         "../envs/bcl2fastq.yml"
     log:
         #bcl2fastq_dir + "bcl2fastq.log"
-        "out/bcl2fastq/{filler}/log"
+        "out/{tool}{extra}/{filler}/log"
     shell:
         """
-        INDIR=`dirname {input}`
-        echo $INDIR
-        bcl2fastq --input-dir $INDIR/Data/Intensities/BaseCalls --runfolder-dir $INDIR --output-dir out/bcl2fastq/{wildcards.filler} --barcode-mismatches 1 &> {log}
+        cp {input.csv} {output.csv}
+        cp {input.xml} {output.xml}
+        INDIR=`dirname {input.csv}`
+        OUTDIR=`dirname {output.csv}`
+        bcl2fastq --input-dir $INDIR/Data/Intensities/BaseCalls --runfolder-dir $OUTDIR --output-dir $OUTDIR {params.extra} &> {log}
         """
 
 #find . -type f -name '*.fastq.gz' -mindepth 2 -exec ln -sf -- {} . \;
