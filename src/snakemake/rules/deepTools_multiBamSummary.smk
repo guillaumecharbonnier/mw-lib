@@ -9,7 +9,7 @@ rule deepTools_multiBamSummary_BED_extra:
     Doc:
         https://deeptools.readthedocs.io/en/develop/content/tools/multiBamSummary.html
     Test:
-        #out/deepTools/multiBamSummary_-e_100/bed-hg38-macs2-peaks-H3K27ac-thymus/bam-Blueprint-thymic-populations-H3K27ac.npz
+        #out/deepTools/multiBamSummary_BED_-e_100/bed-hg38-macs2-peaks-H3K27ac-thymus/bam-Blueprint-thymic-populations-H3K27ac.npz
     """
     input:
         bam = lambda wildcards: eval(config['ids'][wildcards.bam_list_id]),
@@ -20,13 +20,13 @@ rule deepTools_multiBamSummary_BED_extra:
     log:
             "out/{tool}{extra}/{bed_id}/{bam_list_id}.log"
     benchmark:
-            "out/{tool}{extra}_{bed_id}_{bam_list_id}.benchmark.tsv"
+            "out/{tool}{extra}/{bed_id}/{bam_list_id}.benchmark.tsv"
     params:
         extra = params_extra
     threads:
         16
     wildcard_constraints:
-        tool="deepTools/multiBamSummary"
+        tool="deepTools/multiBamSummary_BED"
     conda:
         "../envs/deeptools.yaml"
     shell:
@@ -41,7 +41,7 @@ rule deepTools_multiBamSummary_bins_extra:
     Doc:
         https://deeptools.readthedocs.io/en/develop/content/tools/multiBamSummary.html
     Test:
-        out/deepTools/multiBamSummary_-e_147/bam-mm10-H4K5K8acbu-R.npz
+        out/deepTools/multiBamSummary_bins_-e_147/bam-mm10-H4K5K8acbu-R.npz
     """
     input:
         bam = lambda wildcards: eval(config['ids'][wildcards.bam_list_id]),
@@ -57,7 +57,7 @@ rule deepTools_multiBamSummary_bins_extra:
     threads:
         16
     wildcard_constraints:
-        tool="deepTools/multiBamSummary",
+        tool="deepTools/multiBamSummary_bins",
         bam_list_id="bam-[A-Za-z0-9-]+"
     conda:
         "../envs/deeptools.yaml"
@@ -103,13 +103,14 @@ rule deepTools_plotCorrelation_extra:
     input:
         npz="out/{filler}.npz"
     output: 
-        pdf="out/{tool}{extra}_corMethod-{deepTools_plotCorrelation_corMethod}_whatToPlot-{deepTools_plotCorrelation_whatToPlot}/{filler}.pdf"
+        pdf="out/{tool}{extra}_corMethod-{corMethod}_whatToPlot-{whatToPlot}/{filler}.{ext}"
     params:
         extra = params_extra
     wildcard_constraints:
         tool="deepTools/plotCorrelation",
         corMethod="spearman|pearson",
-        whatToPlot="heatmap|scatterplot"
+        whatToPlot="heatmap|scatterplot",
+        ext="pdf|png|svg|eps"
     shell:
         "plotCorrelation --corData {input.npz} --plotFile {output.pdf} --corMethod {wildcards.corMethod} --whatToPlot {wildcards.whatToPlot} {params.extra}"
 
