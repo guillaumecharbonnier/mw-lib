@@ -1,0 +1,8 @@
+name:
+  manta
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - manta

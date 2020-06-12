@@ -1,18 +1,19 @@
-rule bedtools_intersect_extra:
+"""
+Note:
+    Depending on your needs, you may rather use on of these three rules:
+    bedtools_intersect_b_lambda_extra
+    bedtools_intersect_a_lambda_extra
+    bedtools_intersect_samedir_extra
+Doc:
+    https://bedtools.readthedocs.io/en/latest/content/tools/intersect.html
+"""
+
+rule bedtools_intersect_b_lambda_extra:
     """
     Created:
         2017-11-14 17:21:40
     Test:
-        "out/bedtools/intersect/default/bed1/danpos/dtriple_v2/samtools/merge/samtools/sam_to_bam/bowtie2/pe_mm9/fastx-toolkit/fastx_trimmer/len30/merge_lanes/run113_run119_run124/MNS-R-WT/danpos.smooth.positions/bed2/danpos/dtriple_v2/samtools/merge/samtools/sam_to_bam/bowtie2/pe_mm9/fastx-toolkit/fastx_trimmer/len30/merge_lanes/run113_run125_run126/PSK-SC-WT/danpos.smooth.positions.bed"
-
-expand("out/bedtools/genomecov/bed/danpos/dtriple_v2/samtools/merge/samtools/sam_to_bam/bowtie2/pe_mm9/fastx-toolkit/fastx_trimmer/len30/merge_lanes/run113_run119_run124/{sample}/danpos.smooth.positions.txt", sample=["MNS-P-WT","MNS-P-KO","MNS-R-WT","MNS-R-KO"])$
-        expand("out/bedtools/genomecov/bed/danpos/dtriple_v2/samtools/merge/samtools/sam_to_bam/bowtie2/pe_mm9/fastx-toolkit/fastx_trimmer/len30/merge_lanes/run113_run125_run126/{sample}/danpos.smooth.positions.txt", sample=["MNS-SC-WT","MNS-SC-KO","PSK-SC-WT","PSK-SC-KO"])
-
-        out/bedtools/intersect_-wa_-u_-b_hg38-fastkd1-run229-peaks-merge/gunzip/to-stdout/chromstar/fastkd1_h4k5ac_run229_g3_g5_as_ko/BROWSERFILES/mode-differential_mark-H4K5ac_binsize1000_stepsize500_combinations.bed
-        bedtools intersect -a out/macs2/callpeak_--broad/samtools/index/samtools/sort/samtools/view_sam_to_bam_-q_30/bowtie2/se_mm10/sickle/se_-t_sanger_-q_30/sra-tools/fastq-dump_se/SRR3126243_over_SRR3126242_peaks.bed -b out/samtools/index/samtools/sort/samtools/view_sam_to_bam_-q_30/bowtie2/se_mm10/sickle/se_-t_sanger_-q_30/sra-tools/fastq-dump_se/SRR3126243.bam
-
         out/bedtools/intersect_-wa_-b_bed-hg19-active-enhancers-thymopoiesis-tall-samples/sort/_-k1,1_-k2,2n/cat/cat-hg19-active-enhancers-thymopoiesis-tall-samples.bed
-
         out/bedtools/intersect_-b_bed-hg19-polycomb-in-at-least-4-thymocytes/r/active_tss_dynamics_hsc-tcell-tall-samples/at_least_3_TALL_no_thymocyte_tss.bed
     """
     input:
@@ -30,6 +31,49 @@ expand("out/bedtools/genomecov/bed/danpos/dtriple_v2/samtools/merge/samtools/sam
     shell:
         "bedtools intersect -a {input.features_a} -b {input.features_b} {params.extra} > {output.features_a_overlapping_features_b}"
 
+rule bedtools_intersect_a_lambda_extra:
+    """
+    Created:
+        2020-06-08 20:12:50
+    Test:
+    """
+    input:
+        features_b = "out/{filler}.{ext}",
+        features_a = lambda wildcards: eval(config['ids'][wildcards.bed_list_id])
+    output:
+        features_a_overlapping_features_b="out/{tool}{extra}_-a_{bed_list_id}/{filler}.{ext}"
+    params:
+        extra = params_extra
+    wildcard_constraints:
+        tool="bedtools/intersect",
+        ext="bam|bed|bedgraph|gff|vcf"
+    conda:
+        "../envs/bedtools.yaml"
+    shell:
+        "bedtools intersect -a {input.features_a} -b {input.features_b} {params.extra} > {output.features_a_overlapping_features_b}"
+
+rule bedtools_intersect_samedir_extra:
+    """
+    Created:
+        2020-06-06 23:47:32
+    Aim:
+        More convenient than rule above when both a and b are from the same directory.
+    Test:
+    """
+    input:
+        features_a = "out/{filler}/{a}.{ext}",
+        features_b = "out/{filler}/{b}.{ext}"
+    output:
+        features_a_overlapping_features_b="out/{tool}{extra}/{filler}/{a}_VS_{b}.{ext}"
+    params:
+        extra = params_extra
+    wildcard_constraints:
+        tool="bedtools/intersect",
+        ext="bam|bed|bedgraph|gff|vcf"
+    conda:
+        "../envs/bedtools.yaml"
+    shell:
+        "bedtools intersect -a {input.features_a} -b {input.features_b} {params.extra} > {output.features_a_overlapping_features_b}"
 
 ### Legacy past this point. Or very specific rules.
 

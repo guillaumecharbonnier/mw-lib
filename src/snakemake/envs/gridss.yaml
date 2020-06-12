@@ -1,0 +1,8 @@
+name:
+  gridss
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - gridss

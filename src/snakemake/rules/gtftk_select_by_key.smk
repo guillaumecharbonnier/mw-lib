@@ -4,6 +4,8 @@ rule gtftk_select_by_key_key_value:
         2017-09-20 12:00:36
     Aim:
         Select only some genes, e.g. coding genes because I do not want to deal with pseudogenes in my heatmaps.
+    Doc:
+        https://dputhier.github.io/pygtftk/selection.html?highlight=select_by_key#select-by-key
     Test:
         out/gtftk/select_by_key_key-gene_biotype_value-protein_coding/gunzip/to-stdout/wget/ftp_ensembl/pub/release-87/gtf/mus_musculus/Mus_musculus.GRCm38.87.gtf
         out/sort/coordinates_bed/gtftk/5p_3p_coord/sed/add_chr/gtftk/select_by_key_key-transcript_biotype_value-protein_coding/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-93/gtf/homo_sapiens/Homo_sapiens.GRCh38.93.bed
