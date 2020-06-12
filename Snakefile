@@ -65,7 +65,7 @@ onsuccess:
     #shell("{MAILAPP} -s 'workflow finished' {USERMAIL} < {log}")
     # mutt -s "Test from mutt" {USERMAIL} < {log}
 
-paths_onerrror = glob.glob('../mw*/src/snakemake/hooks/onerror/*')
+paths_onerror = glob.glob('../mw*/src/snakemake/hooks/onerror/*')
 onerror:
     shell("for path in {paths_onerror}; do . $path; done")
     #shell("{MAILAPP} -s 'an error occurred' {USERMAIL} < {log}")
