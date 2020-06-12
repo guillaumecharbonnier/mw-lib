@@ -1,0 +1,8 @@
+name:
+  smoove
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - smoove

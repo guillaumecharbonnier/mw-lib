@@ -1,0 +1,11 @@
+name:
+  pygtftk_bats
+channels:
+  - guillaumecharbonnier
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - pygtftk
+  - bats
+
