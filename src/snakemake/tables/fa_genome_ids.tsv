@@ -7,6 +7,8 @@ fa-genome-GRCm38	["out/cat/assembly_ensembl/GRCm38.fa"]
 #fa-genome-GRCh38	["out/samtools/faidx/cat/assembly_ensembl/GRCh38.fa"]
 #TODO: update all fa-genome paths to include "meta/index_fa"
 fa-genome-GRCh38	["out/meta/index_fa/cat/assembly_ensembl/GRCh38.fa"]
+fa-genome-GRCh38-ensembl-r100	["out/meta/index_fa/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-100/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna_sm.toplevel.fa"]
+fa-genome-hg38	["out/meta/index_fa/sed/add-chr-in-fa/cat/assembly_ensembl/GRCh38.fa"]
 fa-genome-GRCh37	["out/cat/assembly_ensembl/GRCh37.fa"]
 fa-genome-NCBIM37	["out/sed/rm-chr-in-fa/cat/assembly_ensembl/NCBIM37.fa"]
 fa-genome-hg19-main-chr	["out/samtools/faidx/cat/cat-assembly-ensembl/hg19.fa"]

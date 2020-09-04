@@ -2,6 +2,9 @@ rule bowtie2_build:
     """
     Modified:
         2017-05-06 14:53:46 - Tool is now installed with conda.
+    Note:
+        This rule will fail if fasta contains more than 4-billion nucleotides.
+        See rule below instead.
     Doc:
         http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml
     Test:
@@ -26,7 +29,34 @@ rule bowtie2_build:
         MAX_THREADS
     shell: 
         """
-        bowtie2-build {input.fasta} {params.index}
+        bowtie2-build --threads {threads} {input.fasta} {params.index}
+        """
+
+rule bowtie2_build_large_index:
+    """
+    Created:
+        2020-08-18 10:07:47
+    Note:
+        This variant of above rule is for fasta with more than 4-billion nucleotides when bowtie2-build output bt2l index instead of bt2 one.
+    Doc:
+        http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml
+    Test:
+    """
+    input:
+        #fasta="out/{filler}",
+        fasta = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+    output:
+        index_parts  = expand("out/bowtie2-build/{{fa_genome_id}}.{parts}.bt2l",
+            parts=["1","2","3","4","rev.1","rev.2"])
+    params:
+        index="out/bowtie2-build/{fa_genome_id}"
+    conda:
+        "../envs/bowtie2.yaml"
+    threads:
+        MAX_THREADS
+    shell: 
+        """
+        bowtie2-build --threads {threads} --large-index {input.fasta} {params.index}
         """
 
 

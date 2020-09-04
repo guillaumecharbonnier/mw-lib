@@ -6,9 +6,14 @@ gtf-hg38-ensembl	["out/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub
 gtf-mm10	["out/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/mus_musculus/Mus_musculus.GRCm38.95.gtf"]
 gtf-mm10-main-chr	["out/awk/extract_main_chr/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/mus_musculus/Mus_musculus.GRCm38.95.gtf"]
 gtf-GRCm38-main-chr	["out/awk/extract_main_chr/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/mus_musculus/Mus_musculus.GRCm38.95.gtf"]
+# Note: Before 2020-06-21 11:26:58 I thought release 67 was the latest with hg19 assembly. 
+# After, I use the true latest release for hg19: r87
 gtf-GRCh37-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/gtf/homo_sapiens/Homo_sapiens.GRCh37.67.gtf"]
 gtf-hg19-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/gtf/homo_sapiens/Homo_sapiens.GRCh37.67.gtf"]
 gtf-NCBIM37-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/gtf/mus_musculus/Mus_musculus.NCBIM37.67.gtf"]
+#
+gtf-GRCh37-ensembl-r87	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/grch37/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh37.87.gtf"]
+gtf-hg19-ensembl-r87	["out/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/grch37/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh37.87.gtf"]
 gtf-mm9-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/gtf/mus_musculus/Mus_musculus.NCBIM37.67.gtf"]
 gtf-mm9	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/gtf/mus_musculus/Mus_musculus.NCBIM37.67.gtf"]
 gtf-mm9CustomFt	["out/gtftk/bed_to_gtf_featureTypetest_sourcegc_workflow/awk/extract_xls_coordinates_to_bed6/macs2/callpeak_broad_BAMPE_mm_SPMRTrue/bam/mm9/merge_run140_run141/H4K5ac-Nut-WT_over_Input-Nut-WT_peaks.gtf"]

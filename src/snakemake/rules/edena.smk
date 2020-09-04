@@ -1,11 +1,13 @@
 rule edena_overlapping:
     """
+    Modified: 
+        2020-08-17 10:05:36 Added '_se' in tool name. Should lead to deprecation in old code. TODO: Add '_se' everywhere.
     Doc:
         https://oit.ua.edu/wp-content/uploads/2016/10/edena_referencemanual120926.pdf
     Note:
         Reads provided to edena should have same length, hence quality trimming, e.g. with sickle, should be skipped
     Test:
-        out/edena/overlapping/awk/sam_to_fastq/samtools/view_bam_to_sam/bedtools/intersect_-v_-b_bed-hg19-refgene-exons/samtools/index/samtools/sort/samtools/view_sam_to_bam/awk/extract_reads_with_insertions/bowtie2/se_-k_1_-q_hg19/bowtie/se_--chunkmbs_256_--best_--strata_-m_1_-n_2_ebwt-hg19/ln/alias/sst/all_samples/fastq/TH134_CD34_H3K27ac_unmapped.ovl
+        out/edena/overlapping_se/awk/sam_to_fastq/samtools/view_bam_to_sam/bedtools/intersect_-v_-b_bed-hg19-refgene-exons/samtools/index/samtools/sort/samtools/view_sam_to_bam/awk/extract_reads_with_insertions/bowtie2/se_-k_1_-q_hg19/bowtie/se_--chunkmbs_256_--best_--strata_-m_1_-n_2_ebwt-hg19/ln/alias/sst/all_samples/fastq/TH134_CD34_H3K27ac_unmapped.ovl
     """
     input:
         fastq="out/{filler}.fastq"
@@ -19,7 +21,7 @@ rule edena_overlapping:
         outdir="out/{tool}{extra}/{filler}",
         extra = params_extra
     wildcard_constraints:
-        tool="edena/overlapping"
+        tool="edena/overlapping_se"
     threads:
         1
         # Actually only use one thread even if more are provided
@@ -28,6 +30,41 @@ rule edena_overlapping:
         "../envs/edena.yaml"
     shell:
         "edena -nThreads {threads} {params.extra} -r {input.fastq} -p {params.outdir} &> {log}"
+
+
+rule edena_overlapping_pe:
+    """
+    Created:
+        2020-08-17 09:59:35
+    Doc:
+        https://oit.ua.edu/wp-content/uploads/2016/10/edena_referencemanual120926.pdf
+    Note:
+        Reads provided to edena should have same length, hence quality trimming, e.g. with sickle, should be skipped
+    Test:
+        out/edena/overlapping_pe/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/856_H3K27ac.ovl
+    """
+    input:
+        fq_1="out/{filler}_1.fastq",
+        fq_2="out/{filler}_2.fastq"
+    output:
+        "out/{tool}{extra}/{filler}.ovl"
+    log:
+        "out/{tool}{extra}/{filler}.log"
+    benchmark:
+        "out/{tool}{extra}/{filler}.benchmark.tsv"
+    params:
+        outdir="out/{tool}{extra}/{filler}",
+        extra = params_extra
+    wildcard_constraints:
+        tool="edena/overlapping_pe"
+    threads:
+        1
+        # Actually only use one thread even if more are provided
+        #MAX_THREADS
+    conda:
+        "../envs/edena.yaml"
+    shell:
+        "edena -nThreads {threads} {params.extra} -DRpairs {input.fq_1} {input.fq_2} -p {params.outdir} &> {log}"
 
 rule edena_assembling:
     """

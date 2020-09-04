@@ -22,7 +22,7 @@ rule bowtie2_single_end_extra_misc_inps:
         index=params_bowtie2_index_base_path
     wildcard_constraints:
         tool="bowtie2/se",
-        ext="fastq|fasta|fastq.gz|fasta.gz"
+        ext="fastq|fasta|fa|fastq.gz|fasta.gz"
     conda:
         "../envs/bowtie2.yaml"
     threads:

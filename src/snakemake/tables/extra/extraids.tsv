@@ -32,9 +32,13 @@ mysql/	ucsc-desc-refgene-hg19.tsv	--user=genome -N --host=genome-mysql.cse.ucsc.
 star/se	standard	--outFilterMismatchNoverLmax 0.08 --outFilterMultimapNmax 1 --genomeLoad NoSharedMemory
 star/pe	standard	--outFilterMismatchNoverLmax 0.08 --outFilterMultimapNmax 1 --genomeLoad NoSharedMemory
 sed/	rm-chr-in-fa	's/^>chr/>/'
+sed/	add-chr-in-fa	's/^>/>chr/'
 sed/	add-chr	'/^#/! s/^/chr/g'
 sed/	rm-first-exclam-in-fq	's/^!//'
 sed/	trim-fasta-header-from-rnaspades	-r "s/_g[0-9]+_i[0-9]+$//g"
+grep/	extract-indel-from-vcf	-E "^#|INDEL"
 bbmap/reformat	nuc-length	minlength=130 maxlength=200
 bbmap/reformat	ss-length	minlength=30 maxlength=100
 gtftk/ologram	tfbs	--no-basic-feature --more-keys tf_id
+bbnorm/se	no-low-depth-filter	min=0
+bbnorm/pe	no-low-depth-filter	min=0

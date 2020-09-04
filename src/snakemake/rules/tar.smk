@@ -110,6 +110,12 @@ rule tar_xvzf_Carrillo2017_blueprint_disease:
     shell:
         "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_blueprint_disease"
 
+rule tar_meme:
+    input:
+        "out/wget/http/meme-suite.org/meme-software/Databases/motifs/motif_databases.12.19.tgz"
+    shell:
+        "tar -xvzf {input} --directory out/tar_meme"
+
 rule tar_xvzf_danpos:
     """
 
