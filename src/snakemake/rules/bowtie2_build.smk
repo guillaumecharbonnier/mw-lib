@@ -8,8 +8,9 @@ rule bowtie2_build:
     Doc:
         http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml
     Test:
-    out/bowtie2-build/wget/ftp/ftp.ensembl.org/pub/release-100/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.22.fa.gz.1.bt2
-    out/bowtie2-build/fa-genome-GRCh38-chr22.1.bt2
+        out/bowtie2-build/wget/ftp/ftp.ensembl.org/pub/release-100/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.22.fa.gz.1.bt2
+        out/bowtie2-build/fa-genome-GRCh38-chr22.1.bt2
+        out/bowtie2-build/fa-ncrna-GRCh38-ensembl-r101.1.bt2
         #index_parts  = expand("out/bowtie2-build/{{filler}}.{parts}.bt2",
     """
     input:

@@ -11,6 +11,7 @@ rule cutadapt_single_end_extra:
         (EXPERIMENTAL).
     Test:
         out/cutadapt/se_-q_30/sra-tools/fastq-dump_se/SRR1202037.fastq
+        out/cutadapt/se_-a_TGGAATTCTCGGGTGCCAAGG_--minimum-length_23/ln/updir/mw-el-cherif/inp/fastq/Run_295/S003257_batch_A_297_603-1_R1.fastq.gz
     """
     input:
         "out/{filler}.{ext}"

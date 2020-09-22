@@ -28,3 +28,4 @@ fa-genome-hg19-main-chr-and-contigs-with-insert-gt-3bp-in-T11C-all-DNA-samples	[
 # So I keep the old id above and add aliases with the 's' below
 fa-genome-hg19-main-chr-and-contigs-with-inserts-gt-3bp-in-T11C-H3K27ac	["out/awk/aggregate_fa_genome_and_sam_contigs_with_inserts_gt_3bp_fa-genome-hg19-main-chr/bowtie2/se_fasta_Abraham2017_hg19/edena/assembling_-d_20_-c_20_-minCoverage_5/edena/overlapping/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/T11C_H3K27ac_contigs.fa"]
 fa-genome-hg19-main-chr-and-contigs-with-indels-gt-3bp-in-T11C-H3K27ac	["out/awk/aggregate_fa_genome_and_sam_contigs_with_indels_gt_3bp_fa-genome-hg19-main-chr/bowtie2/se_fasta_Abraham2017_hg19/edena/assembling_-d_20_-c_20_-minCoverage_5/edena/overlapping/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/T11C_H3K27ac_contigs.fa"]
+fa-ncrna-GRCh38-ensembl-r101	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-101/fasta/homo_sapiens/ncrna/Homo_sapiens.GRCh38.ncrna.fa"]
