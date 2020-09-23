@@ -25,7 +25,7 @@ rule megahit_se:
     conda:
         "../envs/megahit.yaml"
     threads:
-        1 # Spades scales memory consumption with number of threads, and can use huge amount of RAM.
+        MAX_THREADS
     shell:
         """
         rm -rf {params.outdir} #Megahit does not run if outdir exists
@@ -63,7 +63,7 @@ rule megahit_pe:
     conda:
         "../envs/megahit.yaml"
     threads:
-        1 # Spades scales memory consumption with number of threads, and can use huge amount of RAM.
+        MAX_THREADS
     shell:
         """
         rm -rf {params.outdir} #Megahit does not run if outdir exists
