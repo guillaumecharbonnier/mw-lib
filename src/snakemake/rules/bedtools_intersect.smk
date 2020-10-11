@@ -18,13 +18,14 @@ rule bedtools_intersect_b_lambda_extra:
     """
     input:
         features_a = "out/{filler}.{ext}",
-        features_b = lambda wildcards: eval(config['ids'][wildcards.bed_list_id])
+        features_b = lambda wildcards: eval(config['ids'][wildcards.feature_list_id])
     output:
-        features_a_overlapping_features_b="out/{tool}{extra}_-b_{bed_list_id}/{filler}.{ext}"
+        features_a_overlapping_features_b="out/{tool}{extra}_-b_{feature_list_id}/{filler}.{ext}"
     params:
         extra = params_extra
     wildcard_constraints:
         tool="bedtools/intersect",
+        feature_list_id = "[a-zA-Z0-9-]+",
         ext="bam|bed|bedgraph|gff|vcf"
     conda:
         "../envs/bedtools.yaml"
