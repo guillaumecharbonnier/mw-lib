@@ -1,18 +1,18 @@
-rule unzip_c:
+rule unzip_p:
     """
     Created:
         2020-02-19 09:12:23
     Aim:
         Unzip only one zipped file.
     Test:
-        out/unzip/c/wget/https/www.proteinatlas.org/download/proteinatlas.tsv
+        out/unzip/p/wget/https/www.proteinatlas.org/download/proteinatlas.tsv
     """
     input:
         "out/{filler}.zip"
     output:
-        "out/unzip/c/{filler}"
+        "out/unzip/p/{filler}"
     shell:
-        "unzip -c {input} > {output}"
+        "unzip -p {input} > {output}"
 
 rule unzip_d:
     """
@@ -35,6 +35,16 @@ rule unzip_d:
         unzip {input} -d {params.outdir}
         """
 
+rule unzip_d_affymetrix_na36:
+    input:
+        "out/wget/http/www.affymetrix.com/Auth/analysis/downloads/na36/ivt/PrimeView.na36.annot.csv.zip"
+    output:
+        "out/unzip/d_affymetrix_na36/PrimeView.na36.annot.csv",
+        "out/unzip/d_affymetrix_na36/3prime-IVT.AFFX_README.NetAffx-CSV-Files.txt"
+    params:
+        outdir="out/unzip/d_affymetrix_na36"
+    shell:
+        "unzip {input} -d {params.outdir}"
 
 rule unzip_d_bowtie_index_hg19_1kgmaj:
     input:
