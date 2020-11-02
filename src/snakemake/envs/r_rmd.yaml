@@ -43,4 +43,5 @@ dependencies:
   - r-rtsne
   - r-biocmanager
   - bioconductor-genomicranges
+  - r-r.utils # allows to load bz2 files with fread
 

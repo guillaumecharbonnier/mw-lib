@@ -30,6 +30,17 @@ rule deepTools_bamCoverage_extra:
         "bamCoverage --bam {input.bam} --numberOfProcessors {threads} {params.extra} -o {output.bw} &> {log}"
 
 rule deepTools_spikeIn_bamCoverage:
+    """
+    Aim:
+        Produce a spike-in-normalized bw file
+    Test:
+        out/deepTools/spikeIn_bamCoverage_BDGP6/samtools/sam_to_bam_bai_-q_30/bowtie2/pe_hg19/sickle/pe_-t_sanger_-q_20/ln/alias/sst/all_samples/fastq/Jurkat_DMSO_H3K4me3.bw
+
+        mw-sst/out/sickle/pe_-t_sanger_-q_20/ln/alias/sst/all_samples/fastq/Jurkat_DMSO_H3K4me3.
+
+        out/ln/alias/sst/all_samples/hg19/bam/Jurkat_DMSO_H3K4me3.bam
+
+    """
     input:
         bam_endo="out/{filler1}{assembly_endo}{filler2}.bam",
         bam_exo ="out/{filler1}{assembly_exo}{filler2}.bam"
@@ -39,10 +50,10 @@ rule deepTools_spikeIn_bamCoverage:
         extra = params_extra,
     wildcard_constraints:
         tool="deepTools/spikeIn_bamCoverage",
-        assembly_exo="dm6",
+        assembly_exo="dm6|BDGP6",
         assembly_endo="GRCm38|mm9|GRCh38|hg19"
     conda:
-        "../envs/deeptools.yaml"
+        "../envs/deeptools_samtools.yaml"
     threads:
         MAX_THREADS
     shell:

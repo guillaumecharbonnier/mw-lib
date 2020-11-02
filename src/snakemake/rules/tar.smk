@@ -55,7 +55,9 @@ rule tar_xvzf_igenome:
     input:
         # Testing for deprecation on 2018-01-10 12:18:41
         #"out/wget/ftp_igenome/{specie}/{source}/{index}/{specie}_{source}_{index}.tar.gz"
-        "out/wget/ftp/igenome:G3nom3s4u@ussd-ftp.illumina.com/{specie}/{source}/{index}/{specie}_{source}_{index}.tar.gz"
+        # Line below was used until 2020-10-19 22:08:48 when it became broken
+        #"out/wget/ftp/igenome:G3nom3s4u@ussd-ftp.illumina.com/{specie}/{source}/{index}/{specie}_{source}_{index}.tar.gz"
+        "out/wget/http/igenomes.illumina.com.s3-website-us-east-1.amazonaws.com/{specie}/{source}/{index}/{specie}_{source}_{index}.tar.gz"
     output:
         #expand("out/tar/xvzf_igenome/{{specie}}/{{source}}/{{index}}/{igenome_files}", igenome_files=["Sequence/Bowtie2Index/genome.1.bt2", "Sequence/WholeGenomeFasta/genome.fa", "Annotation/Genes/genes.gtf"])
         expand("out/tar/xvzf_igenome/{{specie}}/{{source}}/{{index}}/{igenome_files}", igenome_files=[x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_igenome.txt", "r")])
