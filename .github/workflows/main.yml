@@ -14,5 +14,5 @@ jobs:
     - name: Test workflow
       uses: snakemake/snakemake-github-action@v1.13.0
       with:
-        directory: .
+        directory: .test
         args: '--cores 1 --use-conda tests_light'
