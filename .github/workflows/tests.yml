@@ -1,0 +1,35 @@
+name: Tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  Testing:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+      with:
+        #repository: my-org/main
+        path: mw-lib
+    - name: Light unit tests
+      uses: snakemake/snakemake-github-action@v1.13.0
+      with:
+        directory: 'mw-lib'
+        snakefile: 'mw-lib/Snakefile'
+        args: '--cores 1 --use-conda light_unit_tests'
+    - name: Heavy unit tests
+      uses: snakemake/snakemake-github-action@v1.13.0
+      with:
+        directory: 'mw-lib'
+        snakefile: 'mw-lib/Snakefile'
+        args: '--cores 1 --use-conda --dag heavy_unit_tests'
+    - name: Integration tests
+      uses: snakemake/snakemake-github-action@v1.13.0
+      with:
+        directory: 'mw-lib'
+        snakefile: 'mw-lib/Snakefile'
+        args: '--cores 1 --use-conda --dag integration_tests'
