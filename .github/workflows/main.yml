@@ -16,8 +16,9 @@ jobs:
         #repository: my-org/main
         path: mw-lib
     - name: Test workflow
+      working-directory: mw-lib
       uses: snakemake/snakemake-github-action@v1.13.0
       with:
-        directory: 'mw-lib'
+        directory: '.'
         args: '--cores 1 --use-conda'
         stagein: 'pwd; ls'
