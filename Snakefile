@@ -8,8 +8,6 @@ import glob
 # Including other python imports.
 paths = glob.glob("../mw*/src/snakemake/imports.py")
 
-print('Test githubpages')
-
 # Including global constraints on wildcards
 paths.extend(glob.glob("../mw*/src/snakemake/wildcard_constraints.smk"))
 
@@ -49,6 +47,7 @@ rule target:
     threads: 1
     message: "-- Rule target completed. --"
     input:
+        "out/wget/ftp/ftp.ensembl.org/robots.txt"
         #Maybe add here the compilated doc for metaworkflow?
 
 # Note: sending email onsucess and onerror like this could be done adding your own
