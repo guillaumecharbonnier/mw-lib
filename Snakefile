@@ -8,6 +8,8 @@ import glob
 # Including other python imports.
 paths = glob.glob("../mw*/src/snakemake/imports.py")
 
+print('Test githubpages')
+
 # Including global constraints on wildcards
 paths.extend(glob.glob("../mw*/src/snakemake/wildcard_constraints.smk"))
 
@@ -74,4 +76,3 @@ onerror:
 #print(dir()) #will give you the list of in scope variables:
 #print(globals()) #will give you a dictionary of global variables
 #print(locals())
-
