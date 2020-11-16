@@ -1,0 +1,8 @@
+name: shovill
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - shovill
+  - coreutils

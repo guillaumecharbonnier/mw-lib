@@ -1,4 +1,4 @@
-MAX_THREADS=16
+MAX_THREADS=4
 
 # Acronym for danpos output.
 PPR = ["positions","peaks","regions"]

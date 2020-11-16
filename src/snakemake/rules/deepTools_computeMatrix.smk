@@ -36,3 +36,37 @@ rule deepTools_computeMatrix_extra:
         "--scoreFileName {input.bw} --outFileName {output.matrix} "
         "--numberOfProcessors {threads} &> {log}"
 
+rule deepTools_computeMatrix_SingleBw_extra:
+    """
+    Created:
+        2020-10-23 18:16:31
+    Aim:
+        Version of deepTools computeMatrix with only a single bw to avoid declaring them in tables.
+    Doc:
+        https://deeptools.readthedocs.io/en/develop/content/tools/computeMatrix.html#reference-point
+    Test:
+    """
+    input:
+        bw  = "out/{filler}.bw",
+        bed = lambda wildcards: eval(config['ids'][wildcards.bed_list_id])
+    output:
+        matrix = "out/{tool}{extra}_{bed_list_id}/{filler}.txt.gz"
+    log:
+                 "out/{tool}{extra}_{bed_list_id}/{filler}.log"
+    benchmark:
+                 "out/{tool}{extra}_{bed_list_id}/{filler}.benchmark.tsv"
+    params:
+        extra = params_extra
+    conda:
+        "../envs/deeptools.yaml"
+    wildcard_constraints:
+        tool="deepTools/computeMatrix",
+        bed_list_id = "bed-[a-zA-Z0-9-]+"
+    threads:
+        16
+    shell:
+        "computeMatrix {params.extra} --regionsFileName {input.bed} "
+        "--scoreFileName {input.bw} --outFileName {output.matrix} "
+        "--numberOfProcessors {threads} &> {log}"
+
+

@@ -27,8 +27,9 @@ wildcard_constraints:
     chain_id = "chain-[a-zA-Z0-9-]+",
     basename = "[a-zA-Z0-9-_]+",
     filename = "[a-zA-Z0-9_-]+",
-    index = "mm9|mm10|hg18|hg19|hg38|GRCh38|GRCm38|dm6|BDGP6|sacCer3", # Reference genome assembly
-    assembly = "mm9|mm10|hg18|hg19|hg38|GRCh38|GRCm38|dm6|BDGP6|sacCer3", # Reference genome assembly
+    #index = "mm9|mm10|hg18|hg19|hg38|GRCh38|GRCm38|dm6|BDGP6|sacCer3|GRCh38-ensembl-r100", # Reference genome assembly
+    index = "[a-zA-Z0-9-]+",
+    assembly = "mm9|mm10|hg18|hg19|hg38|GRCh38|GRCm38|dm6|BDGP6|sacCer3|GRCh38-ensembl-r100", # Reference genome assembly
     #gff_id = "mm9|mm10|mm10-chr1|hg18|hg19|hg38|GRCh38|GRCm38|dm6|sacCer3|GRCm38-Ensembl-91-chr19", # Reference genome assembly
     runtype = "se|pe", # Used to discriminate single and paired-ends specific rules.
     refType = "TSS|TES|center", # wildcards for deepTools computeMatrix, reference used in reference-point mode.

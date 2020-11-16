@@ -11,6 +11,7 @@ rule ucsc_bedGraphToBigWig:
             -unc - If set, do not use compression.
     Test:
         out/ucsc/bedGraphToBigWig_mm10/sort/coordinates_bed/bedtools/genomecov_bga_ibam_g-mm10/samtools/sort/samtools/view_bSh_q-30/bowtie2/pe_mm10/sickle/pe_-t_sanger_-q_30/ln/paired_end_remove_mate_prefix/gunzip/merge_lanes_nextseq500_paired_end/ln/alias/fastq/run207/H4K5ac-Nut-WT.bw
+        out/ucsc/bedGraphToBigWig_chrominfo-hg19/igvtools/tdftobedgraph/ln/updir/mw-tall/inp/GSE60104/GSM1464990_20140211_733.spikein.hg19.bedgraph.bw
     """
     input:
         BedGraph = "out/{filler}.BedGraph",
@@ -20,4 +21,6 @@ rule ucsc_bedGraphToBigWig:
     conda:
         "../envs/ucsc.yaml"
     shell:
-        "bedGraphToBigWig {input.BedGraph} {input.chromInfo} {output.bw}"
+        """
+        bedGraphToBigWig {input.BedGraph} {input.chromInfo} {output.bw}
+        """

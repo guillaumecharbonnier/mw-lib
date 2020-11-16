@@ -6,7 +6,7 @@ channels:
   - defaults
 dependencies:
   - conda
-  - snakemake = 5.18
+  - snakemake = 5.18 # 5.19 breaks the symlink use in some rules, eg samtools index leads to ChildIO error
   - rpy2
   - pandas
   - numpy

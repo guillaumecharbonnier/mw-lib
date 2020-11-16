@@ -1,0 +1,8 @@
+name:
+  grep
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - grep
