@@ -10,10 +10,14 @@ jobs:
   Testing:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout repo
+      uses: actions/checkout@v2
+      with:
+        #repository: my-org/main
+        path: mw-lib
     - name: Test workflow
       uses: snakemake/snakemake-github-action@v1.13.0
       with:
-        directory: .
+        directory: 'mw-lib'
         args: '--cores 1 --use-conda'
         stagein: 'pwd; ls'
