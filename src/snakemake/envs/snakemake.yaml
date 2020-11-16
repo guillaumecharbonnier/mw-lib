@@ -6,7 +6,7 @@ channels:
   - defaults
 dependencies:
   - conda
-  - snakemake
+  - snakemake = 5.18
   - rpy2
   - pandas
   - numpy
