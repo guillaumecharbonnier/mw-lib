@@ -262,7 +262,8 @@ rule star_build_index:
             --sjdbGTFfile {input.gtf}
 
         # Because Star produce a log into the wdir.
-        mv Log.out {params.outdir}/Log.out
+		# Edit: 17/09/2020: STAR now write log in output folder. mv no more required
+        #mv Log.out {params.outdir}/Log.out
         """
 
 rule star_build_index_legacy:
@@ -305,6 +306,6 @@ rule star_build_index_legacy:
             --sjdbGTFfile {input.gtf}
 
         # Because Star produce a log into the wdir.
-        mv Log.out {params.dir}/Log.out
+        #mv Log.out {params.dir}/Log.out
         """
 

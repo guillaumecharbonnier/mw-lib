@@ -6,6 +6,7 @@ snakemake/stdout	broad-analysis.dot	r_chen_test_clusterprofiler
 snakemake/stdout	thymus-mca.dot	out/r/thymus_article_mca_draft/fviz_mca_ind_arrange_7x14.pdf
 snakemake/stdout	ci-sst.dot	config_targets
 snakemake/stdout	gcthesis-example1.dot	gcthesis_task3
+snakemake/stdout	tgml-qc.dot	config_qc_targets
 deepTools/plotHeatmap	47aa	--whatToShow heatmap
 deepTools/plotHeatmap	74b0	--sortRegions no --interpolationMethod nearest --heatmapHeight 10 --heatmapWidth 1 --missingDataColor 1 --colorList '#313695,#B6DFEC,#FFF6B1,#F67C4A,#A70226' --whatToShow 'plot, heatmap and colorbar' --legendLocation upper-center --xAxisLabel ' ' --refPointLabel 0 --samplesLabel CD34 EC LC SP4 SP8
 deepTools/plotHeatmap	a860	--sortRegions no --heatmapHeight 10 --heatmapWidth 1 --colorList '#313695,#B6DFEC,#FFF6B1,#F67C4A,#A70226' --whatToShow 'plot, heatmap and colorbar' --legendLocation upper-center --xAxisLabel ' ' --refPointLabel 0 --samplesLabel HSC CD34 EC LC SP4 SP8

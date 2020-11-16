@@ -29,6 +29,7 @@ rule tar_xvzf:
         out/tar/xvzf/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/BLUEPRINT_cell_lines/done
         out/tar/xvzf/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/BLUEPRINT_disease/done
         out/tar/xvzf/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/ENCODE/done
+        out/tar/xvzf/wget/https/cf.10xgenomics.com/supp/cell-exp/refdata-gex-mm10-2020-A/done
     """
     input:
         "out/{filler}.tar.gz"
@@ -201,4 +202,12 @@ rule tar_xvzf_hmcan_diff_test_example:
         tar -xvzf {input} --directory {params.outdir}
         """
 
-
+rule tar_xvzf_genome_cellranger:
+    input:
+        "out/{filler}.tar.gz"
+    output:
+        touch("out/tar/xvzf_genome_cellranger/{filler}/done")
+    params:
+        outdir="out/tar/xvzf_genome_cellranger/{filler}"
+    shell:
+        "tar -xvzf {input} --directory `dirname {params.outdir}`"

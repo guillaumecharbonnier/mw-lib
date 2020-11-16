@@ -30,3 +30,7 @@ gtf-hg19-tfbs	["out/awk/tfbsConsSites_to_gtf.gtf"]
 #gtf-dm6-ensembl	["out/tar/xvzf_igenome/Drosophila_melanogaster/UCSC/dm6/Annotation/Genes/genes.gtf"]
 gtf-BDGP6-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-100/gtf/drosophila_melanogaster/Drosophila_melanogaster.BDGP6.28.100.gtf"]
 gtf-R64-1-1-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-100/gtf/saccharomyces_cerevisiae/Saccharomyces_cerevisiae.R64-1-1.100.gtf"]
+
+# gtf for cellranger
+gtf-GRCh38-cellranger ["http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.primary_assembly.annotation.gtf.gz"]
+gtf-GRCm38-cellranger ["http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M23/gencode.vM23.primary_assembly.annotation.gtf.gz"]
