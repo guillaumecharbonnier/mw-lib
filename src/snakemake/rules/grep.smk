@@ -16,6 +16,6 @@ rule grep_extra:
     wildcard_constraints:
         tool="grep/"
     conda:
-        "../envs/coreutils.yaml"
+        "../envs/grep.yaml"
     shell:
         "grep {params.extra} {input.txt} > {output.txt}"

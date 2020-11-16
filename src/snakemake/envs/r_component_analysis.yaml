@@ -1,6 +1,3 @@
-# Created: 2018-08-24 11:40:15
-# Modified: 2018-10-17 14:41:36
-# Modiffied: 2018-12-25 18:41:43
 # A R environment to do component analysis (PCA, MCA, ...)
 name:
   r_component_analysis
@@ -29,4 +26,8 @@ dependencies:
   - r-iotools
   - r-mltools
   - r-dbscan
+  - r-umap
+  - umap-learn
+  - r-pheatmap
+  - r-nmf
 

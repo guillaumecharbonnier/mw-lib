@@ -116,6 +116,25 @@ rule awk_trim_sam_query_name:
         awk 'BEGIN{{OFS=FS="\\t"}} {{$1=substr($1,1,250)}}1' {input} > {output}
         """
 
+rule awk_trim_fasta_seq_name:
+    """
+    Created:
+        2020-09-20 11:14:33
+    Aim:
+        It looks like FIMO crashes when it has to deal with fasta with too long seq_names.
+        This rule trim the seq_names to 250 characters to avoid that.
+    Test:
+        out/awk/trim_fasta_seq_name/python/vcf_to_flanking_sequence_fa-genome-GRCh38-ensembl-r100/grep/extract-indel-from-vcf/bcftools/mpileup_fa-genome-GRCh38-ensembl-r100/samtools/index/samtools/sort/samtools/view_sam_to_bam/bowtie2/se_fa_--rfg_1,1_-k_1_-q_-f_GRCh38-ensembl-r100/megahit/se/ln/alias/sst/all_samples/fastq/398_BT4_H3K27ac/final.contigs.fasta
+    """
+    input:
+        "out/{filler}.fasta"
+    output:
+        "out/awk/trim_fasta_seq_name/{filler}.fasta"
+    shell:
+        """
+        awk 'BEGIN{{OFS=FS="\\t"}} {{if ($0 ~ /^>/) {{$0=substr($0,1,250)}} }} {{print $0}}' {input} > {output}
+        """
+
 rule awk_extract_cluster:
     """
     out/awk/extract_cluster/deepTools/plotHeatmap_--kmeans_40_--boxAroundHeatmaps_no/deepTools/computeMatrix_reference-point_--referencePoint_center_-bs_5_-b_150_-a_150_bed-mm10-nuc-prcs-maxfuzz-40-minsmt-30-only-high-qual-fragments_bw-mnase-prcs-naked-nuc-ss/1.bed

@@ -61,3 +61,21 @@ rule igvtools_sort:
         "igvtools sort {input} {output}"
 
 
+rule igvtools_tdftobedgraph:
+    """
+    Created:
+        2020-09-30 22:28:38
+    Test:
+        out/igvtools/tdftobedgraph/ln/updir/mw-tall/inp/GSE60104/GSM1464990_20140211_733.spikein.hg19.bedgraph.BedGraph
+    """
+    input:
+        "out/{filler}.tdf"
+    output:
+        "out/igvtools/tdftobedgraph/{filler}.BedGraph"
+    conda:
+        "../envs/igvtools.yaml"
+    shell:
+        "igvtools tdftobedgraph {input} {output}"
+
+
+

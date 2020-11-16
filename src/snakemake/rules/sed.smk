@@ -13,7 +13,7 @@ rule sed_extra:
     input:
         "out/{filler}"
     output:
-        temp("out/{tool}{extra}/{filler}")
+        "out/{tool}{extra}/{filler}"
     log:
         "out/{tool}{extra}/{filler}.log"
     params:

@@ -32,6 +32,7 @@ ruleorder: crossmap_bam > samtools_index_legacy
 ruleorder: ln_srf_parent_dir > samtools_index_legacy
 ruleorder: ln_alias > samtools_index_legacy
 ruleorder: samtools_index > samtools_index_legacy
+ruleorder: samtools_sam_to_bam_bai_extra > samtools_index_legacy
 rule samtools_index_legacy:
     """
     Modified:

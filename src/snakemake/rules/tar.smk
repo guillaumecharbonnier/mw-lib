@@ -29,6 +29,7 @@ rule tar_xvzf:
         out/tar/xvzf/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/BLUEPRINT_cell_lines/done
         out/tar/xvzf/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/BLUEPRINT_disease/done
         out/tar/xvzf/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/paper_data_sets/chromatin_states_carrillo_build37/ENCODE/done
+        out/tar/xvzf/wget/https/cf.10xgenomics.com/supp/cell-exp/refdata-gex-mm10-2020-A/done
     """
     input:
         "out/{filler}.tar.gz"
@@ -55,7 +56,9 @@ rule tar_xvzf_igenome:
     input:
         # Testing for deprecation on 2018-01-10 12:18:41
         #"out/wget/ftp_igenome/{specie}/{source}/{index}/{specie}_{source}_{index}.tar.gz"
-        "out/wget/ftp/igenome:G3nom3s4u@ussd-ftp.illumina.com/{specie}/{source}/{index}/{specie}_{source}_{index}.tar.gz"
+        # Line below was used until 2020-10-19 22:08:48 when it became broken
+        #"out/wget/ftp/igenome:G3nom3s4u@ussd-ftp.illumina.com/{specie}/{source}/{index}/{specie}_{source}_{index}.tar.gz"
+        "out/wget/http/igenomes.illumina.com.s3-website-us-east-1.amazonaws.com/{specie}/{source}/{index}/{specie}_{source}_{index}.tar.gz"
     output:
         #expand("out/tar/xvzf_igenome/{{specie}}/{{source}}/{{index}}/{igenome_files}", igenome_files=["Sequence/Bowtie2Index/genome.1.bt2", "Sequence/WholeGenomeFasta/genome.fa", "Annotation/Genes/genes.gtf"])
         expand("out/tar/xvzf_igenome/{{specie}}/{{source}}/{{index}}/{igenome_files}", igenome_files=[x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_igenome.txt", "r")])
@@ -109,6 +112,12 @@ rule tar_xvzf_Carrillo2017_blueprint_disease:
         [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_blueprint_disease","r")]
     shell:
         "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_blueprint_disease"
+
+rule tar_meme:
+    input:
+        "out/wget/http/meme-suite.org/meme-software/Databases/motifs/motif_databases.12.19.tgz"
+    shell:
+        "tar -xvzf {input} --directory out/tar_meme"
 
 rule tar_xvzf_danpos:
     """
@@ -193,4 +202,12 @@ rule tar_xvzf_hmcan_diff_test_example:
         tar -xvzf {input} --directory {params.outdir}
         """
 
-
+rule tar_xvzf_genome_cellranger:
+    input:
+        "out/{filler}.tar.gz"
+    output:
+        touch("out/tar/xvzf_genome_cellranger/{filler}/done")
+    params:
+        outdir="out/tar/xvzf_genome_cellranger/{filler}"
+    shell:
+        "tar -xvzf {input} --directory `dirname {params.outdir}`"

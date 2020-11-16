@@ -1,7 +1,3 @@
-rule dev_imsindel:
-    input:
-        expand("out/imsindel/_fa-genome-GRCh38-r94-chr1/samtools/index/samtools/sort/samtools/view_sam_to_bam/bwa/mem_pe_fa-genome-GRCh38-r94-chr1/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/{sample}/1.out", sample=["Jurkat_SRR1509753_H3K27ac","Jurkat1_SRX2975115_H3K27ac","Jurkat2_SRR5789197_H3K27ac"])
-
 rule imsindel:
     """
     Test:
@@ -21,7 +17,8 @@ rule imsindel:
         extra = params_extra
     wildcard_constraints:
         tool="imsindel/"
-    threads: MAX_THREADS
+    threads:
+        MAX_THREADS
     conda:
         "../envs/imsindel.yaml"
     shell:

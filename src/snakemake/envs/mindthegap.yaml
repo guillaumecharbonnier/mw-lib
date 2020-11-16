@@ -1,0 +1,8 @@
+name: mindthegap
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - mindthegap
+

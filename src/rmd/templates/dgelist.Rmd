@@ -1,0 +1,9 @@
+<!--
+This template needs these variables to work properly:
+* rmd_template_settings$dge_list     = a DGEList object
+* rmd_template_settings$chunk_prefix = a camelCase prefix for the chunk labels
+* rmd_template_settings$design_list  = a list containing these items:
+  * formula = a string formula
+  * coef = The contrast
+  * design_chunk_stem = a UpperCamelCase string to append to chunk_prefix
+-->
