@@ -8,5 +8,5 @@ jobs:
     steps:
     - uses: snakemake/snakemake-github-action@v1.13.0
       with:
-        directory: '.test'
+        directory: '.'
         args: '--cores 1 --use-conda --conda-cleanup-pkgs cache tests_light'
