@@ -16,3 +16,4 @@ jobs:
       with:
         directory: .
         args: '--cores 1 --use-conda'
+        stagein: 'pwd; ls'
