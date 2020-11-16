@@ -3,7 +3,7 @@ rule gtftk_coverage_extra_chrominfo_bed_bw:
     Created:
         2017-03-07 15:47:19
     Aim:
-        Test gtftk coverage with a bed as input file.vas an alternative to featureCounts.
+        Test gtftk coverage with a bed as input file as an alternative to featureCounts.
         Use 'extra' wildcard to add desired short-named arguments.
     Note:
         Pseudocount forced to 0 because of a strange bug with default pseudocount=1:
@@ -27,7 +27,7 @@ rule gtftk_coverage_extra_chrominfo_bed_bw:
     wildcard_constraints:
         tool="gtftk/coverage"
     threads:
-        16
+        MAX_THREADS
     conda:
         "../envs/pygtftk.yaml"
     shell:

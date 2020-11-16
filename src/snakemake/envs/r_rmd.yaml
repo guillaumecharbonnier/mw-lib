@@ -41,4 +41,7 @@ dependencies:
   - r-fastcluster # provides a replacement to R-base hclust to cluster more than 65536 rows.
   - r-fpc # I want to try pamk
   - r-rtsne
+  - r-biocmanager
+  - bioconductor-genomicranges
+  - r-r.utils # allows to load bz2 files with fread
 

@@ -4,6 +4,8 @@ rule picard_MarkDuplicates_extra:
     """
     Created:
         2018-10-25 14:12:01
+    Modified:
+        2020-10-19 22:42:16 - Switched to new syntax
     Test:
         out/picard/MarkDuplicates_REMOVE_DUPLICATES=true/inp/bam/hg19_RNA-Seq_thymus/CD34plus.bam
     """
@@ -20,7 +22,7 @@ rule picard_MarkDuplicates_extra:
     conda:
         "../envs/picard.yaml"
     shell:
-        "picard MarkDuplicates I={input.bam} O={output.bam} M={output.metrics} {params.extra}"
+        "picard MarkDuplicates -I {input.bam} -O {output.bam} -M {output.metrics} {params.extra}"
 
 
 #rule picard_MarkDuplicates:

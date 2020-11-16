@@ -1,0 +1,21 @@
+name:
+  r_brgenomics
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bioconductor-brgenomics
+  - r-ggpubr
+  - bioconductor-rtracklayer
+  - bioconductor-edger
+  - r-data.table
+  - r-stringr
+  - r-rcolorbrewer
+  - r-ggpubr
+  - r-ggplot2
+  - r-data.table
+  - r-biocmanager
+  - bioconductor-genomicranges
+  - r-r.utils # allows to load bz2 files with fread
+

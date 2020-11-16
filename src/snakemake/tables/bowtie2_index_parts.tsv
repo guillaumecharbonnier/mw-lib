@@ -7,6 +7,7 @@ sacCer3	expand('out/tar/xvzf_igenome/Saccharomyces_cerevisiae/UCSC/sacCer3/Seque
 hg38	expand('out/tar/xvzf_igenome/Homo_sapiens/UCSC/hg38/Sequence/Bowtie2Index/genome.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])
 hg19	expand('out/tar/xvzf_igenome/Homo_sapiens/UCSC/hg19/Sequence/Bowtie2Index/genome.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])
 GRCh38	expand('out/tar/xvzf_igenome/Homo_sapiens/NCBI/GRCh38/Sequence/Bowtie2Index/genome.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])
+GRCh38-ensembl-r100	expand("out/bowtie2-build/fa-genome-GRCh38-ensembl-r100.{parts}.bt2l", parts=["1","2","3","4","rev.1","rev.2"])
 BDGP6	expand('out/bowtie2-build/fa-genome-BDGP6.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])
 R64-1-1	expand('out/bowtie2-build/fa-genome-R64-1-1.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])
-
+ncrna-GRCh38-ensembl-r101	expand("out/bowtie2-build/fa-ncrna-GRCh38-ensembl-r101.{part}.bt2", part=['1','2','3','4','rev.1','rev.2'])

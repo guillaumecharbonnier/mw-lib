@@ -6,6 +6,7 @@ rule scalpel_discovery:
     Doc:
         https://sourceforge.net/p/scalpel/wiki/Manual/
     Note:
+    --two-pass to test
     Test:
         out/scalpel/discovery_--single_--bed_chr1:47185416-47335629_fa-genome-GRCh38/samtools/index/samtools/sort/samtools/view_sam_to_bam/bwa/mem_se_fa-genome-GRCh38/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/Jurkat_SRR1057274_H3K27ac/bamfile.bam
         out/scalpel/discovery_--single_--bed_chr1:47000000-48000000_fa-genome-hg19-main-chr/samtools/index/samtools/sort/samtools/view_sam_to_bam/bwa/mem_se_fa-genome-hg19-main-chr/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/Jurkat_SRR1057274_H3K27ac/bamfile.bam
