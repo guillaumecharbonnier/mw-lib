@@ -1,9 +1,12 @@
-- name: First interaction
-  uses: actions/first-interaction@v1.1.0
-  with:
-    # Token for the repository. Can be passed in using {{ secrets.GITHUB_TOKEN }}
-    repo-token: 
-    # Comment to post on an individual's first issue
-    issue-message: # optional
-    # Comment to post on an individual's first pull request
-    pr-message: # optional
+name: Tests
+
+on: [pull_request, push]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: snakemake/snakemake-github-action@v1.13.0
+      with:
+        directory: '.test'
+        args: '--cores 1 --use-conda --conda-cleanup-pkgs cache tests_light'
