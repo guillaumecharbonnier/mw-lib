@@ -1,0 +1,9 @@
+name:
+  r_tgcabiolinks
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bioconductor-tcgabiolinks
+
