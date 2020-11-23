@@ -37,7 +37,7 @@ sed/	add-chr	'/^#/! s/^/chr/g'
 sed/	rm-first-exclam-in-fq	's/^!//'
 sed/	trim-fasta-header-from-rnaspades	-r "s/_g[0-9]+_i[0-9]+$//g"
 grep/	extract-indel-from-vcf	-E "^#|INDEL"
-grep/	extract-reads-with-0-1-mismatch-in-sam	-E "NM:i:[01][^0-9]"
+grep/	extract-reads-with-0-1-mismatch-in-sam	-E "^@|NM:i:[01][^0-9]"
 bbmap/reformat	nuc-length	minlength=130 maxlength=200
 bbmap/reformat	ss-length	minlength=30 maxlength=100
 gtftk/ologram	tfbs	--no-basic-feature --more-keys tf_id

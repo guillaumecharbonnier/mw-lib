@@ -139,6 +139,25 @@ rule unzip_d_hmcan_diff:
         sed -i 's|-Wall|-Wall -I /gpfs/projects/spicuglia/mw/opt/miniconda/envs/hmcan_diff/include|g' {output.makefile}
         """
 
+rule unzip_exceRpt:
+    """
+    Created:
+        2020-11-13 15:45
+    Test:
+    """
+    input:
+        "out/wget/https/github.com/rkitchen/exceRpt/archive/master.zip"
+    output:
+        "out/unzip/exceRpt/exceRpt-master/exceRpt_smallRNA"
+    wildcard_constraints:
+    params:
+        outdir="out/unzip/exceRpt/"
+    shell:
+        """
+        rm -rf out/unzip/exceRpt/
+        unzip {input} -d {params.outdir}
+        """
+
 
 
 

@@ -199,4 +199,33 @@ rule tar_xvzf_hmcan_diff_test_example:
         tar -xvzf {input} --directory {params.outdir}
         """
 
+rule tar_xvzf_exceRpt:
+    """
+    """
+    input:
+        "out/wget/https/github.com/rkitchen/exceRpt/archive/4.3.2.tar.gz"
+    output:
+        expand("out/tar/xvzf_exceRpt/exceRpt-4.3.2/{filler}", filler=["exceRpt_smallRNA", "mergePipelineRuns_functions.R", "mergePipelineRuns.R"])
+    params:
+        outdir="out/tar/xvzf_exceRpt/"
+    shell:
+        """
+        mkdir -p {output}
+        tar -xvzf {input} --directory {params.outdir}
+        """
+
+rule tar_xvzf_exceRptDB_hg38:
+    """
+    """
+    input:
+        "out/wget/http/org.gersteinlab.excerpt.s3-website-us-east-1.amazonaws.com/exceRptDB_v4_hg38_lowmem.tgz"
+    output:
+        expand("out/tar/xvzf_exceRptDB_hg38/{filler}", filler=["toto"])
+    params:
+        outdir="out/tar/xvzf_exceRptDB_hg38/"
+    shell:
+        """
+        mkdir -p {output}
+        tar -xvzf {input} --directory {params.outdir}
+        """
 
