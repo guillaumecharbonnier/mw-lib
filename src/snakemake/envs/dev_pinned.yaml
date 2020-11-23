@@ -11,7 +11,7 @@ dependencies:
   - vim
   - htop
   # Related to snakemake below:
-  - snakemake
+  - snakemake = 5.18
   - rpy2
   - pandas
   - xlrd # needed to load excel file with pandas

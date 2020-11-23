@@ -1,0 +1,16 @@
+name:
+  r_excerpt
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-plyr
+  - r-gplots
+  - bioconductor-marray
+  - r-reshape2
+  - r-tidyverse
+    #- r-tools
+  - bioconductor-rgraphviz
+  - r-scales
+

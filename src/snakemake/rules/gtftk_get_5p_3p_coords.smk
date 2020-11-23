@@ -11,6 +11,7 @@ rule gtftk_get_5p_3p_coords:
     Test:
         out/gtftk/get_5p_3p_coords/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-93/gtf/homo_sapiens/Homo_sapiens.GRCh38.93.bed
         out/gtftk/get_5p_3p_coords_-n_gene_name/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-93/gtf/homo_sapiens/Homo_sapiens.GRCh38.93.bed
+        out/gtftk/get_5p_3p_coords_-n_gene_name/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-75/gtf/homo_sapiens/Homo_sapiens.GRCh37.75.bed
     """
     input:
         gtf="out/{filler}.gtf"

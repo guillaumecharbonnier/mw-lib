@@ -14,6 +14,10 @@ rule meme_fimo:
         meme = lambda wildcards: config['ids'][wildcards.meme_id]
     output:
         expand("out/meme/fimo_{{meme_id}}/{{filler}}/{file}", file=['fimo.html', 'fimo.tsv'])
+    log:
+               "out/meme/fimo_{meme_id}/{filler}/log"
+    benchmark:
+               "out/meme/fimo_{meme_id}/{filler}/benchmark.tsv"
     params:
         outdir="out/meme/fimo_{meme_id}/{filler}"
     wildcard_constraints:
@@ -22,5 +26,5 @@ rule meme_fimo:
         "../envs/meme.yaml"
     shell:
         """
-        fimo --oc {params.outdir} {input.meme} {input.fasta}
+        fimo --oc {params.outdir} {input.meme} {input.fasta} &> {log}
         """

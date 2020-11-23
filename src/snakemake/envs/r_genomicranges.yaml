@@ -1,0 +1,10 @@
+name:
+  r_genomicranges
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-data.table
+  - r-biocmanager
+  - bioconductor-genomicranges

@@ -14,6 +14,7 @@ gtf-NCBIM37-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-
 #
 gtf-GRCh37-ensembl-r87	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/grch37/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh37.87.gtf"]
 gtf-hg19-ensembl-r87	["out/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/grch37/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh37.87.gtf"]
+gtf-GRCh37-ensembl-r87-protein-coding	["out/gtftk/select_by_key_key-gene_biotype_value-protein_coding/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/grch37/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh37.87.gtf"]
 gtf-mm9-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/gtf/mus_musculus/Mus_musculus.NCBIM37.67.gtf"]
 gtf-mm9	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/gtf/mus_musculus/Mus_musculus.NCBIM37.67.gtf"]
 gtf-mm9CustomFt	["out/gtftk/bed_to_gtf_featureTypetest_sourcegc_workflow/awk/extract_xls_coordinates_to_bed6/macs2/callpeak_broad_BAMPE_mm_SPMRTrue/bam/mm9/merge_run140_run141/H4K5ac-Nut-WT_over_Input-Nut-WT_peaks.gtf"]
