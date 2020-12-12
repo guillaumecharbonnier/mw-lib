@@ -34,6 +34,10 @@ dependencies:
   - bioconductor-tcgabiolinks
   - bioconductor-genomicranges
   - bioconductor-summarizedexperiment
+  - bioconductor-clusterprofiler
+  - bioconductor-org.hs.eg.db
+  - bioconductor-enrichplot
+  - bioconductor-reactomepa
   - bioconductor-egsea
   - bioconductor-egseadata
   - bioconductor-deseq2
