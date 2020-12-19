@@ -46,7 +46,7 @@ rule gtftk_coverage_extra_chrominfo_bed_single_bw:
     input:
         inputfile = lambda wildcards: eval(config['ids'][wildcards.bed_list_id]),
         chrominfo = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id]),
-        bw        = out/{filler}.bw
+        bw        = "out/{filler}.bw"
     output:
         txt="out/{tool}{extra}_{chrominfo_id}_{bed_list_id}/{filler}.txt"
     log:
