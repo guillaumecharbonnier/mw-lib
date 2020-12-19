@@ -41,7 +41,7 @@ rule gtftk_coverage_extra_chrominfo_bed_single_bw:
     Doc:
         https://dputhier.github.io/pygtftk/coverage.html#coverage
     Test:
-        out/gtftk/coverage_-x_chrominfo-hg19_bed-hg19-ec-sharp/ln/alias/sst/all_samples/hg19/bw/EC_H3K4me3.bw
+        out/gtftk/coverage_-x_chrominfo-hg19_bed-hg19-ec-sharp/ln/alias/sst/all_samples/hg19/bw/EC_H3K4me3.txt
     """
     input:
         inputfile = lambda wildcards: eval(config['ids'][wildcards.bed_list_id]),
