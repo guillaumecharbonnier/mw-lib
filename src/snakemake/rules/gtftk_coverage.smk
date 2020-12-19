@@ -3,8 +3,7 @@ rule gtftk_coverage_extra_chrominfo_bed_bw:
     Created:
         2017-03-07 15:47:19
     Aim:
-        Test gtftk coverage with a bed as input file as an alternative to featureCounts.
-        Use 'extra' wildcard to add desired short-named arguments.
+        Takes a GTF as input to compute bigwig coverage in regions of interest (promoter, transcript body, intron, intron_by_tx, tts…) or a BED6 to focus on user-defined regions.
     Note:
         Pseudocount forced to 0 because of a strange bug with default pseudocount=1:
             https://github.com/dputhier/gtftk/issues/125
@@ -34,6 +33,38 @@ rule gtftk_coverage_extra_chrominfo_bed_bw:
         """
         gtftk coverage {params} --inputfile {input.inputfile} --outputfile {output.txt} --chrom-info {input.chrominfo} --nb-proc {threads} {input.bw} &> {log}
         """
+
+rule gtftk_coverage_extra_chrominfo_bed_single_bw:
+    """
+    Aim:
+        gtftk coverage version with only one bw file as input.
+    Doc:
+        https://dputhier.github.io/pygtftk/coverage.html#coverage
+    Test:
+        out/gtftk/coverage_-x_chrominfo-hg19_bed-hg19-ec-sharp/ln/alias/sst/all_samples/hg19/bw/EC_H3K4me3.bw
+    """
+    input:
+        inputfile = lambda wildcards: eval(config['ids'][wildcards.bed_list_id]),
+        chrominfo = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id]),
+        bw        = out/{filler}.bw
+    output:
+        txt="out/{tool}{extra}_{chrominfo_id}_{bed_list_id}/{filler}.txt"
+    log:
+        "out/{tool}{extra}_{chrominfo_id}_{bed_list_id}/{filler}.log"
+    params:
+        extra = params_extra
+    wildcard_constraints:
+        tool="gtftk/coverage"
+    threads:
+        MAX_THREADS
+    conda:
+        "../envs/pygtftk.yaml"
+    shell:
+        """
+        gtftk coverage {params} --inputfile {input.inputfile} --outputfile {output.txt} --chrom-info {input.chrominfo} --nb-proc {threads} {input.bw} &> {log}
+        """
+
+
 
 rule gtftk_coverage_extra_chrominfo_gtf_bw:
     """
