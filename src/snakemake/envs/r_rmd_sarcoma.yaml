@@ -32,6 +32,7 @@ dependencies:
   - r-wgcna
   - r-biocmanager
   - bioconductor-tcgabiolinks
+  - bioconductor-complexheatmap
   - bioconductor-genomicranges
   - bioconductor-summarizedexperiment
   - bioconductor-clusterprofiler
