@@ -1,0 +1,105 @@
+<!--
+This template needs 
+* chunk_label_prefix
+* d = dds
+* r = res
+
+It should be called from 
+applyPostDeseq2Template()
+-->
+
+```{r {{chunk_label_prefix}}SaveResDeseq2, warning=F}
+rds_dir <- file.path(
+  output_dir,
+  "rds"
+)
+dir.create(
+  rds_dir,
+  recursive=TRUE,
+  showWarnings=FALSE
+)
+rds_file <- paste0(
+  opts_current$get("label"),
+  ".rds"
+)
+rds_filepath <- file.path(
+  rds_dir,
+  rds_file
+)
+r <- data.frame(
+  rowData(d),
+  r
+)
+saveRDS(
+  object = r,
+  file = rds_filepath
+)
+```
+
+```{r {{chunk_label_prefix}}PlotVolcanoDeseq2, warning=F, fig.cap=fig_cap}
+EnhancedVolcano(r,
+  lab = rownames(r),
+  x = "log2FoldChange",
+  y = "pvalue",
+  pCutoff = p_cutoff,
+  FCcutoff = FC_cutoff,
+  title = NULL,
+  subtitle = NULL
+)
+
+cols <- c(
+  "log2FoldChange",
+  "baseMean",
+  "pvalue",
+  "padj"
+)
+
+signif_genes <- r$pvalue < p_cutoff & abs(r$log2FoldChange) > FC_cutoff
+p <- produceDataTableWithButtons(r[signif_genes,])
+p <- formatRound(
+  table = p,
+  columns = cols,
+  digits = 7
+)
+p <- formatRound(
+  table = p,
+  columns = "lfcSE",
+  digits = 4
+)
+
+dt_dir <- file.path(
+  output_dir,
+  "DT"
+)
+
+dir.create(
+  dt_dir,
+  recursive=TRUE,
+  showWarnings=FALSE
+)
+
+dt_file <- paste0(
+  opts_current$get("label"),
+  ".html"
+)
+dt_filepath <- file.path(
+  dt_dir,
+  dt_file
+)
+dt_filepath_from_output_dir <- file.path(
+  "DT",
+  dt_file
+)
+
+fig_cap <- paste0(
+  "Volcano plot. [Link to table](",
+  dt_filepath_from_output_dir,
+  ")."
+)
+
+saveWidgetFix(
+  p,
+  file = dt_filepath
+)
+```
+
