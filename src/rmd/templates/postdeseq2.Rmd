@@ -30,15 +30,24 @@ r <- data.frame(
   rowData(d),
   r
 )
+
+r <- r[,names(r) %in% cols]
 saveRDS(
   object = r,
   file = rds_filepath
 )
 ```
 
-```{r {{chunk_label_prefix}}PlotVolcanoDeseq2, warning=F, fig.cap=fig_cap}
-EnhancedVolcano(r,
-  lab = rownames(r),
+```{r {{chunk_label_prefix}}PlotVolcanoDeseq2, warning=F, fig.cap=fig_cap, results="asis"}
+if ("hugo_symbol" %in% colnames(r)) {
+  labels <- r$hugo_symbol
+} else {
+  labels <- rownames(r)
+}
+
+EnhancedVolcano(
+  r,
+  lab = labels,
   x = "log2FoldChange",
   y = "pvalue",
   pCutoff = p_cutoff,
@@ -47,24 +56,20 @@ EnhancedVolcano(r,
   subtitle = NULL
 )
 
-cols <- c(
-  "log2FoldChange",
-  "baseMean",
-  "pvalue",
-  "padj"
-)
+numeric_cols <- unlist(lapply(r, is.numeric))
+numeric_cols <- names(numeric_cols[numeric_cols])
 
-signif_genes <- r$pvalue < p_cutoff & abs(r$log2FoldChange) > FC_cutoff
-p <- produceDataTableWithButtons(r[signif_genes,])
-p <- formatRound(
-  table = p,
-  columns = cols,
-  digits = 7
+signif_genes <- which(
+  r$pvalue < p_cutoff &
+  abs(r$log2FoldChange) > FC_cutoff &
+  !is.na(r$log2FoldChange)
 )
+r_signif <-r[signif_genes,]
+p <- produceDataTableWithButtons(r_signif)
 p <- formatRound(
   table = p,
-  columns = "lfcSE",
-  digits = 4
+  columns = numeric_cols,
+  digits = 7
 )
 
 dt_dir <- file.path(
@@ -92,7 +97,11 @@ dt_filepath_from_output_dir <- file.path(
 )
 
 fig_cap <- paste0(
-  "Volcano plot. [Link to table](",
+  "Volcano plot. Significant genes according to Pvalue < ",
+  p_cutoff,
+  " and |log2FoldChange| > ",
+  FC_cutoff,
+  " are highlighted in red and available in [this table](",
   dt_filepath_from_output_dir,
   ")."
 )
@@ -101,5 +110,26 @@ saveWidgetFix(
   p,
   file = dt_filepath
 )
+
+if ("hugo_symbol" %in% colnames(r)) {
+  dereg_genes <- r_signif$hugo_symbol
+  upreg_genes <- r_signif[r_signif$log2FoldChange > 0, ]$hugo_symbol
+  downreg_genes <- r_signif[r_signif$log2FoldChange < 0, ]$hugo_symbol
+
+  dereg_url <- getEnrichrUrlFromGenes(dereg_genes)
+  upreg_url <- getEnrichrUrlFromGenes(upreg_genes)
+  downreg_url <- getEnrichrUrlFromGenes(downreg_genes)
+
+  cat(
+    "* Enrichr results for all deregulated genes are available [here](",
+    dereg_url,
+    ")\n* Enrichr results for upregulated genes available [here](",
+    upreg_url,
+    ")\n* Enrichr results for downregulated genes available [here](",
+    downreg_url,
+    ")",
+    sep=""
+  )
+}
 ```
 
