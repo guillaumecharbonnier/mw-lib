@@ -120,8 +120,7 @@ if ("hugo_symbol" %in% colnames(r)) {
   urls$enrichr$dereg <- getEnrichrUrlFromGenes(dereg_genes)
   urls$enrichr$upreg <- getEnrichrUrlFromGenes(upreg_genes)
   urls$enrichr$downreg <- getEnrichrUrlFromGenes(downreg_genes)
-
-
+}
 
 # gProfiler works better with Ensembl Gene Ids.
 # It avoids questions for ambiguous genes.
@@ -152,7 +151,7 @@ if (type_ids %in% c("ensembl_gene_id", "hugo_symbol") ) {
     as_short_link = TRUE
   )
 
-    cat(
+  cat(
     "* Enrichr results for all deregulated genes are available [here](",
     urls$enrichr$dereg,
     ")\n* Enrichr results for upregulated genes are available [here](",
