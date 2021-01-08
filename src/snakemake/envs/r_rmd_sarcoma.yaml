@@ -10,6 +10,7 @@ dependencies:
   - pandoc=1.19 #requirement to render R Markdown.
   - r-codetools #requirement to avoid error after first R chunk during R Markdown rendering.
   - r-yaml
+  - r-httr
   - r-dt
   - r-styler
   - r-rcolorbrewer
@@ -30,6 +31,7 @@ dependencies:
   - r-factoextra
   - r-flexclust
   - r-wgcna
+  - r-gprofiler2
   - r-biocmanager
   - bioconductor-tcgabiolinks
   - bioconductor-complexheatmap

@@ -1,14 +1,14 @@
 getEnrichrUrlFromGenes <- function(genes) {
   req.body <- list(
-    list=paste(
+    list = paste(
       genes,
-      collapse="\n"
+      collapse = "\n"
     )
   )
   post.req <- httr::POST(
-    "http://maayanlab.cloud/Enrichr/addList", 
-    encode="multipart", 
-    body=I(req.body)
+    "http://maayanlab.cloud/Enrichr/addList",
+    encode = "multipart",
+    body = I(req.body)
   )
   url <- paste0(
     "https://amp.pharm.mssm.edu/Enrichr/enrich?dataset=",
