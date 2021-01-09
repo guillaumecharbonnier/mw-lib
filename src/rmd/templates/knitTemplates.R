@@ -48,6 +48,7 @@ knitPostDeseq2Template <- function(
 knitWgcnaTemplate <- function(
                               d = vsd,
                               selected_power = NULL,
+                              output_dir = book_from_rmd,
                               chunk_label_prefix = opts_current$get("label")) {
   src <- knitr::knit_expand("templates/wgcna.Rmd")
   res <- knitr::knit_child(

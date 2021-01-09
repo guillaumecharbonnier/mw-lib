@@ -424,14 +424,10 @@ if ("try-error" %in% class(res)) {
 }
 ```
 
-
-
 To check that module-to-genes reattribution is working as expected, heatmap of signal for VNN1 module is produced, both as absolute values and as Z-score ones.
 
 ```{r {{chunk_label_prefix}}PlotHeatmapVnn1ModuleAbsoluteValues, fig.cap=fig_cap}
 message(opts_current$get("label"))
-messageMemoryUsage()
-
 d_subset <- d[moduleColors == vnn1_module, ]
 pdf_path_from_book <- paste0(
   "plots/",
@@ -492,7 +488,6 @@ if (nrow(d_subset) > 2000) {
 
 ```{r {{chunk_label_prefix}}PlotHeatmapVnn1ModuleZscoreValues, fig.cap=fig_cap, results="asis"}
 message(opts_current$get("label"))
-messageMemoryUsage()
 pdf_path_from_book <- paste0(
   "plots/",
   opts_current$get("label"),
@@ -546,10 +541,10 @@ if (nrow(d_subset) > 2000) {
 ```
 
 ```{r {{chunk_label_prefix}}PlotGenesInVnn1ModuleCorPearson, fig.cap=fig_cap}
-fig_cap <- "Genes in VNN1 module plotted by Pearson correlation against it."
 if (nrow(d_subset) > 5000) {
   cat("VNN1 module contains more than 5000 genes. Correlation analysis is skipped")
 } else {
+  
   cor_subset <- cor(t(assay(d_subset)))
   d <- data.frame(
     cor_vs_VNN1 = cor_subset[,"ENSG00000112299"],
@@ -571,7 +566,48 @@ if (nrow(d_subset) > 5000) {
   )
   p <- p + geom_point()
   p <- p + geom_text_repel()
-  p
+  print(p)
+
+  r <- data.frame(
+    cor_vs_VNN1 = cor_subset[,"ENSG00000112299"],
+    rowData(d_subset)
+  )
+  
+  rdt <- produceDataTableWithButtons(r)
+  dt_dir <- file.path(
+    output_dir,
+    "DT"
+  )
+
+  dir.create(
+    dt_dir,
+    recursive=TRUE,
+    showWarnings=FALSE
+  )
+
+  dt_file <- paste0(
+    opts_current$get("label"),
+    ".html"
+  )
+  dt_filepath <- file.path(
+    dt_dir,
+    dt_file
+  )
+  dt_filepath_from_output_dir <- file.path(
+    "DT",
+    dt_file
+  )
+
+  fig_cap <- paste0(
+    "Genes in VNN1 module plotted by Pearson correlation against it. Details are available in [this table](",
+    dt_filepath_from_output_dir,
+    ")."
+  )
+
+  saveWidgetFix(
+    rdt,
+    file = dt_filepath
+  )
 }
 ```
 
@@ -580,12 +616,6 @@ message(opts_current$get("label"))
 if (nrow(d_subset) > 5000) {
   cat("More than 5000 genes in VNN1 module. Analysis skipped. You should try to reduce module size.")
 } else {
-  r <- data.frame(
-    cor_vs_VNN1 = cor_subset[,"ENSG00000112299"],
-     rowData(d_subset)
-  )
-  produceDataTableWithButtons(r)
-
   urls <- list()
   if ("hugo_symbol" %in% colnames(r)) {
     urls$enrichr$positive_correl_with_VNN1 <- getEnrichrUrlFromGenes(r[r$cor_vs_VNN1 > 0,]$hugo_symbol)
@@ -626,9 +656,9 @@ if (nrow(d_subset) > 5000) {
     )
     urls$gprofiler$multiquery <- gost(
       query = list(
-        dereg = r[, type_ids],
-        upreg = r[r$cor_vs_VNN1 > 0, type_ids],
-        downreg = r[r$cor_vs_VNN1 < 0, type_ids]
+        unsigned_correl_with_VNN1 = r[, type_ids],
+        positive_correl_with_VNN1 = r[r$cor_vs_VNN1 > 0, type_ids],
+        negative_correl_with_VNN1 = r[r$cor_vs_VNN1 < 0, type_ids]
       ),
       as_short_link = TRUE
     )
