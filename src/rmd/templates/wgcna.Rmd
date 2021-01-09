@@ -1,20 +1,24 @@
 
-```{r {{chunk_label_prefix}}CheckGoodSamples}
+
+There are `r nrow(d)` genes and `r ncol(d)` samples in the dataset.
+
+```{r {{chunk_label_prefix}}CheckGoodSamples, results="asis"}
 gsg <- goodSamplesGenes(t(assay(d)), verbose = 0)
 
-if (gsg$allOK) {
-  check_good_samples <- "All samples and genes look good for the analysis."
-} else {
-  check_good_samples <- "At least some samples or genes look not suitable for the analysis."
-}
-cat("Before filtering")
-dim(d)
 d <- d[gsg$goodGenes, gsg$goodSamples]
-cat("After filtering")
-dim(d)
-```
 
-There are `r nrow(d)` genes and `r ncol(d)` samples in the dataset for network creation. `r check_good_samples`
+if (gsg$allOK) {
+  cat("All samples and genes look good for the analysis.")
+} else {
+  cat(
+    "At least some samples or genes look not suitable for the co-expression analysis. After removing them, there remain",
+    nrow(d),
+    "genes and",
+    ncol(d),
+    "samples."
+  )
+}
+```
 
 ```{r {{chunk_label_prefix}}FindSoftThresholdPower, warning=FALSE}
 if (is.null(selected_power)) {
@@ -141,7 +145,7 @@ message("{{chunk_label_prefix}}FocusOnVanin1")
 ```{r {{chunk_label_prefix}}FocusOnVanin1}
 # tmp <- data.table(Gene_name=vst_data$rowData$Gene_name, mergedModule=mergedColors, module=moduleColors)
 tmp <- data.table(
-  Gene_name = rowData(d)$external_gene_name,
+  Gene_name = rowData(d)$hugo_symbol,
   Ensembl_Gene_Id = rowData(d)$ensembl_gene_id,
   module = moduleColors
 )
@@ -182,8 +186,21 @@ Here are the modules for a few genes of interest:
 Heatmap absolute and Zscore signal of all modules are available [**here**](plots/plotHeatmapSelectedModuleBicorUnsignedMergeCutHeight0Point15Power13/). Since both VNN1 and PPARG modules are quite close, an attempt to merge close modules could be attempted.
 -->
 
-```{r}
-message("{{chunk_label_prefix}}EnrichPathway")
+```{r {{chunk_label_prefix}}MultiQueryGprofiler, results="asis"}
+queries <- list()
+for (module in sort(unique(moduleColors))) {
+  queries[[module]] <- rowData(d)[moduleColors %in% module,"ensembl_gene_id"]
+}
+url_gprofiler <- gost(
+  query = queries,
+  as_short_link = TRUE
+)
+cat(
+  "g:Profiler results for all modules are available [here](",
+  url_gprofiler,
+  "). Since there are many modules, you should expect at least 1 minute computation on the g:Profiler website for this query. Check below for faster queries focused on VNN1 module.",
+  sep=""
+)
 ```
 
 ```{r {{chunk_label_prefix}}EnrichPathway, fig.width=16, fig.height=28, fig.cap='Pathway'}
@@ -199,11 +216,6 @@ res <- try(
   },
   silent = TRUE
 )
-
-if ("{{chunk_label_prefix}}" == 
-"resultsWgcnaTcgaSarcMalignantFibrousHistiocytomaManualPower9Knit") {
-  #browser()
-}
 
 if ("try-error" %in% class(res)) {
   print("No enriched Pathway term in these classes")
@@ -436,7 +448,7 @@ if (nrow(d_subset) > 2000) {
 } else if (nrow(d_subset) > 1) {
   p <- Heatmap(
     assay(d_subset),
-    row_labels = rowData(d_subset)$external_gene_name,
+    row_labels = rowData(d_subset)$hugo_symbol,
     km = 2,
     name = "RNA\nVST\nsignal",
     column_title = "Samples",
@@ -496,7 +508,7 @@ if (nrow(d_subset) > 2000) {
 } else if (nrow(d_subset) > 1) {
   p <- Heatmap(
     scaleRows(assay(d_subset)),
-    row_labels = rowData(d_subset)$external_gene_name,
+    row_labels = rowData(d_subset)$hugo_symbol,
     km = 2,
     name = "RNA\nZ-score of\nVST signal",
     column_title = "Samples",
@@ -533,7 +545,8 @@ if (nrow(d_subset) > 2000) {
 }
 ```
 
-```{r {{chunk_label_prefix}}PlotGenesInVnn1Module}
+```{r {{chunk_label_prefix}}PlotGenesInVnn1ModuleCorPearson, fig.cap=fig_cap}
+fig_cap <- "Genes in VNN1 module plotted by Pearson correlation against it."
 if (nrow(d_subset) > 5000) {
   cat("VNN1 module contains more than 5000 genes. Correlation analysis is skipped")
 } else {
@@ -545,7 +558,7 @@ if (nrow(d_subset) > 5000) {
   )
   d$label <- ifelse(
     d$rank < 5 | d$rank > max(d$rank) - 5,
-    d$external_gene_name,
+    d$hugo_symbol,
     ""
   )
   p <- ggplot(
@@ -557,212 +570,81 @@ if (nrow(d_subset) > 5000) {
     )
   )
   p <- p + geom_point()
+  p <- p + geom_text_repel()
   p
 }
 ```
 
-```{r {{chunk_label_prefix}}PrintGenesInVNN1Module}
+```{r {{chunk_label_prefix}}PrintGenesInVNN1ModuleAndQueryEnrichrGprofiler, results="asis"}
 message(opts_current$get("label"))
 if (nrow(d_subset) > 5000) {
+  cat("More than 5000 genes in VNN1 module. Analysis skipped. You should try to reduce module size.")
 } else {
-  produceDataTableWithButtons(
-    data.frame(
-      cor_vs_VNN1 = cor_subset[,"ENSG00000112299"],
-      rowData(d_subset)
+  r <- data.frame(
+    cor_vs_VNN1 = cor_subset[,"ENSG00000112299"],
+     rowData(d_subset)
+  )
+  produceDataTableWithButtons(r)
+
+  urls <- list()
+  if ("hugo_symbol" %in% colnames(r)) {
+    urls$enrichr$positive_correl_with_VNN1 <- getEnrichrUrlFromGenes(r[r$cor_vs_VNN1 > 0,]$hugo_symbol)
+    urls$enrichr$negative_correl_with_VNN1 <- getEnrichrUrlFromGenes(r[r$cor_vs_VNN1 < 0,]$hugo_symbol)
+    urls$enrichr$unsigned_correl_with_VNN1 <- getEnrichrUrlFromGenes(r$hugo_symbol)
+
+    cat(
+      "* Enrichr results for all genes in VNN1 module are available [here](",
+      urls$enrichr$unsigned_correl_with_VNN1,
+      ")\n* Enrichr results for genes in VNN1 module and positively correlated with it are available [here](",
+      urls$enrichr$positive_correl_with_VNN1,
+      ")\n* Enrichr results for genes in VNN1 module and negatively correlated with it are available [here](",
+      urls$enrichr$negative_correl_with_VNN1,
+      ")\n",
+      sep = ""
     )
-  )
-}
-```
-
-```{r {{chunk_label_prefix}}relateModulesToMetadataBicorUnsignedMergeCutHeight0Point15Power13}
-
-# MEs0 <- moduleEigengenes(t(assay(d)), moduleColors)$eigengenes
-# MEs <- orderMEs(MEs0)
-
-# datTrait <- vst_data$colData
-# datTrait$sex <- as.numeric(factor(datTrait$sex))
-# datTrait$smoking.bool <- as.numeric(factor(datTrait$smoking.bool))
-# # browser()
-# moduleTraitCor <- cor(MEs, datTrait, use = "p")
-# moduleTraitPvalue <- corPvalueStudent(moduleTraitCor, nrow(vst_data$colData))
-
-# textMatrix <- paste(signif(moduleTraitCor, 2),
-#   "\n(",
-#   signif(moduleTraitPvalue, 1),
-#   ")",
-#   sep = ""
-# )
-# dim(textMatrix) <- dim(moduleTraitCor)
-fig_width <- 5
-fig_height <- 5
-```
-
-```{r {{chunk_label_prefix}}plotHetmapRelationsModulesToMetadata, fig.cap=fig_cap, fig.width=fig_width, fig.height=fig_height}
-# fig_width <- 3 + ncol(moduleTraitCor) * 0.25
-# fig_height <- 3 + nrow(moduleTraitCor) * 0.25
-# fig_cap <- "Pearson correlation between module eigengene and metadata"
-
-# # par(mar = c(6, 8.5, 3, 3))
-# # Display the correlation values within a heatmap plot
-# labeledHeatmap(
-#   Matrix = moduleTraitCor,
-#   xLabels = names(vst_data$colData),
-#   yLabels = names(MEs),
-#   ySymbols = names(MEs),
-#   colorLabels = FALSE,
-#   colors = greenWhiteRed(50),
-#   textMatrix = textMatrix,
-#   # setStdMargins = FALSE,
-#   cex.text = 0.5,
-#   # zlim = c(-1,1),
-#   main = paste("Module-trait relationships")
-# )
-```
-
-```{r {{chunk_label_prefix}}preparePlotHeatmapSelectedModule, eval=FALSE}
-p_basename <- file.path(
-  book_from_rmd,
-  "plots",
-  opts_current$get("label")
-)
-
-p_basename_absolute <- paste0(p_basename, "/AbsoluteValues/")
-p_basename_zscore <- paste0(p_basename, "/ZscoreValues/")
-p_basename_zscore_kmeans2 <- paste0(p_basename, "/ZscoreValues_kmeans2/")
-
-dir.create(p_basename_absolute, recursive = TRUE)
-dir.create(p_basename_zscore)
-dir.create(p_basename_zscore_kmeans2)
-
-# No grey because it is too big for RAM
-selected_modules <- unique(tmp$module)
-selected_modules <- selected_modules[selected_modules != "grey"]
-
-for (selected_module in selected_modules) {
-  cat("Enrichments analyses for ", selected_module, " module")
-  selected_module_data <- assay(d)[which(tmp$module == selected_module), ]
-  selected_module_gene_name <- vst_data$rowData$Gene_name[which(tmp$module == selected_module)]
-  selected_module_entrez_id <- vst_data$rowData$entrez_id[which(tmp$module == selected_module)]
-
-  # fig_height <- min(49, 1 + 0.3*nrow(selected_module_data))
-  # fig_cap <- 'log2(vst) signal in VNN1 module. Rows were gene name is prefixed with "-" display negative Z-score for these genes, meaning their signal is anticorrelated with other genes in the cluster. [pdf version with readable genes and findable VNN1](plots/plotHeatmapVnn1ModuleBicorAbsoluteValues.pdf)'
-
-  p <- pheatmap(
-    mat = selected_module_data,
-    # annotation_col = to_display_data$colData[,interesting_metadata],
-    main = paste(selected_module, "module, absolute VST-normalized values"),
-    cluster_cols = FALSE,
-    labels_row = selected_module_gene_name,
-    fontsize = 8
-  )
-  p
-
-  p_filename <- paste0(
-    p_basename_absolute,
-    selected_module,
-    ".pdf"
-  )
-
-  ggsave(
-    filename = p_filename, p, limitsize = FALSE,
-    height = 1 + 0.28 * nrow(selected_module_data)
-  )
-
-  selected_module_data <- t(scale(t(selected_module_data)))
-
-  p <- pheatmap(
-    mat = selected_module_data,
-    # annotation_col = to_display_data$colData[,interesting_metadata],
-    main = paste(selected_module, "module, Zscore of VST-normalized values"),
-    cluster_cols = FALSE,
-    labels_row = selected_module_gene_name,
-    fontsize = 8
-  )
-  p
-
-  p_filename <- paste0(
-    p_basename_zscore,
-    selected_module,
-    ".pdf"
-  )
-
-  ggsave(
-    filename = p_filename, p, limitsize = FALSE,
-    height = 1 + 0.28 * nrow(selected_module_data)
-  )
-
-  p <- pheatmap(
-    mat = selected_module_data,
-    # annotation_col = to_display_data$colData[,interesting_metadata],
-    main = paste(selected_module, "module, Zscore of VST-normalized values"),
-    kmeans_k = 2,
-    cluster_cols = FALSE,
-    labels_row = selected_module_gene_name,
-    fontsize = 8
-  )
-
-  p_filename <- paste0(
-    p_basename_zscore_kmeans2,
-    selected_module,
-    ".pdf"
-  )
-
-  ggsave(
-    filename = p_filename, p, limitsize = FALSE,
-    height = 3
-  )
-
-  entrez_gene_list <- list()
-  entrez_gene_list$cluster_1 <- na.omit(selected_module_entrez_id[p$kmeans$cluster == 1])
-  entrez_gene_list$cluster_2 <- na.omit(selected_module_entrez_id[p$kmeans$cluster == 2])
-  print(paste("Cluster 1 can be associated with", length(entrez_gene_list$cluster_1), "genes with Entrez ID"))
-  print(paste("Cluster 2 can be associated with", length(entrez_gene_list$cluster_2), "genes with Entrez ID"))
-
-  res <- try(
-    {
-      compareCluster(
-        geneCluster = entrez_gene_list,
-        fun = "enricher",
-        TERM2GENE = msigdb,
-        universe = unique(na.omit(vst_data$rowData$entrez_id))
-      )
-    },
-    silent = TRUE
-  )
-
-  if ("try-error" %in% class(res)) {
-    print("No enriched Hallmarks term in the 2 kmeans clusters of this module")
-  } else {
-    p <- dotplot(res,
-      title = paste(selected_module, "module, Hallmarks for the 2-means clusters"),
-      showCategory = 30
-    )
-    p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
-    print(p)
   }
 
-  res <- try(
-    {
-      compareCluster(
-        geneCluster = entrez_gene_list,
-        fun = "enrichKEGG",
-        title = paste(selected_module, "module, KEGG for the 2-means clusters"),
-        pvalueCutoff = 0.05,
-        pAdjustMethod = "BH"
-      )
-    },
-    silent = TRUE
-  )
-
-  if ("try-error" %in% class(res)) {
-    print("No enriched Kegg term in these classes")
-  } else {
-    p <- dotplot(res,
-      showCategory = 30
+  # gProfiler works better with Ensembl Gene Ids.
+  # It avoids questions for ambiguous genes.
+  if ("ensembl_gene_id" %in% colnames(r)) {
+    type_ids <- "ensembl_gene_id"
+  } else if ("hugo_symbol" %in% colnames(r)) {
+    type_ids <- "hugo_symbol"
+  }
+  if (type_ids %in% c("ensembl_gene_id", "hugo_symbol") ) {
+    urls$gprofiler$unsigned_correl_with_VNN1 <- gost(
+      query = r[, type_ids],
+      as_short_link = TRUE
     )
-    p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
-    print(p)
+    urls$gprofiler$positive_correl_with_VNN1 <- gost(
+      query=r[r$cor_vs_VNN1 > 0, type_ids],
+      as_short_link = TRUE
+    )
+    urls$gprofiler$negative_correl_with_VNN1 <- gost(
+      query=r[r$cor_vs_VNN1 < 0, type_ids],
+      as_short_link = TRUE
+    )
+    urls$gprofiler$multiquery <- gost(
+      query = list(
+        dereg = r[, type_ids],
+        upreg = r[r$cor_vs_VNN1 > 0, type_ids],
+        downreg = r[r$cor_vs_VNN1 < 0, type_ids]
+      ),
+      as_short_link = TRUE
+    )
+
+    cat(
+      "* g:Profiler results for all genes in VNN1 module are available [here](",
+      urls$gprofiler$unsigned_correl_with_VNN1,
+      ")\n* g:Profiler results for genes in VNN1 module and positively correlated with it are available [here](",
+      urls$gprofiler$positive_correl_with_VNN1,
+      ")\n* g:Profiler results for genes in VNN1 module and negatively correlated with it are available [here](",
+      urls$gprofiler$negative_correl_with_VNN1,
+      ")\n* g:Profiler results for comparison of the three queries above are available [here](",
+      urls$gprofiler$multiquery,
+      ")",
+      sep=""
+    )
   }
 }
 ```
-
