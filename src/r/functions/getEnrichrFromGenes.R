@@ -12,6 +12,9 @@ getEnrichrUrlFromGenes <- function(genes) {
   )
   url <- paste0(
     "https://amp.pharm.mssm.edu/Enrichr/enrich?dataset=",
-    jsonlite::fromJSON(content(post.req, "text"))$shortId
+    jsonlite::fromJSON(httr::content(
+      post.req,
+      "text"
+    ))$shortId
   )
 }
