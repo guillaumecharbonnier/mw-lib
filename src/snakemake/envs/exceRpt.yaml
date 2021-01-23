@@ -1,0 +1,14 @@
+name: exceRpt
+channels:
+  - defaults
+  - bioconda
+  - conda-forge
+  - dranew
+dependencies:
+  - openjdk
+  - fastx_toolkit
+  - star=2.6.1d
+  - bowtie2
+  - samtools
+  - fastqc
+  - coreutils

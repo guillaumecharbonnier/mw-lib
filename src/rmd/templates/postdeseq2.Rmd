@@ -1,0 +1,173 @@
+<!--
+This template needs 
+* chunk_label_prefix
+* d = dds
+* r = res
+
+It should be called from 
+applyPostDeseq2Template()
+-->
+
+```{r {{chunk_label_prefix}}SaveResDeseq2, warning=F}
+rds_dir <- file.path(
+  output_dir,
+  "rds"
+)
+dir.create(
+  rds_dir,
+  recursive=TRUE,
+  showWarnings=FALSE
+)
+rds_file <- paste0(
+  opts_current$get("label"),
+  ".rds"
+)
+rds_filepath <- file.path(
+  rds_dir,
+  rds_file
+)
+r <- data.frame(
+  rowData(d),
+  r
+)
+
+r <- r[,names(r) %in% cols]
+saveRDS(
+  object = r,
+  file = rds_filepath
+)
+```
+
+```{r {{chunk_label_prefix}}PlotVolcanoDeseq2, warning=F, fig.cap=fig_cap, results="asis"}
+if ("hugo_symbol" %in% colnames(r)) {
+  labels <- r$hugo_symbol
+} else {
+  labels <- rownames(r)
+}
+
+EnhancedVolcano(
+  r,
+  lab = labels,
+  x = "log2FoldChange",
+  y = "pvalue",
+  pCutoff = p_cutoff,
+  FCcutoff = FC_cutoff,
+  title = NULL,
+  subtitle = NULL
+)
+
+numeric_cols <- unlist(lapply(r, is.numeric))
+numeric_cols <- names(numeric_cols[numeric_cols])
+
+signif_genes <- which(
+  r$pvalue < p_cutoff &
+  abs(r$log2FoldChange) > FC_cutoff &
+  !is.na(r$log2FoldChange)
+)
+r_signif <-r[signif_genes,]
+p <- produceDataTableWithButtons(r_signif)
+p <- formatRound(
+  table = p,
+  columns = numeric_cols,
+  digits = 7
+)
+
+dt_dir <- file.path(
+  output_dir,
+  "DT"
+)
+
+dir.create(
+  dt_dir,
+  recursive=TRUE,
+  showWarnings=FALSE
+)
+
+dt_file <- paste0(
+  opts_current$get("label"),
+  ".html"
+)
+dt_filepath <- file.path(
+  dt_dir,
+  dt_file
+)
+dt_filepath_from_output_dir <- file.path(
+  "DT",
+  dt_file
+)
+
+fig_cap <- paste0(
+  "Volcano plot. Significant genes according to Pvalue < ",
+  p_cutoff,
+  " and |log2FoldChange| > ",
+  FC_cutoff,
+  " are highlighted in red and available in [this table](",
+  dt_filepath_from_output_dir,
+  ")."
+)
+
+saveWidgetFix(
+  p,
+  file = dt_filepath
+)
+
+urls <- list()
+if ("hugo_symbol" %in% colnames(r)) {
+  dereg_genes <- r_signif$hugo_symbol
+  upreg_genes <- r_signif[r_signif$log2FoldChange > 0, ]$hugo_symbol
+  downreg_genes <- r_signif[r_signif$log2FoldChange < 0, ]$hugo_symbol
+
+  urls$enrichr$dereg <- getEnrichrUrlFromGenes(dereg_genes)
+  urls$enrichr$upreg <- getEnrichrUrlFromGenes(upreg_genes)
+  urls$enrichr$downreg <- getEnrichrUrlFromGenes(downreg_genes)
+}
+
+# gProfiler works better with Ensembl Gene Ids.
+# It avoids questions for ambiguous genes.
+if ("ensembl_gene_id" %in% colnames(r)) {
+  type_ids <- "ensembl_gene_id"
+} else if ("hugo_symbol" %in% colnames(r)) {
+  type_ids <- "hugo_symbol"
+}
+if (type_ids %in% c("ensembl_gene_id", "hugo_symbol") ) {
+  urls$gprofiler$dereg <- gost(
+    query = r_signif[, type_ids],
+    as_short_link = TRUE
+  )
+  urls$gprofiler$upreg <- gost(
+    query=r_signif[r_signif$log2FoldChange > 0, type_ids],
+    as_short_link = TRUE
+  )
+  urls$gprofiler$downreg <- gost(
+    query=r_signif[r_signif$log2FoldChange < 0, type_ids],
+    as_short_link = TRUE
+  )
+  urls$gprofiler$multiquery <- gost(
+    query = list(
+      dereg = r_signif[, type_ids],
+      upreg = r_signif[r_signif$log2FoldChange > 0, type_ids],
+      downreg = r_signif[r_signif$log2FoldChange < 0, type_ids]
+    ),
+    as_short_link = TRUE
+  )
+
+  cat(
+    "* Enrichr results for all deregulated genes are available [here](",
+    urls$enrichr$dereg,
+    ")\n* Enrichr results for upregulated genes are available [here](",
+    urls$enrichr$upreg,
+    ")\n* Enrichr results for downregulated genes are available [here](",
+    urls$enrichr$downreg,
+    ")\n* g:Profiler results for all deregulated genes are available [here](",
+    urls$gprofiler$dereg,
+    ")\n* g:Profiler results for upregulated genes are available [here](",
+    urls$gprofiler$upreg,
+    ")\n* g:Profiler results for downregulated genes are available [here](",
+    urls$gprofiler$downreg,
+    ")\n* g:Profiler results for comparison of the three queries above are available [here](",
+    urls$gprofiler$multiquery,
+    ")",
+    sep=""
+  )
+}
+```

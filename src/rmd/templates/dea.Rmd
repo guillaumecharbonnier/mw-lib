@@ -1,0 +1,118 @@
+<!--
+This template should be called from inside templates/3-results-4-umi-custom-workflow.Rmd
+-->
+
+```{r {{chunk_label_prefix}}ComputeDeseq2, warning=F}
+dds <- DESeqDataSetFromMatrix(
+  countData = dge_list_subset$counts,
+  colData = dge_list_subset$samples,
+  design = ~ {{ design }}
+)
+dds <- DESeq(dds)
+# resultsNames(dds) # lists the coefficients
+# res <- results(dds, name="condition_trt_vs_untrt")
+# or to shrink log fold changes association with condition:
+res <- lfcShrink(dds, coef = "{{coef}}", type = "apeglm")
+
+```
+
+```{r {{chunk_label_prefix}}SaveResDeseq2, warning=F}
+rds_dir <- file.path(
+  output_dir,
+  "rds"
+)
+dir.create(
+  rds_dir,
+  recursive=TRUE,
+  showWarnings=FALSE
+)
+rds_file <- paste0(
+  opts_current$get("label"),
+  ".rds"
+)
+rds_filepath <- file.path(
+  rds_dir,
+  rds_file
+)
+saveRDS(
+  object = data.frame(dge_list_subset$genes, res),
+  file = rds_filepath
+)
+```
+
+```{r {{chunk_label_prefix}}PlotVolcanoDeseq2, warning=F, fig.cap=fig_cap}
+EnhancedVolcano(res,
+  lab = rownames(res),
+  x = "log2FoldChange",
+  title = NULL,
+  subtitle = NULL,
+  # xlim = c(-5, 8),
+  y = "pvalue"
+)
+
+cols <- c(
+  "log2FoldChange",
+  "baseMean",
+  "pvalue",
+  "padj"
+)
+
+res <- data.frame(
+  dge_list_subset$genes,
+  res
+)
+
+p <- set1Datatable(res)
+p <- formatRound(
+  table = p,
+  columns = cols,
+  digits = 7
+)
+p <- formatRound(
+  table = p,
+  columns = "lfcSE",
+  digits = 4
+)
+
+dt_dir <- paste0(
+  "DT/",
+  opts_current$get("label"),
+  ".html"
+)
+
+dt_dir <- file.path(
+  output_dir,
+  "DT"
+)
+
+dir.create(
+  dt_dir,
+  recursive=TRUE,
+  showWarnings=FALSE
+)
+
+dt_file <- paste0(
+  opts_current$get("label"),
+  ".html"
+)
+dt_filepath <- file.path(
+  dt_dir,
+  dt_file
+)
+dt_filepath_from_output_dir <- file.path(
+  "DT",
+  dt_file
+)
+
+fig_cap <- paste0(
+  "Volcano plot. [Link to table](",
+  dt_filepath_from_output_dir,
+  ")."
+)
+
+saveWidgetFix(
+  p,
+  file = dt_filepath
+)
+```
+
