@@ -58,3 +58,18 @@ knitWgcnaTemplate <- function(
   )
   cat(res, sep = "\n")
 }
+
+
+knitRrho2Template <- function(rds1,
+                              rds2,
+                              output_dir = book_from_rmd,
+                              chunk_label_prefix = opts_current$get("label")) {
+
+  src <- knitr::knit_expand("templates/rrho2.Rmd")
+  res <- knitr::knit_child(
+    text = unlist(src),
+    envir = environment(),
+    quiet = TRUE
+  )
+  cat(res, sep = "\n")
+}

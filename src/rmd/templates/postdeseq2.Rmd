@@ -97,7 +97,9 @@ dt_filepath_from_output_dir <- file.path(
 )
 
 fig_cap <- paste0(
-  "Volcano plot. Significant genes according to Pvalue < ",
+  "Volcano plot. ",
+  nrow(r_signif),
+  " significant genes according to Pvalue < ",
   p_cutoff,
   " and |log2FoldChange| > ",
   FC_cutoff,
