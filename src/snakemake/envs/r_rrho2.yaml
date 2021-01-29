@@ -1,0 +1,9 @@
+name:
+  r_rrho2
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-devtools
+  - r-venndiagram

@@ -1,0 +1,45 @@
+name:
+  r_rmd_tgml_rna_kit_benchmark
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-rmarkdown
+  - r-bookdown
+  - pandoc=1.19 #requirement to render R Markdown.
+  - r-codetools #requirement to avoid error after first R chunk during R Markdown rendering.
+  - r-yaml
+  - r-httr
+  - r-dt
+  - r-styler
+  - r-rcolorbrewer
+  - r-ggpubr
+  - r-data.table
+  - r-r.utils # allows to load bz2 files with fread
+  - r-stringr
+  - r-nmf
+  - r-fastcluster # provides a replacement to R-base hclust to cluster more than 65536 rows.
+  - r-factoextra
+  - r-rcolorbrewer
+  - r-ggplot2
+  - r-ggally
+  - r-ggrepel
+  - r-ggcorrplot
+  - r-factominer
+  - r-factoextra
+  - r-flexclust
+  - r-gprofiler2
+  - r-circlize
+  - r-dendsort
+  - r-upsetr
+  - r-devtools
+  - r-biocmanager
+  - bioconductor-complexheatmap
+  - bioconductor-clusterprofiler
+  - bioconductor-org.hs.eg.db
+  - bioconductor-enrichplot
+  - bioconductor-deseq2
+  - bioconductor-apeglm
+  - bioconductor-enhancedvolcano
+

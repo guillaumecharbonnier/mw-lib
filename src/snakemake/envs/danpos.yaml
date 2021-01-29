@@ -4,7 +4,6 @@ channels:
   - bioconda
   - conda-forge
   - defaults
-  - guillaumecharbonnier
 dependencies:
   - danpos
   - samtools < 1

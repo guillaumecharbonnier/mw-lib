@@ -1,0 +1,224 @@
+x and y in this section refer to these DESeq2 analyses:
+
+* x={{rds1}}
+* y={{rds2}}
+
+```{r {{chunk_label_prefix}}Rrho2PlotHeatmap, warning=F, fig.cap=fig_cap}
+fig_cap <- "RRHO2 heatmap"
+if (!require("RRHO2", character.only = TRUE)) {
+  library(devtools)
+  install_github("RRHO2/RRHO2")
+}
+library(RRHO2)
+library(DESeq2)
+
+res1 <- readRDS(
+  file.path(
+    output_dir,
+    "{{rds1}}.rds"
+  )
+)
+
+res2 <- readRDS(
+  file.path(
+    output_dir,
+    "{{rds2}}.rds"
+  )
+)
+
+res1$signed_mlog10_pvalue <- -sign(res1$log2FoldChange) * log10(res1$pvalue)
+res2$signed_mlog10_pvalue <- -sign(res2$log2FoldChange) * log10(res2$pvalue)
+
+id <- names(res1)[1]
+
+res <- merge(res1, res2, by = id, all = TRUE)
+res[is.na(res)] <- 0
+
+RRHO_obj <- RRHO2_initialize(
+  res[, c(id, "signed_mlog10_pvalue.x")],
+  res[, c(id, "signed_mlog10_pvalue.y")],
+  labels = c("x", "y"),
+  log10.ind = TRUE
+)
+
+RRHO2_heatmap(RRHO_obj)
+```
+
+```{r {{chunk_label_prefix}}Rrho2PlotVennDd, warning=F, fig.cap=fig_cap}
+fig_cap <- "RRHO2 Venn diagram for downregulated genes"
+## down regulation genes in list1
+# RRHO_obj$genelist_dd$gene_list1_dd
+
+## down regulation genes in list2
+# RRHO_obj$genelist_dd$gene_list2_dd
+
+## overlap between down regulation genes in list1 and list2
+# RRHO_obj$genelist_dd$gene_list_overlap_dd
+
+#### Visualize by Venn Diagram
+RRHO2_vennDiagram(RRHO_obj, type = "dd")
+```
+
+```{r {{chunk_label_prefix}}Rrho2PlotTiles, fig.cap=fig_cap, fig.height=14, eval=FALSE}
+d <- melt(RRHO_obj$genelist_dd)
+
+# write(x=as.list(RRHO_obj$genelist_dd$gene_list1_dd),file="test.txt", sep="\n")
+
+p <- ggplot(
+  d,
+  aes(x = L1, y = value)
+)
+p <- p + geom_tile()
+p
+
+```
+
+```{r, cache=FALSE}
+fig_height <- min(
+  49,
+  0.5 + 0.2 * length(RRHO_obj$genelist_dd$gene_list_overlap_dd)
+)
+```
+```{r {{chunk_label_prefix}}Rrho2PlotPointsOverlapDd, fig.cap=fig_cap, fig.height=fig_height}
+fig_cap <- "RRHO2 overlapped down-regulated genes. Underlying values in the table below."
+cols <- c(
+  id,
+  "log2FoldChange.x",
+  "log2FoldChange.y",
+  "pvalue.x",
+  "pvalue.y"
+)
+
+res_overlap <- res[res[[id]] %in% RRHO_obj$genelist_dd$gene_list_overlap_dd, cols]
+DT <- produceDataTableWithButtons(res_overlap)
+
+res_overlap_x <- res_overlap[, grepl(
+  pattern = paste0(id,"|.x$"),
+  x = names(res_overlap)
+)]
+res_overlap_y <- res_overlap[, grepl(
+  pattern = paste0(id,"|.y$"),
+  x = names(res_overlap)
+)]
+
+res_overlap_x$condition <- "x"
+res_overlap_y$condition <- "y"
+
+names(res_overlap_x) <- sub(
+  pattern = ".x$",
+  replacement = "",
+  x = names(res_overlap_x)
+)
+
+names(res_overlap_y) <- sub(
+  pattern = ".y$",
+  replacement = "",
+  x = names(res_overlap_y)
+)
+res_overlap <- rbind(
+  res_overlap_x,
+  res_overlap_y
+)
+
+# cols <- c(
+#   "miRNA",
+#   "condition",
+#   "log2FoldChange",
+#   "pvalue"
+# )
+
+# res_overlap <- res_overlap[,cols]
+
+# res_overlap <- melt(
+#   res_overlap,
+#   measure.vars=c(
+#     "pvalue",
+#     "log2FoldChange"
+#   )
+# )
+
+p <- ggplot(
+  res_overlap,
+  aes(
+    x = condition,
+    y = get(id),
+    size = log2FoldChange,
+    color = pvalue
+  )
+)
+p <- p + geom_point()
+# p <- p + facet_grid( . ~ condition)
+p <- p + scale_size(trans = "reverse")
+p
+```
+```{r {{chunk_label_prefix}}Rrho2DataTablePointsOverlapDd}
+DT
+```
+
+```{r {{chunk_label_prefix}}Rrho2PlotVennUu, warning=F, fig.cap=fig_cap}
+fig_cap <- "RRHO2 Venn diagram for up-regulated genes"
+RRHO2_vennDiagram(RRHO_obj, type = "uu")
+
+fig_height <- min(
+  49,
+  0.5 + 0.2 * length(RRHO_obj$genelist_uu$gene_list_overlap_uu)
+)
+```
+
+```{r {{chunk_label_prefix}}Rrho2PlotPointsOverlapUu, fig.cap=fig_cap, fig.height=fig_height}
+fig_cap <- "RRHO2 overlapped up-regulated genes. Underlying values in the table below."
+cols <- c(
+  id,
+  "log2FoldChange.x",
+  "log2FoldChange.y",
+  "pvalue.x",
+  "pvalue.y"
+)
+
+res_overlap <- res[res[[id]] %in% RRHO_obj$genelist_uu$gene_list_overlap_uu, cols]
+DT <- produceDataTableWithButtons(res_overlap)
+
+res_overlap_x <- res_overlap[, grepl(
+  pattern = paste0(id,"|.x$"),
+  x = names(res_overlap)
+)]
+
+res_overlap_y <- res_overlap[, grepl(
+  pattern = paste0(id,"|.y$"),
+  x = names(res_overlap)
+)]
+
+res_overlap_x$condition <- "x"
+res_overlap_y$condition <- "y"
+
+names(res_overlap_x) <- sub(
+  pattern = ".x$",
+  replacement = "",
+  x = names(res_overlap_x)
+)
+
+names(res_overlap_y) <- sub(
+  pattern = ".y$",
+  replacement = "",
+  x = names(res_overlap_y)
+)
+res_overlap <- rbind(
+  res_overlap_x,
+  res_overlap_y
+)
+
+p <- ggplot(
+  res_overlap,
+  aes(
+    x = condition,
+    y = get(id),
+    size = log2FoldChange,
+    color = pvalue
+  )
+)
+p <- p + geom_point()
+p
+```
+```{r {{chunk_label_prefix}}Rrho2DataTablePointsOverlapUu}
+DT
+```
