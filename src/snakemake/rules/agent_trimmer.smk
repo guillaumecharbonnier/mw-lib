@@ -22,7 +22,7 @@ rule agent_trim_pe:
     shell:
         """
         {input.agent} trim -fq1 {input.fq1l1},{input.fq1l2} -fq2 {input.fq2l1},{input.fq2l2} {params.extra} -out_loc `dirname {output.fq1}`
-        """"
+        """
 
 rule get_agent:
     """
