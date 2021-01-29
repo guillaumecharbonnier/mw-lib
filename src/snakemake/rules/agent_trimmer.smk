@@ -11,7 +11,7 @@ rule agent_trim_pe:
         fq1l2 = "out/{filler}_L002_R1_001.fastq.gz",
         fq2l1 = "out/{filler}_L001_R2_001.fastq.gz",
         fq2l2 = "out/{filler}_L002_R2_001.fastq.gz",
-        agent = "out/agent/agent.sh"
+        agent = "out/agent/agent/agent.sh"
     output:
         fq1 = "out/{tool}{extra}/{filler}_1.fastq.gz",
         fq2 = "out/{tool}{extra}/{filler}_2.fastq.gz"
