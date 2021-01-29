@@ -27,7 +27,7 @@ rule agent_trim_pe:
 rule get_agent:
     """
     https://explore.agilent.com/AGeNT-Software-Download-Form-TY
-    """"
+    """
     output:
         agent = "out/agent/agent.sh"
     shell:
