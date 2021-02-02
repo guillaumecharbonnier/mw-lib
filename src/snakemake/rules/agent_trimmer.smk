@@ -7,6 +7,7 @@ rule agent_trim_pe:
     Note:
         -out_loc `dirname {output.fq1}`
         does not work properly as output files are put inside input directory instead...
+        Also note the "input directory" follow symlinks. As such, we should copy (and not symlink) input files into output directory before running trimmer.
     Test:
         out/agent/trim_-v2/ln/updir/mw/inp/fastq/2021_RNAseq_NECKER_spicuglia/fastq/MOLT4_S60_2.fastq.gz
         
@@ -30,17 +31,24 @@ rule agent_trim_pe:
         tool = "agent/trim"
     shell:
         """
-        rm -f \
-            out/{wildcards.filler}_L001_R[1-2]_001.fastq[0-9]+_Cut_0.fastq.gz \
-            out/{wildcards.filler}_L001_RN_001.fastq[0-9]+_MBC_0.txt.gz \
-            out/{wildcards.filler}_L001_RN_001.fastq[0-9]+_STATS_0.properties
+        OUTDIR=`dirname {output.fq1}`
+        FQ1L1=$OUTDIR/`basename {input.fq1l1}`
+        FQ1L2=$OUTDIR/`basename {input.fq1l2}`
+        FQ2L1=$OUTDIR/`basename {input.fq2l1}`
+        FQ2L2=$OUTDIR/`basename {input.fq2l2}`
 
-        {input.agent} trim -fq1 {input.fq1l1},{input.fq1l2} -fq2 {input.fq2l1},{input.fq2l2} {params.extra}
+        cp -rL {input.fq1l1} $FQ1L1
+        cp -rL {input.fq1l2} $FQ1L2
+        cp -rL {input.fq2l1} $FQ2L1
+        cp -rL {input.fq2l2} $FQ2L2
 
-        mv out/{wildcards.filler}_L001_R1_001.fastq[0-9]+_Cut_0.fastq.gz {output.fq1}
-        mv out/{wildcards.filler}_L001_R2_001.fastq[0-9]+_Cut_0.fastq.gz {output.fq2}
-        mv out/{wildcards.filler}_L001_RN_001.fastq[0-9]+_MBC_0.txt.gz {output.mbc}
-        mv out/{wildcards.filler}_L001_RN_001.fastq[0-9]+_STATS_0.properties {output.properties}
+        {input.agent} trim -fq1 $FQ1L1,$FQ1L2 -fq2 $FQ2L1,$FQ2L2 {params.extra}
+
+        OUTPREFIX=out/{wildcards.tool}{wildcards.extra}/{wildcards.filler}
+        mv $OUTPREFIX_L001_R2_001.fastq[0-9]+_Cut_0.fastq.gz {output.fq2}
+        mv $OUTPREFIX_L001_R1_001.fastq[0-9]+_Cut_0.fastq.gz {output.fq1}
+        mv $OUTPREFIX_L001_RN_001.fastq[0-9]+_MBC_0.txt.gz {output.mbc}
+        mv $OUTPREFIX_L001_RN_001.fastq[0-9]+_STATS_0.properties {output.properties}
         """
 
 rule get_agent:
