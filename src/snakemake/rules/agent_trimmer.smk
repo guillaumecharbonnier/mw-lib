@@ -45,10 +45,10 @@ rule agent_trim_pe:
         {input.agent} trim -fq1 $FQ1L1,$FQ1L2 -fq2 $FQ2L1,$FQ2L2 {params.extra}
 
         OUTPREFIX=out/{wildcards.tool}{wildcards.extra}/{wildcards.filler}
-        mv $OUTPREFIX_L001_R2_001.fastq[0-9]+_Cut_0.fastq.gz {output.fq2}
-        mv $OUTPREFIX_L001_R1_001.fastq[0-9]+_Cut_0.fastq.gz {output.fq1}
-        mv $OUTPREFIX_L001_RN_001.fastq[0-9]+_MBC_0.txt.gz {output.mbc}
-        mv $OUTPREFIX_L001_RN_001.fastq[0-9]+_STATS_0.properties {output.properties}
+        mv ${{OUTPREFIX}}_L001_R2_001.fastq*_Cut_0.fastq.gz {output.fq2}
+        mv ${{OUTPREFIX}}_L001_R1_001.fastq*_Cut_0.fastq.gz {output.fq1}
+        mv ${{OUTPREFIX}}_L001_RN_001.fastq*_MBC_0.txt.gz {output.mbc}
+        mv ${{OUTPREFIX}}_L001_RN_001.fastq*_STATS_0.properties {output.properties}
         """
 
 rule get_agent:
