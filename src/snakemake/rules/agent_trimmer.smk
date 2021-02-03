@@ -107,15 +107,15 @@ rule agent_locatit_mbc:
     output:
         bam = "out/{tool}{extra}/{filler_align}{filler_trim}.bam"
     params:
-        extra = params_extra
+        extra = params_extra,
+        memory="65536m" # default not working for test bam, this is the first other tested value
     wildcard_constraints:
         tool = "agent/locatit_mbc",
         filler_trim = "agent/trim.*"
     shell:
         """
-        {input.agent} locatit {params.extra} -o {output.bam} {input.bam} {input.mbc}
+        {input.agent} -Xmx{params.memory} locatit {params.extra} -o {output.bam} {input.bam} {input.mbc}
         """
-
 
 rule get_agent:
     """
