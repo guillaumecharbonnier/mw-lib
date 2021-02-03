@@ -113,7 +113,7 @@ rule agent_locatit_mbc:
         filler_trim = "agent/trim.*"
     shell:
         """
-        {input.agent} locatit {params.extra} {input.bam} {input.mbc}
+        {input.agent} locatit {params.extra} -o {output.bam} {input.bam} {input.mbc}
         """
 
 
