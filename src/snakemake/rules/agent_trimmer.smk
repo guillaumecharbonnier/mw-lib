@@ -110,6 +110,8 @@ rule agent_locatit_mbc:
     params:
         extra = params_extra,
         memory="128G" # default not working for test bam, this is the first other tested value
+    threads:
+        MAX_THREADS
     wildcard_constraints:
         tool = "agent/locatit_mbc",
         filler_trim = "agent/trim.*"
