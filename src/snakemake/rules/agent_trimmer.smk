@@ -110,10 +110,10 @@ rule agent_locatit_mbc:
         extra = params_extra
     wildcard_constraints:
         tool = "agent/locatit_mbc",
-        filler_trim = "agent/trim*"
+        filler_trim = "agent/trim.*"
     shell:
         """
-        {input.agent} locatit -i {params.extra} {input.bam} {input.mbc}
+        {input.agent} locatit {params.extra} {input.bam} {input.mbc}
         """
 
 
