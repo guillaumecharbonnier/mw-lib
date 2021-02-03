@@ -103,18 +103,21 @@ rule agent_locatit_mbc:
         # 
         bam = "out/{filler_align}{filler_trim}.bam",
         mbc = "out/{filler_trim}.txt.gz",
-        agent = "out/agent/agent/agent.sh"
+        agent = "out/agent/agent/agent.sh",
+        locatit = "out/agent/agent/lib/locatit-2.0.5.jar"
     output:
         bam = "out/{tool}{extra}/{filler_align}{filler_trim}.bam"
     params:
         extra = params_extra,
-        memory="65536m" # default not working for test bam, this is the first other tested value
+        memory="128G" # default not working for test bam, this is the first other tested value
     wildcard_constraints:
         tool = "agent/locatit_mbc",
         filler_trim = "agent/trim.*"
     shell:
         """
-        {input.agent} -Xmx{params.memory} locatit {params.extra} -o {output.bam} {input.bam} {input.mbc}
+        java -Xmx{params.memory} -jar {input.locatit} {params.extra} -o {output.bam} {input.bam} {input.mbc}
+
+        # {input.agent} -Xmx{params.memory} locatit {params.extra} -o {output.bam} {input.bam} {input.mbc}
         """
 
 rule get_agent:
@@ -122,7 +125,8 @@ rule get_agent:
     https://explore.agilent.com/AGeNT-Software-Download-Form-TY
     """
     output:
-        agent = "out/agent/agent/agent.sh"
+        agent = "out/agent/agent/agent.sh",
+        locatit = "out/agent/agent/lib/locatit-2.0.5.jar"
     shell:
         """
         OUTDIR=out/agent
