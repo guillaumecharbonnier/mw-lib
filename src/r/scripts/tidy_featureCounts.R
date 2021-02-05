@@ -17,7 +17,8 @@ setnames(
 
 fwrite(
   x = d,
-  file = snakemake@output[["raw"]]
+  file = snakemake@output[["raw"]],
+  sep = "\t"
 )
 
 m <- rpkm(d[,-1])
@@ -28,5 +29,6 @@ d <- data.table(
 
 fwrite(
   x = d,
-  file = snakemake@output[["rpkm"]]
+  file = snakemake@output[["rpkm"]],
+  sep = "\t"
 )
