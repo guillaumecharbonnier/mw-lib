@@ -1,0 +1,9 @@
+name:
+  r_tidy_featureCounts
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-data.table
+  - bioconductor-edger
