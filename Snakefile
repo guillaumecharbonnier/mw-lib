@@ -5,6 +5,11 @@ import os
 WDIR= os.getcwd()
 import glob
 
+# We use mwconf instead of config dict for config elements we do not want to be passed to "script:". This is because heavy config can lead to slow or even broken R script execution.
+mwconf = {}
+mwconf['ids'] = {}
+mwconf['targets'] = {}
+
 # Including other python imports.
 paths = glob.glob("../mw*/src/snakemake/imports.py")
 
@@ -26,10 +31,6 @@ paths.extend(glob.glob('../mw*/src/snakemake/rules/*.rules'))
 for path in paths:
     include: path
     #eprint("Loaded: " + path)
-
-# ids may already be filled with some function like in mw-sst plugin
-if 'ids' not in config:
-    mwconf['ids']={}
 
 # Loading config dicts
 paths = glob.glob('../mw*/src/snakemake/tables/*ids.tsv')
