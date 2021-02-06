@@ -3,6 +3,8 @@ library(edgeR)
 
 d <- fread(snakemake@input[["tsv"]])
 
+gene_length <- d$Length
+
 d[, c("Chr", "Start", "End", "Strand", "Length") := NULL]
 
 setnames(
@@ -21,7 +23,7 @@ fwrite(
   sep = "\t"
 )
 
-m <- rpkm(d[,-1])
+m <- rpkm(d[,-1], gene_length)
 d <- data.table(
   d[,1],
   m
