@@ -14,7 +14,7 @@ rule r_greatr_yaml_new:
     """
     input:
         yaml = "out/{filler}.yaml",
-        bed_list = lambda wildcards: eval(config['ids'][wildcards.bed_list_id])
+        bed_list = lambda wildcards: eval(mwconf['ids'][wildcards.bed_list_id])
     output:
         done=touch("out/r/new_greatr_{bed_list_id}/{filler}/done")
     conda:
@@ -39,7 +39,7 @@ rule r_greatr_yaml_old:
     input:
         #yaml='src/greatr/{bed_list_id}.yaml',
         yaml=input_yaml_greatr,
-        bed_list = lambda wildcards: eval(config['ids'][wildcards.bed_list_id])
+        bed_list = lambda wildcards: eval(mwconf['ids'][wildcards.bed_list_id])
     output:
         done=touch("out/r/greatr_yaml-{bed_list_id}/done")
     conda:
@@ -74,7 +74,7 @@ rule r_greatr_extra:
             out/r/greatr_bed-hg19-active-enhancers-interesting-classes/done
     """
     input:
-        bed_list = lambda wildcards: eval(config['ids'][wildcards.bed_list_id])
+        bed_list = lambda wildcards: eval(mwconf['ids'][wildcards.bed_list_id])
     output:
         #tables="out/r/great_heatmap{extra}_bed-{bed_list_id}/enrichment_tables.Rdata"
         done=touch("out/{tool}{extra}_{bed_list_id}/done"),

@@ -11,8 +11,8 @@ rule deepTools_bamPEFragmentSize:
         out/deepTools/bamPEFragmentSize/Blueprint-thymic-populations-H3K27ac-merged.pdf
     """
     input:
-        bam = lambda wildcards: eval(config['ids'][wildcards.bam_list_id]),
-        bai = lambda wildcards: [path + '.bai' for path in eval(config['ids'][wildcards.bam_list_id])]
+        bam = lambda wildcards: eval(mwconf['ids'][wildcards.bam_list_id]),
+        bai = lambda wildcards: [path + '.bai' for path in eval(mwconf['ids'][wildcards.bam_list_id])]
     output:
         pdf="out/{tool}{extra}/{bam_list_id}.pdf"
     params:

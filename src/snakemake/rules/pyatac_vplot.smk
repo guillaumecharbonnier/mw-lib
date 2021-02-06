@@ -55,7 +55,7 @@ rule pyatac_vplot_lower_upper_flank_not_atac_plot_extra_bed:
     input:
         bam="out/{filler}.bam",
         bai="out/{filler}.bam.bai",
-        bed = lambda wildcards: eval(config['ids'][wildcards.bed_id])
+        bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_id])
     output:
         vplot=           "out/pyatac/vplot_lower-{lower}_upper-{upper}_flank-{flank}_not_atac_plot_extra_bed-{bed_id}/{filler}.Vplot.eps",
         insertsizes=     "out/pyatac/vplot_lower-{lower}_upper-{upper}_flank-{flank}_not_atac_plot_extra_bed-{bed_id}/{filler}.InsertSizes.eps",
@@ -99,7 +99,7 @@ rule pyatac_vplot_lower_upper_flank_scale_not_atac_plot_extra_bed:
     input:
         bam="out/{filler}.bam",
         bai="out/{filler}.bam.bai",
-        bed = lambda wildcards: eval(config['ids'][wildcards.bed_id])
+        bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_id])
     output:
         vplot=           "out/pyatac/vplot_lower-{lower}_upper-{upper}_flank-{flank}_scale_not_atac_plot_extra_bed-{bed_id}/{filler}.Vplot.eps",
         insertsizes=     "out/pyatac/vplot_lower-{lower}_upper-{upper}_flank-{flank}_scale_not_atac_plot_extra_bed-{bed_id}/{filler}.InsertSizes.eps",

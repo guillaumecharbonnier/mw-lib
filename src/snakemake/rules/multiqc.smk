@@ -52,13 +52,13 @@ rule create_multiqc_filelist:
         out/create_multiqc_filelist/multiqc-sst.txt
     """
     input:
-        #dependencies = lambda wildcards: eval(str(config['ids'][wildcards.multiqc_id]))
+        #dependencies = lambda wildcards: eval(str(mwconf['ids'][wildcards.multiqc_id]))
     output:
         filelist = "out/create_multiqc_filelist/{multiqc_id}.txt"
     run:
         with open(output.filelist, "w") as f:
             #f.writelines(map(lambda s: s + '\n', lines))
-            for item in config['ids'][wildcards.multiqc_id]:
+            for item in mwconf['ids'][wildcards.multiqc_id]:
                 f.write("%s\n" % item)
 
 rule multiqc_with_requirements:
@@ -73,7 +73,7 @@ rule multiqc_with_requirements:
         out/multiqc/req_multiqc-sst/multiqc_report.html
     """
     input:
-        #dependencies = lambda wildcards: eval(config['ids'][wildcards.multiqc_id])
+        #dependencies = lambda wildcards: eval(mwconf['ids'][wildcards.multiqc_id])
         "out/create_multiqc_filelist/{multiqc_id}.txt"
     output:
         report   = "out/{tool}{extra}_{multiqc_id}/multiqc_report.html"

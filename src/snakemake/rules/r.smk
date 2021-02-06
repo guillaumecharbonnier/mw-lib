@@ -115,7 +115,7 @@ rule r_multi_peak_anno_stats_to_heatmap:
         out/r/multi_peak_anno_stats_to_heatmap/test19/log2_ratio_enrich_vs_uniform_distrib.pdf
     """
     input:
-        peak_anno_stats_list = lambda wildcards: eval(config['ids'][wildcards.peak_anno_stats_list_id]),
+        peak_anno_stats_list = lambda wildcards: eval(mwconf['ids'][wildcards.peak_anno_stats_list_id]),
         script="src/r/script/multi_peak_anno_stats_to_heatmap.R"
     output:
         "out/r/multi_peak_anno_stats_to_heatmap/{peak_anno_stats_list_id}/log2_ratio_enrich_vs_uniform_distrib.pdf"
@@ -318,7 +318,7 @@ rule r_great_heatmap_from_first_clustering:
         out/r/great_heatmap__g-MSDBP__m-Binom_Fold_Enrichment,Binom_Bonf_PValue,Hyper_Bonf_PValue__s-greater,lower,lower__t-1.5,0.001,0.001_bed-hg19-cpg-meth-call-clusters/enrichment_tables.done
     """
     input:
-        bed_list = lambda wildcards: eval(config['ids'][wildcards.bed_list_id]),
+        bed_list = lambda wildcards: eval(mwconf['ids'][wildcards.bed_list_id]),
         script="src/r/pkg/gcfun/R/GREATR.R",
         #Rscript="opt/miniconda/envs/r_great_heatmap/bin/Rscript"
     output:

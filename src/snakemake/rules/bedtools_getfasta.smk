@@ -9,8 +9,8 @@ rule bedtools_getfasta_extra:
     """
     input:
         #fasta = input_fa_genome,
-        fasta = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id]),
-        #fai   = lambda wildcards: [path + '.fai' for path in eval(config['ids'][wildcards.bam_list_id])],
+        fasta = lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id]),
+        #fai   = lambda wildcards: [path + '.fai' for path in eval(mwconf['ids'][wildcards.bam_list_id])],
         bed = "out/{filler}.bed"
     output:
         fasta="out/{tool}{extra}_{fa_genome_id}/{filler}.fa"

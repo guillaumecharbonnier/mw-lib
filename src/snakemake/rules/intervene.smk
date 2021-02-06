@@ -9,7 +9,7 @@ rule intervene_test:
         out/intervene/hg38-macs2-peaks-H3K27ac-thymus-no-peaks-in-input/Intervene_venn.pdf
     """
     input:
-        bed_list = lambda wildcards: eval(config['ids'][wildcards.bed_list_id])
+        bed_list = lambda wildcards: eval(mwconf['ids'][wildcards.bed_list_id])
     output:
         "out/intervene/{bed_list_id}/Intervene_venn.pdf",
         "out/intervene/{bed_list_id}/Intervene_upset.pdf",

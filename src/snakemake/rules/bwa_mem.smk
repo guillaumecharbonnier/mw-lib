@@ -38,7 +38,7 @@ rule bwa_mem_se:
     """
     input:
         fastq="out/{filler}.fastq",
-        index_files=lambda wildcards: eval(config['ids'][wildcards.bwa_index_id])
+        index_files=lambda wildcards: eval(mwconf['ids'][wildcards.bwa_index_id])
     output:
         sam="out/bwa/mem2_se_{bwa_index_id}/{filler}.sam"
     #params:

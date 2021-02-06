@@ -14,7 +14,7 @@ rule bbmap_se:
     """
     input:
         fq="out/{filler}.{ext}",
-        fa= lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fa= lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         sam="out/{tool}_{ext}{extra}_{fa_genome_id}/{filler}.sam"
     log:

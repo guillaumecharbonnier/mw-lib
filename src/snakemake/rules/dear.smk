@@ -46,9 +46,9 @@ rule dear:
     """
     input:
         dear="../DEA.R/DEA/DEA.R",
-        bam = lambda wildcards: eval(config['ids'][wildcards.bam_list_id]),
-        tsv = lambda wildcards: eval(config['ids'][wildcards.dear_id]),
-        gtf = lambda wildcards: eval(config['ids'][wildcards.gtf_id])
+        bam = lambda wildcards: eval(mwconf['ids'][wildcards.bam_list_id]),
+        tsv = lambda wildcards: eval(mwconf['ids'][wildcards.dear_id]),
+        gtf = lambda wildcards: eval(mwconf['ids'][wildcards.gtf_id])
     output:
         expand("out/dear/{{dear_id}}_{{gtf_id}}_{{bam_list_id}}/{file}", file=DEAR_OUTFILES)
     log:

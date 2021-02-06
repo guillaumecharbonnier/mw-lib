@@ -15,7 +15,7 @@ rule kallisto_quant_pe:
     input:
         fq1="out/{filler}_1.fastq.gz",
         fq2="out/{filler}_2.fastq.gz",
-        idx=lambda wildcards: eval(config['ids'][wildcards.kallisto_idx_id])
+        idx=lambda wildcards: eval(mwconf['ids'][wildcards.kallisto_idx_id])
     output:
         h5="out/{tool}{extra}_{kallisto_idx_id}/{filler}/abundance.h5",
         tsv="out/{tool}{extra}_{kallisto_idx_id}/{filler}/abundance.tsv"

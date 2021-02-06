@@ -42,8 +42,8 @@ rule gfold_diff_with_replicates:
         out/gfold/diff_with_replicates/tsv-gfold-GRCh38-casero2016-thy3_VS_tsv-gfold-GRCh38-casero2016-thy4.tsv
     """
     input:
-        tsv1 = lambda wildcards: eval(config['ids'][wildcards.tsv1_id]),
-        tsv2 = lambda wildcards: eval(config['ids'][wildcards.tsv2_id]),
+        tsv1 = lambda wildcards: eval(mwconf['ids'][wildcards.tsv1_id]),
+        tsv2 = lambda wildcards: eval(mwconf['ids'][wildcards.tsv2_id]),
     output:
         tsv="out/gfold/diff_with_replicates/{tsv1_id}_VS_{tsv2_id}.tsv"
     wildcard_constraints:

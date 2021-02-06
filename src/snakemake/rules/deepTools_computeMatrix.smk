@@ -13,8 +13,8 @@ rule deepTools_computeMatrix_extra:
        out/deepTools/plotHeatmap/deepTools/compute_Matrix_scale-regions_bed-cd34-ec-common-atac-peaks-sorted-according-to-h3k27ac_bw-hg38-h3k27ac-cd34-ec-quantile-normalized.pdf
     """
     input:
-        bw  = lambda wildcards: eval(config['ids'][wildcards.bw_list_id]),
-        bed = lambda wildcards: eval(config['ids'][wildcards.bed_list_id])
+        bw  = lambda wildcards: eval(mwconf['ids'][wildcards.bw_list_id]),
+        bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_list_id])
     output:
         matrix = "out/{tool}{extra}_{bed_list_id}_{bw_list_id}.txt.gz"
     log:
@@ -48,7 +48,7 @@ rule deepTools_computeMatrix_SingleBw_extra:
     """
     input:
         bw  = "out/{filler}.bw",
-        bed = lambda wildcards: eval(config['ids'][wildcards.bed_list_id])
+        bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_list_id])
     output:
         matrix = "out/{tool}{extra}_{bed_list_id}/{filler}.txt.gz"
     log:

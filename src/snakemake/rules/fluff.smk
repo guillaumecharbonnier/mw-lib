@@ -9,8 +9,8 @@ rule fluff_heatmap:
         out/fluff/heatmap_-C_k_-k_5_-g_-M_Pearson/bed-mm10-test-srr-peaks_bam-mm10-test-srr.png
     """
     input:
-        bed = lambda wildcards: eval(config['ids'][wildcards.bed_list_id]),
-        d   = lambda wildcards: eval(config['ids'][wildcards.d_id])
+        bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_list_id]),
+        d   = lambda wildcards: eval(mwconf['ids'][wildcards.d_id])
     output:
         png = "out/{tool}{extra}/{bed_list_id}_{d_id}.{ext}",
         bed = "out/{tool}{extra}/{bed_list_id}_{d_id}.{ext}_clusters.bed",
@@ -41,9 +41,9 @@ rule fluff_bandplot:
         out/fluff/bandplot_bam-mm10-test-srr/fluff/heatmap_-C_k_-k_5/bed-mm10-test-srr-peaks_bam-mm10-test-srr.png_clusters.png
     """
     input:
-        #bed = lambda wildcards: eval(config['ids'][wildcards.bed_list_id]),
+        #bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_list_id]),
         bed = "out/{filler}.bed",
-        d   = lambda wildcards: eval(config['ids'][wildcards.d_id])
+        d   = lambda wildcards: eval(mwconf['ids'][wildcards.d_id])
     output:
         #png="out/{tool}{extra}/{bed_list_id}_{d_id}.png"
         img = "out/{tool}{extra}_{d_id}/{filler}.{ext}"
@@ -70,7 +70,7 @@ rule fluff_profile:
         out/fluff/profile_-i_chr2:112244957-112260300/bam-mm10-test-srr.png
     """
     input:
-        d = lambda wildcards: eval(config['ids'][wildcards.d_id])
+        d = lambda wildcards: eval(mwconf['ids'][wildcards.d_id])
     output:
         png="out/{tool}{extra}/{d_id}.png"
     params:

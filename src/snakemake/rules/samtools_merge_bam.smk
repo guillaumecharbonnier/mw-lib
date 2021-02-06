@@ -9,7 +9,7 @@ rule samtools_merge:
         out/samtools/merge/bam-hg19-CapStarr_K562_IFN_rep1-merged.bam
     """
     input:
-        bam = lambda wildcards: eval(config['ids'][wildcards.bam_list_id])
+        bam = lambda wildcards: eval(mwconf['ids'][wildcards.bam_list_id])
     output:
         bam = "out/samtools/merge/{bam_list_id}.bam"
     wildcard_constraints:

@@ -17,7 +17,7 @@ rule ucsc_wigToBigWig_extra:
     """
     input:
         wig = "out/{filler}.wig",
-        chrominfo = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id])
+        chrominfo = lambda wildcards: eval(mwconf['ids'][wildcards.chrominfo_id])
     output:
         bw = "out/{tool}{extra}_{chrominfo_id}/{filler}.bw"
     params:

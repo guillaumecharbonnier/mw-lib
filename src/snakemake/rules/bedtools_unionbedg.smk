@@ -17,7 +17,7 @@ rule bedtools_unionbedg:
         out/bedtools/unionbedg_-header/bed-hg19-5-states-collapsed-segments-thymopoiesis-tall-samples.bg
     """
     input:
-        bed_list = lambda wildcards: eval(config['ids'][wildcards.bg_list_id])
+        bed_list = lambda wildcards: eval(mwconf['ids'][wildcards.bg_list_id])
     output:
         bed = "out/{tool}{extra}/{bg_list_id}.bg"
     params:

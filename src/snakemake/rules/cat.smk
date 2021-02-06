@@ -11,7 +11,7 @@ rule cat:
         out/sort/coordinates_bed/cat/hg38-macs2-peaks-H3K27ac-thymus.bed
     """
     input:
-        lambda wildcards: eval(config['ids'][wildcards.cat_id])
+        lambda wildcards: eval(mwconf['ids'][wildcards.cat_id])
     output:
         "out/cat/{cat_id}"
     shell:

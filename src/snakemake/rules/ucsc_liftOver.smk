@@ -9,7 +9,7 @@ rule ucsc_liftOver:
     """
     input:
         bed = "out/{filler}.bed",
-        chain = lambda wildcards: eval(config['ids'][wildcards.chain_id])
+        chain = lambda wildcards: eval(mwconf['ids'][wildcards.chain_id])
     output:
         bed = "out/ucsc/liftOver_{chain_id}/{filler}.bed",
         unmapped = "out/ucsc/liftOver_{chain_id}/{filler}.bed.unmapped"

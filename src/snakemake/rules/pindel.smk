@@ -22,7 +22,7 @@ rule pindel:
     input:
         #bam="out/{filler}.bam", # TODO: write function that parse first column of Txt to get bam dependencies
         txt="out/{filler}.txt",
-        fa= lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fa= lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         vcf=touch("out/{tool}{extra}_{fa_genome_id}/{filler}/done")
     log:
@@ -51,7 +51,7 @@ rule pindel2vcf:
     input:
         #bam="out/{filler}.bam",
         done="out/{filler}/done",
-        fa= lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fa= lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         vcf="out/{tool}{extra}_{fa_genome_id}/{filler}.vcf"
     params:

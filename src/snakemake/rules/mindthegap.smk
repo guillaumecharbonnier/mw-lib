@@ -7,7 +7,7 @@ rule MindTheGap_find_se:
     """
     input:
         fastq="out/{filler}.fastq",
-        fasta = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fasta = lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         breakpoints="out/{tool}_{fa_genome_id}/{filler}.breakpoints",
         h5="out/{tool}_{fa_genome_id}/{filler}.h5",
@@ -33,7 +33,7 @@ rule MindTheGap_find_pe:
     input:
         fastq_1="out/{filler}_1.fastq",
         fastq_2="out/{filler}_2.fastq",
-        fasta = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fasta = lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         breakpoints="out/{tool}_{fa_genome_id}/{filler}.breakpoints",
         h5="out/{tool}_{fa_genome_id}/{filler}.h5",

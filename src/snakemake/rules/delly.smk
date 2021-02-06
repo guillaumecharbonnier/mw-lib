@@ -21,7 +21,7 @@ rule delly_call:
     input:
         bam="out/{filler}.bam",
         bai="out/{filler}.bam.bai",
-        fa= lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fa= lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         bcf = "out/{tool}{extra}_{fa_genome_id}/{filler}.bcf"
     log:

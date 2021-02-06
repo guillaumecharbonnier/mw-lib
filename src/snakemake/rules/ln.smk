@@ -34,7 +34,7 @@ rule ln_alias:
         out/ln/alias/microarray-ko-nut-log-fc-neg.bed
     """
     input:
-        lambda wildcards: config['ids'][wildcards.id]
+        lambda wildcards: mwconf['ids'][wildcards.id]
         #input_ln_alias
     output:
         alias="out/ln/alias/{id}"
@@ -59,7 +59,7 @@ rule ln_alias_hardlink:
         Softlink version should be preferred for usage within Snakemake when possible.
     """
     input:
-        lambda wildcards: config['ids'][wildcards.id]
+        lambda wildcards: mwconf['ids'][wildcards.id]
     output:
         alias="out/ln/alias_hardlink/{id}"
     priority:

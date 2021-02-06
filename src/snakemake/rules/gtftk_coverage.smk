@@ -14,9 +14,9 @@ rule gtftk_coverage_extra_chrominfo_bed_bw:
         out/gtftk/coverage_-x_chrominfo-mm10_bed-mm10-ikE120-peak_bw-mm10-immgen-atac.txt
     """
     input:
-        inputfile = lambda wildcards: eval(config['ids'][wildcards.bed_list_id]),
-        chrominfo = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id]),
-        bw        = lambda wildcards: eval(config['ids'][wildcards.bw_list_id])
+        inputfile = lambda wildcards: eval(mwconf['ids'][wildcards.bed_list_id]),
+        chrominfo = lambda wildcards: eval(mwconf['ids'][wildcards.chrominfo_id]),
+        bw        = lambda wildcards: eval(mwconf['ids'][wildcards.bw_list_id])
     output:
         txt="out/{tool}{extra}_{chrominfo_id}_{bed_list_id}_{bw_list_id}.txt"
     log:
@@ -44,8 +44,8 @@ rule gtftk_coverage_extra_chrominfo_bed_single_bw:
         out/gtftk/coverage_-x_chrominfo-hg19_bed-hg19-ec-sharp/ln/alias/sst/all_samples/hg19/bw/EC_H3K4me3.txt
     """
     input:
-        inputfile = lambda wildcards: eval(config['ids'][wildcards.bed_list_id]),
-        chrominfo = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id]),
+        inputfile = lambda wildcards: eval(mwconf['ids'][wildcards.bed_list_id]),
+        chrominfo = lambda wildcards: eval(mwconf['ids'][wildcards.chrominfo_id]),
         bw        = "out/{filler}.bw"
     output:
         txt="out/{tool}{extra}_{chrominfo_id}_{bed_list_id}/{filler}.txt"
@@ -76,9 +76,9 @@ rule gtftk_coverage_extra_chrominfo_gtf_bw:
         out/gtftk/coverage_p-0_x_f-exon_chrominfo-hg38-main-chr_gtf-hg38-ensembl_bw-hg38-RNA-thymus.txt
     """
     input:
-        gtf       = lambda wildcards: eval(config['ids'][wildcards.gtf_id]),
-        chrominfo = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id]),
-        bw        = lambda wildcards: eval(config['ids'][wildcards.bw_list_id])
+        gtf       = lambda wildcards: eval(mwconf['ids'][wildcards.gtf_id]),
+        chrominfo = lambda wildcards: eval(mwconf['ids'][wildcards.chrominfo_id]),
+        bw        = lambda wildcards: eval(mwconf['ids'][wildcards.bw_list_id])
     output:
         txt="out/{tool}{extra}_chrominfo-{chrominfo_id}_gtf-{gtf_id}_{bw_list_id}.txt"
     log:

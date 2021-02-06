@@ -11,7 +11,7 @@ rule bedtools_multiinter_bed:
         out/bedtools/multiinter_-header/bed-hg38-sequencing-summary-h3k27ac-2019-10-26.bed
     """
     input:
-        bed_list = lambda wildcards: eval(config['ids'][wildcards.bed_list_id])
+        bed_list = lambda wildcards: eval(mwconf['ids'][wildcards.bed_list_id])
     output:
         bed_multiinter = "out/{tool}{extra}/{bed_list_id}.bed"
     params:

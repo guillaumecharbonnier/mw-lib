@@ -6,7 +6,7 @@ rule imsindel:
     input:
         #imsindel="../IMSindel/bin/imsindel",
         bam="out/{filler}.bam",
-        fa= lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fa= lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         vcf="out/{tool}{extra}_{fa_genome_id}/{filler}/1.out"
     log:

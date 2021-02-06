@@ -88,7 +88,7 @@ rule chipseqspike_gff_csv:
         #bw="",
         dep = input_dep_chipseqspike,
         csv = "src/chipseqspike/{csv}.csv",
-        gff = lambda wildcards: eval(config['ids'][wildcards.gff_id])
+        gff = lambda wildcards: eval(mwconf['ids'][wildcards.gff_id])
     params:
         bam="out/chipseqspike/gff-{gff_id}/{csv}",
         bw ="out/chipseqspike/gff-{gff_id}/{csv}",

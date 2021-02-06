@@ -18,7 +18,7 @@ rule danpos_wiq:
     input:
         wig_reference = "out/{filler}/{reference}.wig",
         wig_to_wiq = "out/{filler}/{wig_to_wiq}.wig",
-        chrominfo = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id])
+        chrominfo = lambda wildcards: eval(mwconf['ids'][wildcards.chrominfo_id])
     output:
         #wig = "out/danpos/wiq_{chrominfo_id}/{filler}/{wig_to_wiq}_qnorVS_{reference}/{wig_to_wiq}.wig"
         wig = "out/danpos/wiq_{chrominfo_id}/{filler}/{wig_to_wiq}_qnorVS_{reference}.wig"
