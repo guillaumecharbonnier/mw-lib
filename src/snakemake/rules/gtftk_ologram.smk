@@ -17,8 +17,8 @@ bed-cd34-ec-common-atac-peaks-classes-according-to-h3k27ac-top110
 out/r/order_cd34_ec_common_atac_peaks_according_to_h3k27ac_ratio/{sample}", sample=['tCD34-high-top110.bed
     """
     input:
-        chromInfo = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id]),
-        gtf       = lambda wildcards: eval(config['ids'][wildcards.gtf_id]),
+        chromInfo = lambda wildcards: eval(mwconf['ids'][wildcards.chrominfo_id]),
+        gtf       = lambda wildcards: eval(mwconf['ids'][wildcards.gtf_id]),
         bed = "out/{filler}.bed"
     output:
         pdf       = "out/{tool}{extra}_{chrominfo_id}_{gtf_id}/{filler}/00_ologram_diagrams.pdf",

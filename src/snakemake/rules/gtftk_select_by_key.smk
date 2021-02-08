@@ -54,7 +54,7 @@ rule gtftk_select_by_key_key_file_with_values:
     """
     input:
         gtf = "out/{filler}.gtf",
-        txt = lambda wildcards: eval(config['ids'][wildcards.txt_id])
+        txt = lambda wildcards: eval(mwconf['ids'][wildcards.txt_id])
     output:
         gtf="out/gtftk/select_by_key_key-{key}_file-with-values-{txt_id}/{filler}.gtf"
     wildcard_constraints:

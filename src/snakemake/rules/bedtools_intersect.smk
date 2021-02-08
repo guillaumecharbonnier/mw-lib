@@ -18,7 +18,7 @@ rule bedtools_intersect_b_lambda_extra:
     """
     input:
         features_a = "out/{filler}.{ext}",
-        features_b = lambda wildcards: eval(config['ids'][wildcards.feature_list_id])
+        features_b = lambda wildcards: eval(mwconf['ids'][wildcards.feature_list_id])
     output:
         features_a_overlapping_features_b="out/{tool}{extra}_-b_{feature_list_id}/{filler}.{ext}"
     params:
@@ -40,7 +40,7 @@ rule bedtools_intersect_a_lambda_extra:
     """
     input:
         features_b = "out/{filler}.{ext}",
-        features_a = lambda wildcards: eval(config['ids'][wildcards.bed_list_id])
+        features_a = lambda wildcards: eval(mwconf['ids'][wildcards.bed_list_id])
     output:
         features_a_overlapping_features_b="out/{tool}{extra}_-a_{bed_list_id}/{filler}.{ext}"
     params:

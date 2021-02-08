@@ -16,7 +16,7 @@ rule bedtools_closest_extra:
     """
     input:
         a = "out/{filler}.bed",
-        b = lambda wildcards: eval(config['ids'][wildcards.bed_id])
+        b = lambda wildcards: eval(mwconf['ids'][wildcards.bed_id])
     output:
         bed = "out/{tool}{extra}_{bed_id}/{filler}.bed"
     log:

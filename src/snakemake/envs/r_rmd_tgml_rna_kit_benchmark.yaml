@@ -26,6 +26,7 @@ dependencies:
   - r-ggally
   - r-ggrepel
   - r-ggcorrplot
+  - r-ggally
   - r-factominer
   - r-factoextra
   - r-flexclust

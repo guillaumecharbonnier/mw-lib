@@ -8,9 +8,9 @@ rule deepTools_plotEnrichment:
         out/deepTools/plotEnrichment_bed-mm10-test-srr-peaks_bam-mm10-test-srr.eps
     """
     input:
-        bam_list = lambda wildcards: eval(config['ids'][wildcards.bam_list_id]),
-        bai_list = lambda wildcards: [path + '.bai' for path in eval(config['ids'][wildcards.bam_list_id])],
-        bed_list = lambda wildcards: eval(config['ids'][wildcards.bed_list_id])
+        bam_list = lambda wildcards: eval(mwconf['ids'][wildcards.bam_list_id]),
+        bai_list = lambda wildcards: [path + '.bai' for path in eval(mwconf['ids'][wildcards.bam_list_id])],
+        bed_list = lambda wildcards: eval(mwconf['ids'][wildcards.bed_list_id])
     output:
         png_pdf_svg_eps_plotly = "out/{tool}{extra}_{bed_list_id}_{bam_list_id}.{png_pdf_svg_eps_plotly}"
     params:

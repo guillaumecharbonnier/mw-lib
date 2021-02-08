@@ -13,7 +13,7 @@ rule pblat:
     """
     input:
         fasta="out/{filler}.fasta",
-        ref=lambda wildcards: eval(config['ids'][wildcards.ref_id])
+        ref=lambda wildcards: eval(mwconf['ids'][wildcards.ref_id])
     output:
         psl="out/{tool}{extra}_{ref_id}/{filler}.psl"
     log:

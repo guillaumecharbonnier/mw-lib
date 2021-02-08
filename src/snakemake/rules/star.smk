@@ -8,19 +8,19 @@ rule star_pe_extra:
     input:
         fwd = "out/{filler}_1.{extin}",
         rev = "out/{filler}_2.{extin}",
-        index = lambda wildcards: config['ids'][wildcards.index_id],
-        gtf   = lambda wildcards: eval(config['ids'][wildcards.gtf_id])
+        index = lambda wildcards: mwconf['ids'][wildcards.index_id],
+        gtf   = lambda wildcards: eval(mwconf['ids'][wildcards.gtf_id])
     output:
         bam    = "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}.{extout}",
         log    = "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}/Log.final.out"
     log:
-                 "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}.log"
+        "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}.log"
     params:
         outdir = "out/star/pe_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}",
         extra = params_extra,
         extin = lambda wildcards: "--readFilesCommand zcat" if wildcards.extin == 'fastq.gz' else "",
         extout = lambda wildcards: "--outSAMtype BAM SortedByCoordinate" if wildcards.extout == 'bam' else "",
-        genomedir = lambda wildcards: os.path.dirname(config['ids'][wildcards.index_id])
+        genomedir = lambda wildcards: os.path.dirname(mwconf['ids'][wildcards.index_id])
     wildcard_constraints:
         tool="star/pe",
         gtf_id="gtf-[a-zA-Z0-9-]+",
@@ -60,8 +60,8 @@ rule star_se_extra:
     """
     input:
         fwd="out/{filler}.{extin}",
-        index = lambda wildcards: config['ids'][wildcards.index_id],
-        gtf   = lambda wildcards: eval(config['ids'][wildcards.gtf_id])
+        index = lambda wildcards: mwconf['ids'][wildcards.index_id],
+        gtf   = lambda wildcards: eval(mwconf['ids'][wildcards.gtf_id])
     output:
         bam    = "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}.{extout}",
         log    = "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}/Log.final.out"
@@ -70,7 +70,7 @@ rule star_se_extra:
         extra = params_extra,
         extin = lambda wildcards: "--readFilesCommand zcat" if wildcards.extin == 'fastq.gz' else "",
         extout = lambda wildcards: "--outSAMtype BAM SortedByCoordinate" if wildcards.extout == 'bam' else "",
-        genomedir = lambda wildcards: os.path.dirname(config['ids'][wildcards.index_id])
+        genomedir = lambda wildcards: os.path.dirname(mwconf['ids'][wildcards.index_id])
     wildcard_constraints:
         tool="star/se",
         gtf_id="gtf-[a-zA-Z0-9-]+",
@@ -237,8 +237,8 @@ rule star_build_index:
         out/star/build_index/fa-genome-GRCh38-Blueprint_gtf-GRCh38-ensembl/Genome
     """
     input:
-        gtf  = lambda wildcards: eval(config['ids'][wildcards.gtf_id]),
-        fa   = lambda wildcards: eval(config['ids'][wildcards.fa_id])
+        gtf  = lambda wildcards: eval(mwconf['ids'][wildcards.gtf_id]),
+        fa   = lambda wildcards: eval(mwconf['ids'][wildcards.fa_id])
     output:
         genomeParameters = "out/star/build_index/{fa_id}_{gtf_id}/genomeParameters.txt",
         genome           = "out/star/build_index/{fa_id}_{gtf_id}/Genome",

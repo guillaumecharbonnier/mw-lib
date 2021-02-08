@@ -11,7 +11,7 @@ rule meme_fimo:
     """
     input:
         fasta="out/{filler}.fasta",
-        meme = lambda wildcards: config['ids'][wildcards.meme_id]
+        meme = lambda wildcards: mwconf['ids'][wildcards.meme_id]
     output:
         expand("out/meme/fimo_{{meme_id}}/{{filler}}/{file}", file=['fimo.html', 'fimo.tsv'])
     log:

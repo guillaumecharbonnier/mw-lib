@@ -20,7 +20,7 @@ rule bedtools_coverage:
     """
     input:
         a="out/{filler}.{ext_a}",
-        b=lambda wildcards: eval(config['ids'][wildcards.b_id])
+        b=lambda wildcards: eval(mwconf['ids'][wildcards.b_id])
     output:
         "out/{tool}{extra}_{b_id}/{filler}.{ext_a}"
     log:
@@ -58,7 +58,7 @@ rule bedtools_coverage_test:
     """
     input:
         a="out/{filler}.{ext_a}",
-        b=lambda wildcards: eval(config['ids'][wildcards.b_id])
+        b=lambda wildcards: eval(mwconf['ids'][wildcards.b_id])
     output:
         "out/{tool}{extra}_{b_id}/{filler}.{ext_a}"
     log:

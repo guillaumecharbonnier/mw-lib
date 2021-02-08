@@ -16,7 +16,7 @@ rule gatk4_haplotyper:
     """
     input:
         bam="out/{filler}.bam",
-        fa= lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fa= lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         vcf="out/{tool}{extra}_{fa_genome_id}/{filler}.vcf.gz"
     log:

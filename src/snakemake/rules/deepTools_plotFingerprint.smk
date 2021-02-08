@@ -17,8 +17,8 @@ rule deepTools_plotFingerprint_extra_lambda:
         out/deepTools/plotFingerprint_bam-hg38-run246.pdf
     """
     input:
-        bam = lambda wildcards: eval(config['ids'][wildcards.bam_list_id]),
-        bai = lambda wildcards: [path + '.bai' for path in eval(config['ids'][wildcards.bam_list_id])]
+        bam = lambda wildcards: eval(mwconf['ids'][wildcards.bam_list_id]),
+        bai = lambda wildcards: [path + '.bai' for path in eval(mwconf['ids'][wildcards.bam_list_id])]
     output:
         pdf = "out/{tool}{extra}_{bam_list_id}.pdf",
         txt = "out/{tool}{extra}_{bam_list_id}.txt"

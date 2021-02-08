@@ -38,7 +38,7 @@ rule texlive_pdfjam:
         out/texlive/pdfjam_--nup_2x1_--landscape/test.pdf
     """
     input:
-        pdf = lambda wildcards: eval(config['ids'][wildcards.pdf_list_id])
+        pdf = lambda wildcards: eval(mwconf['ids'][wildcards.pdf_list_id])
     output:
         pdf = "out/{tool}{extra}/{pdf_list_id}"
     params:

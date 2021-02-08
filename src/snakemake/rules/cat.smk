@@ -11,12 +11,34 @@ rule cat:
         out/sort/coordinates_bed/cat/hg38-macs2-peaks-H3K27ac-thymus.bed
     """
     input:
-        lambda wildcards: eval(config['ids'][wildcards.cat_id])
+        lambda wildcards: eval(mwconf['ids'][wildcards.cat_id])
     output:
         "out/cat/{cat_id}"
     shell:
         "cat {input} > {output}"
 
+
+rule cat_merge_2_lanes_pe:
+    """
+    Created:
+        2021-02-05 16:18:13    
+    Aim:
+        Merge the 4 lanes produced by Illumina NextSeq500.·
+        Testing merging from raw pattern produced by basespace. Doing that may help in the resolution of bad file naming in sst projet.
+    Test:
+        out/cat/merge_lanes_nextseq500_se/inp/fastq/run146/RD_ATAC-seq_Salvatore-Spicuglia-19020/S001387_TH148_149_CD34pos_1aneg_7neg-19019/TH148-149-CD34pos-1aneg-7neg_S1.fastq.gz
+    """
+    input:
+        fastq_lane1 = "out/{filler}_L001_R{n}_001.fastq.gz",
+        fastq_lane2 = "out/{filler}_L002_R{n}_001.fastq.gz",
+    output:
+        fastq = "out/cat/merge_2_lanes_pe/{filler}_R{n}.fastq.gz"
+    wildcard_constraints:
+        n = "1|2"
+    threads:
+        1
+    shell:
+        "cat {input} > {output}"
 
 rule cat_merge_lanes_nextseq500_se:
     """

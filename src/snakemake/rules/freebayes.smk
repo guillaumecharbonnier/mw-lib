@@ -10,7 +10,7 @@ rule freebayes_fa_bam:
     """
     input:
         bam="out/{filler}.bam",
-        fa= lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fa= lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         vcf="out/{tool}{extra}_{fa_genome_id}/{filler}.vcf"
     log:
@@ -43,8 +43,8 @@ rule freebayes_fa_vcf_bam:
     """
     input:
         bam="out/{filler}.bam",
-        fa  = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id]),
-        vcfgz = lambda wildcards: eval(config['ids'][wildcards.vcfgz_id])
+        fa  = lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id]),
+        vcfgz = lambda wildcards: eval(mwconf['ids'][wildcards.vcfgz_id])
     output:
         vcf="out/{tool}{extra}_{fa_genome_id}_{vcfgz_id}/{filler}.vcf"
     log:

@@ -14,8 +14,8 @@ rule deepTools_multiBigwigSummary_BED_extra:
         out/deepTools/multiBigwigSummary_BED_bed-hg38-ensembl-r95-ealpha/bw-hg38-tall-h3k27ac-qnorm.tsv
     """
     input:
-        bw_list = lambda wildcards: eval(config['ids'][wildcards.bw_list_id]),
-        bed     = lambda wildcards: eval(config['ids'][wildcards.bed_or_gtf_id])
+        bw_list = lambda wildcards: eval(mwconf['ids'][wildcards.bw_list_id]),
+        bed     = lambda wildcards: eval(mwconf['ids'][wildcards.bed_or_gtf_id])
     output:
         npz="out/{tool}{extra}_{bed_or_gtf_id}/{bw_list_id}.npz",
         tsv="out/{tool}{extra}_{bed_or_gtf_id}/{bw_list_id}.tsv"
@@ -47,7 +47,7 @@ rule deepTools_multiBigwigSummary_bins_extra:
         out/deepTools/multiBigwigSummary_bins/hg38-h3k27ac-cd34-ec-quantile-normalized.tsv
     """
     input:
-        bw_list = lambda wildcards: eval(config['ids'][wildcards.bw_list_id])
+        bw_list = lambda wildcards: eval(mwconf['ids'][wildcards.bw_list_id])
     output:
         npz="out/{tool}{extra}/{bw_list_id}.npz",
         tsv="out/{tool}{extra}/{bw_list_id}.tsv"

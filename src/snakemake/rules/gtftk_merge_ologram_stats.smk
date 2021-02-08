@@ -14,7 +14,7 @@ bed-cd34-ec-common-atac-peaks-classes-according-to-h3k27ac-top110
 out/r/order_cd34_ec_common_atac_peaks_according_to_h3k27ac_ratio/{sample}", sample=['tCD34-high-top110.bed
     """
     input:
-        stats = lambda wildcards: eval(config['ids'][wildcards.ologram_id])
+        stats = lambda wildcards: eval(mwconf['ids'][wildcards.ologram_id])
     output:
         pdf   = "out/{tool}{extra}/{ologram_id}.pdf"
     params:

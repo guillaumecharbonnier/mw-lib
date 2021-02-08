@@ -15,7 +15,7 @@ rule bowtie2_build:
     """
     input:
         #fasta="out/{filler}",
-        fasta = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fasta = lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         index_parts  = expand("out/bowtie2-build/{{fa_genome_id}}.{parts}.bt2",
             parts=["1","2","3","4","rev.1","rev.2"])
@@ -45,7 +45,7 @@ rule bowtie2_build_large_index:
     """
     input:
         #fasta="out/{filler}",
-        fasta = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fasta = lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         index_parts  = expand("out/bowtie2-build/{{fa_genome_id}}.{parts}.bt2l",
             parts=["1","2","3","4","rev.1","rev.2"])

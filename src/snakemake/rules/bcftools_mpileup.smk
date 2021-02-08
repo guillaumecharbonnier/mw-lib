@@ -14,7 +14,7 @@ rule bcftools_mpileup_fagenome:
     """
     input:
         bam="out/{filler}.bam",
-        fa= lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fa= lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         "out/{tool}{extra}_{fa_genome_id}/{filler}.vcf"
     params:
@@ -35,8 +35,8 @@ rule bcftools_mpileup_fagenome_bamlist:
         out/bcftools/mpileup_fa-genome-hg19-main-chr_bam-hg19-T11C-H3K27ac-dev1.vcf
     """
     input:
-        bam = lambda wildcards: eval(config['ids'][wildcards.bam_list_id]),
-        fa  = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        bam = lambda wildcards: eval(mwconf['ids'][wildcards.bam_list_id]),
+        fa  = lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         "out/{tool}{extra}_{fa_genome_id}_{bam_list_id}.vcf"
     params:

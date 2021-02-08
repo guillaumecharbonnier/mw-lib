@@ -119,8 +119,8 @@ rule rseg_diff_chrom_deadzones_mode:
         -chrom can't be read if put before deadzones? not sure but strange. Actually it seems that the parser does not like multiple spaces between arguments and the command in one line works correctly.
     """
     input:
-        chrom     = lambda wildcards: eval(config['ids'][wildcards.chrom_id]),
-        deadzones = lambda wildcards: eval(config['ids'][wildcards.bed_id]),
+        chrom     = lambda wildcards: eval(mwconf['ids'][wildcards.chrom_id]),
+        deadzones = lambda wildcards: eval(mwconf['ids'][wildcards.bed_id]),
         bed1 = "out/{filler}/{sample1}.bed",
         bed2 = "out/{filler}/{sample2}.bed"
     output:

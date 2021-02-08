@@ -40,8 +40,8 @@ Optional arguments:
         out/subread/buildindex_-c/fa-genome-GRCh38-r95-chr22.reads
     """
     input:
-        fasta = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
-        #fai   = lambda wildcards: [path + '.fai' for path in eval(config['ids'][wildcards.bam_list_id])],
+        fasta = lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
+        #fai   = lambda wildcards: [path + '.fai' for path in eval(mwconf['ids'][wildcards.bam_list_id])],
         #genome="out/{filler}.fa"
     output:
         expand("out/{{tool}}{{extra}}/{{fa_genome_id}}.{ext}", ext=["reads","log","files","00.c.tab","00.c.array"])
@@ -218,9 +218,9 @@ rule subread_align_extra:
         out/subread/buildindex_-c/GRCh38-r94-main-chr.done
     """
     input:
-        fasta = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id]),
-        index = lambda wildcards: eval(config['ids'][wildcards.subread_index_id]),
-        gtf   = lambda wildcards: eval(config['ids'][wildcards.gtf_id])
+        fasta = lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id]),
+        index = lambda wildcards: eval(mwconf['ids'][wildcards.subread_index_id]),
+        gtf   = lambda wildcards: eval(mwconf['ids'][wildcards.gtf_id])
         #genome="out/{filler}.fa"
     output:
         done="out/{tool}{extra}_-i_{index_id}_-t_{t}/{fa_genome_id}.done"

@@ -11,7 +11,7 @@ rule abra2_fa_bam:
     """
     input:
         bam="out/{filler}.bam",
-        fa= lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fa= lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         bam="out/{tool}{extra}_{fa_genome_id}/{filler}.bam"
     log:
@@ -52,8 +52,8 @@ rule abra2_fa_vcf_bam:
     """
     input:
         bam="out/{filler}.bam",
-        fa  = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id]),
-        vcf = lambda wildcards: eval(config['ids'][wildcards.vcf_id])
+        fa  = lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id]),
+        vcf = lambda wildcards: eval(mwconf['ids'][wildcards.vcf_id])
     output:
         bam="out/{tool}{extra}_{fa_genome_id}_{vcf_id}/{filler}.bam"
     log:
