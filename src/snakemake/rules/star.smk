@@ -14,7 +14,7 @@ rule star_pe_extra:
         bam    = "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}.{extout}",
         log    = "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}/Log.final.out"
     log:
-                 "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}.log"
+        "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}.log"
     params:
         outdir = "out/star/pe_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}",
         extra = params_extra,
