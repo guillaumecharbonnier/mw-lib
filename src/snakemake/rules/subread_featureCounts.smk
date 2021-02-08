@@ -26,8 +26,8 @@ rule subread_featureCounts_extra:
         out/subread/featureCounts_-F_SAF_saf-mm10-tss-pm1kb_bam-mnase-cs-spm-nuc-ss.tsv
     """
     input:
-        gtf_saf = lambda wildcards: eval(config['ids'][wildcards.gtf_saf_id]),
-        bam     = lambda wildcards: eval(config['ids'][wildcards.bam_list_id])
+        gtf_saf = lambda wildcards: eval(mwconf['ids'][wildcards.gtf_saf_id]),
+        bam     = lambda wildcards: eval(mwconf['ids'][wildcards.bam_list_id])
     output:
         tsv = "out/{tool}{extra}_{gtf_saf_id}_{bam_list_id}.tsv",
         txt = "out/{tool}{extra}_{gtf_saf_id}_{bam_list_id}.tsv.summary"

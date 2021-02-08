@@ -15,8 +15,8 @@ rule ceas:
     """
     input:
         average_profiling        = "out/{filler}.wig",
-        chip_region_annotation   = lambda wildcards: eval(config['ids'][wildcards.bed_id]),
-        gene_centered_annotation = lambda wildcards: eval(config['ids'][wildcards.refgene_id])
+        chip_region_annotation   = lambda wildcards: eval(mwconf['ids'][wildcards.bed_id]),
+        gene_centered_annotation = lambda wildcards: eval(mwconf['ids'][wildcards.refgene_id])
     output:
         rcode = "out/ceas/{refgene_id}_{bed_id}/{filler}.R",
         #pdf   = "out/ceas/feature/{index}/{rep_pos}/{exp}/{sample}/{selection}/{selection}.pdf"

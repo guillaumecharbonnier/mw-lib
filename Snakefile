@@ -5,6 +5,11 @@ import os
 WDIR= os.getcwd()
 import glob
 
+# We use mwconf instead of config dict for config elements we do not want to be passed to "script:". This is because heavy config can lead to slow or even broken R script execution.
+mwconf = {}
+mwconf['ids'] = {}
+mwconf['targets'] = {}
+
 # Including other python imports.
 paths = glob.glob("../mw*/src/snakemake/imports.py")
 
@@ -27,10 +32,6 @@ for path in paths:
     include: path
     #eprint("Loaded: " + path)
 
-# ids may already be filled with some function like in mw-sst plugin
-if 'ids' not in config:
-    config['ids']={}
-
 # Loading config dicts
 paths = glob.glob('../mw*/src/snakemake/tables/*ids.tsv')
 
@@ -39,9 +40,9 @@ for path in paths:
     fp = open(path)
     rdr = csv.DictReader(filter(lambda row: row[0]!='#', fp), delimiter='\t')
     for row in rdr:
-        if row['id'] in config["ids"]:
+        if row['id'] in mwconf["ids"]:
             eprint(row['id'] + ' from ' + path + ' is replacing previous value')
-        config["ids"][row['id']] = row['path']
+        mwconf["ids"][row['id']] = row['path']
 
 rule target:
     threads: 1

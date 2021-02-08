@@ -12,9 +12,9 @@ rule deepTools_multiBamSummary_BED_extra:
         #out/deepTools/multiBamSummary_BED_-e_100/bed-hg38-macs2-peaks-H3K27ac-thymus/bam-Blueprint-thymic-populations-H3K27ac.npz
     """
     input:
-        bam = lambda wildcards: eval(config['ids'][wildcards.bam_list_id]),
-        bai = lambda wildcards: [path + '.bai' for path in eval(config['ids'][wildcards.bam_list_id])],
-        bed = lambda wildcards: eval(config['ids'][wildcards.bed_id])
+        bam = lambda wildcards: eval(mwconf['ids'][wildcards.bam_list_id]),
+        bai = lambda wildcards: [path + '.bai' for path in eval(mwconf['ids'][wildcards.bam_list_id])],
+        bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_id])
     output:
         npz="out/{tool}{extra}/{bed_id}/{bam_list_id}.npz"
     log:
@@ -44,8 +44,8 @@ rule deepTools_multiBamSummary_bins_extra:
         out/deepTools/multiBamSummary_bins_-e_147/bam-mm10-H4K5K8acbu-R.npz
     """
     input:
-        bam = lambda wildcards: eval(config['ids'][wildcards.bam_list_id]),
-        bai = lambda wildcards: [path + '.bai' for path in eval(config['ids'][wildcards.bam_list_id])]
+        bam = lambda wildcards: eval(mwconf['ids'][wildcards.bam_list_id]),
+        bai = lambda wildcards: [path + '.bai' for path in eval(mwconf['ids'][wildcards.bam_list_id])]
     output:
         npz="out/{tool}{extra}/{bam_list_id}.npz"
     log:

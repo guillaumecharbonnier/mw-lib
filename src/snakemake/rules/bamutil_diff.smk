@@ -12,7 +12,7 @@ rule bamutil_diff_abara2check:
     input:
         bam_before="out/{filler}.bam",
         bam_after="out/samtools/index/abra2/_fa-genome-hg19-main-chr/{filler}.bam"
-        #bam = lambda wildcards: eval(config['ids'][wildcards.bam_list_id])
+        #bam = lambda wildcards: eval(mwconf['ids'][wildcards.bam_list_id])
     output:
         "out/bamutil/diff/{filler}.txt"
     conda:

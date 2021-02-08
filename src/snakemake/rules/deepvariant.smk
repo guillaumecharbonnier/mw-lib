@@ -14,7 +14,7 @@ rule deepvariant_fa_bam_dev_only:
     input:
         script="../deepvariant/scripts/run_deepvariant.py",
         bam="out/{filler}.bam",
-        fa= lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fa= lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         vcf="out/{tool}{extra}_{fa_genome_id}/{filler}.vcf.gz",
         gvcf="out/{tool}{extra}_{fa_genome_id}/{filler}.g.vcf.gz"

@@ -14,7 +14,7 @@ rule ucsc_bedToBigBed:
     """
     input:
         bed = "out/{filler}.bed",
-        chromInfo = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id])
+        chromInfo = lambda wildcards: eval(mwconf['ids'][wildcards.chrominfo_id])
     output:
         bb="out/{tool}{extra}_{chrominfo_id}/{filler}.bb"
     log:

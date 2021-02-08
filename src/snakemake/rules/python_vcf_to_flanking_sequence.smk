@@ -7,7 +7,7 @@ rule python_vcf_to_flanking_sequence:
     """
     input:
         vcf = "out/{filler}.vcf",
-        fa = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id]),
+        fa = lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id]),
         py = "../mw-lib/src/python/vcf_to_flanking_sequence.py"
     output:
         fa = "out/python/vcf_to_flanking_sequence_{fa_genome_id}/{filler}.fasta"

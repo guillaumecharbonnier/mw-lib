@@ -112,7 +112,7 @@ rule samtools_view_filter_bam_with_bed:
     input:
         bam = "out/{filler}.bam",
         bai = "out/{filler}.bam.bai",
-        bed = lambda wildcards: eval(config['ids'][wildcards.bed_id]),
+        bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_id]),
     output:
         bam="out/{tool}{extra}_{bed_id}/{filler}.bam"
     wildcard_constraints:
@@ -396,7 +396,7 @@ rule samtools_view_bh_L:
     input:
         bam = "out/{filler}.bam",
         bai = "out/{filler}.bam.bai",
-        bed = lambda wildcards: eval(config['ids'][wildcards.bed_id]),
+        bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_id]),
         samtools="opt/miniconda/envs/samtools/bin/samtools"
     output:
         bam="out/samtools/view_bh_L-{bed_id}/{filler}.bam"

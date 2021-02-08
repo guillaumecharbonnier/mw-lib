@@ -40,7 +40,7 @@ rule exceRpt_merge_pipeline:
         out/exceRpt/mergePipelineRuns/excerpt-test-S002350/done
     """
     input:
-        excerpt_tgz = lambda wildcards: eval(config['ids'][wildcards.excerpt_tgz_list_id]),
+        excerpt_tgz = lambda wildcards: eval(mwconf['ids'][wildcards.excerpt_tgz_list_id]),
         mergepipeline="/gpfs/tgml/nin/exceRpt-master/mergePipelineRuns.R",
     output:
         "out/exceRpt/mergePipelineRuns/{excerpt_tgz_list_id}/done"

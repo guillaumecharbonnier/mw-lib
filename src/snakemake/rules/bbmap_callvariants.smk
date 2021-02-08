@@ -13,7 +13,7 @@ rule bbmap_callvariants:
     """
     input:
         sam="out/{filler}.sam.gz",
-        fa= lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fa= lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         vcf="out/{tool}{extra}_{fa_genome_id}/{filler}.vcf"
     log:

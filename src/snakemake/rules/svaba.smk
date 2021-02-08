@@ -7,7 +7,7 @@ rule SvABA_germline:
     """
     input:
         bam="out/{filler}.bam",
-        fasta = lambda wildcards: eval(config['ids'][wildcards.bwa_index_id])
+        fasta = lambda wildcards: eval(mwconf['ids'][wildcards.bwa_index_id])
     output:
         bam="out/{tool}_{bwa_index_id}/{filler}.contigs.bam",
     params:

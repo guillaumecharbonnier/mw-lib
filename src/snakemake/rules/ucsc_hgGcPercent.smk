@@ -8,7 +8,7 @@ rule ucsc_hgGcPercent:
         out/ucsc/hgGcPercent/2bit-mm10.wig
     """
     input:
-        twobit = lambda wildcards: eval(config['ids'][wildcards.twobit_id])
+        twobit = lambda wildcards: eval(mwconf['ids'][wildcards.twobit_id])
     output:
         wig="out/{tool}{extra}/{twobit_id}.wig"
     params:

@@ -15,7 +15,7 @@ rule scalpel_discovery:
     """
     input:
         bam="out/{filler}.bam",
-        fa= lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fa= lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         "out/{tool}{extra}_{fa_genome_id}/{filler}/bamfile.bam"
     log:
@@ -47,8 +47,8 @@ rule scalpel_discovery_bed:
     """
     input:
         bam="out/{filler}.bam",
-        bed= lambda wildcards: eval(config['ids'][wildcards.bed_id]),
-        fa= lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        bed= lambda wildcards: eval(mwconf['ids'][wildcards.bed_id]),
+        fa= lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         "out/{tool}{extra}_{fa_genome_id}_{bed_id}/{filler}/bamfile.bam"
     log:

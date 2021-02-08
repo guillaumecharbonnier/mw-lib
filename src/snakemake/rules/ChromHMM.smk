@@ -5,7 +5,7 @@ def input_bed_ChromHMM_BinarizeBed_dependencies(wildcards):
     Aim:
         A function retrieving the third column of 'cellmarkfiletable' to return the list of bed files needed by ChromHMM BinarizeBed and ensure bed files are created by Snakemake before being used by ChromHMM.
     """
-    cellmarkfiletable = config['ids'][wildcards['cellmarkfiletable_id']]
+    cellmarkfiletable = mwconf['ids'][wildcards['cellmarkfiletable_id']]
 
     df = pandas.read_table(cellmarkfiletable, header=None, comment='#')
     # Column 3 should contain samples
@@ -35,8 +35,8 @@ rule ChromHMM_BinarizeBed_cellmarkfiletable_chrominfo_extra:
         usage BinarizeBed [-b binsize][-c controldir][-center][-colfields chromosome,start,end[,strand]][-e offsetend][-f foldthresh][-g signalthresh][-n shift][-o outputcontroldir][-p poissonthresh][-peaks][-s offsetstart][-strictthresh][-t outputsignaldir][-u pseudocountcontrol][-w flankwidthcontrol] chromosomelengthfile inputbeddir cellmarkfiletable outputbinarydir
     """
     input:
-        chromosomelengthfile = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id]),
-        cellmarkfiletable    = lambda wildcards: config['ids'][wildcards.cellmarkfiletable_id],
+        chromosomelengthfile = lambda wildcards: eval(mwconf['ids'][wildcards.chrominfo_id]),
+        cellmarkfiletable    = lambda wildcards: mwconf['ids'][wildcards.cellmarkfiletable_id],
         bed = input_bed_ChromHMM_BinarizeBed_dependencies
     output:
         done=touch("out/{tool}{extra}_{chrominfo_id}_{cellmarkfiletable_id}/done")
@@ -207,7 +207,7 @@ rule ChromHMM_MakeBrowserFiles:
 #    """
 #    input:
 #        #chromhmm="opt/miniconda/envs/chromhmm/bin/ChromHMM.sh",
-#        chromosomelengthfile = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id]),
+#        chromosomelengthfile = lambda wildcards: eval(mwconf['ids'][wildcards.chrominfo_id]),
 #        cellmarkfiletable="src/chromhmm/cellmarkfiletable/{cellmarkfiletable_id}.tsv",
 #        bed=input_bed_ChromHMM_BinarizeBed_dependencies
 #    output:

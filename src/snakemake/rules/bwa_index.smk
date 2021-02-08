@@ -8,8 +8,8 @@ rule bwa_index:
         out/bwa/index/fa-genome-GRCh38-Blueprint.amb
     """
     input:
-        fasta = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
-        #fai   = lambda wildcards: [path + '.fai' for path in eval(config['ids'][wildcards.bam_list_id])],
+        fasta = lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
+        #fai   = lambda wildcards: [path + '.fai' for path in eval(mwconf['ids'][wildcards.bam_list_id])],
         #genome=input_fa_genome
     output:
         index=expand("out/bwa/index/{{fa_genome_id}}.{ext}", ext=["fa", "amb","ann","bwt","pac","sa"])
@@ -176,7 +176,7 @@ rule awk_aggregate_fa_genome_and_sam_contigs_with_inserts_gt_3b:
     """
     input:
         sam="out/{filler}.sam",
-        fasta = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fasta = lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         fasta =        "out/awk/aggregate_fa_genome_and_sam_contigs_with_inserts_gt_3bp_{fa_genome_id}/{filler}.fa",
         sam   =        "out/awk/aggregate_fa_genome_and_sam_contigs_with_inserts_gt_3bp_{fa_genome_id}/{filler}.sam",
@@ -208,7 +208,7 @@ rule awk_aggregate_fa_genome_and_sam_contigs_with_indel_gt_3b:
     """
     input:
         sam="out/{filler}.sam",
-        fasta = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fasta = lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         fasta =        "out/awk/aggregate_fa_genome_and_sam_contigs_with_indels_gt_3bp_{fa_genome_id}/{filler}.fa",
         sam   =        "out/awk/aggregate_fa_genome_and_sam_contigs_with_indels_gt_3bp_{fa_genome_id}/{filler}.sam",
@@ -243,7 +243,7 @@ rule meta_aggregate_fa_genome_with_sam_alternative_contigs:
     """
     input:
         sam="out/{filler}.sam",
-        fasta = lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fasta = lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         fasta =        "out/bwa/aggregate_fa_genome_and_sam_contigs_with_inserts_gt_3bp_{fa_genome_id}/{filler}.fa",
         index = expand("out/bwa/aggregate_fa_genome_and_sam_contigs_with_inserts_gt_3bp_{{fa_genome_id}}/{{filler}}.{ext}", ext=["amb","ann","bwt","pac","sa"]),

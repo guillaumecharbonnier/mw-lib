@@ -11,7 +11,7 @@ rule gtftk_select_by_loc_f_n:
     """
     input:
         gtf = "out/{filler}.gtf",
-        bed = lambda wildcards: eval(config['ids'][wildcards.bed_id])
+        bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_id])
     output:
         gtf = "out/gtftk/select_by_loc_f-{bed_id}_invert-match/{filler}.gtf"
     wildcard_constraints:
@@ -40,7 +40,7 @@ rule gtftk_select_by_loc_f:
     """
     input:
         gtf = "out/{filler}.gtf",
-        bed = lambda wildcards: eval(config['ids'][wildcards.bed_id])
+        bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_id])
     output:
         gtf = "out/gtftk/select_by_loc_f-{bed_id}/{filler}.gtf"
     wildcard_constraints:

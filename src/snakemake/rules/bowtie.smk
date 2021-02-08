@@ -10,7 +10,7 @@ rule bowtie_single_end_extra:
     """
     input:
         fastq="out/{filler}.fastq.gz",
-        index_files= lambda wildcards: eval(config['ids'][wildcards.ebwt_id])
+        index_files= lambda wildcards: eval(mwconf['ids'][wildcards.ebwt_id])
     output:
         sam      = "out/{tool}{extra}_{ebwt_id}/{filler}.sam",
         unmapped = "out/{tool}{extra}_{ebwt_id}/{filler}_unmapped.fastq.gz",
@@ -22,7 +22,7 @@ rule bowtie_single_end_extra:
         extra=params_extra,
         #index_basepath=params_bowtie2_index_base_path
         #index_basepath="hg19" 
-        index_basepath= lambda wildcards: os.path.commonprefix(eval(config['ids'][wildcards.ebwt_id]))[:-1]
+        index_basepath= lambda wildcards: os.path.commonprefix(eval(mwconf['ids'][wildcards.ebwt_id]))[:-1]
     wildcard_constraints:
         tool="bowtie/se"
     conda:
@@ -43,7 +43,7 @@ rule bowtie_build:
     out/bowtie/build/fa-genome-hg19-main-chr.1.ebwt
     """
     input:
-        fa=lambda wildcards: eval(config['ids'][wildcards.fa_genome_id])
+        fa=lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
         expand("out/bowtie/build/{{fa_genome_id}}.{part}.ebwt", part=["1","2","3","4","rev.1","rev.2"])
     conda:

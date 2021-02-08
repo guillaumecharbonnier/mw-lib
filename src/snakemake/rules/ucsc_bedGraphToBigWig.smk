@@ -15,7 +15,7 @@ rule ucsc_bedGraphToBigWig:
     """
     input:
         BedGraph = "out/{filler}.BedGraph",
-        chromInfo = lambda wildcards: eval(config['ids'][wildcards.chrominfo_id])
+        chromInfo = lambda wildcards: eval(mwconf['ids'][wildcards.chrominfo_id])
     output:
         bw="out/ucsc/bedGraphToBigWig_{chrominfo_id}/{filler}.bw"
     conda:

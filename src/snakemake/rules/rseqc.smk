@@ -118,7 +118,7 @@ rule rseqc_infer_experiment:
     """
     input:
         sam_or_bam="out/{filler}.{sam_or_bam}",
-        bed = lambda wildcards: eval(config['ids'][wildcards.bed_id])
+        bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_id])
     output:
         txt = "out/rseqc/infer_experiment/{bed_id}/{filler}.{sam_or_bam}.txt"
     log:
