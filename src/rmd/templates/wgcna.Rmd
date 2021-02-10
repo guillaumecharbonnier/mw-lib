@@ -546,6 +546,7 @@ if (nrow(d_subset) > 5000) {
 } else {
   
   cor_subset <- cor(t(assay(d_subset)))
+  p_subset <- cor_pmat(t(assay(d_subset)))
   d <- data.frame(
     cor_vs_VNN1 = cor_subset[,"ENSG00000112299"],
     rank = rank(cor_subset[,"ENSG00000112299"]),
@@ -569,7 +570,8 @@ if (nrow(d_subset) > 5000) {
   print(p)
 
   r <- data.frame(
-    cor_vs_VNN1 = cor_subset[,"ENSG00000112299"],
+    r_pearson_cor_vs_VNN1 = cor_subset[,"ENSG00000112299"],
+    p_pearson_cor_vs_VNN1 = p_subset[,"ENSG00000112299"],
     rowData(d_subset)
   )
   
