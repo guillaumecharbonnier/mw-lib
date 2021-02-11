@@ -1,0 +1,9 @@
+name: r_deseq2_edger
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bioconductor-deseq2
+  - bioconductor-apeglm
+
