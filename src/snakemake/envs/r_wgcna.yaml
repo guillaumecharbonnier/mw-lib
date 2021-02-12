@@ -1,10 +1,9 @@
 name:
-  r_deseq2
+  r_wgcna
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - bioconductor-deseq2
-  - bioconductor-apeglm
+  - r-wgcna
 
