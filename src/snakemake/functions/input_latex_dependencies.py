@@ -71,8 +71,8 @@ def r_smi_dep(wildcards):
 
     return(filepaths)
 
-def r_smi_dir(dir):
-    rmd_paths = glob.glob(dir + "/*.Rmd")
+def rmd_bookdown_smi_dep(wildcards):
+    rmd_paths = glob.glob("src/rmd/" + wildcards['filler'] + "/*.Rmd")
     dep_paths = []
     pattern = re.compile(r"""smi *<- *["'](.+)["']""")
     for rmd_path in rmd_paths:
@@ -80,7 +80,6 @@ def r_smi_dir(dir):
             for line in infile:
                 match = pattern.search(line)
                 if match:
-                    print(line)
                     dep_paths.append(match.group(1))
     
     return(dep_paths)
