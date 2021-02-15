@@ -37,8 +37,9 @@ rule bcl2fastq:
         out/bcl2fastq/_--barcode-mismatches_1/gpfs/projects/spicuglia/mw/inp/bcl/Run_310_200225_NS500637_0217_AH2JLTBGXF/Reports/html/tree.html out/bcl2fastq/_--barcode-mismatches_1_--no-lane-splitting/gpfs/projects/spicuglia/mw/inp/bcl/Run_310_200225_NS500637_0217_AH2JLTBGXF/Reports/html/tree.html
     """
     input:
-        xml="/{filler}/RunInfo.xml",
-        csv="/{filler}/SampleSheet.csv"
+        xml="/{filler}/RunInfo.xml", 
+        csv="out/{tool}{extra}/{filler}/SampleSheet.csv",
+        #csv="/{filler}/SampleSheet.csv"
         #"inp/bcl/Run_310_200225_NS500637_0217_AH2JLTBGXF/RunInfo.xml"
         #bcl2fastq_input
     output:
@@ -47,7 +48,6 @@ rule bcl2fastq:
         #"out/bcl2fastq/{accession}/{experiment}/
         #clustering/{sample}")
         xml="out/{tool}{extra}/{filler}/RunInfo.xml",
-        csv="out/{tool}{extra}/{filler}/SampleSheet.csv",
         html="out/{tool}{extra}/{filler}/Reports/html/tree.html"
         #int_list
     params:
@@ -63,10 +63,9 @@ rule bcl2fastq:
         "out/{tool}{extra}/{filler}/log"
     shell:
         """
-        cp {input.csv} {output.csv}
         cp {input.xml} {output.xml}
-        INDIR=`dirname {input.csv}`
-        OUTDIR=`dirname {output.csv}`
+        INDIR=`dirname {input.xml}`
+        OUTDIR=`dirname {output.xml}`
         bcl2fastq --input-dir $INDIR/Data/Intensities/BaseCalls --runfolder-dir $OUTDIR --output-dir $OUTDIR {params.extra} &> {log}
         """
 

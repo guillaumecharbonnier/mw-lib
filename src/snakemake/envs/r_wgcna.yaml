@@ -1,0 +1,9 @@
+name:
+  r_wgcna
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-wgcna
+
