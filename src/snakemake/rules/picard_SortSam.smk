@@ -26,7 +26,7 @@ rule picard_SortSam_sortOrder:
     output:
         bam = "out/picard/SortSam_sortOrder-{sortOrder}/{id}.bam",
     wildcard_constraints:
-        sortOrder="queryname|reads|coordinate|duplicate"
+        sortOrder="queryname|readname|coordinate|duplicate"
     conda:
         "../envs/picard.yaml"
     shell:
