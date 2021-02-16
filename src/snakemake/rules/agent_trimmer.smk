@@ -66,27 +66,8 @@ rule agent_trim_pe:
         mv ${{OUTPREFIX}}_L001_RN_001.fastq*_STATS_0.properties {output.properties}
         """
 
-rule picard_MergeBamAlignment_dev_for_locatit_without_mbc:
-    input:
-        "out/star/pe_fastq.gz_to_bam_staridx-GRCh38-ensembl_gtf-GRCh38-ensembl/agent/trim_-v2/ln/updir/mw/inp/fastq/2021_RNAseq_NECKER_spicuglia/fastq/MOLT4_S60.bam"
 
-rule picard_FastqToSam_pe_dev_for_locatit_without_mbc:
-    input:
-        fq1 = "out/{filler}_1.fastq.gz",
-        fq2 = "out/{filler}_2.fastq.gz"
-    output:
-        bam = "out/{tool}{extra}/{filler}.bam"
-    wildcard_constraints:
-        tool = "picard/FastqToSam"
-    shell:
-        """
-        java -jar picard.jar FastqToSam \
-            F1={input.fq1} \
-            F2={input.fq2} \
-            O={output.bam} \
-            SM=sample001 \
-            RG=rg0013
-        """
+
 
 rule agent_locatit_mbc:
     """
@@ -94,11 +75,12 @@ rule agent_locatit_mbc:
         This version of Locatit requires MBC file, and is for example required for RNA-seq in XTHS2 mode (Single-strand consensus)
     Doc:
         https://www.agilent.com/cs/library/software/public/AGeNT%20ReadMe.pdf
+    Note:
+        Aligned reads should be sorted by read names and not by coordinates.
     Test:
-        out/agent/locatit_mbc_-i_-R/star/pe_fastq.gz_to_bam_staridx-GRCh38-ensembl_gtf-GRCh38-ensembl/agent/trim_-v2/ln/updir/mw/inp/fastq/2021_RNAseq_NECKER_spicuglia/fastq/MOLT4_S60.bam
+        out/samtools/index/samtools/sort/agent/locatit_mbc_-i_-R/picard/SortSam_sortOrder-queryname/star/pe_fastq.gz_to_bam_staridx-GRCh38-ensembl_gtf-GRCh38-ensembl/agent/trim_-v2/ln/updir/mw/inp/fastq/2021_RNAseq_NECKER_spicuglia/fastq/MOLT4_S60.bam
     """
     input:
-        #bam = "out/star/pe_fastq.gz_to_bam_staridx-GRCh38-ensembl_gtf-GRCh38-ensembl/agent/trim_-v2/ln/updir/mw/inp/fastq/2021_RNAseq_NECKER_spicuglia/fastq/MOLT4_S60.bam",
         # star/pe_fastq.gz_to_bam_staridx-GRCh38-ensembl_gtf-GRCh38-ensembl/
         # 
         bam = "out/{filler_align}{filler_trim}.bam",
@@ -122,9 +104,11 @@ rule agent_locatit_mbc:
         # {input.agent} -Xmx{params.memory} locatit {params.extra} -o {output.bam} {input.bam} {input.mbc}
         """
 
-rule get_agent:
+rule agent_wget:
     """
-    https://explore.agilent.com/AGeNT-Software-Download-Form-TY
+    Aim:
+        Agent is currently only available on Agilent website
+        https://explore.agilent.com/AGeNT-Software-Download-Form-TY
     """
     output:
         agent = "out/agent/agent/agent.sh",
