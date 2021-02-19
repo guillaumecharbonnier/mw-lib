@@ -46,8 +46,8 @@ rule agent_trim_pe:
         rm -f \
             ${{OUTPREFIX}}_1.fastq*_Cut_0.fastq.gz \
             ${{OUTPREFIX}}_2.fastq*_Cut_0.fastq.gz \
-            ${{OUTPREFIX}}_N.fastq*_MBC_0.txt.gz \
-            ${{OUTPREFIX}}_N.fastq*_STATS_0.properties
+            ${{OUTPREFIX}}_N*_MBC_0.txt.gz \
+            ${{OUTPREFIX}}_N*_STATS_0.properties
 
         {input.agent} trim -fq1 $FQ1 -fq2 $FQ2 {params.extra}
 
@@ -56,8 +56,8 @@ rule agent_trim_pe:
         # Timestamped output files from agent are simplified
         mv ${{OUTPREFIX}}_2.fastq*_Cut_0.fastq.gz {output.fq2}
         mv ${{OUTPREFIX}}_1.fastq*_Cut_0.fastq.gz {output.fq1}
-        mv ${{OUTPREFIX}}_N.fastq*_MBC_0.txt.gz {output.mbc}
-        mv ${{OUTPREFIX}}_N.fastq*_STATS_0.properties {output.properties}
+        mv ${{OUTPREFIX}}_N*_MBC_0.txt.gz {output.mbc}
+        mv ${{OUTPREFIX}}_N*_STATS_0.properties {output.properties}
         """
 
 

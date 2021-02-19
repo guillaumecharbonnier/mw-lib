@@ -8,6 +8,7 @@ dependencies:
   #- git-annex
   #- uncommitted
   - tmux
+  - git
   - vim
   - htop
   # Related to snakemake below:
