@@ -1,0 +1,11 @@
+name:
+  r_fishpond
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - bioconductor-tximeta
+  - bioconductor-fishpond
+  - r-biocmanager
+
