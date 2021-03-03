@@ -15,7 +15,7 @@ dependencies:
   - snakemake
   - rpy2
   - pandas
-  - xlrd # needed to load excel file with pandas
+  - openpyxl # needed to load excel file with pandas
   - numpy
   - biopython
   - conda
