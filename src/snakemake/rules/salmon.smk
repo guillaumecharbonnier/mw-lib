@@ -10,7 +10,7 @@ rule salmon_index:
     conda:
         "../envs/salmon.yaml"
     shell:
-        "salmon index -t {input} -i `dirname {output}`"
+        "salmon index -t {input} -i {output}"
 
 rule salmon_quant_bam:
     """
@@ -19,13 +19,19 @@ rule salmon_quant_bam:
         out/salmon/index/wget/http/ftp.ensembl.org/pub/release-103/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all
     """
     input:
-        "out/{filler}.fa.gz"
+        index = lambda wildcards: mwconf['ids'][wildcards.index_id],
+        bam = "out/{filler}.bam"
     output:
-        directory("out/salmon/quant/{filler}")
+        directory("out/{tool}{extra}_{index_id}/{filler}")
+    params:
+        extra = params_extra
+    wildcard_constraints:
+        tool = "salmon/quant_bam",
+        index_id = "salmon-[a-zA-Z0-9-]+"
     conda:
         "../envs/salmon.yaml"
     shell:
-        "salmon index -t {input} -i {output}"
+        "salmon quant -i {input.index} {params.extra} -a {input.bam} -o {output}"
 
 rule salmon_quant_fastq_pe:
     """
