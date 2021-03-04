@@ -6,3 +6,4 @@ channels:
   - defaults
 dependencies:
   - salmon
+  - tbb == 2020.2

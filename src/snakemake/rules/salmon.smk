@@ -28,10 +28,12 @@ rule salmon_quant_bam:
     wildcard_constraints:
         tool = "salmon/quant_bam",
         index_id = "salmon-[a-zA-Z0-9-]+"
+    threads:
+        4
     conda:
         "../envs/salmon.yaml"
     shell:
-        "salmon quant -i {input.index} {params.extra} -a {input.bam} -o {output}"
+        "salmon quant -p {threads} -i {input.index} {params.extra} -a {input.bam} -o {output}"
 
 rule salmon_quant_fastq_pe:
     """
@@ -49,7 +51,9 @@ rule salmon_quant_fastq_pe:
     wildcard_constraints:
         tool = "salmon/quant_fastq_pe",
         index_id = "salmon-[a-zA-Z0-9-]+"
+    threads:
+        4
     conda:
         "../envs/salmon.yaml"
     shell:
-        "salmon quant -i {input.index} {params.extra} -1 {input.fq1} -2 {input.fq2} -o {output}"
+        "salmon quant -p {threads} -i {input.index} {params.extra} -1 {input.fq1} -2 {input.fq2} -o {output}"
