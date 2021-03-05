@@ -7,5 +7,9 @@ channels:
 dependencies:
   - bioconductor-tximeta
   - bioconductor-fishpond
+  - bioconductor-org.hs.eg.db
+  - bioconductor-summarizedexperiment
+  - r-openxlsx
+  - r-readr
   - r-biocmanager
 
