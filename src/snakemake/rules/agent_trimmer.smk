@@ -33,14 +33,11 @@ rule agent_trim_pe:
         OUTDIR=`dirname {output.fq1}`
         FQ1=$OUTDIR/`basename {input.fq1}`
         FQ2=$OUTDIR/`basename {input.fq2}`
-
         # Input fastq symlink are dereferenced in the output directory
         # else agent will put output files into symlink targets.
         cp -rL {input.fq1} $FQ1
         cp -rL {input.fq2} $FQ2
-
         OUTPREFIX=out/{wildcards.tool}{wildcards.extra}/{wildcards.filler}
-
         # Output files from previous run should be removed
         # as the regex `mv` below should match only one file each.
         rm -f \
@@ -48,11 +45,8 @@ rule agent_trim_pe:
             ${{OUTPREFIX}}_2.fastq*_Cut_0.fastq.gz \
             ${{OUTPREFIX}}_N*_MBC_0.txt.gz \
             ${{OUTPREFIX}}_N*_STATS_0.properties
-
         {input.agent} trim -fq1 $FQ1 -fq2 $FQ2 {params.extra}
-
         rm -f $FQ1 $FQ2
-
         # Timestamped output files from agent are simplified
         mv ${{OUTPREFIX}}_2.fastq*_Cut_0.fastq.gz {output.fq2}
         mv ${{OUTPREFIX}}_1.fastq*_Cut_0.fastq.gz {output.fq1}
@@ -101,16 +95,13 @@ rule agent_trim_2_lanes_pe:
         FQ1L2=$OUTDIR/`basename {input.fq1l2}`
         FQ2L1=$OUTDIR/`basename {input.fq2l1}`
         FQ2L2=$OUTDIR/`basename {input.fq2l2}`
-
         # Input fastq symlink are dereferenced in the output directory
         # else agent will put output files into symlink targets.
         cp -rL {input.fq1l1} $FQ1L1
         cp -rL {input.fq1l2} $FQ1L2
         cp -rL {input.fq2l1} $FQ2L1
         cp -rL {input.fq2l2} $FQ2L2
-
         OUTPREFIX=out/{wildcards.tool}{wildcards.extra}/{wildcards.filler}
-
         # Output files from previous run should be removed
         # as the regex `mv` below should match only one file each.
         rm -f \
@@ -118,11 +109,8 @@ rule agent_trim_2_lanes_pe:
             ${{OUTPREFIX}}_L001_R2_001.fastq*_Cut_0.fastq.gz \
             ${{OUTPREFIX}}_L001_RN_001.fastq*_MBC_0.txt.gz \
             ${{OUTPREFIX}}_L001_RN_001.fastq*_STATS_0.properties
-
         {input.agent} trim -fq1 $FQ1L1,$FQ1L2 -fq2 $FQ2L1,$FQ2L2 {params.extra}
-
         rm -f $FQ1L1 $FQ1L2 $FQ2L1 $FQ2L2
-
         # Timestamped output files from agent are simplified
         mv ${{OUTPREFIX}}_L001_R2_001.fastq*_Cut_0.fastq.gz {output.fq2}
         mv ${{OUTPREFIX}}_L001_R1_001.fastq*_Cut_0.fastq.gz {output.fq1}
