@@ -1,0 +1,38 @@
+name:
+  r_netbid
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+# From: https://jyyulab.github.io/NetBID/docs/pre_request
+dependencies:
+  - r-devtools
+  - bioconductor-geoquery
+  - bioconductor-biobase
+  - bioconductor-limma
+  - bioconductor-deseq2
+  - bioconductor-impute
+  - bioconductor-tximport
+  - bioconductor-consensusclusterplus
+  - bioconductor-complexheatmap
+  - bioconductor-biomart
+  - bioconductor-gsva
+  - bioconductor-rhdf5
+  - r-aricode
+  - r-igraph
+  - r-rcolorbrewer
+  - r-plot3d
+  - r-plotrix
+  - r-umap
+  - r-plotly
+  - r-ordinal
+  - r-mcmcglmm
+  - r-arm
+  - r-reshape
+  - r-msigdbr
+  - r-openxlsx
+  - r-rmarkdown
+  - r-kableextra
+
+
+

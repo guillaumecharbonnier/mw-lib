@@ -11,7 +11,7 @@ getEnrichrUrlFromGenes <- function(genes) {
     body = I(req.body)
   )
   url <- paste0(
-    "https://amp.pharm.mssm.edu/Enrichr/enrich?dataset=",
+    "https://maayanlab.cloud/Enrichr/enrich?dataset=",
     jsonlite::fromJSON(httr::content(
       post.req,
       "text"

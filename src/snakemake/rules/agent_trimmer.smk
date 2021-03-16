@@ -60,8 +60,6 @@ rule agent_trim_pe:
         mv ${{OUTPREFIX}}_N*_STATS_0.properties {output.properties}
         """
 
-
-
 rule agent_trim_2_lanes_pe:
     """
     Doc:
