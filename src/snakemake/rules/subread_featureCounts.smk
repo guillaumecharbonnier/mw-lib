@@ -44,7 +44,7 @@ rule subread_featureCounts_extra:
         bam_list="bam-[a-zA-Z0-9-]+",
         gtf_saf_id="[a-zA-Z0-9-]+"
     threads:
-        16
+        MAX_THREADS
     shell:
         """
         featureCounts -a {input.gtf_saf} {params.extra} -T {threads} -o {output.tsv} {input.bam} &> {log}
