@@ -84,7 +84,7 @@ rule gtftk_coverage_extra_chrominfo_gtf_bw:
     log:
         "out/{tool}{extra}_chrominfo-{chrominfo_id}_gtf-{gtf_id}_{bw_list_id}.log"
     threads:
-        16
+        MAX_THREADS
     wildcard_constraints:
         tool="gtftk/coverage"
     conda:

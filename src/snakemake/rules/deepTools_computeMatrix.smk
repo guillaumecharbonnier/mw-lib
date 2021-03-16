@@ -30,7 +30,7 @@ rule deepTools_computeMatrix_extra:
         bw_list_id = "bw-[a-zA-Z0-9-]+",
         bed_list_id = "bed-[a-zA-Z0-9-]+"
     threads:
-        16
+        MAX_THREADS
     shell:
         "computeMatrix {params.extra} --regionsFileName {input.bed} "
         "--scoreFileName {input.bw} --outFileName {output.matrix} "
@@ -63,7 +63,7 @@ rule deepTools_computeMatrix_SingleBw_extra:
         tool="deepTools/computeMatrix",
         bed_list_id = "bed-[a-zA-Z0-9-]+"
     threads:
-        16
+        MAX_THREADS
     shell:
         "computeMatrix {params.extra} --regionsFileName {input.bed} "
         "--scoreFileName {input.bw} --outFileName {output.matrix} "

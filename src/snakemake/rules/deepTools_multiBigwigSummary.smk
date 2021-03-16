@@ -28,7 +28,7 @@ rule deepTools_multiBigwigSummary_BED_extra:
     wildcard_constraints:
         tool="deepTools/multiBigwigSummary_BED"
     threads:
-        16
+        MAX_THREADS
     conda:
         "../envs/deeptools.yaml"
     shell:
@@ -60,7 +60,7 @@ rule deepTools_multiBigwigSummary_bins_extra:
     wildcard_constraints:
         tool="deepTools/multiBigwigSummary_bins"
     threads:
-        16
+        MAX_THREADS
     conda:
         "../envs/deeptools.yaml"
     shell:

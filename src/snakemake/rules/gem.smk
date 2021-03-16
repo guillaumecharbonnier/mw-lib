@@ -34,7 +34,7 @@ rule gem_mappability:
     params:
         outprefix="out/gem/mappability/GRCm38"
     threads:
-        16
+        MAX_THREADS
     shell:
         """
         export PATH=$PATH:opt/GEM-binaries-Linux-x86_64-core_i3-20130406-045632/bin

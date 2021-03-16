@@ -290,7 +290,7 @@ rule deepTools_bamCoverage_filterRNAstrand_binSize_minMappingQuality_normalizeUs
         binSize="[0-9]+",
         minMappingQuality="[0-9]+"
     threads:
-        16
+        MAX_THREADS
     shell:
         """
         {input.bamCoverage} \
@@ -315,7 +315,7 @@ rule deepTools_bamCoverage_filterRNAstrand_binSize_minMappingQuality_normalizeUs
 #        bai="out/samtools/sam_to_bam/bowtie2/{runtype}/{index}/{exp}/{sample}.bam.bai",
 #    output:
 #        bw="out/deepTools/bamCoverage/samtools/sam_to_bam/bowtie2/{runtype}/{index}/{exp}/{sample}.bw"
-#    threads: 16
+#    threads: MAX_THREADS
 #    shell:"""
 #    {input.bamCoverage} --bam {input.bam} \
 #    --numberOfProcessors 16 --binSize 1 \
@@ -336,7 +336,7 @@ rule deepTools_bamCoverage_filterRNAstrand_binSize_minMappingQuality_normalizeUs
 #        bai="out/star/{runtype}/{index}/{exp}/{sample}.bam.bai",
 #    output:
 #        bw="out/deepTools/bamCoverage/star/{runtype}/{index}/{exp}/{sample}.bw"
-#    threads: 16
+#    threads: MAX_THREADS
 #    shell:"""
 #    {input.bamCoverage} --bam {input.bam} \
 #    --numberOfProcessors 16 --binSize 1 \
@@ -355,14 +355,16 @@ rule deepTools_bamCoverage_blacklisted_legacy:
         bed="annotation/input/feature/{index}/blacklist.bed"
     output:
         bw="out/bw/bamCoverage_blacklisted/{index}/{exp}/{sample}.bw"
-    threads: 16
-    shell:"""
-    {input.bamCoverage} --bam {input.bam} \
-        --numberOfProcessors 16 --binSize 1 \
-        --minMappingQuality 30 \
-        --blackListFileName {input.bed} \
-        --normalizeUsingRPKM -o {output.bw}
-    """
+    threads:
+        MAX_THREADS
+    shell:
+        """
+        {input.bamCoverage} --bam {input.bam} \
+            --numberOfProcessors 16 --binSize 1 \
+            --minMappingQuality 30 \
+            --blackListFileName {input.bed} \
+            --normalizeUsingRPKM -o {output.bw}
+        """
 
 rule deepTools_bamCoverage_MNase_mode_legacy:
     """
@@ -372,13 +374,15 @@ rule deepTools_bamCoverage_MNase_mode_legacy:
         bamCoverage="opt/miniconda/envs/deeptools/bin/bamCoverage",\
         bam="out/bam/{index}/{exp}/{sample}.bam"
     output: bw="out/bw/bamCoverage_MNase_mode/{index}/{exp}/{sample}.bw"
-    threads: 16
-    shell:"""
-        {input.bamCoverage} --bam {input.bam} \
-        --numberOfProcessors 16 --binSize 1 \
-        --normalizeUsingRPKM -o {output.bw} \
-        --MNase
-    """
+    threads:
+        MAX_THREADS
+    shell:
+        """
+            {input.bamCoverage} --bam {input.bam} \
+            --numberOfProcessors 16 --binSize 1 \
+            --normalizeUsingRPKM -o {output.bw} \
+            --MNase
+        """
 
 rule deepTools_bamCoverage_custom_MNase_mode:
     """
@@ -389,13 +393,15 @@ rule deepTools_bamCoverage_custom_MNase_mode:
         bam="out/bam/{index}/{exp}/{sample}.bam"
     output:
         bw="out/bw/bamCoverage_custom_MNase_mode/{index}/{exp}/{sample}.bw"
-    threads: 16
-    shell:"""
-    {input.bamCoverage} --bam {input.bam} \
-        --numberOfProcessors 16 --binSize 1 \
-        --normalizeUsingRPKM -o {output.bw} \
-        --centerReads --extendReads 3
-    """
+    threads:
+        MAX_THREADS
+    shell:
+        """
+        {input.bamCoverage} --bam {input.bam} \
+            --numberOfProcessors 16 --binSize 1 \
+            --normalizeUsingRPKM -o {output.bw} \
+            --centerReads --extendReads 3
+        """
 
 rule deepTools_bamCoverage_legacy:
     """
@@ -415,11 +421,13 @@ rule deepTools_bamCoverage_legacy:
         bw="out/bw/bamCoverage/{index}/{exp}/{sample}.bw"
     conda:
         "../envs/deeptools.yaml"
-    threads: 16
-    shell:"""
-    #{input.bamCoverage} --bam {input.bam} \
-    bamCoverage --bam {input.bam} \
-    --numberOfProcessors 16 --binSize 1 \
-    --minMappingQuality 30 \
-    --normalizeUsingRPKM -o {output.bw}
-    """
+    threads:
+        MAX_THREADS
+    shell:
+        """
+        #{input.bamCoverage} --bam {input.bam} \
+        bamCoverage --bam {input.bam} \
+        --numberOfProcessors 16 --binSize 1 \
+        --minMappingQuality 30 \
+        --normalizeUsingRPKM -o {output.bw}
+        """

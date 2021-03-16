@@ -58,7 +58,7 @@ rule fastq_screen_filter:
     conda:
         "../envs/fastq_screen.yaml"
     threads:
-        16
+        MAX_THREADS
     shell:
         "fastq_screen {params.extra} "
         "--conf {input.conf} --threads {threads} "

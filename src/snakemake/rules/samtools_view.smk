@@ -551,7 +551,7 @@ rule samtools_view_b_h_s:
     wildcard_constraints:
         s="[0-9].[0-9]+"
     threads:
-        16
+        MAX_THREADS
     shell:
         """
         {input.samtools} view -bh -s {wildcards.s} --threads {threads} {input.bam} > {output.bam}

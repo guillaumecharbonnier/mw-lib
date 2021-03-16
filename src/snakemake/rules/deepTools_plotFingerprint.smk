@@ -33,7 +33,7 @@ rule deepTools_plotFingerprint_extra_lambda:
     conda:
         "../envs/deeptools.yaml"
     threads:
-        16
+        MAX_THREADS
     shell:
         "plotFingerprint --bamfiles {input.bam} --plotFile {output.pdf} --outQualityMetrics {output.txt} --numberOfProcessors {threads} {params.extra} &> {log}"
 
@@ -69,7 +69,7 @@ rule deepTools_plotFingerprint_extra_filler:
     conda:
         "../envs/deeptools.yaml"
     threads:
-        16
+        MAX_THREADS
     shell:
         "plotFingerprint --bamfiles {input.bam} "
         "--plotFile {output.pdf} "

@@ -22,7 +22,7 @@ rule abyss_pe:
         tool = "abyss/pe",
         ext="fa|fq|fasta|fastq|fasta.gz|fastq.gz"
     threads:
-        16
+        MAX_THREADS
     conda:
         "../envs/abyss.yaml"
     shell:
@@ -50,7 +50,7 @@ rule abyss_debug_pe:
         tool = "abyss/debug_pe",
         ext="fa|fq|fasta|fastq|fasta.gz|fastq.gz"
     threads:
-        16
+        MAX_THREADS
     conda:
         "../envs/abyss.yaml"
     shell:

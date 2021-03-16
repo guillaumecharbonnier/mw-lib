@@ -99,7 +99,7 @@ rule deepTools_bamCompare_scaleFactorsMethod_ratio_binsize_normalizeUsingRPKM_ex
     output:
         bw="out/deepTools/bamCompare_scaleFactorsMethod-{scaleFactorsMethod}_ratio-{ratio}_binSize-{binSize}_normalizeUsingRPKM_extendReads-{extendReads}/{filler}/{id_bam1}_vs_{id_bam2}.bw"
     threads:
-        16
+        MAX_THREADS
     wildcard_constraints:
         ratio="log2|ratio|subtract|add|reciprocal_ratio",
         scaleFactorsMethod="readCount|SES",
@@ -298,7 +298,7 @@ rule deepTools_bamCompare_scaleFactorsMethod_ratio_binSize_smoothLength_minMappi
         bai2="out/{filler}/{id_bam2}.bam.bai"
     output:
         bw="out/deepTools/bamCompare_scaleFactorsMethod-{scaleFactorsMethod}_ratio-{ratio}_binSize-{binSize}_smoothLength-{smoothLength}_minMappingQuality-{minMappingQuality}_extendReads-{extendReads}/{filler}/{id_bam1}_vs_{id_bam2}.bw"
-    threads: 16
+    threads: MAX_THREADS
     wildcard_constraints:
         ratio="log2|ratio|subtract|add|reciprocal_ratio",
         scaleFactorsMethod="readCount|SES",
@@ -344,7 +344,7 @@ rule deepTools_bamCompare_ratio_scaleFactorsMethod_binsize_legacy:
         bam2="out/{filler}/{id_bam2}.bam"
     output:
         bw="out/deepTools/bamCompare/{ratio}_{scaleFactorsMethod}_{binSize}/{filler}/{id_bam1}_vs_{id_bam2}.bw"
-    threads: 16
+    threads: MAX_THREADS
     wildcard_constraints:
         ratio="log2|ratio|subtract|add|reciprocal_ratio",
         scaleFactorsMethod="readCount|SES",
@@ -387,7 +387,7 @@ rule deepTools_bamCompare_ratio_scaleFactorsMethod_binsize_minMappingQuality_leg
         bai2="out/{filler}/{id_bam2}.bam.bai"
     output:
         bw="out/deepTools/bamCompare/ratio{ratio}_scaleFactorsMethod{scaleFactorsMethod}_binSize{binSize}_minMappingQuality{minMappingQuality}/{filler}/{id_bam1}_vs_{id_bam2}.bw"
-    threads: 16
+    threads: MAX_THREADS
     wildcard_constraints:
         ratio="log2|ratio|subtract|add|reciprocal_ratio",
         scaleFactorsMethod="readCount|SES",

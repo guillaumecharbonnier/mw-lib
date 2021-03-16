@@ -22,6 +22,6 @@ rule deepTools_bamPEFragmentSize:
     conda:
         "../envs/deeptools.yaml"
     threads:
-        16
+        MAX_THREADS
     shell:
         "bamPEFragmentSize --bamfiles {input.bam} --histogram {output.pdf} {params.extra} --numberOfProcessors {threads}"
