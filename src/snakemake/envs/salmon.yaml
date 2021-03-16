@@ -1,0 +1,9 @@
+name:
+  salmon
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - salmon
+  - tbb == 2020.2
