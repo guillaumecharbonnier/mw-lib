@@ -1,0 +1,9 @@
+name:
+  r_netbid2
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+# From: https://jyyulab.github.io/NetBID/docs/pre_request
+dependencies:
+  - r-devtools

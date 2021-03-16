@@ -1,0 +1,9 @@
+name:
+  sjaracne
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - guillaumecharbonnier
+dependencies:
+  - sjaracne
