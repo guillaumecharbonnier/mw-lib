@@ -20,7 +20,7 @@ out/r/order_cd34_ec_common_atac_peaks_according_to_h3k27ac_ratio/{sample}", samp
     params:
         extra = params_extra
     threads:
-        16
+        MAX_THREADS
     wildcard_constraints:
         tool="gtftk/merge_ologram_stats"
     conda:

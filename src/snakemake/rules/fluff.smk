@@ -25,7 +25,7 @@ rule fluff_heatmap:
     conda:
         "../envs/fluff.yaml"
     threads:
-        16
+        MAX_THREADS
     shell:
         "fluff heatmap {params} -f {input.bed} -d {input.d} -o {output.png} -P {threads} &> {log}"
 

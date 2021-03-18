@@ -23,7 +23,7 @@ rule gapfiller:
     wildcard_constraints:
         tool = "gapfiller/"
     threads:
-        16
+        MAX_THREADS
     conda:
         "../envs/gapfiller.yaml"
     shell:

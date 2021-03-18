@@ -42,7 +42,8 @@ rule star_pe_extra:
             --sjdbGTFfile $WDIR/{input.gtf} \
             --runThreadN {threads} \
             {params.extin} {params.extout} {params.extra}
-        mv Aligned.sortedByCoord.out.bam $WDIR/{output.bam} ) &> {log}
+        mv Aligned.sortedByCoord.out.bam $WDIR/{output.bam}
+        rm -rf {params.outdir}/_STARgenome ) &> {log}
         """
 
 rule star_se_extra:
@@ -93,6 +94,7 @@ rule star_se_extra:
             --runThreadN {threads} \
             {params.extin} {params.extout} {params.extra}
         mv Aligned.sortedByCoord.out.bam $WDIR/{output.bam}
+        rm -rf {params.outdir}/_STARgenome
         """
 
 
@@ -130,6 +132,7 @@ rule star_se_legacy:
             --outFilterMultimapNmax 1 \
             --genomeLoad NoSharedMemory
         mv Aligned.sortedByCoord.out.bam $WDIR/{output.bam}
+        rm -rf {params.outdir}/_STARgenome
         """
 
 
@@ -171,6 +174,7 @@ rule star_pe_index_legacy:
             --outFilterMultimapNmax 1 \
             --genomeLoad NoSharedMemory
         mv Aligned.sortedByCoord.out.bam $WDIR/{output.bam}
+        rm -rf {params.outdir}/_STARgenome
         """
 
 rule star_pe_index_outFilterMultimapNmax_legacy:

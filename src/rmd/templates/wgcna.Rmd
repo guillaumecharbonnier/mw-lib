@@ -546,6 +546,7 @@ if (nrow(d_subset) > 5000) {
 } else {
   
   cor_subset <- cor(t(assay(d_subset)))
+  p_subset <- cor_pmat(t(assay(d_subset)))
   d <- data.frame(
     cor_vs_VNN1 = cor_subset[,"ENSG00000112299"],
     rank = rank(cor_subset[,"ENSG00000112299"]),
@@ -569,7 +570,8 @@ if (nrow(d_subset) > 5000) {
   print(p)
 
   r <- data.frame(
-    cor_vs_VNN1 = cor_subset[,"ENSG00000112299"],
+    r_pearson_cor_vs_VNN1 = cor_subset[,"ENSG00000112299"],
+    p_pearson_cor_vs_VNN1 = p_subset[,"ENSG00000112299"],
     rowData(d_subset)
   )
   
@@ -618,8 +620,8 @@ if (nrow(d_subset) > 5000) {
 } else {
   urls <- list()
   if ("hugo_symbol" %in% colnames(r)) {
-    urls$enrichr$positive_correl_with_VNN1 <- getEnrichrUrlFromGenes(r[r$cor_vs_VNN1 > 0,]$hugo_symbol)
-    urls$enrichr$negative_correl_with_VNN1 <- getEnrichrUrlFromGenes(r[r$cor_vs_VNN1 < 0,]$hugo_symbol)
+    urls$enrichr$positive_correl_with_VNN1 <- getEnrichrUrlFromGenes(r[r$r_pearson_cor_vs_VNN1 > 0,]$hugo_symbol)
+    urls$enrichr$negative_correl_with_VNN1 <- getEnrichrUrlFromGenes(r[r$r_pearson_cor_vs_VNN1 < 0,]$hugo_symbol)
     urls$enrichr$unsigned_correl_with_VNN1 <- getEnrichrUrlFromGenes(r$hugo_symbol)
 
     cat(
@@ -647,18 +649,18 @@ if (nrow(d_subset) > 5000) {
       as_short_link = TRUE
     )
     urls$gprofiler$positive_correl_with_VNN1 <- gost(
-      query=r[r$cor_vs_VNN1 > 0, type_ids],
+      query=r[r$r_pearson_cor_vs_VNN1 > 0, type_ids],
       as_short_link = TRUE
     )
     urls$gprofiler$negative_correl_with_VNN1 <- gost(
-      query=r[r$cor_vs_VNN1 < 0, type_ids],
+      query=r[r$r_pearson_cor_vs_VNN1 < 0, type_ids],
       as_short_link = TRUE
     )
     urls$gprofiler$multiquery <- gost(
       query = list(
         unsigned_correl_with_VNN1 = r[, type_ids],
-        positive_correl_with_VNN1 = r[r$cor_vs_VNN1 > 0, type_ids],
-        negative_correl_with_VNN1 = r[r$cor_vs_VNN1 < 0, type_ids]
+        positive_correl_with_VNN1 = r[r$r_pearson_cor_vs_VNN1 > 0, type_ids],
+        negative_correl_with_VNN1 = r[r$r_pearson_cor_vs_VNN1 < 0, type_ids]
       ),
       as_short_link = TRUE
     )

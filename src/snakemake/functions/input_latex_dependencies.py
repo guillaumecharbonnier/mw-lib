@@ -71,6 +71,19 @@ def r_smi_dep(wildcards):
 
     return(filepaths)
 
+def rmd_bookdown_smi_dep(wildcards):
+    rmd_paths = glob.glob("src/rmd/" + wildcards['filler'] + "/*.Rmd")
+    dep_paths = []
+    pattern = re.compile(r"""smi *<- *["'](.+)["']""")
+    for rmd_path in rmd_paths:
+        with open (rmd_path, "rt") as infile:
+            for line in infile:
+                match = pattern.search(line)
+                if match:
+                    dep_paths.append(match.group(1))
+    
+    return(dep_paths)
+
 
 #def parse_tex_file(path, pattern):
 #    

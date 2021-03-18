@@ -1,9 +1,9 @@
+name:
+  salmon
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - r-data.table
-  - r-rcolorbrewer
-  - r-beanplot
-  - r-docopt
+  - salmon
+  - tbb == 2020.2

@@ -1,0 +1,3 @@
+id	path
+salmon-index-GRCh38-ensembl-r103-cdna	"out/salmon/index/wget/http/ftp.ensembl.org/pub/release-103/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all"
+salmon-index-GRCh38-ensembl-r103	"out/salmon/index_ensembl_with_decoys/release-103/fasta/homo_sapiens/Homo_sapiens.GRCh38"

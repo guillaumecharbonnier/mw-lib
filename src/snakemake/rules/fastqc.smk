@@ -26,7 +26,7 @@ rule fastqc:
         tool="fastqc/",
         ext="fastq|fastq.gz|bam|sam"
     threads:
-        16
+        MAX_THREADS
     shell:
         "fastqc --threads {threads} --outdir `dirname {output.html}` {params.extra} {input} &> {log}"
 

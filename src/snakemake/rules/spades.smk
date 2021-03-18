@@ -392,12 +392,11 @@ rule rnaspades_1_pe_lib:
     conda:
         "../envs/spades.yaml"
     threads:
-        16
+        MAX_THREADS
     shell:
         """
         rnaspades.py -t {threads} -m 100 {params.extra} \
             --pe1-1  {input.pe1_1}  --pe1-2  {input.pe1_2} \
             -o {params.outdir}
         """
-
 

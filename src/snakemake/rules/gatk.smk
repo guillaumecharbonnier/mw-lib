@@ -28,7 +28,7 @@ rule gatk4_haplotyper:
     wildcard_constraints:
         tool = "gatk4/HaplotypeCaller"
     threads:
-        16
+        MAX_THREADS
     conda:
         "../envs/gatk4.yaml"
     shell:

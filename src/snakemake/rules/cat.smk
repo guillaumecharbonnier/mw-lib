@@ -18,23 +18,23 @@ rule cat:
         "cat {input} > {output}"
 
 
-rule cat_merge_2_lanes_pe:
+rule cat_merge_illumina_2_lanes_pe:
     """
     Created:
-        2021-02-05 16:18:13    
+        2021-02-05 16:18:13
     Aim:
-        Merge the 4 lanes produced by Illumina NextSeq500.·
-        Testing merging from raw pattern produced by basespace. Doing that may help in the resolution of bad file naming in sst projet.
+        Merge the 2 lanes produced by Illumina NovaSeq.
     Test:
-        out/cat/merge_lanes_nextseq500_se/inp/fastq/run146/RD_ATAC-seq_Salvatore-Spicuglia-19020/S001387_TH148_149_CD34pos_1aneg_7neg-19019/TH148-149-CD34pos-1aneg-7neg_S1.fastq.gz
+        out/ln/updir/mw/inp/fastq/2021_RNAseq_NECKER_spicuglia/fastq/MOLT4_S60_R1.fastq.gz
     """
     input:
-        fastq_lane1 = "out/{filler}_L001_R{n}_001.fastq.gz",
-        fastq_lane2 = "out/{filler}_L002_R{n}_001.fastq.gz",
+        fastq_lane1 = "out/{filler}_L001_R{n}_001.{ext}",
+        fastq_lane2 = "out/{filler}_L002_R{n}_001.{ext}"
     output:
-        fastq = "out/cat/merge_2_lanes_pe/{filler}_R{n}.fastq.gz"
+        fastq = "out/cat/merge_illumina_2_lanes_pe/{filler}_R{n}.{ext}"
     wildcard_constraints:
-        n = "1|2"
+        n = "1|2",
+        ext = "fastq|fastq.gz"
     threads:
         1
     shell:

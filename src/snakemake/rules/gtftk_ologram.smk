@@ -31,7 +31,7 @@ out/r/order_cd34_ec_common_atac_peaks_according_to_h3k27ac_ratio/{sample}", samp
         extra = params_extra,
         outputdir = "out/{tool}{extra}_{chrominfo_id}_{gtf_id}/{filler}"
     threads:
-        16
+        MAX_THREADS
     wildcard_constraints:
         tool="gtftk/ologram",
         gtf_id="gtf-[a-zA-Z0-9-]+",

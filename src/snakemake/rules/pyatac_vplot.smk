@@ -70,7 +70,7 @@ rule pyatac_vplot_lower_upper_flank_not_atac_plot_extra_bed:
     conda:
         "../envs/nucleoatac.yaml"
     threads:
-        16
+        MAX_THREADS
     shell:
         """
         pyatac vplot \
@@ -112,7 +112,7 @@ rule pyatac_vplot_lower_upper_flank_scale_not_atac_plot_extra_bed:
         flank="[0-9]+",
         bed_id="[a-zA-Z0-9-]+"
     threads:
-        16
+        MAX_THREADS
     conda:
         "../envs/nucleoatac.yaml"
     shell:

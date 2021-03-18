@@ -27,7 +27,7 @@ rule scalpel_discovery:
     wildcard_constraints:
         tool = "scalpel/discovery"
     threads:
-        16
+        MAX_THREADS
     conda:
         "../envs/scalpel.yaml"
     shell:
@@ -60,7 +60,7 @@ rule scalpel_discovery_bed:
     wildcard_constraints:
         tool = "scalpel/discovery"
     threads:
-        16
+        MAX_THREADS
     conda:
         "../envs/scalpel.yaml"
     shell:

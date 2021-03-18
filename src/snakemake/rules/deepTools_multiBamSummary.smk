@@ -24,7 +24,7 @@ rule deepTools_multiBamSummary_BED_extra:
     params:
         extra = params_extra
     threads:
-        16
+        MAX_THREADS
     wildcard_constraints:
         tool="deepTools/multiBamSummary_BED"
     conda:
@@ -55,7 +55,7 @@ rule deepTools_multiBamSummary_bins_extra:
     params:
         extra = params_extra
     threads:
-        16
+        MAX_THREADS
     wildcard_constraints:
         tool="deepTools/multiBamSummary_bins",
         bam_list_id="bam-[A-Za-z0-9-]+"

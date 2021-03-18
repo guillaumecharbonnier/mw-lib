@@ -87,7 +87,7 @@ rule bowtie_build:
 #    wildcard_constraints:
 #        tool="bowtie2/pe"
 #    threads:
-#        16
+#        MAX_THREADS
 #    shell:
 #        """
 #        bowtie2 -p {threads} -x {params.index}\

@@ -1,9 +1,9 @@
+name:
+  sjaracne
 channels:
   - conda-forge
   - bioconda
   - defaults
+  - guillaumecharbonnier
 dependencies:
-  - r-data.table
-  - r-rcolorbrewer
-  - r-beanplot
-  - r-docopt
+  - sjaracne

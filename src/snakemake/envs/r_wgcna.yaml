@@ -1,9 +1,9 @@
+name:
+  r_wgcna
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - r-data.table
-  - r-rcolorbrewer
-  - r-beanplot
-  - r-docopt
+  - r-wgcna
+

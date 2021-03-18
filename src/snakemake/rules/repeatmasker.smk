@@ -26,7 +26,7 @@ rule repeatmasker_test1:
     conda:
         "../envs/repeatmasker.yaml"
     threads:
-        16
+        MAX_THREADS
     shell:
         """
         RepeatMasker -parallel {threads} {params.extra} --dir `dirname {output}` {input.fasta}
