@@ -4,7 +4,7 @@
 
 library(data.table)
 
-files <- fread(snakemake@input)
+files <- fread(snakemake@input[[1]])
 
 # files <- c(
 #   "out/subread/featureCounts_-O_-t_exon_-g_gene_name_gtf-GRCh38-ensembl_bam-GRCh38-exp-RNA-Thymoglobulin.tsv",
@@ -27,5 +27,5 @@ dm <- Reduce(
 )
 fwrite(
   x = dm,
-  file = snakemake@output,
+  file = snakemake@output[[1]],
 )
