@@ -17,7 +17,8 @@ rule gtftk_retrieve:
         extra = params_extra
     wildcard_constraints:
         tool="gtftk/retrieve",
-        specie="mus_musculus|homo_sapiens|[a-z]+_[a-z]+"
+        specie="[mM]us_[mM]usculus|homo_sapiens|[a-zA-Z0-9-]+"
+        #specie="mus_musculus|homo_sapiens|[a-z]+_[a-z]+"
     conda:
         "../envs/pygtftk.yaml"
     shell:
