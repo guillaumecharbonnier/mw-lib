@@ -1,102 +1,38 @@
 rule rseqc_geneBody_coverage:
     """
-    Created:
-        2016-11-3 11h04
-    Aim:
     Doc:
         http://rseqc.sourceforge.net/#genebody-coverage-py
     Test:
-        
     """
     input:
         bam = "out/{filler}.bam",
         bai = "out/{filler}.bam.bai",
-        bed = "annotation/processed/feature/{index}/rseqc/housekeeping.bed"
+        bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_id])
     output:
-        pdf       = "out/rseqc/geneBody_coverage/{filler}.geneBodyCoverage.curves.pdf"
+        pdf = "out/rseqc/geneBody_coverage/{filler}.geneBodyCoverage.curves.pdf"
     params:
-        outprefix = "out/rseqc/geneBody_coverage/{filler}"
+        outprefix = "out/rseqc/geneBody_coverage_{bed_id}/{filler}"
     conda:
         "../envs/rseqc.yaml"
     shell:
         "geneBody_coverage.py -i {input.bam} -r {input.bed} -o {params.outprefix}"
 
-def input_bam_rseqc_geneBody_coverage_bam_list(wildcards):
-    # Getting variables from Snakemake wildcards.
-    bam_list_key=wildcards['bam_list_key']
-    index=wildcards['index']
-    
-    if bam_list_key == 'nut':
-        prefix="out/star/pe_" + index + "/sickle/pe_-t_sanger_-q_20/fastq/nut_rnaseq/"
-        paths=expand("{prefix}{sample}.bam", prefix=prefix, sample=["Nut-P-WT","Nut-P-KO","Nut-R-WT","Nut-R-KO"])
-
-    elif bam_list_key == 'h2al2':
-        paths_p_r_c=expand("out/star/pe_GRCm38_outFilterMultimapNmax-1000/sickle/pe_-t_sanger_-q_20/merge_lanes/run176/RNA-{stage}-H2AL2-{condition}-Rep{replicate}.bam",   
-            stage=["P","R","C"],  
-            condition=["WT","KO"],   
-            replicate=["1","2","3"])
-
-        paths_s_r1=expand("out/star/pe_GRCm38_outFilterMultimapNmax-1000/sickle/pe_-t_sanger_-q_20/merge_lanes/run176/RNA-S-H2AL2-{condition}-Rep1.bam",
-            condition=["WT","KO"])
-
-        paths_s_r2=expand("out/star/pe_GRCm38_outFilterMultimapNmax-1000/sickle/pe_-t_sanger_-q_20/merge_lanes/run176/RNA-S-H2AL2-WT-Rep2.bam")
-       
-        paths = paths_p_r_c + paths_s_r1 + paths_s_r2
-
-    else:
-        print('Error: Add paths in function input_bam_rseqc_geneBody_coverage_bam_list')
-
-    return(paths)
-
-
-def input_bai_rseqc_geneBody_coverage_bam_list(wildcards):
-    # Getting variables from Snakemake wildcards.
-    bam_list_key=wildcards['bam_list_key']
-    index=wildcards['index']
-    
-    if bam_list_key == 'nut':
-        prefix="out/star/pe_" + index + "/sickle/pe_-t_sanger_-q_20/fastq/nut_rnaseq/"
-        paths=expand("{prefix}{sample}.bam.bai", prefix=prefix, sample=["Nut-P-WT","Nut-P-KO","Nut-R-WT","Nut-R-KO"])
-
-    elif bam_list_key == 'h2al2':
-        paths_p_r_c=expand("out/star/pe_GRCm38_outFilterMultimapNmax-1000/sickle/pe_-t_sanger_-q_20/merge_lanes/run176/RNA-{stage}-H2AL2-{condition}-Rep{replicate}.bam.bai",   
-            stage=["P","R","C"],  
-            condition=["WT","KO"],   
-            replicate=["1","2","3"])
-
-        paths_s_r1=expand("out/star/pe_GRCm38_outFilterMultimapNmax-1000/sickle/pe_-t_sanger_-q_20/merge_lanes/run176/RNA-S-H2AL2-{condition}-Rep1.bam.bai",
-            condition=["WT","KO"])
-
-        paths_s_r2=expand("out/star/pe_GRCm38_outFilterMultimapNmax-1000/sickle/pe_-t_sanger_-q_20/merge_lanes/run176/RNA-S-H2AL2-WT-Rep2.bam.bai")
-       
-        paths = paths_p_r_c + paths_s_r1 + paths_s_r2
-
-    else:
-        print('Error: Add paths in function input_bam_rseqc_geneBody_coverage_bam_list')
-
-    return(paths)
-
-
 rule rseqc_geneBody_coverage_bam_list:
     """
-    Created:
-        2016-11-3 14h29
-    Modified:
-        2017-03-28 15:23:41 - Updated paths for H2AL2 analysis.
     Note:
-        This should not work properly outside H2AL2 case for the moment after rework.
+        example of required bed:
+        bed="out/sed/remove_chr/awk/extract_main_chr/gunzip/wget/sourceforge_rseqc/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"
     Test:
-        out/rseqc/geneBody_coverage_bam_list/mm10/h2al2.geneBodyCoverage.curves.pdf
     """
     input:
-        bam=input_bam_rseqc_geneBody_coverage_bam_list,
-        bai=input_bai_rseqc_geneBody_coverage_bam_list,
-        #bed="annotation/processed/feature/{index}/rseqc/housekeeping.bed"
-        bed="out/sed/remove_chr/awk/extract_main_chr/gunzip/wget/sourceforge_rseqc/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"
+        bam = lambda wildcards: eval(mwconf['ids'][wildcards.bam_list_id]),
+        # Optional: Make sure bam files have their bai.
+        # bai = todo_write_a_function_that_take_bam_and_add_suffix_bai,
+        bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_id])
     output:
-        pdf="out/rseqc/geneBody_coverage_bam_list/{index}/{bam_list_key}.geneBodyCoverage.curves.pdf"
+        pdf="out/rseqc/geneBody_coverage_bam_list_{bed_id}/{bam_list_id}.geneBodyCoverage.curves.pdf"
     params:
-        outprefix="out/rseqc/geneBody_coverage_bam_list/{index}/{bam_list_key}"
+        outprefix="out/rseqc/geneBody_coverage_bam_list_{bed_id}/{bam_list_id}"
     conda:
         "../envs/rseqc.yaml"
     shell:
@@ -132,6 +68,4 @@ rule rseqc_infer_experiment:
         "../envs/rseqc.yaml"
     shell:
         "infer_experiment.py -r {input.bed} -i {input.sam_or_bam} > {output.txt} 2> {log}"
-
-    
 
