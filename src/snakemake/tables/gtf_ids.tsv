@@ -1,7 +1,11 @@
 id	path
-gtf-GRCm38	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/mus_musculus/Mus_musculus.GRCm38.95.gtf"]
-gtf-GRCm38-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/mus_musculus/Mus_musculus.GRCm38.95.gtf"]
+# Note: 2021-03-22: Change the release for mouse, release 102 is the latest for mm10.
+gtf-GRCm38	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-102/gtf/mus_musculus/Mus_musculus.GRCm38.102.gtf"]
+gtf-GRCm38-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-102/gtf/mus_musculus/Mus_musculus.GRCm38.102.gtf"]
+gtf-GRCm38-merge-attr-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-102/gtf/mus_musculus/Mus_musculus.GRCm38.102.gtf"]
+gtf-GRCm38-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/gtftk/retrieve_-s_mus_musculus_-r_102/mus_musculus.gtf"]
 gtf-GRCh38-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/homo_sapiens/Homo_sapiens.GRCh38.95.gtf"]
+gtf-GRCh38-merge-attr-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/homo_sapiens/Homo_sapiens.GRCh38.95.gtf"]
 gtf-hg38-ensembl	["out/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/homo_sapiens/Homo_sapiens.GRCh38.95.gtf"]
 gtf-mm10	["out/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/mus_musculus/Mus_musculus.GRCm38.95.gtf"]
 gtf-mm10-main-chr	["out/awk/extract_main_chr/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/mus_musculus/Mus_musculus.GRCm38.95.gtf"]
@@ -31,6 +35,13 @@ gtf-hg19-tfbs	["out/awk/tfbsConsSites_to_gtf.gtf"]
 gtf-BDGP6-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-100/gtf/drosophila_melanogaster/Drosophila_melanogaster.BDGP6.28.100.gtf"]
 gtf-R64-1-1-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-100/gtf/saccharomyces_cerevisiae/Saccharomyces_cerevisiae.R64-1-1.100.gtf"]
 
+# 2021-03-22
+# Add GRCm39 genomes
+gtf-GRCm39	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-103/gtf/mus_musculus/Mus_musculus.GRCm39.103.gtf"]
+gtf-GRCm39-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-103/gtf/mus_musculus/Mus_musculus.GRCm39.103.gtf"]
+gtf-GRCm39-merge-attr-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-103/gtf/mus_musculus/Mus_musculus.GRCm39.103.gtf"]
+gtf-GRCm39-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/gtftk/retrieve_-s_mus_musculus_-r_103/mus_musculus.gtf"]
+
 # gtf for cellranger
-gtf-GRCh38-cellranger ["http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.primary_assembly.annotation.gtf.gz"]
-gtf-GRCm38-cellranger ["http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M23/gencode.vM23.primary_assembly.annotation.gtf.gz"]
+gtf-GRCh38-cellranger	["http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.primary_assembly.annotation.gtf.gz"]
+gtf-GRCm38-cellranger	["http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M23/gencode.vM23.primary_assembly.annotation.gtf.gz"]
