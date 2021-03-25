@@ -9,7 +9,7 @@ rule rseqc_geneBody_coverage:
         bai = "out/{filler}.bam.bai",
         bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_id])
     output:
-        pdf = "out/rseqc/geneBody_coverage/{filler}.geneBodyCoverage.curves.pdf"
+        pdf = "out/rseqc/geneBody_coverage_{bed_id}/{filler}.geneBodyCoverage.curves.pdf"
     params:
         outprefix = "out/rseqc/geneBody_coverage_{bed_id}/{filler}"
     conda:
