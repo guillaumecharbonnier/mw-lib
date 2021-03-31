@@ -116,7 +116,7 @@ saveWidgetFix(
 urls <- list()
 urls_items <- ""
 if ("hugo_symbol" %in% colnames(r)) {
-  dereg_genes <- r_signif$hugo_symbol
+  dereg_genes <- r_signif[, "hugo_symbol"]
   upreg_genes <- r_signif[r_signif$log2FoldChange > 0, "hugo_symbol"]
   downreg_genes <- r_signif[r_signif$log2FoldChange < 0, "hugo_symbol"]
 
@@ -125,11 +125,14 @@ if ("hugo_symbol" %in% colnames(r)) {
   } else {
     urls$enrichr$dereg <- getEnrichrUrlFromGenes(dereg_genes)
     
-    urls_items$enrichr_dereg_genes <- paste0(
+    # suppressWarning for 
+    ## Warning in urls_items$enrichr_dereg_genes <- paste0("* Enrichr results for all
+    ## deregulated genes are available [here](", : Coercing LHS to a list
+    urls_items$enrichr_dereg_genes <- suppressWarnings(paste0(
       "* Enrichr results for all deregulated genes are available [here](",
       urls$enrichr$dereg,
       ")"
-    )
+    ))
   }
   if (length(upreg_genes) == 0) {
     urls_items$enrichr_upreg_genes <- "* No Enrichr results for upregulated genes because there are none"
@@ -210,9 +213,9 @@ if (type_ids %in% c("ensembl_gene_id", "hugo_symbol") ) {
     )
   }
   multiquery_list <- list(
-    dereg_genes,
-    upreg_genes,
-    downreg_genes
+    dereg = dereg_genes,
+    upreg = upreg_genes,
+    downreg = downreg_genes
   )
   multiquery_list <- multiquery_list[
     lapply(
