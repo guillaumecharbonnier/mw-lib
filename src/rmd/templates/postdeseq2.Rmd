@@ -117,8 +117,8 @@ urls <- list()
 urls_items <- ""
 if ("hugo_symbol" %in% colnames(r)) {
   dereg_genes <- r_signif$hugo_symbol
-  upreg_genes <- r_signif[r_signif$log2FoldChange > 0, ]$hugo_symbol
-  downreg_genes <- r_signif[r_signif$log2FoldChange < 0, ]$hugo_symbol
+  upreg_genes <- r_signif[r_signif$log2FoldChange > 0, "hugo_symbol"]
+  downreg_genes <- r_signif[r_signif$log2FoldChange < 0, "hugo_symbol"]
 
   if (length(dereg_genes) == 0) {
     urls_items$enrichr_dereg_genes <- "* No Enrichr results for deregulated genes because there are none"
@@ -135,7 +135,6 @@ if ("hugo_symbol" %in% colnames(r)) {
     urls_items$enrichr_upreg_genes <- "* No Enrichr results for upregulated genes because there are none"
   } else {
     urls$enrichr$upreg <- getEnrichrUrlFromGenes(upreg_genes)
-    
     urls_items$enrichr_upreg_genes <- paste0(
       "* Enrichr results for upregulated genes are available [here](",
       urls$enrichr$upreg,
