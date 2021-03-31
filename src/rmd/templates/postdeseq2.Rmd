@@ -145,7 +145,7 @@ if ("hugo_symbol" %in% colnames(r)) {
     urls_items$enrichr_downreg_genes <- "* No Enrichr results for downregulated genes because there are none"
   } else {
     urls$enrichr$downreg <- getEnrichrUrlFromGenes(downreg_genes)
-    urls_items$enrichr_upreg_genes <- paste0(
+    urls_items$enrichr_downreg_genes <- paste0(
       "* Enrichr results for downregulated genes are available [here](",
       urls$enrichr$downreg,
       ")"
@@ -171,7 +171,7 @@ if (type_ids %in% c("ensembl_gene_id", "hugo_symbol") ) {
     )
     urls_items$gprofiler_dereg_genes <- paste0(
       "* g:Profiler results for all deregulated genes are available [here](",
-      urls$enrichr$dereg,
+      urls$gprofiler$dereg,
       ")"
     )
   }
@@ -188,7 +188,7 @@ if (type_ids %in% c("ensembl_gene_id", "hugo_symbol") ) {
     )
     urls_items$gprofiler_upreg_genes <- paste0(
       "* g:Profiler results for all upregulated genes are available [here](",
-      urls$enrichr$upreg,
+      urls$gprofiler$upreg,
       ")"
     )
   }
@@ -205,7 +205,7 @@ if (type_ids %in% c("ensembl_gene_id", "hugo_symbol") ) {
     )
     urls_items$gprofiler_downreg_genes <- paste0(
       "* g:Profiler results for all downregulated genes are available [here](",
-      urls$enrichr$downreg,
+      urls$gprofiler$downreg,
       ")"
     )
   }
@@ -227,7 +227,7 @@ if (type_ids %in% c("ensembl_gene_id", "hugo_symbol") ) {
     )
     urls_items$gprofiler_multiquery <- paste0(
       "* g:Profiler results for comparison of the three queries above are available [here](",
-      urls$enrichr$multiquery,
+      urls$gprofiler$multiquery,
       ")"
     )
   }
