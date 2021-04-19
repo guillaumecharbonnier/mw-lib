@@ -57,7 +57,7 @@ rule cellranger_mkfastq:
         cp -r ${{RUN}}/outs/fastq_path/Reports .
         ) &> {log}
         # go back to mw-sst folder
-        cd /gpfs/tgml/mw-sst
+        #cd /gpfs/tgml/mw-sst
         '''
 
 

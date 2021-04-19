@@ -4,3 +4,5 @@ subread/featureCounts	merge_gene_id_name,five_prime_utr,gene_id,gene_name,transc
 gtftk/convert	gene_id,transcript_id,gene_name
 gtftk/get_5p_3p_coords	gene_id,transcript_id,gene_name
 gtftk/retrieve	rattus_norvegicus
+gtftk/retrieve	mus_musculus
+gtftk/merge_attr	merge_gene_id_name,gene_id,gene_name

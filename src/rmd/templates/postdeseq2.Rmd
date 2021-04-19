@@ -114,14 +114,42 @@ saveWidgetFix(
 )
 
 urls <- list()
+urls_items <- list()
 if ("hugo_symbol" %in% colnames(r)) {
-  dereg_genes <- r_signif$hugo_symbol
-  upreg_genes <- r_signif[r_signif$log2FoldChange > 0, ]$hugo_symbol
-  downreg_genes <- r_signif[r_signif$log2FoldChange < 0, ]$hugo_symbol
+  dereg_genes <- r_signif[, "hugo_symbol"]
+  upreg_genes <- r_signif[r_signif$log2FoldChange > 0, "hugo_symbol"]
+  downreg_genes <- r_signif[r_signif$log2FoldChange < 0, "hugo_symbol"]
 
-  urls$enrichr$dereg <- getEnrichrUrlFromGenes(dereg_genes)
-  urls$enrichr$upreg <- getEnrichrUrlFromGenes(upreg_genes)
-  urls$enrichr$downreg <- getEnrichrUrlFromGenes(downreg_genes)
+  if (length(dereg_genes) == 0) {
+    urls_items$enrichr_dereg_genes <- "* No Enrichr results for deregulated genes because there are none"
+  } else {
+    urls$enrichr$dereg <- getEnrichrUrlFromGenes(dereg_genes)
+    urls_items$enrichr_dereg_genes <- paste0(
+      "* Enrichr results for all deregulated genes are available [here](",
+      urls$enrichr$dereg,
+      ")"
+    )
+  }
+  if (length(upreg_genes) == 0) {
+    urls_items$enrichr_upreg_genes <- "* No Enrichr results for upregulated genes because there are none"
+  } else {
+    urls$enrichr$upreg <- getEnrichrUrlFromGenes(upreg_genes)
+    urls_items$enrichr_upreg_genes <- paste0(
+      "* Enrichr results for upregulated genes are available [here](",
+      urls$enrichr$upreg,
+      ")"
+    )
+  }
+  if (length(downreg_genes) == 0) {
+    urls_items$enrichr_downreg_genes <- "* No Enrichr results for downregulated genes because there are none"
+  } else {
+    urls$enrichr$downreg <- getEnrichrUrlFromGenes(downreg_genes)
+    urls_items$enrichr_downreg_genes <- paste0(
+      "* Enrichr results for downregulated genes are available [here](",
+      urls$enrichr$downreg,
+      ")"
+    )
+  }
 }
 
 # gProfiler works better with Ensembl Gene Ids.
@@ -132,44 +160,76 @@ if ("ensembl_gene_id" %in% colnames(r)) {
   type_ids <- "hugo_symbol"
 }
 if (type_ids %in% c("ensembl_gene_id", "hugo_symbol") ) {
-  urls$gprofiler$dereg <- gost(
-    query = r_signif[, type_ids],
-    as_short_link = TRUE
+  dereg_genes <- r_signif[, type_ids]
+  if (length(dereg_genes) == 0) {
+    urls_items$gprofiler_dereg_genes <- "* No g:Profiler results for deregulated genes because there are none"
+  } else {
+    urls$gprofiler$dereg <- gost(
+      query = dereg_genes,
+      as_short_link = TRUE
+    )
+    urls_items$gprofiler_dereg_genes <- paste0(
+      "* g:Profiler results for all deregulated genes are available [here](",
+      urls$gprofiler$dereg,
+      ")"
+    )
+  }
+  upreg_genes <- r_signif[
+    r_signif$log2FoldChange > 0,
+    type_ids
+  ]
+  if (length(upreg_genes) == 0) {
+    urls_items$gprofiler_upreg_genes <- "* No g:Profiler results for upregulated genes because there are none"
+  } else {
+    urls$gprofiler$upreg <- gost(
+      query = upreg_genes,
+      as_short_link = TRUE
+    )
+    urls_items$gprofiler_upreg_genes <- paste0(
+      "* g:Profiler results for all upregulated genes are available [here](",
+      urls$gprofiler$upreg,
+      ")"
+    )
+  }
+  downreg_genes <- r_signif[
+    r_signif$log2FoldChange < 0,
+    type_ids
+  ]
+  if (length(downreg_genes) == 0) {
+    urls_items$gprofiler_downreg_genes <- "* No g:Profiler results for downregulated genes because there are none"
+  } else {
+    urls$gprofiler$downreg <- gost(
+      query = downreg_genes,
+      as_short_link = TRUE
+    )
+    urls_items$gprofiler_downreg_genes <- paste0(
+      "* g:Profiler results for all downregulated genes are available [here](",
+      urls$gprofiler$downreg,
+      ")"
+    )
+  }
+  multiquery_list <- list(
+    dereg = dereg_genes,
+    upreg = upreg_genes,
+    downreg = downreg_genes
   )
-  urls$gprofiler$upreg <- gost(
-    query=r_signif[r_signif$log2FoldChange > 0, type_ids],
-    as_short_link = TRUE
-  )
-  urls$gprofiler$downreg <- gost(
-    query=r_signif[r_signif$log2FoldChange < 0, type_ids],
-    as_short_link = TRUE
-  )
-  urls$gprofiler$multiquery <- gost(
-    query = list(
-      dereg = r_signif[, type_ids],
-      upreg = r_signif[r_signif$log2FoldChange > 0, type_ids],
-      downreg = r_signif[r_signif$log2FoldChange < 0, type_ids]
-    ),
-    as_short_link = TRUE
-  )
-
-  cat(
-    "* Enrichr results for all deregulated genes are available [here](",
-    urls$enrichr$dereg,
-    ")\n* Enrichr results for upregulated genes are available [here](",
-    urls$enrichr$upreg,
-    ")\n* Enrichr results for downregulated genes are available [here](",
-    urls$enrichr$downreg,
-    ")\n* g:Profiler results for all deregulated genes are available [here](",
-    urls$gprofiler$dereg,
-    ")\n* g:Profiler results for upregulated genes are available [here](",
-    urls$gprofiler$upreg,
-    ")\n* g:Profiler results for downregulated genes are available [here](",
-    urls$gprofiler$downreg,
-    ")\n* g:Profiler results for comparison of the three queries above are available [here](",
-    urls$gprofiler$multiquery,
-    ")",
-    sep=""
-  )
+  multiquery_list <- multiquery_list[
+    lapply(
+      multiquery_list,
+      length
+    ) > 0
+  ]
+  if (length(multiquery_list) > 0) {
+    urls$gprofiler$multiquery <- gost(
+      query = multiquery_list,
+      as_short_link = TRUE
+    )
+    urls_items$gprofiler_multiquery <- paste0(
+      "* g:Profiler results for comparison of the three queries above are available [here](",
+      urls$gprofiler$multiquery,
+      ")"
+    )
+  }
+  cat(paste(urls_items, collapse="\n"))
 }
 ```
