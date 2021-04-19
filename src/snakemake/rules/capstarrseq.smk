@@ -221,7 +221,7 @@ rule capstarrseq_fold_change:
                 quote = FALSE,
                 row.names = FALSE,
                 col.names = FALSE,
-                sep = '\\t'
+                sep = "\\t"
             )
         '
         """
