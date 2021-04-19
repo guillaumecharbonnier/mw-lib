@@ -81,11 +81,12 @@ rule capstarrseq_coverage_fpkm_input:
     conda:
         "../envs/capstarrseq.yaml"
     shell:
+        """
         # 1. Coverage
         # Old way consume too much RAM.
-        #{input.bedtools} coverage -a {input.bed_crms} -b {input.bed_reads} > {output.tsv_cov_unfiltered}
+        #bedtools coverage -a {input.bed_crms} -b {input.bed_reads} > {output.tsv_cov_unfiltered}
         # Strange because it still consumes a lot of memory with 'sorted'.
-        {input.bedtools} coverage -sorted -a {input.bed_crms} -b {input.bed_reads} > {output.tsv_cov_unfiltered}
+        bedtools coverage -sorted -a {input.bed_crms} -b {input.bed_reads} > {output.tsv_cov_unfiltered}
         #cp {output.tsv_cov_unfiltered} tmp/debug_tsv_cov_unfiltered.tsv
         
         # 2. Coverage to FPKM
@@ -544,7 +545,7 @@ rule capstarrseq_merge_all_data:
 #        crm_type="mTDHS|hProm|hProm_posEprom"
 #    run:
 #        shell("""# 1. Coverage
-#        {input.bedtools} coverage -a {input.bed_crms} -b {input.bed_reads} > {output.tsv_cov_unfiltered}
+#        bedtools coverage -a {input.bed_crms} -b {input.bed_reads} > {output.tsv_cov_unfiltered}
 #        #cp {output.tsv_cov_unfiltered} tmp/debug_tsv_cov_unfiltered.tsv
 #        """)
 #        shell("""# 2. Coverage to FPKM
@@ -601,7 +602,7 @@ rule capstarrseq_merge_all_data:
 #        crm_type="mTDHS|hProm|hProm_posEprom"
 #    shell:"""
 #    # 1. Coverage
-#    {input.bedtools} coverage -a {input.bed_crms} -b {input.bed_reads} > {output.tsv_cov}
+#    bedtools coverage -a {input.bed_crms} -b {input.bed_reads} > {output.tsv_cov}
 #
 #    # 2. Coverage to FPKM
 #    nb_mReads=`grep "mapped (" {input.flagstat} | awk '{{print $1}}'`
@@ -650,7 +651,7 @@ rule capstarrseq_merge_all_data:
 ###        extReads="[0-9]+",
 ###        index="hg19|mm9"
 ###    shell:"""
-###    {input.bedtools} coverage -a {input.bed_crms} -b {input.bed_reads} > {output.tsv}
+###    bedtools coverage -a {input.bed_crms} -b {input.bed_reads} > {output.tsv}
 ###    """
 ###
 ###rule awk_compute_fpkm:
