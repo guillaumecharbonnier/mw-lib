@@ -246,154 +246,370 @@ rule capstarrseq_grouping_crms:
         outdir = "out/capstarrseq/grouping_crms/{id}/",
         th_negative_1 = "0.05",
         th_negative_2 = "0.01"
-    run:
-        R("""
-        dat <- read.table('{input.fc}', stringsAsFactors=F)
-    
-        ## CALCUL DU SEUIL EN FONCTION D'UN FDR
-        for (fdr in c({params.th_negative_1},{params.th_negative_2})) {{
-            # Determination du seuil
-            idx <- which(dat[,4] == 'Negative')
-            # Skipping FDR computation if no Negative set is provided.
-            if (length(idx)!=0) {{
-                P <- ecdf(dat[idx,5])
-                th_FoldChange <- quantile(P,probs=1-fdr)
+    conda:
+        "../envs/capstarrseq.yaml"
+    shell:
+        """
+        Rscript -e '
+            dat <- read.table(
+                "{input.fc}",
+                stringsAsFactors = FALSE
+            )
+        
+            ## CALCUL DU SEUIL EN FONCTION DU FDR
+            for (fdr in c({params.th_negative_1},{params.th_negative_2})) {{
+                # Determination du seuil
+                idx <- which(dat[,4] == "Negative")
+                # Skipping FDR computation if no Negative set is provided.
+                if (length(idx)!=0) {{
+                    P <- ecdf(dat[idx,5])
+                    th_FoldChange <- quantile(P,probs=1-fdr)
 
-                # identification des regions actives/inactives
-                idx <- which(dat[,5] >= th_FoldChange)
-                groups <- rep('Inactive',nrow(dat))
-                groups[idx] <- 'Active'
-                groups[which(is.na(dat[,5]))] <- 'NA'
-                
-                pdf(paste('{params.outdir}/Groups.FDR=',fdr,'.pdf',sep=''))
-                par(mfrow=c(2,2))
-                
-                #- boxplot en fonction des categories
-                categories <- unique(dat[,4])
-                fc <- list() ; lfc <- list()
-                for (category in categories) {{
-                    idx <- which(dat[,4] == category)
-                    fc[[category]] <- dat[idx,5]
-                    lfc[[category]] <- log2(dat[idx,5])
+                    # identification des regions actives/inactives
+                    idx <- which(dat[,5] >= th_FoldChange)
+                    groups <- rep(
+                        "Inactive",
+                        nrow(dat)
+                    )
+                    groups[idx] <- "Active"
+                    groups[which(is.na(dat[,5]))] <- "NA"
+                    
+                    pdf(
+                        paste(
+                            "{params.outdir}/Groups.FDR=",
+                            fdr,
+                            ".pdf",
+                            sep=""
+                        )
+                    )
+                    par(mfrow=c(2,2))
+                    
+                    #- boxplot en fonction des categories
+                    categories <- unique(dat[,4])
+                    fc <- list() ; lfc <- list()
+                    for (category in categories) {{
+                        idx <- which(dat[,4] == category)
+                        fc[[category]] <- dat[idx,5]
+                        lfc[[category]] <- log2(dat[idx,5])
+                    }}
+                    colors <- rep("lightgrey",length(categories))
+                    if ("Random" %in% categories) {{ colors[which(categories == "Random")] <- "darkblue" }}
+                    if ("PosEpromoter" %in% categories) {{ colors[which(categories == "PosEpromoter")] <- "darkgreen" }}
+                    if ("Positive" %in% categories) {{ colors[which(categories == "Positive")] <- "darkgreen" }}
+                    if ("Negative" %in% categories) {{ colors[which(categories == "Negative")] <- "darkred" }}
+                    boxplot(
+                        fc,
+                        pch = 20,
+                        col=colors,
+                        main = "Fold Change of categories",
+                        ylab = "Fold Change",
+                        las = 2
+                    )
+                    text(
+                        length(categories),
+                        0.9*max(dat[,5]),
+                        labels = sprintf(
+                            "Threshold :\n%3.2f",
+                            th_FoldChange
+                        ),
+                        col = "red"
+                    )
+                    boxplot(
+                        lfc,
+                        pch = 20,
+                        col = colors,
+                        main = "Fold Change of categories",
+                        ylab = "Fold Change [log2]",
+                        las = 2
+                    )
+                    abline(
+                        h = log2(th_FoldChange),
+                        col = "red",
+                        lty = "dashed"
+                    )
+
+                    #- ranked genomic regions based on their Fold Change
+                    plot(
+                        sort(
+                            dat[
+                                -which(dat[,4]=="Random" | dat[,4]=="Negative"),
+                                5
+                            ]
+                        ),
+                        pch = 20,
+                        main = "Activity of genomic regions\n(Random/Negative not included)",
+                        ylab = "Fold Change",
+                        xlab = "Ranked genomic regions"
+                    )
+                    idx <- which(dat[,5] >= th_FoldChange & dat[,4] != "Random" & dat[,4] != "Negative")
+                    abline(
+                        v = nrow(dat)-length(idx),
+                        col = "red",
+                        lty = "dashed"
+                    )
+                    text(
+                        nrow(dat)-length(idx),
+                        0.9*max(dat[,5]),
+                        labels = length(idx),
+                        pos = 2,
+                        offset = 0,
+                        col = "red"
+                    )
+                    idx <- which(
+                        dat[,5] < th_FoldChange &
+                        dat[,4] != "Random" &
+                        dat[,4] != "Negative"
+                    )
+                    text(
+                        length(idx)/2,
+                        0.9*max(dat[,5]),
+                        labels = length(idx),
+                        col = "black"
+                    )
+            
+                    #- info sur l"analyse
+                    plot(
+                        c(0, 1),
+                        c(0, 1),
+                        ann = FALSE,
+                        bty = "n",
+                        type = "n",
+                        xaxt = "n",
+                        yaxt = "n"
+                    )
+                    text(
+                        x = 0.5,
+                        y = 1,
+                        "INFORMATION",
+                        cex = 1.5,
+                        pos = 1,
+                        offset = 0,
+                        col = "black"
+                    )
+                    text(
+                        x = 0,
+                        y = 0.70,
+                        "{wildcards.id_sample}",
+                        pos = 4,
+                        offset = 0,
+                        col = "black"
+                    )
+                    text(
+                        x = 0,
+                        y = 0.60,
+                        paste(
+                            "Method: FDR=",
+                            fdr,
+                            sep = ""
+                        ),
+                        pos = 4,
+                        offset = 0,
+                        col = "black"
+                    )
+                    dev.off()
+                    
+                    dat_groups <- data.frame(
+                        dat[,1:4],
+                        groups
+                    )
+                    write.table(
+                        dat_groups,
+                        file = paste(
+                            "{params.outdir}/Groups.FDR=",
+                            fdr,
+                            ".grp",
+                            sep = ""
+                        ),
+                        quote = FALSE,
+                        row.names = FALSE,
+                        col.names = FALSE,
+                        sep = "\\t"
+                    )
                 }}
-                colors <- rep('lightgrey',length(categories))
-                if ('Random' %in% categories) {{ colors[which(categories == 'Random')] <- 'darkblue' }}
-                if ('PosEpromoter' %in% categories) {{ colors[which(categories == 'PosEpromoter')] <- 'darkgreen' }}
-                if ('Positive' %in% categories) {{ colors[which(categories == 'Positive')] <- 'darkgreen' }}
-                if ('Negative' %in% categories) {{ colors[which(categories == 'Negative')] <- 'darkred' }}
-                boxplot(fc, pch=20, col=colors, main='Fold Change of categories', ylab='Fold Change',las=2)
-                text(length(categories), 0.9*max(dat[,5]), labels=sprintf('Threshold :\n%3.2f',th_FoldChange), col='red')
-                boxplot(lfc, pch=20, col=colors, main='Fold Change of categories', ylab='Fold Change [log2]', las=2)
-                abline(h=log2(th_FoldChange), col='red', lty='dashed')
-
-                
-                #- ranked genomic regions based on their Fold Change
-                plot(sort(dat[-which(dat[,4]=='Random' | dat[,4]=='Negative'),5]), pch=20, main='Activity of genomic regions\n(Random/Negative not included)', ylab='Fold Change', xlab='Ranked genomic regions')
-                idx <- which(dat[,5] >= th_FoldChange & dat[,4] != 'Random' & dat[,4] != 'Negative')
-                abline(v=nrow(dat)-length(idx), col='red', lty='dashed')
-                text(nrow(dat)-length(idx), 0.9*max(dat[,5]), labels=length(idx), pos=2, offset=0, col='red')
-                idx <- which(dat[,5] < th_FoldChange & dat[,4] != 'Random' & dat[,4] != 'Negative')
-                text(length(idx)/2, 0.9*max(dat[,5]), labels=length(idx), col='black')
-        
-                #- info sur l'analyse
-                plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n')
-                text(x=0.5, y=1, 'INFORMATION', cex=1.5, pos=1, offset=0, col = 'black')
-                text(x=0, y=0.70, '{wildcards.id_sample}', pos=4, offset=0, col = 'black')
-                text(x=0, y=0.60, paste('Method: FDR=',fdr,sep=''), pos=4, offset=0, col = 'black')            
-                dev.off()            
-                
-                dat_groups <- data.frame(dat[,1:4], groups)
-                write.table(dat_groups, file=paste('{params.outdir}/Groups.FDR=',fdr,'.grp',sep=''), quote=F, row.names=F, col.names=F, sep='\t')
             }}
-        }}
+            
+            
+            ## Compute threshold base on inflexion point
+            
+            #---  code from ROSE tool to dertermine super-enhancers  ---#
+            #--
+            #This function calculates the cutoff by sliding a diagonal line and finding where it is tangential (or as close as possible)
+            calculate_cutoff <- function(inputVector, drawPlot=TRUE,...){{
+                inputVector <- sort(inputVector)
+                inputVector[inputVector<0]<-0 #set those regions with more control than ranking equal to zero
+                slope <- (max(inputVector)-min(inputVector))/length(inputVector) #This is the slope of the line we want to slide. This is the diagonal.
+                xPt <- floor(optimize(numPts_below_line,lower=1,upper=length(inputVector),myVector= inputVector,slope=slope)$minimum) #Find the x-axis point where a line passing through that point has the minimum number of points below it. (ie. tangent)
+                y_cutoff <- inputVector[xPt] #The y-value at this x point. This is our cutoff.
         
-        
-        ## CALCUL DU SEUIL EN FONCTION DU POINT D'INFLEXION
-        
-        #---  code from ROSE tool to dertermine super-enhancers  ---#
-        #--
-        #This function calculates the cutoff by sliding a diagonal line and finding where it is tangential (or as close as possible)
-        calculate_cutoff <- function(inputVector, drawPlot=TRUE,...){{
-            inputVector <- sort(inputVector)
-            inputVector[inputVector<0]<-0 #set those regions with more control than ranking equal to zero
-            slope <- (max(inputVector)-min(inputVector))/length(inputVector) #This is the slope of the line we want to slide. This is the diagonal.
-            xPt <- floor(optimize(numPts_below_line,lower=1,upper=length(inputVector),myVector= inputVector,slope=slope)$minimum) #Find the x-axis point where a line passing through that point has the minimum number of points below it. (ie. tangent)
-            y_cutoff <- inputVector[xPt] #The y-value at this x point. This is our cutoff.
-    
-            if(drawPlot){{  #if TRUE, draw the plot
-                plot(1:length(inputVector), inputVector,type="l",...)
-                b <- y_cutoff-(slope* xPt)
-                abline(v= xPt,h= y_cutoff,lty=2,col=8)
-                points(xPt,y_cutoff,pch=16,cex=0.9,col=2)
-                abline(coef=c(b,slope),col=2)
-                title(paste("x=",xPt,"\ny=",signif(y_cutoff,3),"\nFold over Median=",signif(y_cutoff/median(inputVector),3),"x\nFold over Mean=",signif(y_cutoff/mean(inputVector),3),"x",sep=""))
-                axis(1,sum(inputVector==0),sum(inputVector==0),col.axis="pink",col="pink") #Number of regions with zero signal
+                if(drawPlot){{  #if TRUE, draw the plot
+                    plot(1:length(inputVector), inputVector,type="l",...)
+                    b <- y_cutoff-(slope* xPt)
+                    abline(
+                        v = xPt,
+                        h = y_cutoff,
+                        lty = 2,
+                        col = 8
+                    )
+                    points(
+                        xPt,
+                        y_cutoff,
+                        pch = 16,
+                        cex = 0.9,
+                        col = 2
+                    )
+                    abline(
+                        coef = c(b,slope),
+                        col = 2
+                    )
+                    title(
+                        paste(
+                            "x=",
+                            xPt,
+                            "\ny=",
+                            signif(
+                                y_cutoff,
+                                3
+                            ),
+                            "\nFold over Median=",
+                            signif(
+                                y_cutoff/median(inputVector),
+                                3
+                            ),
+                            "x\nFold over Mean=",
+                            signif(
+                                y_cutoff/mean(inputVector),
+                                3
+                            ),
+                            "x",
+                            sep=""
+                        )
+                    )
+                    axis(
+                        1,
+                        sum(inputVector==0),
+                        sum(inputVector==0),
+                        col.axis = "pink",
+                        col = "pink"
+                    ) #Number of regions with zero signal
+                }}
+                return(
+                    list(
+                        absolute = y_cutoff,
+                        overMedian = y_cutoff/median(inputVector),
+                        overMean = y_cutoff/mean(inputVector)
+                    )
+                )
             }}
-            return(list(absolute=y_cutoff,overMedian=y_cutoff/median(inputVector),overMean=y_cutoff/mean(inputVector)))
-        }}
 
-        #this is an accessory function, that determines the number of points below a diagnoal passing through [x,yPt]
-        numPts_below_line <- function(myVector,slope,x){{
-            yPt <- myVector[x]
-            b <- yPt-(slope*x)
-            xPts <- 1:length(myVector)
-            return(sum(myVector<=(xPts*slope+b)))
-        }}
-        #--
-        #---  code from ROSE tool to dertermine super-enhancers  ---#
+            #this is an accessory function, that determines the number of points below a diagnoal passing through [x,yPt]
+            numPts_below_line <- function(myVector,slope,x){{
+                yPt <- myVector[x]
+                b <- yPt-(slope*x)
+                xPts <- 1:length(myVector)
+                return(sum(myVector<=(xPts*slope+b)))
+            }}
+            #--
+            #---  code from ROSE tool to determine super-enhancers  ---#
 
-        # determination du seuil
-        idx <- which(dat[,4] != 'Negative' & dat[,4] != 'Random')
-        th_FoldChange <- calculate_cutoff(dat[idx,5], drawPlot=F)$absolute
+            # determination du seuil
+            idx <- which(
+                dat[,4] != "Negative" &
+                dat[,4] != "Random"
+            )
+            th_FoldChange <- calculate_cutoff(dat[idx,5], drawPlot=F)$absolute
 
-        # identification des regions actives/inactives
-        idx <- which(dat[,5] >= th_FoldChange)
-        groups <- rep('Inactive',nrow(dat))
-        groups[idx] <- 'Active'
-        groups[which(is.na(dat[,5]))] <- 'NA'
+            # identification des regions actives/inactives
+            idx <- which(dat[,5] >= th_FoldChange)
+            groups <- rep(
+                "Inactive",
+                nrow(dat)
+            )
+            groups[idx] <- "Active"
+            groups[which(is.na(dat[,5]))] <- "NA"
 
-        pdf('{output.pdf}')
-        par(mfrow=c(2,2))
+            pdf("{output.pdf}")
+            par(mfrow=c(2,2))
 
-        #- boxplot en fonction des categories
-        categories <- unique(dat[,4])
-        fc <- list() ; lfc <- list()
-        for (category in categories) {{
-            idx <- which(dat[,4] == category)
-            fc[[category]] <- dat[idx,5]
-            lfc[[category]] <- log2(dat[idx,5])
-        }}
-        colors <- rep('lightgrey',length(categories))
-        if ('Random' %in% categories) {{ colors[which(categories == 'Random')] <- 'darkblue' }}
-        if ('PosEpromoter' %in% categories) {{ colors[which(categories == 'PosEpromoter')] <- 'darkgreen' }}
-        if ('Positive' %in% categories) {{ colors[which(categories == 'Positive')] <- 'darkgreen' }}
-        if ('Negative' %in% categories) {{ colors[which(categories == 'Negative')] <- 'darkred' }}
-        boxplot(fc, pch=20, col=colors, main='Fold Change of categories', ylab='Fold Change', las=2)
-        text(length(categories), 0.9*max(dat[,5]), labels=sprintf('Threshold :\n%3.2f',th_FoldChange), col='red')
-        boxplot(lfc, pch=20, col=colors, main='Fold Change of categories', ylab='Fold Change [log2]', las=2)
-        abline(h=log2(th_FoldChange), col='red', lty='dashed')
-        
-        #- ranked genomic regions based on their Fold Change
-        plot(sort(dat[which(dat[,4]!='Random' & dat[,4]!='Negative'),5]), pch=20, main='Activity of genomic regions\n(Random/Negative not included)', ylab='Fold Change', xlab='Ranked genomic regions')
+            #- boxplot en fonction des categories
+            categories <- unique(dat[,4])
+            fc <- list() ; lfc <- list()
+            for (category in categories) {{
+                idx <- which(dat[,4] == category)
+                fc[[category]] <- dat[idx,5]
+                lfc[[category]] <- log2(dat[idx,5])
+            }}
+            colors <- rep("lightgrey",length(categories))
+            if ("Random" %in% categories) {{ colors[which(categories == "Random")] <- "darkblue" }}
+            if ("PosEpromoter" %in% categories) {{ colors[which(categories == "PosEpromoter")] <- "darkgreen" }}
+            if ("Positive" %in% categories) {{ colors[which(categories == "Positive")] <- "darkgreen" }}
+            if ("Negative" %in% categories) {{ colors[which(categories == "Negative")] <- "darkred" }}
+            boxplot(fc, pch=20, col=colors, main="Fold Change of categories", ylab="Fold Change", las=2)
+            text(length(categories), 0.9*max(dat[,5]), labels=sprintf("Threshold :\n%3.2f",th_FoldChange), col="red")
+            boxplot(lfc, pch=20, col=colors, main="Fold Change of categories", ylab="Fold Change [log2]", las=2)
+            abline(h=log2(th_FoldChange), col="red", lty="dashed")
+            
+            #- ranked genomic regions based on their Fold Change
+            plot(sort(dat[which(dat[,4]!="Random" & dat[,4]!="Negative"),5]), pch=20, main="Activity of genomic regions\n(Random/Negative not included)", ylab="Fold Change", xlab="Ranked genomic regions")
 
-        idx <- which(dat[,5] >= th_FoldChange & dat[,4] != 'Random' & dat[,4] != 'Negative')
-        abline(v=nrow(dat)-length(idx), col='red', lty='dashed')
-        text(nrow(dat)-length(idx)/2, 0.9*max(dat[,5]), labels=length(idx), pos=2, offset=0, col='red')
-        idx <- which(dat[,5] < th_FoldChange & dat[,4] != 'Random' & dat[,4] != 'Negative')
-        text(length(idx)/2, 0.9*max(dat[,5]), labels=length(idx), col='black')
-        
-        print('debug_test4')
-        
-        #- info sur l'analyse
-        plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n')
-        text(x=0.5, y=1, 'INFORMATION', cex=1.5, pos=1, offset=0, col = 'black')
-        text(x=0, y=0.70, '{wildcards.id_sample}', pos=4, offset=0, col = 'black')
-        text(x=0, y=0.60, 'Method: Inflexion point', pos=4, offset=0, col = 'black')
-        dev.off()            
+            idx <- which(dat[,5] >= th_FoldChange & dat[,4] != "Random" & dat[,4] != "Negative")
+            abline(v=nrow(dat)-length(idx), col="red", lty="dashed")
+            text(nrow(dat)-length(idx)/2, 0.9*max(dat[,5]), labels=length(idx), pos=2, offset=0, col="red")
+            idx <- which(dat[,5] < th_FoldChange & dat[,4] != "Random" & dat[,4] != "Negative")
+            text(length(idx)/2, 0.9*max(dat[,5]), labels=length(idx), col="black")
+            
+            print("debug_test4")
+            
+            #- info sur l"analyse
+            plot(
+                c(0, 1),
+                c(0, 1),
+                ann = FALSE,
+                bty = "n",
+                type = "n",
+                xaxt = "n",
+                yaxt = "n"
+            )
+            text(
+                x = 0.5,
+                y = 1,
+                "INFORMATION",
+                cex = 1.5,
+                pos = 1,
+                offset = 0,
+                col = "black"
+            )
+            text(
+                x = 0,
+                y = 0.70,
+                "{wildcards.id_sample}",
+                pos = 4,
+                offset = 0,
+                col = "black"
+            )
+            text(
+                x = 0,
+                y = 0.60,
+                "Method: Inflexion point",
+                pos = 4,
+                offset = 0,
+                col = "black"
+            )
+            dev.off()
 
-        dat <- data.frame(dat[,1:4], groups)
-        write.table(dat, file='{output.groups}', quote=F, row.names=F, col.names=F, sep='\t')
-        """)
+            dat <- data.frame(
+                dat[,1:4],
+                groups
+            )
+            write.table(
+                dat,
+                file ="{output.groups}",
+                quote = FALSE,
+                row.names = FALSE,
+                col.names = FALSE,
+                sep = "\\t"
+            )
+        '
+        """
 
 rule capstarrseq_merge_all_data:
     """
@@ -419,37 +635,85 @@ rule capstarrseq_merge_all_data:
     output:
         tsv = "out/capstarrseq/merge_all_data_{crm_type}/{id}/{id_sample}_over_{id_input}.allData.tsv",
         pdf = "out/capstarrseq/merge_all_data_{crm_type}/{id}/{id_sample}_over_{id_input}.inflexionPointGroups.pdf"
-    params:
-    run:
-        shell("cp {input.pdf} {output.pdf}")
-        R("""
-        bed_crm <- read.table('{input.bed_crm}', stringsAsFactors=F, sep="\t")
-        fpkm <- read.table('{input.fpkm}', stringsAsFactors=F)
-        fpkm_input <- read.table('{input.fpkm_input}', stringsAsFactors=F)
-        fc <- read.table('{input.fc}', stringsAsFactors=F)
-        group <- read.table('{input.group}', stringsAsFactors=F)
-     
-        # Because some of my input bed are bed4 and some are bed6.
-        if (dim(bed_crm)[2] == 4){{
-            bed_crm[,5] <- '.'
-            bed_crm[,6] <- 'NA'
-            }}
+    conda:
+        "../envs/capstarrseq.yaml"
+    shell:
+        """
+        cp {input.pdf} {output.pdf}
+        Rscript -e '
+            bed_crm <- read.table(
+                "{input.bed_crm}",
+                stringsAsFactors = FALSE,
+                sep = "\\t"
+            )
+            fpkm <- read.table(
+                "{input.fpkm}",
+                stringsAsFactors = FALSE
+            )
+            fpkm_input <- read.table(
+                "{input.fpkm_input}",
+                stringsAsFactors = FALSE
+            )
+            fc <- read.table(
+                "{input.fc}",
+                stringsAsFactors = FALSE
+            )
+            group <- read.table(
+                "{input.group}",
+                stringsAsFactors = FALSE
+            )
 
-        dat <- data.frame(fpkm, fpkm_input[,5], fc[,5], group[,5], bed_crm[,6])
-        #group_labels <- sapply(strsplit(group_files,'\\\.'), function(x){{ nb=length(x) ; return(paste('group_',x[nb-2],'.',x[nb-1],sep='')) }})
-        colnames(dat) <- c('chr','start','end','category','fpkm','fpkm_input','fold_change','group_inflexionPoint','gene_name')
-        
-        #if (file.exists('data/CRMs/CRMs_geneAssociation.bed_notOrdered') == TRUE) {{
-        #    genes <- read.table('data/CRMs/CRMs_geneAssociation.bed_notOrdered', stringsAsFactors=F)
-        #    str_fpkm <- apply(fpkm[,1:3],1,paste,collapse='_')
-        #    str_genes <- apply(genes[,1:3],1,paste,collapse='_')
-        #    idx <- match(str_fpkm, str_genes)
-        #    genes <- genes[idx,]
-        #    dat <- data.frame(dat, genes=genes[,4], location=genes[,5])
-        #}}
+            # Because some of my input bed are bed4 and some are bed6.
+            if (dim(bed_crm)[2] == 4){{
+                bed_crm[,5] <- "."
+                bed_crm[,6] <- "NA"
+                }}
 
-        write.table(dat, file='{output.tsv}', quote=F, row.names=F, col.names=T, sep='\t')
-        """)
+            dat <- data.frame(
+                fpkm,
+                fpkm_input[,5],
+                fc[,5],
+                group[,5],
+                bed_crm[,6]
+            )
+            #group_labels <- sapply(
+                strsplit(
+                    group_files,
+                    "\\\."
+                ),
+                function(x){{ nb=length(x) ; return(paste("group_",x[nb-2],".",x[nb-1],sep="")) }}
+            )
+            colnames(dat) <- c(
+                "chr",
+                "start",
+                "end",
+                "category",
+                "fpkm",
+                "fpkm_input",
+                "fold_change",
+                "group_inflexionPoint",
+                "gene_name"
+            )
+            
+            #if (file.exists("data/CRMs/CRMs_geneAssociation.bed_notOrdered") == TRUE) {{
+            #    genes <- read.table("data/CRMs/CRMs_geneAssociation.bed_notOrdered", stringsAsFactors=F)
+            #    str_fpkm <- apply(fpkm[,1:3],1,paste,collapse="_")
+            #    str_genes <- apply(genes[,1:3],1,paste,collapse="_")
+            #    idx <- match(str_fpkm, str_genes)
+            #    genes <- genes[idx,]
+            #    dat <- data.frame(dat, genes=genes[,4], location=genes[,5])
+            #}}
+
+            write.table(
+                dat,
+                file = "{output.tsv}",
+                quote = FALSE,
+                row.names = FALSE,
+                col.names = TRUE,
+                sep="\\t"
+            )
+        '
+        """
 
 #localrules: targets, ln_seq_id_to_sample_id_bam
 
