@@ -2,10 +2,12 @@
 # Load a recent bcl2fastq env before running
 # conda activate bcl2fastq
 #/gpfs/tgml/apps/cellranger-3.1.0/cellranger mkfastq --run=/gpfs/tgml/reads/bcl/Run_243_190213_NS500637_0150_AHNJM5BGX7 --id=Run_243 --csv=/gpfs/tgml/reads/bcl/Run_243_190213_NS500637_0150_AHNJM5BGX7/SampleSheet.csv --output-dir=/gpfs/tgml/nin/test_cellranger
-
 ###
 # I encountered some trouble with the param extra. So for now, the localcores and localmem will be set manually in the rule. 
 ###
+#
+# 2021-03-06 Update cellranger to v 6.0.0
+
 
 rule cellranger_mkfastq:
     """
@@ -45,7 +47,7 @@ rule cellranger_mkfastq:
         EXP=`grep Experiment {input.csv} | cut -d "," -f 2`
         RUN=`echo {input.csv} | awk -F"/" '{{print $8}}' | cut -d "_" -f 1,2`
         # Trick to get the relative path to cellranger from output-dir
-        CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-4.0.0', '${{OUTDIR}}'))"`
+        CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.0', '${{OUTDIR}}'))"`
         export PATH=$CELLRANGER_RELATIVE_PATH_TO_OUTPUT:$PATH
         # Same trick as before to get relative path to fastq file from output-dir
         INDIR_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('${{INDIR}}', '${{OUTDIR}}'))"`
@@ -96,7 +98,7 @@ rule cellranger_count:
         SAMPLE=`grep S0 ${{SAMPLESHEET}} | grep -v -E "HTO|ADT" | cut -d , -f 2`
         RUN=`grep Experiment ${{SAMPLESHEET}} | cut -d , -f 2 | cut -d _ -f 1,2`
         # Trick to get the relative path to cellranger from output-dir
-        CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-4.0.0', '${{OUTDIR}}'))"`
+        CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.0', '${{OUTDIR}}'))"`
         export PATH=$CELLRANGER_RELATIVE_PATH_TO_OUTPUT:$PATH
         # Same trick as before to get relative path to fastq file from output-dir
         INDIR_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('${{INDIR}}', '${{OUTDIR}}'))"`

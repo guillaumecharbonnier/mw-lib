@@ -69,3 +69,40 @@ rule rseqc_infer_experiment:
     shell:
         "infer_experiment.py -r {input.bed} -i {input.sam_or_bam} > {output.txt} 2> {log}"
 
+
+rule tin_bam_list:
+    """
+    Note:
+        example of required bed:
+        bed="out/sed/remove_chr/awk/extract_main_chr/gunzip/wget/sourceforge_rseqc/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"
+    Test:
+    """
+    input:
+        bam = lambda wildcards: eval(mwconf['ids'][wildcards.bam_list_id]),
+        # Optional: Make sure bam files have their bai.
+        # bai = todo_write_a_function_that_take_bam_and_add_suffix_bai,
+        bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_id])
+    output:
+        summary="out/rseqc/tin_bam_list_{bed_id}/{bam_list_id}.summary.txt"
+    log:
+        "out/rseqc/tin_bam_list_{bed_id}/{bam_list_id}.log"
+    params:
+        outprefix="out/rseqc/tin_bam_list_{bed_id}/{bam_list_id}"
+    conda:
+        "../envs/rseqc.yaml"
+    shell:
+        """
+        (
+        # move to outdir because we can't tell to tin.py where to write
+        OUTDIR=`dirname {output.summary}`
+        echo $OUTDIR 
+        cd $OUTDIR
+        BAM_LIST=`echo "{input.bam}" | sed 's/out/..\/../g' | tr ' ' ','`
+        BED_FILE=`echo "{input.bed}" | sed 's/out/..\/../'`
+        tin.py -i $BAM_LIST -r $BED_FILE
+        # Find a better way to get the first file
+        FIRST_FILE=({input.bam})
+        grep TIN `basename $FIRST_FILE | sed 's/.bam/.summary.txt/g'` >> `basename {output.summary}`
+        for file in {input.bam}; do echo $file; echo `basename $file`; grep -v TIN `basename $file | sed 's/.bam/.summary.txt/g'` >>  `basename {output.summary}`; done
+        ) > {log}
+        """

@@ -52,19 +52,19 @@ bed-chrom-GRCh38	["out/sort/coordinates-rseg-bed/awk/faidx_to_bed3/samtools/faid
 # https://sourceforge.net/projects/rseqc/files/BED/Human_Homo_sapiens/hg19_Ensembl_gene.bed.gz/download	
 # https://downloads.sourceforge.net/project/rseqc/BED/Human_Homo_sapiens/hg19_Ensembl_gene.bed.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Frseqc%2Ffiles%2FBED%2FHuman_Homo_sapiens%2Fhg19_Ensembl_gene.bed.gz%2Fdownload&ts=1549406197
 # 2021-03-25: Add housekeeping gene bed file from rseqc for mouse and human
-bed-housekeeping-genes-GRCm38	["out/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"]
-bed-housekeeping-genes-GRCm38-merge-attr	["out/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"]
-bed-housekeeping-genes-GRCm38-merge-attr-retrieve	["out/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"]
+bed-housekeeping-genes-GRCm38	["out/sed/remove_chr/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"]
+bed-housekeeping-genes-GRCm38-merge-attr	["out/sed/remove_chr/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"]
+bed-housekeeping-genes-GRCm38-merge-attr-retrieve	["out/sed/remove_chr/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"]
 # I put GRCm39 to avoid error. Should find a housekeeping file for this genome
-bed-housekeeping-genes-GRCm39	["out/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"]
-bed-housekeeping-genes-GRCm39-merge-attr	["out/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"]
-bed-housekeeping-genes-GRCm39-merge-attr-retrieve	["out/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"]
+bed-housekeeping-genes-GRCm39	["out/sed/remove_chr/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"]
+bed-housekeeping-genes-GRCm39-merge-attr	["out/sed/remove_chr/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"]
+bed-housekeeping-genes-GRCm39-merge-attr-retrieve	["out/sed/remove_chr/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"]
 # I put mm10 even if we don't refer it. Just in case
-bed-housekeeping-genes-mm10	["out/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"]
-bed-housekeeping-genes-mm9	["out/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/mm9.HouseKeepingGenes.bed"]
-bed-housekeeping-genes-hg19	["out/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Human_Homo_sapiens/hg19.HouseKeepingGenes.bed"]
-bed-housekeeping-genes-GRCh39	["out/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Human_Homo_sapiens/hg38.HouseKeepingGenes.bed"]
-bed-housekeeping-genes-GRCh38merge-attr	["out/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Human_Homo_sapiens/hg38.HouseKeepingGenes.bed"]
+bed-housekeeping-genes-mm10	["out/sed/remove_chr/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/mm10.HouseKeepingGenes.bed"]
+bed-housekeeping-genes-mm9	["out/sed/remove_chr/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/mm9.HouseKeepingGenes.bed"]
+bed-housekeeping-genes-hg19	["out/sed/remove_chr/wget/https/sourceforge.net/projects/rseqc/files/BED/Human_Homo_sapiens/hg19.HouseKeepingGenes.bed"]
+bed-housekeeping-genes-GRCh38	["out/sed/remove_chr/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Human_Homo_sapiens/hg38.HouseKeepingGenes.bed"]
+bed-housekeeping-genes-GRCh38-merge-attr	["out/sed/remove_chr/gunzip/to-stdout/wget/https/sourceforge.net/projects/rseqc/files/BED/Human_Homo_sapiens/hg38.HouseKeepingGenes.bed"]
 #https://genome.ucsc.edu/cgi-bin/hgTables?hgsid=709973581_ZCGTPs1mYBVNXPJvU9o0TABHdvIj&boolshad.hgta_printCustomTrackHeaders=0&hgta_ctName=tb_knownGene&hgta_ctDesc=table+browser+query+on+knownGene&hgta_ctVis=pack&hgta_ctUrl=&fbQual=whole&fbUpBases=200&fbExonBases=0&fbIntronBases=0&fbDownBases=200&hgta_doGetBed=get+BED	
 bed-hg38-GENCODE-knownGene	["out/wget/hg38-GENCODE-knownGene.bed"]
 # bed_list_peak_anno	
