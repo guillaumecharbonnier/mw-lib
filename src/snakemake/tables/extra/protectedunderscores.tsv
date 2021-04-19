@@ -3,5 +3,6 @@ picard/MarkDuplicates	MAX_SEQUENCES_FOR_DISK_READ_ENDS_MAP,MAX_SEQS,MAX_FILE_HAN
 subread/featureCounts	merge_gene_id_name,five_prime_utr,gene_id,gene_name,transcript_id,transcript_name
 gtftk/convert	gene_id,transcript_id,gene_name
 gtftk/get_5p_3p_coords	gene_id,transcript_id,gene_name
-gtftk/merge_attr	merge_gene_id_name,gene_id,gene_name
+gtftk/retrieve	rattus_norvegicus
 gtftk/retrieve	mus_musculus
+gtftk/merge_attr	merge_gene_id_name,gene_id,gene_name

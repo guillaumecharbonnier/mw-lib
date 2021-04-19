@@ -9,6 +9,7 @@ HUMAN_MAIN_CHROMOSOMES = HUMAN_AUTOSOMES + ["X","Y","M"]
 HUMAN_MAIN_CHROMOSOMES_NCBI = expand("chr{chr}", chr=HUMAN_MAIN_CHROMOSOMES)
 HUMAN_MAIN_CHR_ENSEMBL=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","X","Y","MT"]
 MOUSE_MAIN_CHR_ENSEMBL=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","X","Y","MT"]
+RAT_MAIN_CHR_ENSEMBL=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","X","Y","MT"]
 
 MOUSE_MAIN_CHR=[
     "chr1",
@@ -50,7 +51,6 @@ TAR_CONTENT_HMCAN_DIFF_TEST_EXAMPLE=[
     "data/hg19-blacklist.bed",
     "data/GC_profile_100KbWindow_Mapp76_hg19.cnp",
     "control_C2.sam"]
-
 
 #f = open('../mw-lib/src/snakemake/lists/outputs_tar_xvzf_Carrillo2017_roadmap.txt', 'r')
 #OUTPUTS_TAR_XVZF_CARILLO2017_ROADMA = f.readlines()

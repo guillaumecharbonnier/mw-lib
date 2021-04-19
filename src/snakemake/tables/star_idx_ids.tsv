@@ -1,8 +1,8 @@
 id	path
 # STAR index files
 staridx-GRCh38-ensembl	out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-ensembl/Genome
-staridx-GRCh38-merge-attr	out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-merge-attr-ensembl/Genome
-staridx-GRCh38-merge-attr-retrieve	out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-merge-attr-retrieve-ensembl/Genome
+staridx-GRCh38-merge-attr-ensembl	out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-merge-attr-ensembl/Genome
+staridx-GRCh38-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-merge-attr-retrieve-ensembl/Genome
 staridx-GRCh38-BP-ensembl	out/star/build_index/fa-genome-GRCh38-Blueprint_gtf-GRCh38-ensembl/Genome
 staridx-GRCh37-ensembl	out/star/build_index/fa-genome-GRCh37_gtf-GRCh37-ensembl/Genome
 staridx-hg19-ensembl	out/star/build_index/fa-genome-GRCh37_gtf-GRCh37-ensembl/Genome
@@ -16,7 +16,8 @@ staridx-BDGP6-ensembl	out/star/build_index/fa-genome-BDGP6_gtf-BDGP6-ensembl/Gen
 staridx-R64-1-1-ensembl	out/star/build_index/fa-genome-R64-1-1_gtf-R64-1-1-ensembl/Genome
 # 2021-03-22
 # Add GRCm39 genome
-staridx-GRCm39-ensembl  out/star/build_index/fa-genome-GRCm39_gtf-GRCm39-ensembl/Genome
-staridx-GRCm39-merge-attr-ensembl   out/star/build_index/fa-genome-GRCm39_gtf-GRCm39-merge-attr-ensembl/Genome
-staridx-GRCm39-merge-attr-retrieve-ensembl  out/star/build_index/fa-genome-GRCm39_gtf-GRCm39-merge-attr-retrieve-ensembl/Genome
-#
+staridx-GRCm39-ensembl	out/star/build_index/fa-genome-GRCm39_gtf-GRCm39-ensembl/Genome
+staridx-GRCm39-merge-attr-ensembl	out/star/build_index/fa-genome-GRCm39_gtf-GRCm39-merge-attr-ensembl/Genome
+staridx-GRCm39-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-GRCm39_gtf-GRCm39-merge-attr-retrieve-ensembl/Genome
+# Add Rat genome
+staridx-Rnor6-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-Rnor6_gtf-Rnor6-merge-attr-retrieve-ensembl/Genome
