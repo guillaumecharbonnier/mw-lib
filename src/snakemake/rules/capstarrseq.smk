@@ -63,7 +63,6 @@ rule capstarrseq_coverage_fpkm_input:
 
     """
     input:
-        bedtools="opt/miniconda/envs/bedtools/bin/bedtools",
         #bed_reads="out/{id_bam_to_bed}/{id}.bed",
         #bed_crms="inp/bed/crms/{crm_type}.bed",
         bed_reads="out/sort/coordinates_bed/{id_bam_to_bed}/{id}.bed",
@@ -79,15 +78,17 @@ rule capstarrseq_coverage_fpkm_input:
     wildcard_constraints:
         id_bam_to_bed = ID_BAM_TO_BED, 
         crm_type = CRM_TYPE
-    run:
-        shell("""# 1. Coverage
+    conda:
+        "../envs/capstarrseq.yaml"
+    shell:
+        # 1. Coverage
         # Old way consume too much RAM.
         #{input.bedtools} coverage -a {input.bed_crms} -b {input.bed_reads} > {output.tsv_cov_unfiltered}
         # Strange because it still consumes a lot of memory with 'sorted'.
         {input.bedtools} coverage -sorted -a {input.bed_crms} -b {input.bed_reads} > {output.tsv_cov_unfiltered}
         #cp {output.tsv_cov_unfiltered} tmp/debug_tsv_cov_unfiltered.tsv
-        """)
-        shell("""# 2. Coverage to FPKM
+        
+        # 2. Coverage to FPKM
         nb_mReads_flagstat=`grep "mapped (" {input.flagstat} | awk '{{print $1}}'`
         nb_mReads=`wc -l {input.bed_reads} | cut -f1 -d ' '`
         echo "Number of reads based on flagstat: $nb_mReads_flagstat"
@@ -96,23 +97,58 @@ rule capstarrseq_coverage_fpkm_input:
 
         awk -v NB_READS=$nb_mReads '{{ fpkm = ($(NF-3) / (($(NF-1))/1000)) / (NB_READS/1000000) ; print $1"\\t"$2"\\t"$3"\\t"$4"\\t"fpkm }}' {output.tsv_cov_unfiltered} > {output.tsv_fpkm_unfiltered}
         #cp {output.tsv_fpkm_unfiltered} tmp/debug_capstarrseq_bedtools_coverage_fpkm_input.tsv
-        """)
-        R("""
-        print('3. CRM filtering based on FPKM threshold (input FPKM < 1)')
-        fpkm_all <- read.table('{output.tsv_fpkm_unfiltered}', stringsAsFactors=F)
-        idx <- which(fpkm_all[,5] >= {params.fpkm_threshold})
-        fpkm_all <- fpkm_all[idx,]
-        write.table(fpkm_all, file='{output.tsv_fpkm}', quote=F, row.names=F, col.names=F, sep='\t')
+        
+        Rscript -e '
+            print("3. CRM filtering based on FPKM threshold (input FPKM < 1)")
+            fpkm_all <- read.table(
+                "{output.tsv_fpkm_unfiltered}",
+                stringsAsFactors = FALSE
+            )
+            idx <- which(fpkm_all[,5] >= {params.fpkm_threshold})
+            fpkm_all <- fpkm_all[idx,]
+            write.table(
+                fpkm_all,
+                file = "{output.tsv_fpkm}",
+                quote = FALSE,
+                row.names = FALSE,
+                col.names = FALSE,
+                sep = "\\t"
+            )
 
-        print('4. Producing filtered CRM file')
-        crms_all <- read.table('{input.bed_crms}', stringsAsFactors=F, sep='\t')
-        #fpkm_all <- read.table('{output.tsv_fpkm}', stringsAsFactors=F)
-        print('read.table done')
-        str_crms_all <- apply(crms_all[,1:3], 1, paste, collapse='_')
-        str_fpkm_all <- apply(fpkm_all[,1:3], 1, paste, collapse='_')
-        idx <- match(str_fpkm_all, str_crms_all)
-        write.table(crms_all[idx,], file='{output.bed_crms}', quote=F, row.names=F, col.names=F, sep='\t')
-        """)
+            print("4. Producing filtered CRM file")
+            crms_all <- read.table(
+                "{input.bed_crms}",
+                stringsAsFactors = FALSE,
+                sep = "\\t"
+            )
+            #fpkm_all <- read.table("{output.tsv_fpkm}", stringsAsFactors=F)
+            print("read.table done")
+            str_crms_all <- apply(
+                crms_all[,1:3],
+                1,
+                paste,
+                collapse="_"
+            )
+            str_fpkm_all <- apply(
+                fpkm_all[,1:3],
+                1,
+                paste,
+                collapse = "_"
+            )
+            idx <- match(
+                str_fpkm_all,
+                str_crms_all
+            )
+            write.table(
+                crms_all[idx,],
+                file = "{output.bed_crms}",
+                quote = FALSE,
+                row.names = FALSE,
+                col.names = FALSE,
+                sep = "\\t"
+            )
+        '
+        """
 
 rule capstarrseq_coverage_fpkm_sample:
     """
@@ -120,7 +156,6 @@ rule capstarrseq_coverage_fpkm_sample:
         2018-01-30 13:34:24 - FPKM calculation does not rely on flagstat number of mapped reads anymore. It seems to be a better solution with just a wc -l on input bed for paired-end data merged with single-end.
     """
     input:
-        bedtools="opt/miniconda/envs/bedtools/bin/bedtools",
         bed_reads="out/sort/coordinates_bed/{id_bam_to_bed}/{id}/{id_sample}.bed",
         bed_crms="out/capstarrseq/coverage_fpkm_input_{crm_type}/{id_bam_to_bed}/{id}/{id_input}.filtered_CRMs.bed",
         flagstat="out/{id}/{id_sample}.flagstat.txt"
@@ -130,10 +165,12 @@ rule capstarrseq_coverage_fpkm_sample:
     wildcard_constraints:
         id_bam_to_bed = ID_BAM_TO_BED,
         crm_type = CRM_TYPE
+    conda:
+        "../envs/capstarrseq.yaml"
     shell:
         """
         # 1. Coverage
-        {input.bedtools} coverage -sorted -a {input.bed_crms} -b {input.bed_reads} > {output.tsv_cov}
+        bedtools coverage -sorted -a {input.bed_crms} -b {input.bed_reads} > {output.tsv_cov}
 
         # 2. Coverage to FPKM
         nb_mReads_flagstat=`grep "mapped (" {input.flagstat} | awk '{{print $1}}'`
