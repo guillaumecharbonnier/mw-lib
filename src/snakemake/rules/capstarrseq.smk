@@ -200,14 +200,31 @@ rule capstarrseq_fold_change:
     wildcard_constraints:
         #id_bam_to_bed="bedtools/bamtobed|awk/extend_reads_[0-9]+/bedtools/bamtobed",
         crm_type = CRM_TYPE
-    run:
-        R("""
-        fpkm_input <- read.table('{input.tsv_fpkm_input}', stringsAsFactors=F)
-        fpkm_sample <- read.table('{input.tsv_fpkm_sample}', stringsAsFactors=F)
-        fc <- (fpkm_sample[,5] + 1) / (fpkm_input[,5] + 1)
-        dat <- data.frame(fpkm_sample[,1:4], fc)
-        write.table(dat, file='{output.fc}', quote=F, row.names=F, col.names=F, sep='\t')
-        """)
+    conda:
+        "../envs/capstarrseq.yaml"
+    shell:
+        """
+        Rscript -e '
+            fpkm_input <- read.table(
+                "{input.tsv_fpkm_input}",
+                stringsAsFactors = FALSE
+            )
+            fpkm_sample <- read.table(
+                "{input.tsv_fpkm_sample}",
+                stringsAsFactors = FALSE
+            )
+            fc <- (fpkm_sample[,5] + 1) / (fpkm_input[,5] + 1)
+            dat <- data.frame(fpkm_sample[,1:4], fc)
+            write.table(
+                dat,
+                file = "{output.fc}",
+                quote = FALSE,
+                row.names = FALSE,
+                col.names = FALSE,
+                sep = '\\t'
+            )
+        '
+        """
 
 rule capstarrseq_grouping_crms:
     """
