@@ -256,16 +256,19 @@ rule capstarrseq_grouping_crms:
                 stringsAsFactors = FALSE
             )
         
-            ## CALCUL DU SEUIL EN FONCTION DU FDR
+            print("CALCUL DU SEUIL EN FONCTION DU FDR")
             for (fdr in c({params.th_negative_1},{params.th_negative_2})) {{
-                # Determination du seuil
+                print("Compute threhsold")
                 idx <- which(dat[,4] == "Negative")
-                # Skipping FDR computation if no Negative set is provided.
+                print("Skipping FDR computation if no Negative set is provided.")
                 if (length(idx)!=0) {{
                     P <- ecdf(dat[idx,5])
-                    th_FoldChange <- quantile(P,probs=1-fdr)
+                    th_FoldChange <- quantile(
+                        P,
+                        probs = 1-fdr
+                    )
 
-                    # identification des regions actives/inactives
+                    print("Identify active and inactive regions")
                     idx <- which(dat[,5] >= th_FoldChange)
                     groups <- rep(
                         "Inactive",
@@ -279,12 +282,12 @@ rule capstarrseq_grouping_crms:
                             "{params.outdir}/Groups.FDR=",
                             fdr,
                             ".pdf",
-                            sep=""
+                            sep = ""
                         )
                     )
                     par(mfrow=c(2,2))
                     
-                    #- boxplot en fonction des categories
+                    print("Produce boxplot for categories")
                     categories <- unique(dat[,4])
                     fc <- list() ; lfc <- list()
                     for (category in categories) {{
@@ -292,11 +295,22 @@ rule capstarrseq_grouping_crms:
                         fc[[category]] <- dat[idx,5]
                         lfc[[category]] <- log2(dat[idx,5])
                     }}
-                    colors <- rep("lightgrey",length(categories))
-                    if ("Random" %in% categories) {{ colors[which(categories == "Random")] <- "darkblue" }}
-                    if ("PosEpromoter" %in% categories) {{ colors[which(categories == "PosEpromoter")] <- "darkgreen" }}
-                    if ("Positive" %in% categories) {{ colors[which(categories == "Positive")] <- "darkgreen" }}
-                    if ("Negative" %in% categories) {{ colors[which(categories == "Negative")] <- "darkred" }}
+                    colors <- rep(
+                        "lightgrey",
+                        length(categories)
+                    )
+                    if ("Random" %in% categories) {{
+                        colors[which(categories == "Random")] <- "darkblue"
+                    }}
+                    if ("PosEpromoter" %in% categories) {{
+                        colors[which(categories == "PosEpromoter")] <- "darkgreen"
+                    }}
+                    if ("Positive" %in% categories) {{
+                        colors[which(categories == "Positive")] <- "darkgreen"
+                    }}
+                    if ("Negative" %in% categories) {{
+                        colors[which(categories == "Negative")] <- "darkred"
+                    }}
                     boxplot(
                         fc,
                         pch = 20,
@@ -309,7 +323,7 @@ rule capstarrseq_grouping_crms:
                         length(categories),
                         0.9*max(dat[,5]),
                         labels = sprintf(
-                            "Threshold :\n%3.2f",
+                            "Threshold :\\n%3.2f",
                             th_FoldChange
                         ),
                         col = "red"
@@ -328,7 +342,7 @@ rule capstarrseq_grouping_crms:
                         lty = "dashed"
                     )
 
-                    #- ranked genomic regions based on their Fold Change
+                    print("Plot ranked genomic regions based on their Fold Change")
                     plot(
                         sort(
                             dat[
@@ -337,7 +351,7 @@ rule capstarrseq_grouping_crms:
                             ]
                         ),
                         pch = 20,
-                        main = "Activity of genomic regions\n(Random/Negative not included)",
+                        main = "Activity of genomic regions\\n(Random/Negative not included)",
                         ylab = "Fold Change",
                         xlab = "Ranked genomic regions"
                     )
@@ -465,17 +479,17 @@ rule capstarrseq_grouping_crms:
                         paste(
                             "x=",
                             xPt,
-                            "\ny=",
+                            "\\ny=",
                             signif(
                                 y_cutoff,
                                 3
                             ),
-                            "\nFold over Median=",
+                            "\\nFold over Median=",
                             signif(
                                 y_cutoff/median(inputVector),
                                 3
                             ),
-                            "x\nFold over Mean=",
+                            "x\\nFold over Mean=",
                             signif(
                                 y_cutoff/mean(inputVector),
                                 3
@@ -544,12 +558,12 @@ rule capstarrseq_grouping_crms:
             if ("Positive" %in% categories) {{ colors[which(categories == "Positive")] <- "darkgreen" }}
             if ("Negative" %in% categories) {{ colors[which(categories == "Negative")] <- "darkred" }}
             boxplot(fc, pch=20, col=colors, main="Fold Change of categories", ylab="Fold Change", las=2)
-            text(length(categories), 0.9*max(dat[,5]), labels=sprintf("Threshold :\n%3.2f",th_FoldChange), col="red")
+            text(length(categories), 0.9*max(dat[,5]), labels=sprintf("Threshold :\\n%3.2f",th_FoldChange), col="red")
             boxplot(lfc, pch=20, col=colors, main="Fold Change of categories", ylab="Fold Change [log2]", las=2)
             abline(h=log2(th_FoldChange), col="red", lty="dashed")
             
             #- ranked genomic regions based on their Fold Change
-            plot(sort(dat[which(dat[,4]!="Random" & dat[,4]!="Negative"),5]), pch=20, main="Activity of genomic regions\n(Random/Negative not included)", ylab="Fold Change", xlab="Ranked genomic regions")
+            plot(sort(dat[which(dat[,4]!="Random" & dat[,4]!="Negative"),5]), pch=20, main="Activity of genomic regions\\n(Random/Negative not included)", ylab="Fold Change", xlab="Ranked genomic regions")
 
             idx <- which(dat[,5] >= th_FoldChange & dat[,4] != "Random" & dat[,4] != "Negative")
             abline(v=nrow(dat)-length(idx), col="red", lty="dashed")
