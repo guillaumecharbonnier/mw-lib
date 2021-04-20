@@ -1,0 +1,12 @@
+name:
+  capstarrseq
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bedtools
+  - coreutils # recent basename needed in rule bedtools_unionbedg
+  - gawk
+  - r-base
+

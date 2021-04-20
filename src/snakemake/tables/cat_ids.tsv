@@ -8,7 +8,6 @@ assembly_ensembl/GRCm38.fa	expand("out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org
 assembly_ensembl/GRCm38-main-chr.fa	expand("out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna_sm.chromosome.{chr}.fa", chr=MOUSE_MAIN_CHR_ENSEMBL)
 assembly_ensembl/NCBIM37.fa	expand("out/sed/add_chr_fa/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/fasta/mus_musculus/dna/Mus_musculus.NCBIM37.67.dna.chromosome.{chr}.fa", chr=MOUSE_MAIN_CHR_ENSEMBL) + expand("out/sed/add_chr_fa/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/fasta/mus_musculus/dna/Mus_musculus.NCBIM37.67.dna.nonchromosomal.fa")
 assembly_ensembl/NCBIM37-main-chr.fa	expand("out/sed/add_chr_fa/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/fasta/mus_musculus/dna/Mus_musculus.NCBIM37.67.dna.chromosome.{chr}.fa", chr=MOUSE_MAIN_CHR_ENSEMBL)
-# 2021-03-25 Add GRCm39
 assembly_ensembl/GRCm39.fa	expand("out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-103/fasta/mus_musculus/dna/Mus_musculus.GRCm39.dna_sm.chromosome.{chr}.fa", chr=MOUSE_MAIN_CHR_ENSEMBL) + expand("out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-103/fasta/mus_musculus/dna/Mus_musculus.GRCm39.dna_sm.nonchromosomal.fa")
 # These two below could be just alias to those above to avoid duplicated files.	
 assembly_ensembl/hg19.fa	expand("out/sed/add_chr_fa/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/fasta/homo_sapiens/dna/Homo_sapiens.GRCh37.67.dna.chromosome.{chr}.fa", chr=HUMAN_MAIN_CHR_ENSEMBL)
