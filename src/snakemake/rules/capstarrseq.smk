@@ -228,6 +228,11 @@ rule capstarrseq_merge_all_data:
         out/capstarrseq/merge_all_data_mTDHS/awk/extend_reads_314/bedtools/bamtobed/ln/sst_exp/CapStarr_155_170_178_204/mm9/mT_DHS_PGK_P5424_stimulated_rep3_over_mT_DHS_PGK_input.tsv
         out/capstarrseq/grouping_crms/capstarrseq/fold_change_mTDHS/awk/extend_reads_314/bedtools/bamtobed/ln/sst_exp/CapStarr_155_170_178_204/mm9/mT_DHS_PGK_P5424_stimulated_rep3_over_mT_DHS_PGK_input.inflexionPointGroups.tsv
 
+    TODO & WARNING: the example below needs a fix right now because 
+    bamtobed bedpe output a single row?!
+    Likely related to input requirement for -bedpe arg.
+    Check :
+    https://bedtools.readthedocs.io/en/latest/content/tools/bamtobed.html#bedpe-set-the-score-field-based-on-bam-tags
     Nori 2019-09-05 13:54:50:
         out/capstarrseq/merge_all_data_hProm/awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_-bedpe/samtools/sort_-n/ln/alias/sst/all_samples/hg19/bam/CapStarr_K562_IFN_rep1_Seq2_over_CapStarr_K562_IFN_control.allData.tsv out/capstarrseq/merge_all_data_hProm/awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_-bedpe/samtools/sort_-n/ln/alias/sst/all_samples/hg19/bam/CapStarr_K562_IFN_rep2_Seq2_over_CapStarr_K562_IFN_control.allData.tsv
 
