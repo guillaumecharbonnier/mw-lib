@@ -10,10 +10,12 @@ staridx-GRCm38-ensembl	out/star/build_index/fa-genome-GRCm38_gtf-GRCm38-ensembl/
 staridx-GRCm38-merge-attr-ensembl	out/star/build_index/fa-genome-GRCm38_gtf-GRCm38-merge-attr-ensembl/Genome
 staridx-GRCm38-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-GRCm38_gtf-GRCm38-merge-attr-retrieve-ensembl/Genome
 staridx-NCBIM37-ensembl	out/star/build_index/fa-genome-NCBIM37_gtf-NCBIM37-ensembl/Genome
+staridx-NCBIM37-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-NCBIM37_gtf-NCBIM37-merge-attr-retrieve-ensembl/Genome
 staridx-mm9-ensembl	out/star/build_index/fa-genome-NCBIM37_gtf-NCBIM37-ensembl/Genome
+staridx-mm9-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-NCBIM37_gtf-NCBIM37-merge-attr-retrieve-ensembl/Genome
 #staridx-dm6-ensembl	out/star/build_index/fa-genome-dm6-ucsc_gtf-dm6-ucsc/Genome
-staridx-BDGP6-ensembl	out/star/build_index/fa-genome-BDGP6_gtf-BDGP6-ensembl/Genome
-staridx-R64-1-1-ensembl	out/star/build_index/fa-genome-R64-1-1_gtf-R64-1-1-ensembl/Genome
+staridx-BDGP6-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-BDGP6_gtf-BDGP6-merge-attr-retrieve-ensembl/Genome
+staridx-R64-1-1-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-R64-1-1_gtf-R64-1-1-merge-attr-retrieve-ensembl/Genome
 # 2021-03-22
 # Add GRCm39 genome
 staridx-GRCm39-ensembl	out/star/build_index/fa-genome-GRCm39_gtf-GRCm39-ensembl/Genome

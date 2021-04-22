@@ -35,5 +35,3 @@ fa_genome_GRCh38_dna_primary_assembly_for_cellranger	["out/wget/ftp/ftp.ensembl.
 fa_genome_GRCm38_dna_primary_assembly_for_cellranger	["out/wget/ftp/ftp.ensembl.org/pub/release-102/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.primary_assembly.fa"]
 # Add Rat genome
 fa-genome-Rnor6	["out/cat/assembly_ensembl/Rnor6.fa"]
-fa_genome_GRCh38_dna_primary_assembly_for_cellranger ["out/wget/http://ftp.ensembl.org/pub/release-98/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz"]
-fa_genome_GRCm38_dna_primary_assembly_for_cellranger ["out/wget/http://ftp.ensembl.org/pub/release-98/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.primary_assembly.fa.gz"]

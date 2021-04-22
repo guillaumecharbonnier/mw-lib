@@ -8,7 +8,7 @@ gtf-GRCh38-ensembl-r95	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/relea
 gtf-GRCh38-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-102/gtf/homo_sapiens/Homo_sapiens.GRCh38.102.gtf"]
 gtf-GRCh38-merge-attr-ensembl-r95	["out/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/homo_sapiens/Homo_sapiens.GRCh38.95.gtf"]
 gtf-GRCh38-merge-attr-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-102/gtf/homo_sapiens/Homo_sapiens.GRCh38.102.gtf"]
-gtf-GRCh38-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-102/gtf/homo_sapiens/Homo_sapiens.GRCh38.102.gtf"]
+gtf-GRCh38-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-s_homo_sapiens_-r_102/homo_sapiens.gtf"]
 gtf-hg38-ensembl	["out/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/homo_sapiens/Homo_sapiens.GRCh38.95.gtf"]
 gtf-mm10	["out/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/mus_musculus/Mus_musculus.GRCm38.95.gtf"]
 gtf-mm10-main-chr	["out/awk/extract_main_chr/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/mus_musculus/Mus_musculus.GRCm38.95.gtf"]
@@ -18,11 +18,13 @@ gtf-GRCm38-main-chr	["out/awk/extract_main_chr/sed/add_chr/gunzip/to-stdout/wget
 gtf-GRCh37-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/gtf/homo_sapiens/Homo_sapiens.GRCh37.67.gtf"]
 gtf-hg19-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/gtf/homo_sapiens/Homo_sapiens.GRCh37.67.gtf"]
 gtf-NCBIM37-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/gtf/mus_musculus/Mus_musculus.NCBIM37.67.gtf"]
+gtf-NCBIM37-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-s_mus_musculus_-r_67/mus_musculus.gtf"]	
 #
 gtf-GRCh37-ensembl-r87	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/grch37/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh37.87.gtf"]
 gtf-hg19-ensembl-r87	["out/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/grch37/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh37.87.gtf"]
 gtf-GRCh37-ensembl-r87-protein-coding	["out/gtftk/select_by_key_key-gene_biotype_value-protein_coding/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/grch37/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh37.87.gtf"]
 gtf-mm9-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/gtf/mus_musculus/Mus_musculus.NCBIM37.67.gtf"]
+gtf-mm9-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-s_mus_musculus_-r_67/mus_musculus.gtf"]
 gtf-mm9	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/gtf/mus_musculus/Mus_musculus.NCBIM37.67.gtf"]
 gtf-mm9CustomFt	["out/gtftk/bed_to_gtf_featureTypetest_sourcegc_workflow/awk/extract_xls_coordinates_to_bed6/macs2/callpeak_broad_BAMPE_mm_SPMRTrue/bam/mm9/merge_run140_run141/H4K5ac-Nut-WT_over_Input-Nut-WT_peaks.gtf"]
 gtf-cuffmerge-GRCm38-H2AL2	["out/cuffmerge/GRCm38_H2AL2/merged.gtf"]
@@ -35,8 +37,10 @@ gtf-longs-protein-coding-no-blacklist-merge-attr-GRCm38	["out/gtftk/select_by_lo
 gtf-hg19-tfbs	["out/awk/tfbsConsSites_to_gtf.gtf"]
 #gtf-sacCer3-ucsc	["NO_GTF_FOR_SACCER3_FIND_ALTERNATIVE_out/tar/xvzf_igenome/Drosophila_melanogaster/UCSC/dm6/Annotation/Genes/genes.gtf"]
 #gtf-dm6-ensembl	["out/tar/xvzf_igenome/Drosophila_melanogaster/UCSC/dm6/Annotation/Genes/genes.gtf"]
-gtf-BDGP6-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-100/gtf/drosophila_melanogaster/Drosophila_melanogaster.BDGP6.28.100.gtf"]
-gtf-R64-1-1-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-100/gtf/saccharomyces_cerevisiae/Saccharomyces_cerevisiae.R64-1-1.100.gtf"]
+#gtf-BDGP6-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-100/gtf/drosophila_melanogaster/Drosophila_melanogaster.BDGP6.28.100.gtf"]
+gtf-BDGP6-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-r_102/drosophila_melanogaster.gtf"]
+#gtf-R64-1-1-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-100/gtf/saccharomyces_cerevisiae/Saccharomyces_cerevisiae.R64-1-1.100.gtf"]
+gtf-R64-1-1-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-r_102/saccharomyces_cerevisiae.gtf"]
 # 2021-03-22
 # Add GRCm39 genomes
 gtf-GRCm39	["ouu/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-103/gtf/mus_musculus/Mus_musculus.GRCm39.103.gtf"]
@@ -47,4 +51,6 @@ gtf-GRCm39-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/
 gtf-GRCh38-cellranger	["out/gunzip/to-stdout/wget/ftp/ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.primary_assembly.annotation.gtf"]
 gtf-GRCm38-cellranger	["out/gunzip/to-stdout/wget/ftp/ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M23/gencode.vM23.primary_assembly.annotation.gtf"]
 # Add Rat genome
-gtf-Rnor6-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/gtftk/retrieve_-s_rattus_norvegicus_-r_103/rattus_norvegicus.gtf"]
+gtf-Rnor6-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-r_102/rattus_norvegicus.gtf"]
+gtf-BDGP6-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-r_102/drosophila_melanogaster.gtf"]
+gtf-R64-1-1-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-r_102/saccharomyces_cerevisiae.gtf"]
