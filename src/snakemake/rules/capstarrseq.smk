@@ -33,7 +33,7 @@ rule capstarrseq_coverage_fpkm_input:
         #bed_reads="out/{id_bam_to_bed}/{id}.bed",
         #bed_crms="inp/bed/crms/{crm_type}.bed",
         bed_reads="out/sort/coordinates_bed/{id_bam_to_bed}/{id}.bed",
-        bed_crms="out/sort/coordinates_bed/ln/updir/mw/inp/bed/crms/{crm_type}.bed",
+        bed_crms="out/sort/coordinates_bed/ln/updir/mw-data/inp/bed/crms/{crm_type}.bed",
         flagstat="out/{id}.flagstat.txt"
     output:
         tsv_cov_unfiltered="out/capstarrseq/coverage_fpkm_input_{crm_type}/{id_bam_to_bed}/{id}.coverage_unfiltered.tsv",
