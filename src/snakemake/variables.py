@@ -10,6 +10,8 @@ HUMAN_MAIN_CHROMOSOMES_NCBI = expand("chr{chr}", chr=HUMAN_MAIN_CHROMOSOMES)
 HUMAN_MAIN_CHR_ENSEMBL=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","X","Y","MT"]
 MOUSE_MAIN_CHR_ENSEMBL=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","X","Y","MT"]
 RAT_MAIN_CHR_ENSEMBL=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","X","Y","MT"]
+DROSOPHILA_MAIN_CHR_ENSEMBL=["2L","2R","3L","3R","4","X","Y", "mitochondrion"]
+SACCHAROMYCES_MAIN_CHR_ENSEMBL=["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","Mito"]
 
 MOUSE_MAIN_CHR=[
     "chr1",
