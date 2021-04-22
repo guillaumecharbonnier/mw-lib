@@ -6,11 +6,11 @@ dat <- read.table(
 print("CALCUL DU SEUIL EN FONCTION DU FDR")
 for (
     fdr in c(
-        snakemake@params[["th_negative_1"]],
-        snakemake@params[["th_negative_2"]]
+        as.numeric(snakemake@params[["th_negative_1"]]),
+        as.numeric(snakemake@params[["th_negative_2"]])
     )
 ) {
-    print("Compute threshold")
+    print(paste("Compute threshold for fdr=",fdr))
     idx <- which(dat[,4] == "Negative")
     print("Skipping FDR computation if no Negative set is provided.")
     if (length(idx)!=0) {
@@ -32,7 +32,7 @@ for (
         pdf(
             paste0(
                 snakemake@params[["outdir"]],
-                "/Groups.FDR=",
+                "Groups.FDR=",
                 fdr,
                 ".pdf"
             )
@@ -155,7 +155,7 @@ for (
         text(
             x = 0,
             y = 0.70,
-            "{wildcards.id_sample}",
+            labels = snakemake@wildcards[["id_sample"]],
             pos = 4,
             offset = 0,
             col = "black"
@@ -182,7 +182,7 @@ for (
             dat_groups,
             file = paste0(
                 snakemake@params[["outdir"]],
-                "/Groups.FDR=",
+                "Groups.FDR=",
                 fdr,
                 ".grp"
             ),
@@ -360,7 +360,7 @@ text(
 text(
     x = 0,
     y = 0.70,
-    "{wildcards.id_sample}",
+    labels = snakemake@wildcards[["id_sample"]],
     pos = 4,
     offset = 0,
     col = "black"
@@ -381,7 +381,7 @@ dat <- data.frame(
 )
 write.table(
     dat,
-    file = snakemake@output["groups"],
+    file = snakemake@output[["groups"]],
     quote = FALSE,
     row.names = FALSE,
     col.names = FALSE,
