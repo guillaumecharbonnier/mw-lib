@@ -2,31 +2,8 @@
 Created:
     2017-04-11 11:21:34
 Aim:
-    Workflow for capstarseq analysis
-    Merge my workflow for Grenoble and the Capstarrseq for Salva to ease development of rules.
-Taken from:
-    salva/fq_to_bam/code/snakemake/workflows/capstarseq_2017_01_05.snakefile
-Notes:
-    Capstarrseq analysis for run170 and rerun of run150 without FPKM filtering.
-    Extension: 314
-    Mouse mm9
-    No filter on input FPKM
-    Previous CapStarrseq_mSilencers (run 150)
-    /gpfs/tgml/reads/fastq/Run_150_NS500-057_12.09.2016_SS_BSoS
-    
-    DHS_PGK_DNA_library (change name to= mT_DHS_PGK_P5424_rep1)
-    Input input_plasmid_library (change name to= mT_DHS_PGK_input)
-    
-    Run 170:
-    MT-DHS-PGK-p5424_rep2
-    Input: input_plasmid_library (mT_DHS_PGK_input) from run 150
-    
-    MT-DHS-EFIA-p5424_rep1
-    MT-DHS-EFIA-p5424_rep2
-    MT-DHS-EFIA-p5424_rep3
-    Input: mT-DHS-EFIA-input
-    
-
+    Rules for capstarseq analysis.
+    Check capstarrseq_merge_all_data rule below for examples of usages.
 """
 
 EXT_CAPSTARSEQ = "314"
@@ -34,33 +11,23 @@ EXT_ATAC = "180"
 EXT_CHIPSEQ = "300"
 EXT_IGMM = "437"
 
-
-
 ID_BAM_TO_BED = "|".join([
     "bedtools/bamtobed|awk/extend_reads_[0-9]+/bedtools/bamtobed/samtools/sort_-n",
-    "awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_bedpe/samtools/sort_-n",
-    "awk/extend_reads_[0-9]+/awk/keep_first_mate_for_pe_bedtools_bamtobed/bedtools/bamtobed/sort_-n",
-    "awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_-bedpe/samtools/sort_-n"])
+    "awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_-bedpe/samtools/sort_-n",
+    "awk/extend_reads_[0-9]+/awk/keep_first_mate_for_pe_bedtools_bamtobed/bedtools/bamtobed/sort_-n"
+    ])
 
 CRM_TYPE = "mTDHS|hProm|hProm_posEprom|IGMM|hSE_RPMI_JURKAT_DND41_hg19_Alex"
-
-#rule capstarrseq_coverage_fpkm_input_v2:
-#    input:
-#        
-#
 
 rule capstarrseq_coverage_fpkm_input:
     """
     Modified:
-        2018-01-30 13:34:24 - FPKM calculation does not rely on flagstat number of mapped reads anymore. It seems to be a better solution with just a wc -l on input bed for paired-end data merged with single-end.    
-    Test:
-        out/15_mTDHS/awk/extend_reads_314/bedtools/bamtobed/samtools/sam_to_bam/bowtie2/pe_mm9/sickle/pe_-t_sanger_-q_20/gunzip/ln/rename_run178_tgml/BAC_mT_DHS_PGK_p5424_rep1.filtered_CRMs.bed
+        2018-01-30 13:34:24 - FPKM calculation does not rely on flagstat number of mapped reads anymore. It seems to be a better solution with just a wc -l on input bed for paired-end data merged with single-end.
     Note:
         I don't understand why flagstat is used here. Maybe juste a wc -l of the input bed would be more appropriate. Especially because flagstat is not appropriate when only mate 1 of paired-end reeds are kepts:
         Number of reads based on flagstat:
         47449907
         39311821 out/sort/coordinates_bed/awk/extend_reads_314/awk/keep_first_mate_for_pe_bedtools_bamtobed/bedtools/bamtobed/ln/sst_exp/CapStarr_155_170_178_204/mm9/mT_DHS_PGK_input.bed
-
     """
     input:
         #bed_reads="out/{id_bam_to_bed}/{id}.bed",
@@ -253,17 +220,22 @@ rule capstarrseq_grouping_crms:
 
 rule capstarrseq_merge_all_data:
     """
+    Aim:
+        Gather the main results in a single tsv file
+        Check Nori's example below for paired-end usage, or Jing's for single end (adjust the value after "extend_reads" accordingly)
     Test:
         out/capstarrseq/coverage_fpkm_input_hProm_posEprom/awk/extend_reads_314/bedtools/bamtobed/samtools/sam_to_bam/bowtie2/se_hg19/sickle/se_-t_sanger_-q_20/gunzip/merge_lanes_nextseq500_single_end/ln/rename_run107_tgml/Input.filtered_CRMs.bed
         out/capstarrseq/merge_all_data_mTDHS/awk/extend_reads_314/bedtools/bamtobed/ln/sst_exp/CapStarr_155_170_178_204/mm9/mT_DHS_PGK_P5424_stimulated_rep3_over_mT_DHS_PGK_input.tsv
         out/capstarrseq/grouping_crms/capstarrseq/fold_change_mTDHS/awk/extend_reads_314/bedtools/bamtobed/ln/sst_exp/CapStarr_155_170_178_204/mm9/mT_DHS_PGK_P5424_stimulated_rep3_over_mT_DHS_PGK_input.inflexionPointGroups.tsv
-    Nori 2019-09-05 13:54:50:
-        out/capstarrseq/merge_all_data_hProm/awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_-bedpe/samtools/sort_-n/ln/alias/sst/all_samples/hg19/bam/CapStarr_K562_IFN_rep1_Seq2_over_Capstarr_K562_IFN_control.allData.tsv out/capstarrseq/merge_all_data_hProm/awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_-bedpe/samtools/sort_-n/ln/alias/sst/all_samples/hg19/bam/CapStarr_K562_IFN_rep2_Seq2_over_Capstarr_K562_IFN_control.allData.tsv
 
-        out/capstarrseq/merge_all_data_hProm/awk/extend_reads_314/bedtools/bamtobed/samtools/merge/bam-hg19-CapStarr-K562-IFN-rep1-merged_over_RAJOUTERIDCONTROLMERGED.allData.tsv
+    Nori 2019-09-05 13:54:50:
+        out/capstarrseq/merge_all_data_hProm/awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_-bedpe/samtools/sort_-n/ln/alias/sst/all_samples/hg19/bam/CapStarr_K562_IFN_rep1_Seq2_over_CapStarr_K562_IFN_control.allData.tsv out/capstarrseq/merge_all_data_hProm/awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_-bedpe/samtools/sort_-n/ln/alias/sst/all_samples/hg19/bam/CapStarr_K562_IFN_rep2_Seq2_over_CapStarr_K562_IFN_control.allData.tsv
 
     Ahmad 2019-10-15 00:34:22
         out/capstarrseq/merge_all_data_IGMM/awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_-bedpe/samtools/sort_-n/ln/alias/sst/all_samples/mm9/bam/capSTARR-seq_P5424_rep1_over_capSTARR-seq_P5424_Input.allData.tsv out/capstarrseq/merge_all_data_IGMM/awk/convert_bedpe_to_bed6_insert_size/bedtools/bamtobed_-bedpe/samtools/sort_-n/ln/alias/sst/all_samples/mm9/bam/capSTARR-seq_P5424_rep2_over_capSTARR-seq_P5424_Input.allData.tsv
+    
+    Jing 2021-04-22
+        out/capstarrseq/merge_all_data_hProm/awk/extend_reads_314/bedtools/bamtobed/samtools/sort_-n/ln/alias/sst/all_samples/hg19/bam/Dao2017_K562_CapStarr_rep1_over_Dao2017_CapStarr_input.allData.tsv
     """
     input:
         bed_crm="out/capstarrseq/coverage_fpkm_input_{crm_type}/{id}/{id_input}.filtered_CRMs.bed",
