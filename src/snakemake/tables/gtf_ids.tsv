@@ -17,6 +17,7 @@ gtf-GRCm38-main-chr	["out/awk/extract_main_chr/sed/add_chr/gunzip/to-stdout/wget
 # After, I use the true latest release for hg19: r87
 gtf-GRCh37-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/gtf/homo_sapiens/Homo_sapiens.GRCh37.67.gtf"]
 gtf-hg19-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/gtf/homo_sapiens/Homo_sapiens.GRCh37.67.gtf"]
+gtf-hg19-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-r_67/homo_sapiens.gtf"]	
 gtf-GRCh37-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-r_67/homo_sapiens.gtf"]	
 gtf-NCBIM37-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-67/gtf/mus_musculus/Mus_musculus.NCBIM37.67.gtf"]
 gtf-NCBIM37-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-r_67/mus_musculus.gtf"]	
@@ -42,16 +43,12 @@ gtf-hg19-tfbs	["out/awk/tfbsConsSites_to_gtf.gtf"]
 gtf-BDGP6-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-r_102/drosophila_melanogaster.gtf"]
 #gtf-R64-1-1-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-100/gtf/saccharomyces_cerevisiae/Saccharomyces_cerevisiae.R64-1-1.100.gtf"]
 gtf-R64-1-1-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-r_102/saccharomyces_cerevisiae.gtf"]
-# 2021-03-22
-# Add GRCm39 genomes
 gtf-GRCm39	["ouu/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-103/gtf/mus_musculus/Mus_musculus.GRCm39.103.gtf"]
 gtf-GRCm39-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-103/gtf/mus_musculus/Mus_musculus.GRCm39.103.gtf"]
 gtf-GRCm39-merge-attr-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-103/gtf/mus_musculus/Mus_musculus.GRCm39.103.gtf"]
 gtf-GRCm39-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/gtftk/retrieve_-r_103/mus_musculus.gtf"]
-# gtf for cellranger
 gtf-GRCh38-cellranger	["out/gunzip/to-stdout/wget/ftp/ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.primary_assembly.annotation.gtf"]
 gtf-GRCm38-cellranger	["out/gunzip/to-stdout/wget/ftp/ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M23/gencode.vM23.primary_assembly.annotation.gtf"]
-# Add Rat genome
 gtf-Rnor6-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-r_102/rattus_norvegicus.gtf"]
 gtf-BDGP6-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-r_102/drosophila_melanogaster.gtf"]
 gtf-R64-1-1-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-r_102/saccharomyces_cerevisiae.gtf"]
