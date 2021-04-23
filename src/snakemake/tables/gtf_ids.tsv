@@ -3,7 +3,7 @@ id	path
 gtf-GRCm38	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-102/gtf/mus_musculus/Mus_musculus.GRCm38.102.gtf"]
 gtf-GRCm38-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-102/gtf/mus_musculus/Mus_musculus.GRCm38.102.gtf"]
 gtf-GRCm38-merge-attr-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-102/gtf/mus_musculus/Mus_musculus.GRCm38.102.gtf"]
-gtf-GRCm38-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/gtftk/retrieve_-s_mus_musculus_-r_102/mus_musculus.gtf"]
+gtf-GRCm38-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-s_mus_musculus_-r_102/mus_musculus.gtf"]
 gtf-GRCh38-ensembl-r95	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/homo_sapiens/Homo_sapiens.GRCh38.95.gtf"]
 gtf-GRCh38-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-102/gtf/homo_sapiens/Homo_sapiens.GRCh38.102.gtf"]
 gtf-GRCh38-merge-attr-ensembl-r95	["out/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/homo_sapiens/Homo_sapiens.GRCh38.95.gtf"]
