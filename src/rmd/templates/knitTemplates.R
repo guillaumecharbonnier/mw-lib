@@ -3,7 +3,7 @@
 
 #' @params cols is a vector of column names to keep in the produced DataTable.
 knitPostDeseq2Template <- function(
-                                   d = vsd,
+                                   d = dds,
                                    r = res,
                                    p_cutoff = 0.05,
                                    FC_cutoff = 2,
