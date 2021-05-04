@@ -158,6 +158,8 @@ if ("ensembl_gene_id" %in% colnames(r)) {
   type_ids <- "ensembl_gene_id"
 } else if ("hugo_symbol" %in% colnames(r)) {
   type_ids <- "hugo_symbol"
+} else{
+  type_ids <- "none"
 }
 if (type_ids %in% c("ensembl_gene_id", "hugo_symbol") ) {
   dereg_genes <- r_signif[, type_ids]
