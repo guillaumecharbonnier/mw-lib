@@ -30,4 +30,6 @@ dependencies:
   - umap-learn
   - r-pheatmap
   - r-nmf
+  - r-bigmemory # optional requirement for NMF (May solve ERROR on large matrix)
+  - bioconductor-iclusterplus
 
