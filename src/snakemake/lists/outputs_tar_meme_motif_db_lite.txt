@@ -1,0 +1,4 @@
+HUMAN/HOCOMOCOv9.meme
+HUMAN/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme
+HUMAN/HOCOMOCOv10_HUMAN_mono_meme_format.meme
+HUMAN/HOCOMOCOv11_core_HUMAN_mono_meme_format.meme
