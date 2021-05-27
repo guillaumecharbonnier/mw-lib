@@ -34,13 +34,14 @@ rule cellranger_mkfastq:
         mkfastq="out/{tool}{extra}/{filler}/mkfastq_log"
     shell:'''
         (
+        # 2021-05-27: Useless condition, snakemake don't check this before running the rule
         #Condition to not copy at each execution
-        if [[ -f {output.xml} ]]; then
-            echo "RunInfo.xml exists."
-            break
-        else
-            cp {input.xml} {output.xml}      
-        fi
+        #if [[ -f {output.xml} ]]; then
+        #    echo "RunInfo.xml exists."
+        #    break
+        #else
+        #    cp {input.xml} {output.xml}      
+        #fi
       
         INDIR=`dirname {input.xml}`
         OUTDIR=`dirname {input.csv}`
@@ -81,7 +82,7 @@ rule cellranger_count:
     params:
         extra = params_extra
     threads:
-        8
+        16
     wildcard_constraints:
         tool="cellranger/count",
         assembly="[A-Za-z0-9-]+"
@@ -107,7 +108,8 @@ rule cellranger_count:
         # Move into the outdir to have cellranger count output in the correct folder 
         cd ${{OUTDIR}}
         #cellranger count {params.extra} --id=${{RUN}} --fastqs=${{INDIR_RELATIVE_PATH_TO_OUTPUT}} --transcriptome=${{REF_RELATIVE_PATH_TO_OUTPUT}} --project=${{EXP}} --sample=${{SAMPLE}}
-        cellranger count {params.extra} --id=${{RUN}} --fastqs=${{INDIR_RELATIVE_PATH_TO_OUTPUT}}/${{RUN}}/outs/fastq_path --transcriptome=${{REF_RELATIVE_PATH_TO_OUTPUT}} --sample=${{SAMPLE}}
+        #cellranger count {params.extra} --id=${{RUN}} --fastqs=${{INDIR_RELATIVE_PATH_TO_OUTPUT}}/${{RUN}}/outs/fastq_path --transcriptome=${{REF_RELATIVE_PATH_TO_OUTPUT}} --sample=${{SAMPLE}}
+        cellranger count {params.extra} --id=${{RUN}} --fastqs=${{INDIR_RELATIVE_PATH_TO_OUTPUT}}/${{RUN}}/outs/fastq_path --transcriptome=${{REF_RELATIVE_PATH_TO_OUTPUT}} 
         touch process_done 
         )&> {log}
         # go back to mw-sst folder

@@ -9,8 +9,9 @@ def params_extra(wildcards):
     """
     extra=wildcards['extra']
 
-    paths = glob.glob('../mw*/src/snakemake/tables/extra/protectedunderscores.tsv')
+    paths = glob.glob('../mw*/src/snakemake/tables/extra/*protectedunderscores.tsv')
     for path in paths:
+        print(path)
         for row in csv.DictReader(open(path), delimiter='\t', quoting=csv.QUOTE_NONE):
             if row['tool'] == wildcards['tool']:
                 strings_to_protect = row['protectedunderscore'].split(",")
