@@ -36,12 +36,12 @@ rule cellranger_mkfastq:
         (
         # 2021-05-27: Useless condition, snakemake don't check this before running the rule
         #Condition to not copy at each execution
-        #if [[ -f {output.xml} ]]; then
-        #    echo "RunInfo.xml exists."
-        #    break
-        #else
-        #    cp {input.xml} {output.xml}      
-        #fi
+        if [[ -f {output.xml} ]]; then
+            echo "RunInfo.xml exists."
+            break
+        else
+            cp {input.xml} {output.xml}      
+        fi
       
         INDIR=`dirname {input.xml}`
         OUTDIR=`dirname {input.csv}`
