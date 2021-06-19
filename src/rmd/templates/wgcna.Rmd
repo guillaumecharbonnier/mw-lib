@@ -217,6 +217,15 @@ res <- try(
   silent = TRUE
 )
 
+saveRDS(
+  object = res,
+  file = file.path(
+    book_from_rmd,
+    "rds",
+    "{{chunk_label_prefix}}ComputeEnrichPathway.rds"
+  )
+)
+
 if ("try-error" %in% class(res)) {
   print("No enriched Pathway term in these classes")
 } else {
@@ -261,6 +270,15 @@ res <- try(
   silent = TRUE
 )
 
+saveRDS(
+  object = res,
+  file = file.path(
+    book_from_rmd,
+    "rds",
+    "{{chunk_label_prefix}}ComputeEnrichKegg.rds"
+  )
+)
+
 if ("try-error" %in% class(res)) {
   print("No enriched Kegg term in these classes")
 } else {
@@ -297,6 +315,15 @@ res <- compareCluster(
   fun = "enricher",
   TERM2GENE = msigdb,
   universe = tmp$entrez
+)
+
+saveRDS(
+  object = res,
+  file = file.path(
+    book_from_rmd,
+    "rds",
+    "{{chunk_label_prefix}}ComputeEnrichHallmarks.rds"
+  )
 )
 
 pdf_fig_width <- 1 +
