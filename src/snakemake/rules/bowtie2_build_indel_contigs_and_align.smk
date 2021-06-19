@@ -164,7 +164,7 @@ rule bowtie2_build_flanked_indel_megahit_and_align_se:
         out/bowtie2/build_flanked_indel_megahit_and_align_se_GRCh38-ensembl-r100/ln/alias/sst/all_samples/fastq/802_BT11_H3K27ac.sam
     """
     input:
-        fasta="out/python/vcf_to_flanking_sequence_fa-genome-{genome_id}/grep/extract-indel-from-vcf/bcftools/mpileup_fa-genome-{genome_id}/samtools/index/samtools/sort/samtools/view_sam_to_bam/bowtie2/se_fa_--rfg_1,1_-k_1_-q_-f_{genome_id}/megahit/se/{filler}/final.contigs.fasta",
+        fasta="out/python/vcf_to_flanking_sequence_fa-genome-{genome_id}/grep/extract-indel-from-vcf/bcftools/mpileup_fa-genome-{genome_id}/samtools/index/samtools/sort/samtools/view_sam_to_bam/bowtie2/se_fa_--rfg_1,1_-k_1_-q_-f_{genome_id}/megahit/se_--min-count_3_--no-mercy/{filler}/final.contigs.fasta",
         fastq="out/{filler}.fastq.gz"
     output:
         sam      = "out/bowtie2/build_flanked_indel_megahit_and_align_se_{genome_id}/{filler}.sam",
@@ -206,7 +206,7 @@ rule bowtie2_build_flanked_indel_megahit_and_align_pe:
         out/python/vcf_to_flanking_sequence_fa-genome-GRCh38-ensembl-r100/grep/extract-indel-from-vcf/bcftools/mpileup_fa-genome-GRCh38-ensembl-r100/samtools/index/samtools/sort/samtools/view_sam_to_bam/bowtie2/se_fa_--rfg_1,1_-k_1_-q_-f_GRCh38-ensembl-r100/megahit/pe/ ln/alias/sst/all_samples/fastq/856_H3K27ac/final.contigs.fasta
     """
     input:
-        fasta="out/python/vcf_to_flanking_sequence_fa-genome-{genome_id}/grep/extract-indel-from-vcf/bcftools/mpileup_fa-genome-{genome_id}/samtools/index/samtools/sort/samtools/view_sam_to_bam/bowtie2/se_fa_--rfg_1,1_-k_1_-q_-f_{genome_id}/megahit/pe/{filler}/final.contigs.fasta",
+        fasta="out/python/vcf_to_flanking_sequence_fa-genome-{genome_id}/grep/extract-indel-from-vcf/bcftools/mpileup_fa-genome-{genome_id}/samtools/index/samtools/sort/samtools/view_sam_to_bam/bowtie2/se_fa_--rfg_1,1_-k_1_-q_-f_{genome_id}/megahit/pe_--min-count_3_--no-mercy//{filler}/final.contigs.fasta",
         fastq_1="out/{filler}_1.fastq.gz",
         fastq_2="out/{filler}_2.fastq.gz"
     output:
