@@ -11,7 +11,8 @@ rule r_tidy_featureCounts:
         tsv = "out/{filler}.tsv"
     output:
         raw = "out/r/tidy_featureCounts/{filler}_raw.tsv",
-        rpkm = "out/r/tidy_featureCounts/{filler}_rpkm.tsv"
+        rpkm = "out/r/tidy_featureCounts/{filler}_rpkm.tsv",
+        tmm_rpk = "out/r/tidy_featureCounts/{filler}_tmm_rpk.tsv"
     conda:
         "../envs/r_tidy_featureCounts.yaml"
     script:
