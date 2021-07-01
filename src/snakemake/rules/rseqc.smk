@@ -79,8 +79,7 @@ rule tin_bam_list:
     """
     input:
         bam = lambda wildcards: eval(mwconf['ids'][wildcards.bam_list_id]),
-        # Optional: Make sure bam files have their bai.
-        # bai = todo_write_a_function_that_take_bam_and_add_suffix_bai,
+        bai = lambda wildcards: [path + '.bai' for path in eval(mwconf['ids'][wildcards.bam_list_id])],
         bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_id])
     output:
         summary="out/rseqc/tin_bam_list_{bed_id}/{bam_list_id}.summary.txt"
