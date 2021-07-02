@@ -82,7 +82,7 @@ rule cellranger_count:
     params:
         extra = params_extra
     threads:
-        16
+        8
     wildcard_constraints:
         tool="cellranger/count",
         assembly="[A-Za-z0-9-]+"
