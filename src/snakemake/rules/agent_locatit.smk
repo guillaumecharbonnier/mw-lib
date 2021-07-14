@@ -22,7 +22,7 @@ rule agent_locatit_mbc:
         "out/{tool}{extra}/{filler_align}{filler_trim}.benchmark.tsv"
     params:
         extra = params_extra,
-        memory="64G" # arbitrary value, need refinement
+        memory="120G" # arbitrary value, need refinement, 64 is enough from most samples, but largest samples need more.
     threads:
         MAX_THREADS
     wildcard_constraints:

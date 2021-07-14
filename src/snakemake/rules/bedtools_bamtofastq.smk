@@ -16,7 +16,7 @@ rule bedtools_bamtofastq_extra:
     params:
         extra = params_extra
     wildcard_constraints:
-        tool="bedtools/bamtofastq"
+        tool="bedtools/bamtofastq_se"
     conda:
         "../envs/bedtools.yaml"
     threads:
