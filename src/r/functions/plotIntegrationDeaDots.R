@@ -41,18 +41,18 @@ plotIntegrationDeaDots <- function(
   p <- p + geom_text(color="black")
   if (squishOobValue) {
     p <- p + scale_color_gradient2(
-      low = "red",
+      low = "blue",
       mid = "lightgrey",
-      high = "blue",
+      high = "red",
       midpoint = 0,
       limits = c(-2,2),
       oob = scales::squish
     )
   } else {
     p <- p + scale_color_gradient2(
-      low = "red",
+      low = "blue",
       mid = "lightgrey",
-      high = "blue",
+      high = "red",
       midpoint = 0
     )
   }
