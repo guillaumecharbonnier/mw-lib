@@ -67,3 +67,115 @@ plotIntegrationDeaDots <- function(
   p <- p + ylab(y_col)
   p
 }
+
+exportIntegrationDeaToXlsx <- function(d, filepath) {
+  dir.create(
+    dirname(filepath),
+    recursive = TRUE,
+    showWarnings = FALSE
+  )
+  # Export to xlsx
+  absMax <- function(x){return(x[which.max(abs(x))])}
+  d <- d[!is.na(d$hugo_symbol),]
+  d_log2FoldChange <- reshape2::dcast(
+    data = d,
+    formula = hugo_symbol ~ design,
+    value.var = "log2FoldChange",
+    fun.aggregate = absMax,
+    fill = 0
+  )
+
+  d_pvalue <- reshape2::dcast(
+    data = d,
+    formula = hugo_symbol ~ design,
+    value.var = "pvalue",
+    fun.aggregate = min
+  )
+
+  wb <- createWorkbook()
+  addWorksheet(
+    wb,
+    "log2FoldChange"
+  )
+  addWorksheet(
+    wb,
+    "pvalue"
+  )
+  writeDataTable(
+    wb,
+    "log2FoldChange",
+    d_log2FoldChange,
+    startCol = 1
+  )
+  writeDataTable(
+    wb,
+    "pvalue",
+    d_pvalue,
+    startCol = 1
+  )
+  conditionalFormatting(
+    wb,
+    sheet = "pvalue",
+    rows = 1:nrow(d_pvalue) + 1,
+    type = "colourScale",
+    style = c("darkgreen", "white"),
+    rule = c(0, 0.1),
+    cols = 2:ncol(d_pvalue)
+  )
+  conditionalFormatting(
+    wb,
+    sheet = "log2FoldChange",
+    rows = 1:nrow(d_log2FoldChange) + 1,
+    type = "colourScale",
+    style = c("blue", "white", "red"),
+    rule = c(-3, 0, 3),
+    cols = 2:ncol(d_log2FoldChange)
+  )
+  for (worksheet in c("pvalue", "log2FoldChange")){
+    freezePane(
+      wb,
+      sheet = worksheet,
+      firstRow = TRUE,
+      firstCol = TRUE
+    )
+    headerStyle <- createStyle(
+      # fontSize = 18,
+      # fontName = "Arial",
+      # textDecoration = "bold",
+      # halign = "left",
+      # fgFill = "#1A33CC",
+      # border = "TopBottomLeftRight",
+      textRotation = 90
+    )
+    addStyle(
+      wb,
+      sheet = worksheet,
+      style = headerStyle,
+      rows = 1,
+      cols = 1:ncol(d_pvalue)
+    )
+    setRowHeights(
+      wb,
+      sheet = worksheet,
+      rows = 1,
+      heights = 200
+    )
+    setColWidths(
+      wb,
+      sheet = worksheet,
+      cols = 2:ncol(d_pvalue),
+      widths = 4,
+    )
+    setColWidths(
+      wb,
+      sheet = worksheet,
+      cols = 1,
+      widths = 8,
+    )
+    saveWorkbook(
+      wb,
+      file = filepath,
+      overwrite = TRUE
+    )
+  }
+}
