@@ -48,7 +48,8 @@ rule cellranger_mkfastq:
         EXP=`grep Experiment {input.csv} | cut -d "," -f 2`
         RUN=`echo {input.csv} | awk -F"/" '{{print $8}}' | cut -d "_" -f 1,2`
         # Trick to get the relative path to cellranger from output-dir
-        CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.0', '${{OUTDIR}}'))"`
+        #CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.0', '${{OUTDIR}}'))"`
+        CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.2', '${{OUTDIR}}'))"`
         export PATH=$CELLRANGER_RELATIVE_PATH_TO_OUTPUT:$PATH
         # Same trick as before to get relative path to fastq file from output-dir
         INDIR_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('${{INDIR}}', '${{OUTDIR}}'))"`
@@ -99,7 +100,8 @@ rule cellranger_count:
         SAMPLE=`grep S0 ${{SAMPLESHEET}} | grep -v -E "HTO|ADT" | cut -d , -f 2`
         RUN=`grep Experiment ${{SAMPLESHEET}} | cut -d , -f 2 | cut -d _ -f 1,2`
         # Trick to get the relative path to cellranger from output-dir
-        CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.0', '${{OUTDIR}}'))"`
+        #CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.0', '${{OUTDIR}}'))"`
+        CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.2', '${{OUTDIR}}'))"`
         export PATH=$CELLRANGER_RELATIVE_PATH_TO_OUTPUT:$PATH
         # Same trick as before to get relative path to fastq file from output-dir
         INDIR_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('${{INDIR}}', '${{OUTDIR}}'))"`

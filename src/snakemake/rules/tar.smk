@@ -241,3 +241,12 @@ rule tar_xvzf_exceRptDB_hg38:
         tar -xvzf {input} --directory {params.outdir}
         """
 
+rule tar_xvzf_genome_spaceranger:
+    input:
+        "out/{filler}.tar.gz"
+    output:
+        touch("out/tar/xvzf_genome_spaceranger/{filler}/done")
+    params:
+        outdir="out/tar/xvzf_genome_spaceranger/{filler}"
+    shell:
+        "tar -xvzf {input} --directory `dirname {params.outdir}`"
