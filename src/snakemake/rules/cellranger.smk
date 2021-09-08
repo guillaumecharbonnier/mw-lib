@@ -7,7 +7,7 @@
 ###
 #
 # 2021-03-06 Update cellranger to v 6.0.0
-
+# 2021-01-07 Update cellranger to v 6.0.2
 
 rule cellranger_mkfastq:
     """
