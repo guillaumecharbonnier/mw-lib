@@ -45,21 +45,19 @@ rule cellranger_mkfastq:
       
         INDIR=`dirname {input.xml}`
         OUTDIR=`dirname {input.csv}`
-        EXP=`grep Experiment {input.csv} | cut -d "," -f 2`
-        RUN=`echo {input.csv} | awk -F"/" '{{print $8}}' | cut -d "_" -f 1,2`
+        EXP=`grep 'Experiment Name' {input.csv} | cut -d "," -f 2`
+        RUN=`grep 'Experiment Name' {input.csv} | cut -d "," -f 2 | cut -d "_" -f 1,2`
         # Trick to get the relative path to cellranger from output-dir
         #CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.0', '${{OUTDIR}}'))"`
         CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.2', '${{OUTDIR}}'))"`
+
         export PATH=$CELLRANGER_RELATIVE_PATH_TO_OUTPUT:$PATH
         # Same trick as before to get relative path to fastq file from output-dir
         INDIR_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('${{INDIR}}', '${{OUTDIR}}'))"`
         cd ${{OUTDIR}}
-        #alias bcl2fastq="/gpfs/tgml/mw-sst/.snakemake/conda/3b33e592/bin/bcl2fastq"
-        cellranger mkfastq {params.extra} --run=${{INDIR_RELATIVE_PATH_TO_OUTPUT}} --id=${{RUN}} --csv=./SampleSheet.csv
+        cellranger mkfastq {params.extra} --localcores {threads} --run=${{INDIR_RELATIVE_PATH_TO_OUTPUT}} --id=${{RUN}} --csv=./SampleSheet.csv
         cp -r ${{RUN}}/outs/fastq_path/Reports .
         ) &> {log}
-        # go back to mw-sst folder
-        #cd /gpfs/tgml/mw-sst
         '''
 
 
@@ -77,9 +75,10 @@ rule cellranger_count:
     """
     input:
         ref="out/tar/xvzf_genome_cellranger/wget/https/cf.10xgenomics.com/supp/cell-exp/refdata-gex-{assembly}/done",
-        xml="out/{filler}/RunInfo.xml"
+        xml="out/{filler}/RunInfo.xml",
+        csv="out/{filler}/SampleSheet.csv"
     output:
-        html="out/{tool}{extra}_{assembly}/{filler}/process_done"
+        done="out/{tool}{extra}_{assembly}/{filler}/process_done"
     params:
         extra = params_extra
     threads:
@@ -89,16 +88,15 @@ rule cellranger_count:
         assembly="[A-Za-z0-9-]+"
     log:
         "out/{tool}{extra}_{assembly}/{filler}/log"
-    shell:'''
+    shell:
+        """
         (
         INDIR=`dirname {input.xml}`
-        OUTDIR=`dirname {output.html}`
+        OUTDIR=`dirname {output.done}`
         REF=`dirname {input.ref}`
-        SAMPLESHEET=${{INDIR}}"/SampleSheet.csv"
-        EXP=`grep Experiment ${{SAMPLESHEET}} | cut -d , -f 2`
+        EXP=`grep 'Experiment Name' {input.csv} | cut -d "," -f 2`
+        RUN=`grep 'Experiment Name' {input.csv} | cut -d "," -f 2 | cut -d "_" -f 1,2`
         # Extract sample names from samplesheet
-        SAMPLE=`grep S0 ${{SAMPLESHEET}} | grep -v -E "HTO|ADT" | cut -d , -f 2`
-        RUN=`grep Experiment ${{SAMPLESHEET}} | cut -d , -f 2 | cut -d _ -f 1,2`
         # Trick to get the relative path to cellranger from output-dir
         #CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.0', '${{OUTDIR}}'))"`
         CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.2', '${{OUTDIR}}'))"`
@@ -114,6 +112,4 @@ rule cellranger_count:
         cellranger count {params.extra} --id=${{RUN}} --fastqs=${{INDIR_RELATIVE_PATH_TO_OUTPUT}}/${{RUN}}/outs/fastq_path --transcriptome=${{REF_RELATIVE_PATH_TO_OUTPUT}} 
         touch process_done 
         )&> {log}
-        # go back to mw-sst folder
-        cd /gpfs/tgml/mw-sst
-    '''
+        """

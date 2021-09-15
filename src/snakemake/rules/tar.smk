@@ -113,9 +113,16 @@ rule tar_xvzf_Carrillo2017_blueprint_disease:
     shell:
         "tar -xvzf {input} --directory out/tar/xvzf_Carrillo2017_blueprint_disease"
 
-rule tar_meme:
+rule tar_meme_motif_db:
     input:
-        "out/wget/http/meme-suite.org/meme-software/Databases/motifs/motif_databases.12.19.tgz"
+        "out/wget/https/meme-suite.org/meme-software/Databases/motifs/motif_databases.12.21.tgz"
+    output:
+        expand(
+            "out/tar_meme/motif_databases/{filepath}",
+            #Using a lite version of file list to limit DAG complexity without files there is no use for the moment
+            #filepath = [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_meme_motif_db.txt","r")]
+            filepath = [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_meme_motif_db_lite.txt","r")]
+        )
     shell:
         "tar -xvzf {input} --directory out/tar_meme"
 

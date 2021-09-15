@@ -1,0 +1,10 @@
+name:
+  r_diffbind
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-biocmanager
+  - bioconductor-diffbind
+

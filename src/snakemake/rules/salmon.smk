@@ -41,6 +41,41 @@ rule salmon_index_ensembl_with_decoys:
         rm -f {output}/transcriptome_genome.fa.gz
         """
 
+rule salmon_index_ensembl_with_decoys_toplevel:
+    """
+    Aim:
+        According to
+        https://combine-lab.github.io/alevin-tutorial/2019/selective-alignment/
+        we should use the primary_assembly fasta for genome reference.
+        It is however missing for some species, and equivalent to the available toplevel one.
+    Test:
+        out/salmon/index_ensembl_with_decoys_toplevel/release-102/fasta/rattus_norvegicus/Rattus_norvegicus.Rnor_6.0
+    """
+    input:
+        cdna = "out/wget/ftp/ftp.ensembl.org/pub/{release_fasta_specie}/cdna/{specie_assembly}.cdna.all.fa.gz",
+        ncrna = "out/wget/ftp/ftp.ensembl.org/pub/{release_fasta_specie}/ncrna/{specie_assembly}.ncrna.fa.gz",
+        dna = "out/wget/ftp/ftp.ensembl.org/pub/{release_fasta_specie}/dna/{specie_assembly}.dna.toplevel.fa.gz"
+    output:
+        directory("out/salmon/index_ensembl_with_decoys_toplevel/{release_fasta_specie}/{specie_assembly}")
+    wildcard_constraints:
+        release_fasta_specie="release-[0-9]+/fasta/[a-z_]+",
+        specie_assembly="[A-Za-z0-9_.]+"
+    conda:
+        "../envs/salmon.yaml"
+    shell:
+        """
+        mkdir -p {output}
+        zcat {input} > {output}/transcriptome_genome.fa
+
+        zcat {input.dna} | grep "^>" | cut -d " " -f 1 | sed "s/>//g" > {output}/decoys.txt
+
+        salmon index -t {output}/transcriptome_genome.fa -d {output}/decoys.txt -i {output}
+
+        rm -f {output}/transcriptome_genome.fa.gz
+        """
+
+
+
 rule salmon_quant_bam:
     """
     Warning: Uncomplete rule. Work todo
@@ -67,14 +102,15 @@ rule salmon_quant_bam:
 rule salmon_quant_fastq_pe:
     """
     Test:
-        out/salmon/quant_fastq_pe_-l_ISF_--validateMappings_salmon-index-GRCh38-ensembl-r103-cdna/bedtools/bamtofastq_pe/agent/locatit_mbc_-i_-R/picard/SortSam_sortOrder-queryname/star/pe_fastq.gz_to_bam_staridx-GRCh38-ensembl_gtf-GRCh38-ensembl/agent/trim_-v2/ln/updir/mw/inp/fastq/2021_RNAseq_NECKER_spicuglia/fastq/MOLT4_S60
+        out/salmon/quant_fastq_pe_-l_A_--validateMappings_salmon-index-GRCh38-ensembl-r102/sickle/pe_-t_sanger_-q_20/sra-tools/fastq-dump_pe/SRR4123954/quant.sf
     """
     input:
         index = lambda wildcards: mwconf['ids'][wildcards.index_id],
         fq1 = "out/{filler}_1.fastq.gz",
         fq2 = "out/{filler}_2.fastq.gz"
     output:
-        directory("out/{tool}{extra}_{index_id}/{filler}")
+        "out/{tool}{extra}_{index_id}/{filler}/quant.sf"
+        #directory("out/{tool}{extra}_{index_id}/{filler}")
     params:
         extra = params_extra
     wildcard_constraints:
@@ -85,4 +121,28 @@ rule salmon_quant_fastq_pe:
     conda:
         "../envs/salmon.yaml"
     shell:
-        "salmon quant -p {threads} -i {input.index} {params.extra} -1 {input.fq1} -2 {input.fq2} -o {output}"
+        "salmon quant -p {threads} -i {input.index} {params.extra} -1 {input.fq1} -2 {input.fq2} -o `dirname {output}`"
+
+rule salmon_quant_fastq_se:
+    """
+    Test:
+        out/salmon/quant_fastq_se_-l_A_--validateMappings_--numGibbsSamples_20_--gcBias_salmon-index-GRCh38-ensembl-r102/sickle/se_-t_sanger_-q_20/sra-tools/fastq-dump_se/SRR1927116/quant.sf
+    """
+    input:
+        index = lambda wildcards: mwconf['ids'][wildcards.index_id],
+        fq = "out/{filler}.fastq.gz",
+    output:
+        "out/{tool}{extra}_{index_id}/{filler}/quant.sf"
+        #directory("out/{tool}{extra}_{index_id}/{filler}")
+    params:
+        extra = params_extra
+    wildcard_constraints:
+        tool = "salmon/quant_fastq_se",
+        index_id = "salmon-[a-zA-Z0-9-]+"
+    threads:
+        4
+    conda:
+        "../envs/salmon.yaml"
+    shell:
+        "salmon quant -p {threads} -i {input.index} {params.extra} -r {input.fq} -o `dirname {output}`"
+

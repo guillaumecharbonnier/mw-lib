@@ -1,5 +1,8 @@
 id	path
 salmon-index-GRCh38-ensembl-r103-cdna	"out/salmon/index/wget/http/ftp.ensembl.org/pub/release-103/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all"
 salmon-index-GRCh38-ensembl-r103	"out/salmon/index_ensembl_with_decoys/release-103/fasta/homo_sapiens/Homo_sapiens.GRCh38"
-salmon-index-GRCm38-ensembl-r103-cdna	"out/salmon/index/wget/http/ftp.ensembl.org/pub/release-102/fasta/mus_musculus/cdna/Mus_musculus.GRCm38.cdna.all"
+salmon-index-GRCh38-ensembl-r102	"out/salmon/index_ensembl_with_decoys/release-102/fasta/homo_sapiens/Homo_sapiens.GRCh38"
+salmon-index-GRCm38-ensembl-r102	"out/salmon/index_ensembl_with_decoys/release-102/fasta/mus_musculus/Mus_musculus.GRCm38"
+salmon-index-Rnor6-ensembl-r102	"out/salmon/index_ensembl_with_decoys_toplevel/release-102/fasta/rattus_norvegicus/Rattus_norvegicus.Rnor_6.0"
+salmon-index-GRCm38-ensembl-r103-cdna	"out/salmon/index/wget/http/ftp.ensembl.org/pub/release-103/fasta/mus_musculus/cdna/Mus_musculus.GRCm38.cdna.all"
 salmon-index-GRCm39-ensembl-r103-cdna	"out/salmon/index/wget/http/ftp.ensembl.org/pub/release-103/fasta/mus_musculus/cdna/Mus_musculus.GRCm39.cdna.all"
