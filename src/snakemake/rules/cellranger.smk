@@ -6,8 +6,8 @@
 # I encountered some trouble with the param extra. So for now, the localcores and localmem will be set manually in the rule. 
 ###
 #
-# 2021-03-06 Update cellranger to v 6.0.0 
-# 2021-06-08 11:36:15 Update cellranger to v 6.0.1
+# 2021-03-06 Update cellranger to v 6.0.0
+# 2021-01-07 Update cellranger to v 6.0.2
 
 rule cellranger_mkfastq:
     """
@@ -34,12 +34,23 @@ rule cellranger_mkfastq:
         mkfastq="out/{tool}{extra}/{filler}/mkfastq_log"
     shell:'''
         (
+        # 2021-05-27: Useless condition, snakemake don't check this before running the rule
+        #Condition to not copy at each execution
+        if [[ -f {output.xml} ]]; then
+            echo "RunInfo.xml exists."
+            break
+        else
+            cp {input.xml} {output.xml}      
+        fi
+      
         INDIR=`dirname {input.xml}`
         OUTDIR=`dirname {input.csv}`
         EXP=`grep 'Experiment Name' {input.csv} | cut -d "," -f 2`
         RUN=`grep 'Experiment Name' {input.csv} | cut -d "," -f 2 | cut -d "_" -f 1,2`
         # Trick to get the relative path to cellranger from output-dir
-        CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.1', '${{OUTDIR}}'))"`
+        #CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.0', '${{OUTDIR}}'))"`
+        CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.2', '${{OUTDIR}}'))"`
+
         export PATH=$CELLRANGER_RELATIVE_PATH_TO_OUTPUT:$PATH
         # Same trick as before to get relative path to fastq file from output-dir
         INDIR_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('${{INDIR}}', '${{OUTDIR}}'))"`
@@ -87,7 +98,8 @@ rule cellranger_count:
         RUN=`grep 'Experiment Name' {input.csv} | cut -d "," -f 2 | cut -d "_" -f 1,2`
         # Extract sample names from samplesheet
         # Trick to get the relative path to cellranger from output-dir
-        CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.1', '${{OUTDIR}}'))"`
+        #CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.0', '${{OUTDIR}}'))"`
+        CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.2', '${{OUTDIR}}'))"`
         export PATH=$CELLRANGER_RELATIVE_PATH_TO_OUTPUT:$PATH
         # Same trick as before to get relative path to fastq file from output-dir
         INDIR_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('${{INDIR}}', '${{OUTDIR}}'))"`
@@ -95,7 +107,9 @@ rule cellranger_count:
         REF_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('${{REF}}', '${{OUTDIR}}'))"`
         # Move into the outdir to have cellranger count output in the correct folder 
         cd ${{OUTDIR}}
-        cellranger count {params.extra} --localcores {threads} --id=${{RUN}} --fastqs=${{INDIR_RELATIVE_PATH_TO_OUTPUT}}/${{RUN}}/outs/fastq_path --transcriptome=${{REF_RELATIVE_PATH_TO_OUTPUT}}
-        touch process_done
+        #cellranger count {params.extra} --id=${{RUN}} --fastqs=${{INDIR_RELATIVE_PATH_TO_OUTPUT}} --transcriptome=${{REF_RELATIVE_PATH_TO_OUTPUT}} --project=${{EXP}} --sample=${{SAMPLE}}
+        #cellranger count {params.extra} --id=${{RUN}} --fastqs=${{INDIR_RELATIVE_PATH_TO_OUTPUT}}/${{RUN}}/outs/fastq_path --transcriptome=${{REF_RELATIVE_PATH_TO_OUTPUT}} --sample=${{SAMPLE}}
+        cellranger count {params.extra} --id=${{RUN}} --fastqs=${{INDIR_RELATIVE_PATH_TO_OUTPUT}}/${{RUN}}/outs/fastq_path --transcriptome=${{REF_RELATIVE_PATH_TO_OUTPUT}} 
+        touch process_done 
         )&> {log}
         """
