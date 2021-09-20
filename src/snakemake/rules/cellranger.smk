@@ -50,12 +50,11 @@ rule cellranger_mkfastq:
         # Trick to get the relative path to cellranger from output-dir
         #CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.0', '${{OUTDIR}}'))"`
         CELLRANGER_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('../apps/cellranger-6.0.2', '${{OUTDIR}}'))"`
-
         export PATH=$CELLRANGER_RELATIVE_PATH_TO_OUTPUT:$PATH
         # Same trick as before to get relative path to fastq file from output-dir
         INDIR_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('${{INDIR}}', '${{OUTDIR}}'))"`
         cd ${{OUTDIR}}
-        cellranger mkfastq {params.extra} --localcores {threads} --run=${{INDIR_RELATIVE_PATH_TO_OUTPUT}} --id=${{RUN}} --csv=./SampleSheet.csv
+        cellranger mkfastq {params.extra} --run=${{INDIR_RELATIVE_PATH_TO_OUTPUT}} --id=${{RUN}} --csv=./SampleSheet.csv
         cp -r ${{RUN}}/outs/fastq_path/Reports .
         ) &> {log}
         '''
