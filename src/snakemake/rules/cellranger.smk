@@ -21,7 +21,7 @@ rule cellranger_mkfastq:
         csv="out/{tool}{extra}/{filler}/SampleSheet.csv"
     output:
         xml="out/{tool}{extra}/{filler}/RunInfo.xml",
-        html="out/{tool}{extra}/{filler}/Reports/html/tree.html",
+        html="out/{tool}{extra}/{filler}/Reports/html/tree.html"
     conda:
         "../envs/bcl2fastq.yml"
     params:
