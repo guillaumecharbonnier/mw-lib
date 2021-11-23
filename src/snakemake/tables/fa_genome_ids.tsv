@@ -35,3 +35,6 @@ fa_genome_GRCh38_dna_primary_assembly_for_cellranger	["out/wget/ftp/ftp.ensembl.
 fa_genome_GRCm38_dna_primary_assembly_for_cellranger	["out/wget/ftp/ftp.ensembl.org/pub/release-102/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.primary_assembly.fa"]
 # Add Rat genome
 fa-genome-Rnor6	["out/cat/assembly_ensembl/Rnor6.fa"]
+# Addition of genomes for spatial transcriptomics
+fa_genome_GRCh38_dna_primary_assembly_for_spaceranger	["out/tar/xvzf_genome_cellranger/wget/https/cf.10xgenomics.com/supp/spatial-exp/refdata-gex-GRCh38-2020-A"]
+fa_genome_GRCm38_dna_primary_assembly_for_spaceranger	["out/tar/xvzf_genome_cellranger/wget/https/cf.10xgenomics.com/supp/spatial-exp/refdata-gex-mm10-2020-A"]

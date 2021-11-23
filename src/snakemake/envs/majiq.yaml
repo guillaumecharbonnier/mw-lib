@@ -1,0 +1,26 @@
+# https://bitbucket.org/biociphers/majiq_academic/src/master/requirements.txt
+name:
+  majiq
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python==3.8
+  - htslib==1.9
+  - pip
+  #- openmp
+  #- lapack
+  - scipy==1.4.1
+  #- numpy
+  #- cython
+  - fortran-compiler
+  - cxx-compiler
+  - h5py
+  - libopenblas
+  - libcblas
+  - liblapack
+  - libgcc
+  - cminpack
+  #- gitpython
+  - mkl

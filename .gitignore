@@ -13,3 +13,10 @@ inp/me/
 *~
 *.swp
 *.aux
+
+# Various temporary files made by Rmd and Bookdown
+_main_cache
+_main_files
+_main.Rmd
+_bookdown_files
+

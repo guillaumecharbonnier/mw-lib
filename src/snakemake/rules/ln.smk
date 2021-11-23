@@ -193,6 +193,17 @@ rule ln_bed_to_bg:
     shell:
         "ln -srf {input} {output}"
 
+localrules: ln_fa_to_fasta
+rule ln_fa_to_fasta:
+    input:
+        "out/{filler}.fa"
+    output:
+        "out/ln/fa_to_fasta/{filler}.fasta"
+    conda:
+        "../envs/coreutils.yaml"
+    shell:
+        "ln -srf {input} {output}"
+
 localrules: ln_pe_remove_mate_prefix
 rule ln_pe_remove_mate_prefix:
     """
