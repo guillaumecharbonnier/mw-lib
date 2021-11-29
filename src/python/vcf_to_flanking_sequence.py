@@ -58,9 +58,18 @@ for record in vcf:
     #        min(record.pos-1+len(record.ref)+flank,
     #            genome.get_reference_length(record.chrom)))
 
-    seq_upstream = genome.fetch(record.chrom,
+    # Handling the special case where the indel is detected at the begining of a chr
+    # Found for 525_H3K27ac_H3K4me3 for the first time
+    # Avoid this error
+    # ValueError: invalid coordinates: start (1) > stop (0)
+    if record.pos == 1:
+        seq_upstream = ""
+    else:
+        seq_upstream = genome.fetch(
+            record.chrom,
             max(record.pos-1-flank, 1),
-            record.pos-1)
+            record.pos-1
+        )
 
     seq_downstream = genome.fetch(record.chrom,
             record.pos-1+len(record.ref),
