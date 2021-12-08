@@ -58,9 +58,18 @@ for record in vcf:
     #        min(record.pos-1+len(record.ref)+flank,
     #            genome.get_reference_length(record.chrom)))
 
-    seq_upstream = genome.fetch(record.chrom,
+    # Handling the special case where the indel is detected at the begining of a chr
+    # Found for 525_H3K27ac_H3K4me3 for the first time
+    # Avoid this error
+    # ValueError: invalid coordinates: start (1) > stop (0)
+    if record.pos == 1:
+        seq_upstream = ""
+    else:
+        seq_upstream = genome.fetch(
+            record.chrom,
             max(record.pos-1-flank, 1),
-            record.pos-1)
+            record.pos-1
+        )
 
     seq_downstream = genome.fetch(record.chrom,
             record.pos-1+len(record.ref),
@@ -94,8 +103,18 @@ for record in vcf:
         #    '>', record.chrom, ':', record.pos, '_ALT_', record.alts[0], '\n',
         #    seq[:flank], record.alts[0], seq[flank+len(record.ref):],
         #    sep="")
-        print('>', record.chrom, ':', record.pos, '_REF_', record.ref, '\n',
+
+        # It is required to trim seqname else Fimo will crash (likely when string is > 100 char)
+        # Trimming to 80 because it is already long enough
+        ref_seqname = '>' + str(record.chrom) + ':' + str(record.pos) + '_REF_' + record.ref
+        ref_seqname = (ref_seqname[:79] + '..') if len(ref_seqname) > 80 else ref_seqname
+
+        alt_seqname = '>' + str(record.chrom) + ':' + str(record.pos) + '_ALT_' + record.alts[0]
+        alt_seqname = (alt_seqname[:79] + '..') if len(alt_seqname) > 80 else alt_seqname
+        print(
+            ref_seqname, '\n',
             seq_upstream, record.ref, seq_downstream, '\n',
-            '>', record.chrom, ':', record.pos, '_ALT_', record.alts[0], '\n',
+            alt_seqname, '\n',
             seq_upstream, record.alts[0], seq_downstream,
-            sep="")
+            sep=""
+        )
