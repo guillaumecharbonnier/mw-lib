@@ -37,7 +37,7 @@ rule snpsift_annotate_dbsnp:
     input:
         vcf="out/{filler}.vcf",
         dbsnp="out/wget/ftp/ftp.ncbi.nih.gov/snp/organisms/human_9606/VCF/00-All.vcf.gz",
-        dbsnp_tbi="https://ftp.ncbi.nih.gov/snp/organisms/human_9606/VCF/00-All.vcf.gz.tbi"
+        dbsnp_tbi="out/wget/ftp/ftp.ncbi.nih.gov/snp/organisms/human_9606/VCF/00-All.vcf.gz.tbi"
     output:
         vcf="out/{tool}{extra}/{filler}.vcf"
     log:
