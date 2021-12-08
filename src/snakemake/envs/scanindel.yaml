@@ -1,0 +1,9 @@
+# Do not install on 2021-12-08 11:52:11 because of conflicting depencies
+name:
+  scanindel
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - scanindel

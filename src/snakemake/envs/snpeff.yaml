@@ -1,0 +1,9 @@
+name: 
+  snpeff
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - snpeff
+  - snpsift
