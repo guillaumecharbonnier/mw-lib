@@ -25,7 +25,7 @@ rule snpeff:
     conda:
         "../envs/snpeff.yaml"
     shell:
-        "snpEff {params.extra} {input.vcf} > {output.vcf} &> {log}"
+        "snpEff -Xmx8g {params.extra} {input.vcf} > {output.vcf} &> {log}"
 
 rule snpsift_annotate_dbsnp:
     """
@@ -53,4 +53,4 @@ rule snpsift_annotate_dbsnp:
     conda:
         "../envs/snpeff.yaml"
     shell:
-        "SnpSift {params.extra} {input.dbsnp} {input.vcf} > {output.vcf} &> {log}"
+        "SnpSift annotate {params.extra} {input.dbsnp} {input.vcf} > {output.vcf} &> {log}"
