@@ -60,8 +60,8 @@ rule wget_gwasCat:
         "out/wget_gwasCat/gwas_catalog_v1.0.2-associations_e104_r2021-11-22.tsv"
     shell:
         """
-        wget 'https://www.ebi.ac.uk/gwas/api/search/downloads/alternative' --output-document 
-        '{output}'
+        cd out/wget_gwasCat
+        wget 'https://www.ebi.ac.uk/gwas/api/search/downloads/alternative' --output-document 'gwas_catalog_v1.0.2-associations_e104_r2021-11-22.tsv'
         """
 
 rule snpsift_gwasCat:
