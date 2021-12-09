@@ -118,3 +118,30 @@ rule snpsift_dbnsfp:
         "../envs/snpeff.yaml"
     shell:
         "SnpSift dbnfsp {params.extra} -v -db {input.dbnsfp} {input.vcf} > {output.vcf} 2> {log}"
+
+rule snpsift_filter:
+    """
+    Aim:
+        Initially created to filter vcf with no known id after annotating using dbsnp.
+        Can be used for any filtering speicified in extra_ids.tsv
+    Doc:
+        http://pcingola.github.io/SnpEff/ss_filter/
+    Test:
+        out/snpsift/filter_no-id/snpsift/annotate_dbsnp/bcftools/merge/vcf-GRCh38-platypus-TALL-H3K27ac-H3K4me3.vcf
+    """
+    input:
+        vcf="out/{filler}.vcf"
+    output:
+        vcf="out/{tool}{extra}/{filler}.vcf"
+    log:
+        "out/{tool}{extra}/{filler}.log"
+    benchmark:
+        "out/{tool}{extra}/{filler}.benchmark.tsv"
+    params:
+        extra = params_extra
+    wildcard_constraints:
+        tool = "snpsift/filter",
+    conda:
+        "../envs/snpeff.yaml"
+    shell:
+        "SnpSift filter {params.extra} {input} > {output}"
