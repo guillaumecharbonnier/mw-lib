@@ -144,4 +144,4 @@ rule snpsift_filter:
     conda:
         "../envs/snpeff.yaml"
     shell:
-        "SnpSift filter {params.extra} {input} > {output}"
+        "SnpSift filter {params.extra} {input} > {output} 2> {log}"
