@@ -22,9 +22,9 @@ rule bedtools_intersect_b_lambda_extra:
     output:
         features_a_overlapping_features_b="out/{tool}{extra}_-b_{feature_list_id}/{filler}.{ext}"
     log:
-        "out/{tool}{extra}_-b_{feature_list_id}/{filler}.log"
+        "out/{tool}{extra}_-b_{feature_list_id}/{filler}.{ext}.log"
     benchmark:
-        "out/{tool}{extra}_-b_{feature_list_id}/{filler}.benchmark.tsv"
+        "out/{tool}{extra}_-b_{feature_list_id}/{filler}.{ext}.benchmark.tsv"
     params:
         extra = params_extra
     wildcard_constraints:
@@ -48,9 +48,9 @@ rule bedtools_intersect_a_lambda_extra:
     output:
         features_a_overlapping_features_b="out/{tool}{extra}_-a_{bed_list_id}/{filler}.{ext}"
     log:
-        "out/{tool}{extra}_-a_{bed_list_id}/{filler}.log"
+        "out/{tool}{extra}_-a_{bed_list_id}/{filler}.{ext}.log"
     benchmark:
-        "out/{tool}{extra}_-a_{bed_list_id}/{filler}.benchmark.tsv"
+        "out/{tool}{extra}_-a_{bed_list_id}/{filler}.{ext}.benchmark.tsv"
     params:
         extra = params_extra
     wildcard_constraints:
@@ -75,9 +75,9 @@ rule bedtools_intersect_samedir_extra:
     output:
         features_a_overlapping_features_b="out/{tool}{extra}/{filler}/{a}_VS_{b}.{ext}"
     log:
-        "out/{tool}{extra}/{filler}/{a}_VS_{b}.log"
+        "out/{tool}{extra}/{filler}/{a}_VS_{b}.{ext}.log"
     benchmark:
-        "out/{tool}{extra}/{filler}/{a}_VS_{b}.benchmark.tsv"
+        "out/{tool}{extra}/{filler}/{a}_VS_{b}.{ext}.benchmark.tsv"
     params:
         extra = params_extra
     wildcard_constraints:
