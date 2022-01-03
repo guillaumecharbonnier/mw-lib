@@ -41,7 +41,7 @@ grep/	extract-indel-from-vcf	-E "^#|INDEL"
 grep/	extract-reads-with-0-1-mismatch-in-sam	-E "^@|NM:i:[01][^0-9]"
 bbmap/reformat	nuc-length	minlength=130 maxlength=200
 bbmap/reformat	ss-length	minlength=30 maxlength=100
-bbmap/reformat	to-60m-pe-reads	samplereadstarget=60000000 mappedonly=t pairedonly=t primaryonly=t
+bbmap/reformat_bam	to-60m-pe-reads	samplereadstarget=60000000 mappedonly=t pairedonly=t primaryonly=t
 gtftk/ologram	tfbs	--no-basic-feature --more-keys tf_id
 bbnorm/se	no-low-depth-filter	min=0
 bbnorm/pe	no-low-depth-filter	min=0
