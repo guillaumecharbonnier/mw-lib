@@ -21,6 +21,10 @@ rule bedtools_intersect_b_lambda_extra:
         features_b = lambda wildcards: eval(mwconf['ids'][wildcards.feature_list_id])
     output:
         features_a_overlapping_features_b="out/{tool}{extra}_-b_{feature_list_id}/{filler}.{ext}"
+    log:
+        "out/{tool}{extra}_-b_{feature_list_id}/{filler}.{ext}.log"
+    benchmark:
+        "out/{tool}{extra}_-b_{feature_list_id}/{filler}.{ext}.benchmark.tsv"
     params:
         extra = params_extra
     wildcard_constraints:
@@ -30,7 +34,7 @@ rule bedtools_intersect_b_lambda_extra:
     conda:
         "../envs/bedtools.yaml"
     shell:
-        "bedtools intersect -a {input.features_a} -b {input.features_b} {params.extra} > {output.features_a_overlapping_features_b}"
+        "bedtools intersect -a {input.features_a} -b {input.features_b} {params.extra} > {output.features_a_overlapping_features_b} 2> {log}"
 
 rule bedtools_intersect_a_lambda_extra:
     """
@@ -43,6 +47,10 @@ rule bedtools_intersect_a_lambda_extra:
         features_a = lambda wildcards: eval(mwconf['ids'][wildcards.bed_list_id])
     output:
         features_a_overlapping_features_b="out/{tool}{extra}_-a_{bed_list_id}/{filler}.{ext}"
+    log:
+        "out/{tool}{extra}_-a_{bed_list_id}/{filler}.{ext}.log"
+    benchmark:
+        "out/{tool}{extra}_-a_{bed_list_id}/{filler}.{ext}.benchmark.tsv"
     params:
         extra = params_extra
     wildcard_constraints:
@@ -51,7 +59,7 @@ rule bedtools_intersect_a_lambda_extra:
     conda:
         "../envs/bedtools.yaml"
     shell:
-        "bedtools intersect -a {input.features_a} -b {input.features_b} {params.extra} > {output.features_a_overlapping_features_b}"
+        "bedtools intersect -a {input.features_a} -b {input.features_b} {params.extra} > {output.features_a_overlapping_features_b} 2> {log}"
 
 rule bedtools_intersect_samedir_extra:
     """
@@ -66,6 +74,10 @@ rule bedtools_intersect_samedir_extra:
         features_b = "out/{filler}/{b}.{ext}"
     output:
         features_a_overlapping_features_b="out/{tool}{extra}/{filler}/{a}_VS_{b}.{ext}"
+    log:
+        "out/{tool}{extra}/{filler}/{a}_VS_{b}.{ext}.log"
+    benchmark:
+        "out/{tool}{extra}/{filler}/{a}_VS_{b}.{ext}.benchmark.tsv"
     params:
         extra = params_extra
     wildcard_constraints:
@@ -74,7 +86,7 @@ rule bedtools_intersect_samedir_extra:
     conda:
         "../envs/bedtools.yaml"
     shell:
-        "bedtools intersect -a {input.features_a} -b {input.features_b} {params.extra} > {output.features_a_overlapping_features_b}"
+        "bedtools intersect -a {input.features_a} -b {input.features_b} {params.extra} > {output.features_a_overlapping_features_b} 2> {log}"
 
 ### Legacy past this point. Or very specific rules.
 
