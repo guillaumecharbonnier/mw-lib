@@ -15,7 +15,7 @@ colorblind_palette_15 <- c(
 #   col = df_col
 # )
 
-vecAnnoToColForCOmplexHeatmap <- function(x) {
+vecAnnoToColForComplexHeatmap <- function(x) {
   y <- sort(unique(x))
   if (length(y) > 15) {
     warning("More than 15 different levels. Annotation heatmap will be unreadable")
