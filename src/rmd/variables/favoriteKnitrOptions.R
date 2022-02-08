@@ -9,6 +9,7 @@ eval_after <- c(
 knitr::opts_chunk$set(
   echo = FALSE,
   message = FALSE,
+  warning = FALSE,
   eval.after = eval_after,
   cache = TRUE
 )

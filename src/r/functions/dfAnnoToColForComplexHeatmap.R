@@ -14,19 +14,31 @@ colorblind_palette_15 <- c(
 #   df = df_anno,
 #   col = df_col
 # )
-dfAnnoToColForComplexHeatmap <- function(df) {
+
+vecAnnoToColForCOmplexHeatmap <- function(x) {
+  y <- sort(unique(x))
+  if (length(y) > 15) {
+    warning("More than 15 different levels. Annotation heatmap will be unreadable")
+  }
+  if (length(y) > 8) {
+    pal = colorblind_palette_15
+  } else {
+    pal = colorblind_palette_8
+  }
+  colors = structure(
+    pal[1:length(y)],
+    names = as.character(y)
+  )
+  return(colors)
+}
+
+dfAnnoToColForComplexHeatmap <- function(
+  df,
+  pal = NULL
+) {
   anno_col <- lapply(
     as.list(df),
-    function(x) {
-      y <- sort(unique(x))
-      if (length(y) > 15) {
-        warning("More than 15 different levels. Annotation heatmap will be unreadable")
-      }
-      colors = structure(
-        colorblind_palette_15[1:length(y)],
-        names = y
-      )
-    }
+    vecAnnoToColForCOmplexHeatmap
   )
   return(anno_col)
 }
