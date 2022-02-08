@@ -38,7 +38,7 @@ dfAnnoToColForComplexHeatmap <- function(
 ) {
   anno_col <- lapply(
     as.list(df),
-    vecAnnoToColForCOmplexHeatmap
+    vecAnnoToColForComplexHeatmap
   )
   return(anno_col)
 }

@@ -558,6 +558,27 @@ rule samtools_view_b_h_s:
         """
 
 
+rule samtools_subsample_bam_to_n_reads:
+    """
+    Aim:
+        Independent rule to subsample reads to n reads
+    From:
+        https://davemcg.github.io/post/easy-bam-downsampling/
+    """
+    input:
+        bam = "out/{filler}.bam"
+    output:
+        bam = "out/samtools/subsample_bam_to_{n_reads}_reads/{filler}.bam"
+    threads:
+        1
+    conda:
+        "../envs/samtools.yaml"
+    shell:
+        """
+        frac=$( samtools idxstats {input.bam} | cut -f3 | awk 'BEGIN {{total=0}} {{total += $1}} END {{frac={wildcards.n_reads}/total; if (frac > 1) {{print 0.999}} else {{print frac}} }}' )
+        samtools view -bs $frac {input.bam} > {output.bam}
+        """
+
 rule samtools_view_subsampling_bam_get_sample_size:
     """
     Created: 2016-06-03 9h34
