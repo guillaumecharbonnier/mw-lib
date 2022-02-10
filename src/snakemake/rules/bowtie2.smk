@@ -25,6 +25,8 @@ rule bowtie2_single_end_extra_misc_inps:
         ext="fastq|fasta|fa|fastq.gz|fasta.gz"
     conda:
         "../envs/bowtie2.yaml"
+    envmodules:
+        "bowtie2/2.4.4"
     threads:
         MAX_THREADS
     shell: 
