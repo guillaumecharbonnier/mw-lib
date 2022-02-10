@@ -10,6 +10,7 @@
 # 2021-01-07 Update cellranger to v 6.0.2
 # 2022-02-02 Add module environnement and dissociate cellranger use for sacapus and for IFB (using modules)
 
+
 rule cellranger_mkfastq:
     input:
         xml="/{filler}/RunInfo.xml",
