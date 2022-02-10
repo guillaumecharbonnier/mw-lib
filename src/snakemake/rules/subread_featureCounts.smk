@@ -39,6 +39,8 @@ rule subread_featureCounts_extra:
         extra = params_extra
     conda:
         "../envs/subread.yaml"
+    envmodules:
+        "subread/2.0.1"
     wildcard_constraints:
         tool="subread/featureCounts",
         bam_list="bam-[a-zA-Z0-9-]+",

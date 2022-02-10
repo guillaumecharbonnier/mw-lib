@@ -23,6 +23,8 @@ rule multiqc_dir:
         tool = "multiqc/dir"
     conda:
         "../envs/multiqc.yaml"
+    envmodules:
+        "multiqc/1.9"
     shell:
         "rm -rf `dirname {output}`/multiqc_data; "
         "multiqc --outdir `dirname {output}` {params.extra} out/{wildcards.filler} &> {log}; "

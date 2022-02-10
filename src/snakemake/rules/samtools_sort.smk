@@ -24,6 +24,8 @@ rule samtools_sort_extra:
         MAX_THREADS
     conda:
         "../envs/samtools.yaml"
+    envmodules:
+        "samtools/1.14"
     shell:
         "samtools sort -@ {threads} -T {output.bam} {params.extra} {input.bam} -o {output.bam} &> {log}"
 

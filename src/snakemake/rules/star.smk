@@ -29,6 +29,8 @@ rule star_pe_extra:
         extout="bam|sam"
     conda:
         "../envs/star.yaml"
+    envmodules:
+        "star/2.7.9a"
     threads:
         8
     shell:
@@ -80,6 +82,8 @@ rule star_se_extra:
         extout="bam|sam"
     conda:
         "../envs/star.yaml"
+    envmodules:
+        "star/2.7.9a"
     threads:
         8
     shell:
@@ -251,6 +255,8 @@ rule star_build_index:
         tmp              = "out/star/build_index/{fa_id}_{gtf_id}/tmp"
     conda:
         "../envs/star.yaml"
+    envmodules:
+        "star/2.7.9a"
     threads:
         4
     shell:

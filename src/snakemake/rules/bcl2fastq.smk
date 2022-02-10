@@ -58,6 +58,8 @@ rule bcl2fastq:
         8
     conda:
         "../envs/bcl2fastq.yml"
+    envmodules:
+        "bcl2fastq/2.20.0"
     log:
         #bcl2fastq_dir + "bcl2fastq.log"
         "out/{tool}{extra}/{filler}/log"

@@ -20,6 +20,8 @@ rule samtools_index:
             "out/samtools/index/{filler}.benchmark.tsv"
     conda:
         "../envs/samtools.yaml"
+    envmodules:
+        "samtools/1.14"
     threads:
         1
     shell:

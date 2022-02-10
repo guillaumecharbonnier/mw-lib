@@ -26,6 +26,8 @@ rule sickle_se_extra:
         ext="fastq|fastq.gz"
     conda:
         "../envs/sickle.yaml"
+    envmodules:
+        "sickle-trim/1.33"
     threads:
         1
     shell:
@@ -58,6 +60,8 @@ rule sickle_pe_extra:
         ext="fastq|fastq.gz"
     conda:
         "../envs/sickle.yaml"
+    envmodules:
+        "sickle-trim/1.33"
     shell:
         "sickle pe -f {input.m1} -r {input.m2} "
         "-o {output.m1} -p {output.m2} "

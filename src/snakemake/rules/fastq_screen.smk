@@ -11,6 +11,8 @@ rule fastq_screen_get_genomes:
         "out/fastq_screen/get_genomes/FastQ_Screen_Genomes/fastq_screen.conf"
     conda:
         "../envs/fastq_screen.yaml"
+    envmodules:
+        "fastq-screen/0.13.0"
     shell:
         "rm -rf out/fastq_screen/get_genomes/FastQ_Screen_Genomes; fastq_screen --get_genomes --outdir out/fastq_screen/get_genomes"
 
@@ -25,6 +27,8 @@ rule sed_edit_fastq_screen_conf:
         genome_path = "out/fastq_screen/get_genomes"
     conda:
         "../envs/coreutils.yaml"
+    envmodules:
+        "coreutils/8.25"
     shell:
         "sed -e 's/THREADS		7/THREADS		16/' "
         "-e 's|/bi/scratch/wingetts/FASTQ_Screen_Paper/FastQ_Screen_Genomes|{params.genome_path}|' {input} > {output}"
@@ -57,6 +61,8 @@ rule fastq_screen_filter:
         tool = "fastq_screen/filter"
     conda:
         "../envs/fastq_screen.yaml"
+    envmodules:
+        "fastq-screen/0.13.0"
     threads:
         MAX_THREADS
     shell:

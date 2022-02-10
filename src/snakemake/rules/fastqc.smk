@@ -22,6 +22,8 @@ rule fastqc:
         extra = params_extra
     conda:
         "../envs/fastqc.yaml"
+    envmodules:
+        "fastqc/0.11.9"
     wildcard_constraints:
         tool="fastqc/",
         ext="fastq|fastq.gz|bam|sam"

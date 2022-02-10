@@ -24,6 +24,8 @@ rule gtftk_retrieve:
         #specie="mus_musculus|homo_sapiens|[a-z]+_[a-z]+"
     conda:
         "../envs/pygtftk.yaml"
+    envmodules:
+        "pygtftk/1.5.3"
     shell:
         "gtftk retrieve {params.extra} --species-name {wildcards.specie} --to-stdout --delete > {output.gtf}"
         #"gtftk retrieve --species-name {wildcards.species} --to-stdout --delete > {output.gtf}"

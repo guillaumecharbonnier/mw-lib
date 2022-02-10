@@ -25,6 +25,8 @@ rule deepTools_bamCoverage_extra:
         extra = params_extra
     conda:
         "../envs/deeptools.yaml"
+    envmodules:
+        "deeptools/3.5.0"
     threads: MAX_THREADS
     shell:
         "bamCoverage --bam {input.bam} --numberOfProcessors {threads} {params.extra} -o {output.bw} &> {log}"

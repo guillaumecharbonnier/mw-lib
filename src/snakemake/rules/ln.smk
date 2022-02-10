@@ -16,6 +16,8 @@ rule ln_extra:
         extra = params_extra
     conda:
         "../envs/coreutils.yaml"
+    envmodules:
+        "coreutils/8.25"
     priority:
         10
     shell:
@@ -44,6 +46,8 @@ rule ln_alias:
         10
     conda:
         "../envs/coreutils.yaml"
+    envmodules:
+        "coreutils/8.25"
     shell:
         # quotes around {input} is mandatory to be able
         # to have files with special characters in input.

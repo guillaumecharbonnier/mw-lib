@@ -19,6 +19,8 @@ rule samtools_idxstats:
         tsv="out/samtools/idxstats/{filler}.idxstat.tsv"
     conda:
         "../envs/samtools.yaml"
+    envmodules:
+        "samtools/1.14"
     threads:
         1
     shell:

@@ -15,6 +15,8 @@ rule gtftk_merge_attr:
         gtf="out/gtftk/merge_attr_gene_id_gene_name/{filler}.gtf"
     conda:
         "../envs/pygtftk.yaml"
+    envmodules:
+        "pygtftk/1.5.3"
     shell:
         """
         gtftk merge_attr \
