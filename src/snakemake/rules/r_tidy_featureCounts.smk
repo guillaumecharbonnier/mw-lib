@@ -15,5 +15,7 @@ rule r_tidy_featureCounts:
         tmm_rpk = "out/r/tidy_featureCounts/{filler}_tmm_rpk.tsv"
     conda:
         "../envs/r_tidy_featureCounts.yaml"
+    envmodules:
+        "r/4.0.3"
     script:
         "../../r/scripts/tidy_featureCounts.R"
