@@ -17,7 +17,7 @@ ID_BAM_TO_BED = "|".join([
     "awk/extend_reads_[0-9]+/awk/keep_first_mate_for_pe_bedtools_bamtobed/bedtools/bamtobed/sort_-n"
     ])
 
-CRM_TYPE = "mTDHS|hProm|hProm_posEprom|IGMM|hSE_RPMI_JURKAT_DND41_hg19_Alex"
+CRM_TYPE = "mTDHS|hProm|hProm_posEprom|IGMM|hSE_RPMI_JURKAT_DND41_hg19_Alex|Jurkat_ATAC_peaks"
 
 rule capstarrseq_coverage_fpkm_input:
     """
