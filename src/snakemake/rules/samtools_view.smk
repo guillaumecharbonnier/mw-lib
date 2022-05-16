@@ -576,6 +576,7 @@ rule samtools_subsample_bam_to_n_reads:
     shell:
         """
         frac=$( samtools idxstats {input.bam} | cut -f3 | awk 'BEGIN {{total=0}} {{total += $1}} END {{frac={wildcards.n_reads}/total; if (frac > 1) {{print 0.999}} else {{print frac}} }}' )
+        echo $frac
         samtools view -bs $frac {input.bam} > {output.bam}
         """
 

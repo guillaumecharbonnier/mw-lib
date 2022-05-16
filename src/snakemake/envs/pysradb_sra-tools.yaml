@@ -1,9 +1,9 @@
-name:
-  fastq_screen
+name: pysradb_sra-tools
 channels:
-  - guillaumecharbonnier
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - fastq-screen
+  - pysradb
+  - sra-tools
+

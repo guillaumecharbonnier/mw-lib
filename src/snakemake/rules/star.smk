@@ -4,6 +4,7 @@ rule star_pe_extra:
         2017-03-25 14:18:31 - updated patterns for inputs
     Test:
        out/star/pe_fastq.gz_to_bam_staridx-GRCh38-ensembl_gtf-GRCh38-ensembl/sickle/pe_-t_sanger_-q_30/sra-tools/fastq-dump_pe/SRR2040277.bam
+       out/star/pe_fastq.gz_to_bam_--quantMode_GeneCounts_staridx-GRCm38-ensembl_gtf-GRCm38-ensembl/sickle/pe_-t_sanger_-q_30/pysradb_download_gsm_pe/GSM4475443.bam
     """
     input:
         fwd = "out/{filler}_1.{extin}",
