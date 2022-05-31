@@ -120,7 +120,7 @@ rule cellranger_count:
 
 
 # Created on 01/03/2022
-# Generate count for multiplexed single-cell data, generated using cellplex protocol
+# Generate count for multiplexed single-cell data, generated using cellplex protocol 
 rule cellranger_multi:
     """
     Doc:
