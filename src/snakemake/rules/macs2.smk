@@ -42,7 +42,8 @@ rule macs2_callpeak_extra:
         TO_RENAME=`find {params.outdir} -name '{wildcards.chip}_over_{wildcards.input}_peaks.narrowPeak' -o -name '{wildcards.chip}_over_{wildcards.input}_peaks.broadPeak'`
         echo $TO_RENAME
         # We want the output bed to have standard columns
-        cut -f1-6 $TO_RENAME > {output.bed}
+        # The score column is limited to 1000
+        awk 'BEGIN {OFS = FS = "\t"} {print $1,$2,$3,$4,$5,($6>1000)? 1000 : $6}' $TO_RENAME > {output.bed}
         rm -f $TO_RENAME) &> {log}
         """
 
@@ -84,7 +85,8 @@ rule macs2_noctrl_callpeak_extra:
         # Renaming narrowPeak or broadPeak to have only one output bed name for all variations of settings
         TO_RENAME=`find {params.outdir} -name '{wildcards.chip}_peaks.narrowPeak' -o -name '{wildcards.chip}_peaks.broadPeak'`
         # We want the output bed to have standard columns
-        cut -f1-6 $TO_RENAME > {output.bed}
+        # The score column is limited to 1000
+        awk 'BEGIN {OFS = FS = "\t"} {print $1,$2,$3,$4,$5,($6>1000)? 1000 : $6}' $TO_RENAME > {output.bed}
         rm -f $TO_RENAME) &> {log}
         """
 
