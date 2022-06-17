@@ -8,3 +8,4 @@ dependencies:
   - rpy2
   - bioconductor-deseq2
   - bioconductor-apeglm
+  - bioconductor-pasilla
