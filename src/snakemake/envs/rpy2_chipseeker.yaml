@@ -1,0 +1,9 @@
+name:
+  rpy2_chipseeker
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - rpy2
+  - bioconductor-chipseeker
