@@ -16,7 +16,7 @@ def params_extra(wildcards):
         for row in csv.DictReader(open(path), delimiter='\t', quoting=csv.QUOTE_NONE):
             if row['tool'] == wildcards['tool']:
                 strings_to_protect = row['protectedunderscore'].split(",")
-                print(strings_to_protect)
+                #print(strings_to_protect)
                 for string_to_protect in strings_to_protect:
                     protected_string = re.sub('_','protectedunderscore',string_to_protect)
                     extra = re.sub(string_to_protect,protected_string,extra)

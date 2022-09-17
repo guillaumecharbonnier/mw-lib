@@ -1,4 +1,4 @@
-rule wget_protocol:
+rule wget_protocol_extra:
     """
     Created:
         2017-09-07 15:12:23
@@ -15,15 +15,20 @@ rule wget_protocol:
         out/wget/ftp/igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/UCSC/hg38/Homo_sapiens_UCSC_hg38.tar.gz
     """
     output:
-        "out/wget/{protocol}/{path}"
+        "out/{tool}{extra}{protocol}/{path}"
     log:
-        "out/wget/{protocol}/{path}.log"
+        "out/{tool}{extra}{protocol}/{path}.log"
     benchmark:
-        "out/wget/{protocol}/{path}.benchmark.tsv"
+        "out/{tool}{extra}{protocol}/{path}.benchmark.tsv"
+    params:
+        extra = params_extra
+    conda:
+        "../envs/wget.yaml"
     wildcard_constraints:
+        tool="wget/",
         protocol="http|https|ftp"
     shell:
-        "wget --output-file={log} --output-document={output} {wildcards.protocol}://{wildcards.path}"
+        "wget {params.extra} --output-file={log} --output-document={output} {wildcards.protocol}://{wildcards.path}"
 
 rule wget_extra:
     """
@@ -42,6 +47,8 @@ rule wget_extra:
         "out/{tool}{extra}.benchmark.tsv"
     params:
         extra = params_extra
+    conda:
+        "../envs/wget.yaml"
     wildcard_constraints:
         tool="wget/"
     shell:

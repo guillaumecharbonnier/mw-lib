@@ -1,0 +1,10 @@
+name:
+  tensorflow
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - tensorflow
+  - seaborn
+  - pandas
+  - numpy

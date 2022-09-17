@@ -1,9 +1,9 @@
 name:
-  fastq_screen
+  rpy2_chipseeker
 channels:
-  - guillaumecharbonnier
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - fastq-screen
+  - rpy2
+  - bioconductor-chipseeker

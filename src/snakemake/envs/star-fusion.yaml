@@ -1,9 +1,7 @@
-name:
-  fastq_screen
+name: star-fusion
 channels:
-  - guillaumecharbonnier
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - fastq-screen
+  - star-fusion

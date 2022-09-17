@@ -1,0 +1,11 @@
+name:
+  rpy2_deseq2
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - rpy2
+  - bioconductor-deseq2
+  - bioconductor-apeglm
+  - bioconductor-pasilla
