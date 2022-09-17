@@ -1,0 +1,9 @@
+name: circexplorer2
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - circexplorer2
+  - ucsc-genepredtogtf # required for https://circexplorer2.readthedocs.io/en/latest/tutorial/setup/
+

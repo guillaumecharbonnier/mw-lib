@@ -24,6 +24,7 @@ rule pysradb_download_gsm_se:
         1
     shell:
         """
+        (
         SRR_IDS=`pysradb gsm-to-srr {wildcards.gsm} | cut -f2 -d " " | tail -n+2`
         DOWNLOAD_DIR="out/pysradb_download_gsm_se/{wildcards.gsm}"
         rm -rf $DOWNLOAD_DIR
@@ -36,6 +37,7 @@ rule pysradb_download_gsm_se:
         gzip -c SRR*.fastq > ../{wildcards.gsm}.fastq.gz
         cd ../
         rm -rf {wildcards.gsm}
+        ) &> {log}
         """
 
 
@@ -58,6 +60,7 @@ rule pysradb_download_gsm_pe:
         1
     shell:
         """
+        (
         SRR_IDS=`pysradb gsm-to-srr {wildcards.gsm} | cut -f2 -d " " | tail -n+2`
         DOWNLOAD_DIR="out/pysradb_download_gsm_pe/{wildcards.gsm}"
         rm -rf $DOWNLOAD_DIR
@@ -65,12 +68,14 @@ rule pysradb_download_gsm_pe:
         cd $DOWNLOAD_DIR
         for ID in $SRR_IDS;
         do
-            fasterq-dump $ID
+            #fasterq-dump $ID
+            fastq-dump $ID
         done
         gzip -c SRR*_1.fastq > ../{wildcards.gsm}_1.fastq.gz
         gzip -c SRR*_2.fastq > ../{wildcards.gsm}_2.fastq.gz
         cd ../
         rm -rf {wildcards.gsm}
+        ) &> {log}
         """
 
 #rule sra_tools_fastqdump_check_se_or_pe:

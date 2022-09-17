@@ -1,0 +1,17 @@
+name: circexplorer3
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - circexplorer2
+  - hisat2
+  - stringtie
+  - pysam
+  - pybedtools
+  - tophat == 2.1.0 # v2.1.1 invalid, 2.1.0 reguired to solve https://www.biostars.org/p/186979/ 
+  - bowtie == 1.0.0
+  - samtools == 0.1.18
+  - ucsc-genepredtogtf # required for https://circexplorer2.readthedocs.io/en/latest/tutorial/setup/
+  - ucsc-gtftogenepred # required for circexplorer3 at circ step
+
