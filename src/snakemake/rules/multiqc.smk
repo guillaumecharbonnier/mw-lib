@@ -12,11 +12,11 @@ rule multiqc_dir:
         out/multiqc/dir/ln/alias/sst/by_customer/Salva_Vahid/logs/multiqc_report.html
     """
     output:
-        "out/{tool}{extra}/{filler}multiqc_report.html"
+        "out/{tool}{extra}{filler}multiqc_report.html"
     log:
-        "out/{tool}{extra}/{filler}multiqc_report.log"
+        "out/{tool}{extra}{filler}multiqc_report.log"
     benchmark:
-        "out/{tool}{extra}/{filler}multiqc_report.benchmark.tsv"
+        "out/{tool}{extra}{filler}multiqc_report.benchmark.tsv"
     params:
         extra = params_extra
     wildcard_constraints:
