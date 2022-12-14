@@ -66,7 +66,8 @@ rule bcl2fastq:
         cp {input.xml} {output.xml}
         INDIR=`dirname {input.xml}`
         OUTDIR=`dirname {output.xml}`
-        bcl2fastq --input-dir $INDIR/Data/Intensities/BaseCalls --runfolder-dir $OUTDIR --output-dir $OUTDIR {params.extra} &> {log}
+        (bcl2fastq --input-dir $INDIR/Data/Intensities/BaseCalls --runfolder-dir $OUTDIR --output-dir $OUTDIR {params.extra}
+        zcat $OUTDIR/Undetermined_S0_R1_001.fastq.gz | grep '^@' | cut -d : -f 10 | sort | uniq -c | sort -nr > $OUTDIR/indexes.txt ) &> {log}
         """
 
 #find . -type f -name '*.fastq.gz' -mindepth 2 -exec ln -sf -- {} . \;
