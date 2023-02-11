@@ -8,6 +8,7 @@ chrominfo-hg19-main-chr	["out/awk/extract_main_chr/gunzip/to-stdout/wget/http/hg
 chrominfo-hg19	["out/gunzip/to-stdout/wget/http/hgdownload.cse.ucsc.edu/goldenpath/hg19/database/chromInfo.txt"]
 chrominfo-GRCm38	["out/sed/rename_mitochondrial_chr_M_to_MT/sed/remove_chr/gunzip/to-stdout/rsync/ucsc/goldenPath/mm10/database/chromInfo.txt"]
 chrominfo-GRCh38	["out/gunzip/to-stdout/rsync/ucsc/goldenPath/hg38/database/chromInfo.txt"]
+chrominfo-GRCh37	["out/sed/rename_mitochondrial_chr_M_to_MT/sed/remove_chr/gunzip/to-stdout/wget/ftp/hgdownload.cse.ucsc.edu/goldenPath/hg19/database/chromInfo.txt"]
 # 2021-03-22 
 # Add GRCm39
 chrominfo-GRCm39	["out/sed/rename_mitochondrial_chr_M_to_MT/sed/remove_chr/gunzip/to-stdout/rsync/ucsc/goldenPath/mm39/database/chromInfo.txt"]

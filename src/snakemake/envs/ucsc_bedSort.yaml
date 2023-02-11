@@ -1,0 +1,8 @@
+name:
+  ucsc_bedSort
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - ucsc-bedsort
