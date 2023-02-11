@@ -1,0 +1,8 @@
+name: emboss
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - emboss
+

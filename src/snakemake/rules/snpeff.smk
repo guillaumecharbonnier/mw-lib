@@ -7,25 +7,38 @@ rule snpeff:
     Note:
     Test:
         out/snpeff/GRCh38.99/platypus/callVariants_fa-genome-GRCh38/samtools/index/samtools/sort/samtools/view_sam_to_bam/bwa/mem_pe_fa-genome-GRCh38/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/803_H3K27ac.vcf
+        out/snpeff/hg19/bcftools/setGT_somatic_to_missing/bcftools/fill-tags_-t_VAF/ln/updir/mw-tall-pediac-data/inp/vcf/3186patients_complet.sorted.vcf.gz
     """
     input:
-        vcf="out/{filler}.vcf",
+        vcf="out/{filler}.{ext}",
     output:
-        vcf="out/{tool}{extra}/{filler}.vcf"
+        vcf="out/{tool}{extra}/{filler}.{ext}"
     log:
-        "out/{tool}{extra}/{filler}.log"
+        "out/{tool}{extra}/{filler}.{ext}.log"
     benchmark:
-        "out/{tool}{extra}/{filler}.benchmark.tsv"
+        "out/{tool}{extra}/{filler}.{ext}.benchmark.tsv"
     params:
         extra = params_extra
     threads:
         MAX_THREADS
     wildcard_constraints:
         tool = "snpeff/",
+        ext = "vcf|vcf.gz"
     conda:
         "../envs/snpeff.yaml"
     shell:
-        "snpEff -Xmx8g {params.extra} {input.vcf} > {output.vcf} 2> {log}"
+        """
+        (
+        if [ "{wildcards.ext}" == "vcf.gz" ]
+        then
+            zcat {input.vcf} | snpEff -Xmx8g {params.extra} | gzip -c > {output.vcf}
+        fi
+        if [ "{wildcards.ext}" == "vcf" ]
+        then 
+            snpEff -Xmx8g {params.extra} {input.vcf} > {output.vcf} 
+        fi
+        ) &> {log}
+        """
 
 rule snpsift_annotate_dbsnp:
     """
@@ -128,20 +141,33 @@ rule snpsift_filter:
         http://pcingola.github.io/SnpEff/ss_filter/
     Test:
         out/snpsift/filter_no-id/snpsift/annotate_dbsnp/bcftools/merge/vcf-GRCh38-platypus-TALL-H3K27ac-H3K4me3.vcf
+        out/snpsift/filter_high-moderate-impact/snpeff/hg19/bcftools/select_tall_samples/bcftools/setGT_somatic_to_missing/bcftools/fill-tags_-t_VAF/ln/updir/mw-tall-pediac-data/inp/vcf/3186patients_complet.sorted.vcf.gz
     """
     input:
-        vcf="out/{filler}.vcf"
+        vcf="out/{filler}.{ext}"
     output:
-        vcf="out/{tool}{extra}/{filler}.vcf"
+        vcf="out/{tool}{extra}/{filler}.{ext}"
     log:
-        "out/{tool}{extra}/{filler}.log"
+        "out/{tool}{extra}/{filler}.{ext}.log"
     benchmark:
-        "out/{tool}{extra}/{filler}.benchmark.tsv"
+        "out/{tool}{extra}/{filler}.{ext}.benchmark.tsv"
     params:
         extra = params_extra
     wildcard_constraints:
         tool = "snpsift/filter",
+        ext = "vcf|vcf.gz"
     conda:
         "../envs/snpeff.yaml"
     shell:
-        "SnpSift filter {params.extra} {input} > {output} 2> {log}"
+        """
+        (
+        if [ "{wildcards.ext}" == "vcf.gz" ]
+        then
+            zcat {input.vcf} | SnpSift filter {params.extra} | gzip -c > {output.vcf}
+        fi
+        if [ "{wildcards.ext}" == "vcf" ]
+        then 
+            SnpSift filter {params.extra} {input.vcf} > {output.vcf}
+        fi
+        ) &> {log}
+        """
