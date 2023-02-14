@@ -10,11 +10,15 @@ dependencies:
   - tmux
   - vim
   - htop
+  - lftp
+  - openssh
+  - git
   # Related to snakemake below:
   - snakemake = 5.18
   - rpy2
   - pandas
   - xlrd # needed to load excel file with pandas
+  - openpyxl
   - numpy
   - biopython
   - conda
