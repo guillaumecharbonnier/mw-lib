@@ -1,0 +1,11 @@
+name: jupyter
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  #- python =3.8
+  #- jupyter =1.0
+  - jupyterlab_code_formatter # =1.4
+  - jupyter_contrib_nbextensions==0.5.1 # https://github.com/ipython-contrib/jupyter_contrib_nbextensions/issues/1568
+  - nbconvert<6
+  - nb_conda_kernels

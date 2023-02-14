@@ -13,7 +13,7 @@ inp/me/
 *~
 *.swp
 *.aux
-
+.ipynb_checkpoints/
 # Various temporary files made by Rmd and Bookdown
 _main_cache
 _main_files
