@@ -10,6 +10,7 @@ chrominfo-GRCm38	["out/sed/rename_mitochondrial_chr_M_to_MT/sed/remove_chr/gunzi
 #chrominfo-GRCh38	["out/gunzip/to-stdout/rsync/ucsc/goldenPath/hg38/database/chromInfo.txt"]
 chrominfo-GRCh38	["out/tar/xvzf_igenome/Homo_sapiens/NCBI/GRCh38/Sequence/WholeGenomeFasta/genome.fa.fai"]
 #chrominfo-GRCh38	["out/gunzip/to-stdout/rsync/ucsc/goldenPath/hg38/database/chromInfo.txt"]
+#chrominfo-GRCh38	["out/gunzip/to-stdout/wget/ftp/hgdownload.cse.ucsc.edu/goldenPath/hg38/database/chromInfo.txt"]
 chrominfo-GRCh37	["out/sed/rename_mitochondrial_chr_M_to_MT/sed/remove_chr/gunzip/to-stdout/wget/ftp/hgdownload.cse.ucsc.edu/goldenPath/hg19/database/chromInfo.txt"]
 # 2021-03-22 
 # Add GRCm39
