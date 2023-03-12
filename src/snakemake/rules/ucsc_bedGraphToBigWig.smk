@@ -21,7 +21,10 @@ rule ucsc_bedGraphToBigWig:
         "../envs/ucsc.yaml"
     shell:
         """
-	bedGraphToBigWig {input.bedGraph} {input.chromInfo} {output.bw}
+        grep -v "track type=" {input.bedGraph} | \
+            sort -k1,1 -k2,2n > {output}.tmp.bedGraph
+            bedGraphToBigWig {output}.tmp.bedGraph {input.chromInfo} {output.bw}
+        rm {output}.tmp.bedGraph
         """
 
 rule ucsc_BedGraphToBigWig:

@@ -7,9 +7,12 @@ bkp/
 shr/
 inp/me/
 .snakemake/
+.nextflow/
+.nextflow.log*
 .DS_Store
 .RData
 .Rhistory
+work/
 *~
 *.swp
 *.aux
