@@ -1,0 +1,9 @@
+name:
+  wiggletools
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - wiggletools
+  - ucsc-wigtobigwig # Needed because wiggletools output wig even from bigwig

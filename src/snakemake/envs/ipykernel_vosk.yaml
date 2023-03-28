@@ -1,0 +1,12 @@
+name: ipykernel_vosk
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - ipykernel
+  - ffmpeg 
+  - pydub
+    #- wave
+  - tqdm
+    #- vosk

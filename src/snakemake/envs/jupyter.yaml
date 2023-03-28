@@ -9,3 +9,4 @@ dependencies:
   - jupyter_contrib_nbextensions==0.5.1 # https://github.com/ipython-contrib/jupyter_contrib_nbextensions/issues/1568
   - nbconvert<6
   - nb_conda_kernels
+  - jupyterlab_widgets # Needed for ipywdidgets

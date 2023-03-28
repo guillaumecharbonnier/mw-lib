@@ -63,6 +63,14 @@ def make_parser():
         default=["exp", "chip_target","type","investigator","cell_type","donor_id","run"],
         required=False)
     
+    parser_grp_main.add_argument(
+        "-m",
+        "--by-merge-metadata",
+        nargs="+",
+        type=str,
+        help='The columns names from the xlsx file to merge to use to tidy. Call one time for each needed merge. Example: -m "exp" "chip_target" -m "exp" "type"',
+        action='append'
+    )
     # parser_grp_main.add_argument(
     #     "-r",
     #     "--remove-out-dir",
@@ -79,12 +87,15 @@ def tidy_samples(
     out_dir=None,
     xlsx=None,
     by_metadata=None,
+    by_merge_metadata=None,
     remove_out_dir=None
 ):
     # Check if inp_dir equals "inp-dir"
     if out_dir == "inp-dir":
         # Set out_dir to the dirname of inp_dir
         out_dir = os.path.dirname(inp_dir)
+    
+    print(by_merge_metadata)
 
     # Commented because it is risky to remove out_dir like this
     # Someone could define a wrong out_dir and remove a lot of data
@@ -99,12 +110,23 @@ def tidy_samples(
 
     # Read the xlsx file with pandas
     samples = pd.read_excel(xlsx, sheet_name="samples", dtype=str)
-    
-    # Currently bugged function
-    # check_inclusion(samples)
 
     # df = df.dropna(subset = "sample_name")
     samples.fillna("NA", inplace=True)
+
+    # Iterate over by_merge_metadata to create the merged columns
+    for merge_metadata in by_merge_metadata:
+        # Combine merge_metadata strings into one
+        merged_metadata_column = "_".join(merge_metadata)
+
+        # Combine the columns into one
+        samples[merged_metadata_column] = samples[merge_metadata].astype(str).apply('_'.join, axis=1)
+
+        # Append the merged column name to by_metadata
+        by_metadata.append(merged_metadata_column)
+    
+    # Currently bugged function
+    # check_inclusion(samples)
 
     # # Get the list of samples
     # samples = samples["sample_name"].unique()
