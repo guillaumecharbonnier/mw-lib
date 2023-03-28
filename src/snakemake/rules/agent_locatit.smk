@@ -28,6 +28,8 @@ rule agent_locatit_mbc:
     wildcard_constraints:
         tool = "agent/locatit_mbc",
         filler_trim = "agent/trim.*"
+    conda:
+        "../envs/agent.yaml"
     shell:
         """
         java -Xmx{params.memory} -jar {input.locatit} {params.extra} -o {output.bam} {input.bam} {input.mbc} &> {log}

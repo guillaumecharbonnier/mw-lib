@@ -28,6 +28,8 @@ rule agent_trim_pe:
         extra = params_extra
     wildcard_constraints:
         tool = "agent/trim"
+    conda:
+        "../envs/agent.yaml"
     shell:
         """
         OUTDIR=`dirname {output.fq1}`
@@ -92,6 +94,8 @@ rule agent_trim_2_lanes_pe:
         extra = params_extra
     wildcard_constraints:
         tool = "agent/trim_2_lanes"
+    conda:
+        "../envs/agent.yaml"
     shell:
         """
         OUTDIR=`dirname {output.fq1}`
