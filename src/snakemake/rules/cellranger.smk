@@ -36,17 +36,9 @@ rule cellranger_mkfastq:
         mkfastq="out/{tool}{extra}/{filler}/mkfastq_log"
     shell:'''
         (
-        # Add a environnment variable to bypass the deprecated OS by cellranger
-        TENX_IGNORE_DEPRECATED_OS=1
         # 2021-05-27: Useless condition, snakemake don't check this before running the rule
         #Condition to not copy at each execution
-        if [[ -f {output.xml} ]]; then
-            echo "RunInfo.xml exists."
-            break
-        else
-            cp {input.xml} {output.xml}      
-        fi
-      
+        cp {input.xml} {output.xml}      
         INDIR=`dirname {input.xml}`
         OUTDIR=`dirname {input.csv}`
         EXP=`grep 'Experiment Name' {input.csv} | cut -d "," -f 2`
