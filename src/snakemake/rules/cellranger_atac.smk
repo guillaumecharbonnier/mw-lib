@@ -66,7 +66,7 @@ rule cellranger_atac_count:
         8
     wildcard_constraints:
         tool="cellranger-atac/count",
-        assembly="[A-Za-z0-9-]+"
+        assembly="[A-Za-z0-9-]+-2.0.0"
     log:
         "out/{tool}{extra}_{assembly}/{filler}/log"
     shell:
@@ -87,7 +87,7 @@ rule cellranger_atac_count:
         REF_RELATIVE_PATH_TO_OUTPUT=`python -c "import os.path; print(os.path.relpath('${{REF}}', '${{OUTDIR}}'))"`
         # Move into the outdir to have cellranger count output in the correct folder 
         cd ${{OUTDIR}}
-        cellranger-atac count {params.extra} --id=${{RUN}} --fastqs=${{INDIR_RELATIVE_PATH_TO_OUTPUT}}/${{RUN}}/outs/fastq_path --transcriptome=${{REF_RELATIVE_PATH_TO_OUTPUT}} 
+        cellranger-atac count {params.extra} --id=${{RUN}} --fastqs=${{INDIR_RELATIVE_PATH_TO_OUTPUT}}/${{RUN}}/outs/fastq_path --reference=${{REF_RELATIVE_PATH_TO_OUTPUT}} 
         touch process_done 
         )&> {log}
         """

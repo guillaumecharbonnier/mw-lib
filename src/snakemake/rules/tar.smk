@@ -257,3 +257,14 @@ rule tar_xvzf_genome_spaceranger:
         outdir="out/tar/xvzf_genome_spaceranger/{filler}"
     shell:
         "tar -xvzf {input} --directory `dirname {params.outdir}`"
+
+
+rule tar_xvzf_genome_cellranger_atac:
+    input:
+        "out/{filler}.tar.gz"
+    output:
+        touch("out/tar/xvzf_genome_cellranger_atac/{filler}/done")
+    params:
+        outdir="out/tar/xvzf_genome_cellranger_atac/{filler}"
+    shell:
+        "tar -xvzf {input} --directory `dirname {params.outdir}`"

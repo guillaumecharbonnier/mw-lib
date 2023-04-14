@@ -31,13 +31,13 @@ fa-genome-hg19-main-chr-and-contigs-with-inserts-gt-3bp-in-T11C-H3K27ac	["out/aw
 fa-genome-hg19-main-chr-and-contigs-with-indels-gt-3bp-in-T11C-H3K27ac	["out/awk/aggregate_fa_genome_and_sam_contigs_with_indels_gt_3bp_fa-genome-hg19-main-chr/bowtie2/se_fasta_Abraham2017_hg19/edena/assembling_-d_20_-c_20_-minCoverage_5/edena/overlapping/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/T11C_H3K27ac_contigs.fa"]
 fa-ncrna-GRCh38-ensembl-r101	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-101/fasta/homo_sapiens/ncrna/Homo_sapiens.GRCh38.ncrna.fa"]
 # Addition of genomes for scRNA-seq
-fa_genome_GRCh38_dna_primary_assembly_for_cellranger	["out/tar/xvzf_genome_cellranger/wget/https/cf.10xgenomics.com/supp/cell-exp/refdata-gex-GRCh38-2020-A"]
-fa_genome_GRCm38_dna_primary_assembly_for_cellranger	["out/tar/xvzf_genome_cellranger/wget/https/cf.10xgenomics.com/supp/cell-exp/refdata-gex-mm10-2020-A"]
+fa_genome_GRCh38_dna_primary_assembly_for_cellranger	["out/tar/xvzf_genome_cellranger/wget/https/cf.10xgenomics.com/supp/cell-exp/refdata-gex-GRCh38-2020-A/done"]
+fa_genome_GRCm38_dna_primary_assembly_for_cellranger	["out/tar/xvzf_genome_cellranger/wget/https/cf.10xgenomics.com/supp/cell-exp/refdata-gex-mm10-2020-A/done"]
 # Add Rat genome
 fa-genome-Rnor6	["out/cat/assembly_ensembl/Rnor6.fa"]
 # Addition of genomes for spatial transcriptomics
-fa_genome_GRCh38_dna_primary_assembly_for_spaceranger	["out/tar/xvzf_genome_cellranger/wget/https/cf.10xgenomics.com/supp/spatial-exp/refdata-gex-GRCh38-2020-A"]
-fa_genome_GRCm38_dna_primary_assembly_for_spaceranger	["out/tar/xvzf_genome_cellranger/wget/https/cf.10xgenomics.com/supp/spatial-exp/refdata-gex-mm10-2020-A"]
+fa_genome_GRCh38_dna_primary_assembly_for_spaceranger	["out/tar/xvzf_genome_cellranger/wget/https/cf.10xgenomics.com/supp/spatial-exp/refdata-gex-GRCh38-2020-A/done"]
+fa_genome_GRCm38_dna_primary_assembly_for_spaceranger	["out/tar/xvzf_genome_cellranger/wget/https/cf.10xgenomics.com/supp/spatial-exp/refdata-gex-mm10-2020-A/done"]
 # Addition of genomes for single-nuclei ATAC-seq
-fa_genome_GRCh38_dna_primary_assembly_for_cellranger_atac	["out/tar/xvzf_genome_cellranger/wget/https/cf.10xgenomics.com/supp/cell-atac/refdata-cellranger-arc-GRCh38-2020-A-2.0.0"]
-fa_genome_GRCm38_dna_primary_assembly_for_cellranger_atac	["out/tar/xvzf_genome_cellranger/wget/https/cf.10xgenomics.com/supp/cell-atac/refdata-cellranger-arc-mm10-2020-A-2.0.0"]
+fa_genome_GRCh38_dna_primary_assembly_for_cellranger_atac	["out/tar/xvzf_genome_cellranger_atac/wget/https/cf.10xgenomics.com/supp/cell-atac/refdata-cellranger-arc-GRCh38-2020-A-2.0.0/done"]
+fa_genome_GRCm38_dna_primary_assembly_for_cellranger_atac	["out/tar/xvzf_genome_cellranger_atac/wget/https/cf.10xgenomics.com/supp/cell-atac/refdata-cellranger-arc-mm10-2020-A-2.0.0/done"]
