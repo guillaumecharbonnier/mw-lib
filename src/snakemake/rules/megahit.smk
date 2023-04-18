@@ -12,7 +12,9 @@ rule megahit_se:
     input:
         fq="out/{filler}.fastq.gz"
     output:
-        expand("out/{{tool}}{{extra}}/{{filler}}/{filename}",filename=["final.contigs.fa"]) #Many more files here
+        contigs = "out/{tool}{extra}/{filler}/final.contigs.fa",
+        # expand("out/{{tool}}{{extra}}/{{filler}}/{filename}",filename=["final.contigs.fa"]) #Many more files here,
+        ln = "out/{tool}{extra}/{filler}.contigs.fa"
     log:
         "out/{tool}{extra}/{filler}/log"
     benchmark:
@@ -30,6 +32,7 @@ rule megahit_se:
         """
         rm -rf {params.outdir} #Megahit does not run if outdir exists
         megahit -t {threads} {params.extra} -r {input.fq} -o {params.outdir} #&> {log}
+        ln -rsf {output.contigs} {output.ln}
         """
 
 rule megahit_pe:
@@ -48,7 +51,9 @@ rule megahit_pe:
         fq_1="out/{filler}_1.fastq.gz",
         fq_2="out/{filler}_2.fastq.gz",
     output:
-        outputs=expand("out/{{tool}}{{extra}}/{{filler}}/{filename}",filename=["final.contigs.fa"]) #Many more files here
+        contigs = "out/{tool}{extra}/{filler}/final.contigs.fa",
+        ln = "out/{tool}{extra}/{filler}.contigs.fa"
+        # outputs=expand("out/{{tool}}{{extra}}/{{filler}}/{filename}",filename=["final.contigs.fa"]) #Many more files here
         #expand("out/{{tool}}{{extra}}/{{filler}}/{filename}",filename=["contigs.fasta", "scaffolds.fasta"]) #Many more files here
         #expand("out/{{tool}}{{extra}}/{{filler}}/{filename}",filename=["transcripts.fasta"]) # Many more files here
     log:
@@ -70,5 +75,6 @@ rule megahit_pe:
         megahit -t {threads} {params.extra} \
             -1 {input.fq_1} -2 {input.fq_2} \
             -o {params.outdir} # &> {log.true}
+        ln -rsf {output.contigs} {output.ln}
         """
 
