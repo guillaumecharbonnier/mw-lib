@@ -1,0 +1,9 @@
+name:
+  gatk4_vqsr
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - gatk4
+  - r-ggplot2 # Add requirement to produce plots with GATK VQSR

@@ -1,0 +1,8 @@
+name:
+  rsidx
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - rsidx
