@@ -7,13 +7,16 @@ bkp/
 shr/
 inp/me/
 .snakemake/
+.nextflow/
+.nextflow.log*
 .DS_Store
 .RData
 .Rhistory
+work/
 *~
 *.swp
 *.aux
-
+.ipynb_checkpoints/
 # Various temporary files made by Rmd and Bookdown
 _main_cache
 _main_files

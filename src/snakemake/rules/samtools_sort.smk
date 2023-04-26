@@ -25,5 +25,9 @@ rule samtools_sort_extra:
     conda:
         "../envs/samtools.yaml"
     shell:
-        "samtools sort -@ {threads} -T {output.bam} {params.extra} {input.bam} -o {output.bam} &> {log}"
+        """
+        # this rm ensure temporary files from a previous interrupted process will not lead to error
+        rm -f {output}.[0-9]*.bam
+        samtools sort -@ {threads} -T {output.bam} {params.extra} {input.bam} -o {output.bam} &> {log}
+        """
 

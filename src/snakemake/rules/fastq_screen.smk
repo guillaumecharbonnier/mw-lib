@@ -60,6 +60,9 @@ rule fastq_screen_filter:
     threads:
         MAX_THREADS
     shell:
+        # rm needed because fastq_screen send an error message 
+        # if the output folder already exists from a previous run
+        #"rm -rf `dirname {output.txt}`; "
         "fastq_screen {params.extra} "
         "--conf {input.conf} --threads {threads} "
         "--outdir `dirname {output.txt}` {input.fastq} &> {log}"

@@ -716,9 +716,9 @@ rule awk_select_subpopulations_from_bed_or_sam_lmin_lmax:
         out/samtools/view_sam_to_bam/awk/select_subpopulations_lmin-30_lmax-100/bowtie2/pe_hg19/sickle/pe_-t_sanger_-q_20/gunzip/already_merged_lane_nextseq500_pe/ln/updir/mw/inp/fastq/run246/S002740_803_K4me3-113115.bam
     """
     input:
-        bed="out/{filler}.{ext}"
+        "out/{filler}.{ext}"
     output:
-        bed="out/awk/select_subpopulations_lmin-{lmin}_lmax-{lmax}/{filler}.{ext}"
+        "out/awk/select_subpopulations_lmin-{lmin}_lmax-{lmax}/{filler}.{ext}"
     params:
         insert_length = lambda wildcards: "$3 - $2" if wildcards.ext == 'bed' else "sqrt($9^2)"
     wildcard_constraints:
@@ -735,7 +735,40 @@ rule awk_select_subpopulations_from_bed_or_sam_lmin_lmax:
             if (insert_length < {wildcards.lmax} && insert_length > {wildcards.lmin}){{
                 print $0
                 }}
-            }}' {input.bed} > {output.bed}
+            }}' {input} > {output}
+        """
+
+rule awk_select_subpopulations_from_bam_lmin_lmax:
+    """
+    Created:
+        2017-05-24 16:31:39
+    Aim:
+        Replace the selection of subpopulation made with my java code because it produces empty files in gtftk peak_anno.
+    """
+    input:
+        "out/{filler}.bam"
+    output:
+        "out/awk/select_subpopulations_lmin-{lmin}_lmax-{lmax}/{filler}.bam"
+    params:
+        insert_length = "sqrt($9^2)"
+    wildcard_constraints:
+        lmin="[0-9]+",
+        lmax="[0-9]+"
+    conda:
+        "../envs/samtools.yaml"
+    shell:
+        """
+        samtools view -h {input} | 
+            awk 'BEGIN{{FS=OFS="\\t"}}{{
+            insert_length = {params.insert_length}
+            if ($0 ~ /^@/){{
+                print $0
+            }}
+            if (insert_length < {wildcards.lmax} && insert_length > {wildcards.lmin}){{
+                print $0
+                }}
+            }}' |
+            samtools view -bSh > {output}
         """
 
 rule awk_select_subpopulations_from_bed_lmin:

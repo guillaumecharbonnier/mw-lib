@@ -1,9 +1,8 @@
-name:
-  salmon
+name: emboss
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - salmon
-  # - tbb == 2020.2
+  - emboss
+

@@ -15,3 +15,4 @@ GRCh38-merge-attr-retrieve	expand('out/tar/xvzf_igenome/Homo_sapiens/NCBI/GRCh38
 BDGP6	expand('out/bowtie2-build/fa-genome-BDGP6.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])
 R64-1-1	expand('out/bowtie2-build/fa-genome-R64-1-1.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])
 ncrna-GRCh38-ensembl-r101	expand('out/bowtie2-build/fa-ncrna-GRCh38-ensembl-r101.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])
+Rnor6	expand('out/bowtie2-build/fa-genome-Rnor6.{part}.bt2', part=['1','2','3','4','rev.1','rev.2'])

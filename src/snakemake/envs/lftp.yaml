@@ -2,9 +2,10 @@
 # Aim: 
 # Example: lftp sftp://201807021_R229_SK@139.124.66.9 -e "mirror; quit"
 name:
-  lftp
+  lftp_openssh
 channels:
   - conda-forge
   - nodefaults
 dependencies:
   - lftp
+  - openssh

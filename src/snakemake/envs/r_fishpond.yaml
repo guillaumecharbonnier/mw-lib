@@ -8,8 +8,10 @@ dependencies:
   - bioconductor-tximeta
   - bioconductor-fishpond
   - bioconductor-org.hs.eg.db
+  - bioconductor-org.mm.eg.db
   - bioconductor-summarizedexperiment
   - r-openxlsx
+  - r-data.table
   - r-readr
   - r-biocmanager
 
