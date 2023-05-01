@@ -16,7 +16,7 @@ rule salmon_index:
 rule salmon_index_ensembl_with_decoys:
     """
     Test:
-        out/salmon/index_ensembl_with_decoys/release-103/fasta/homo_sapiens/Homo_sapiens.GRCh38
+        out/salmon/index_ensembl_with_decoys/release-102/fasta/homo_sapiens/Homo_sapiens.GRCh38
     """
     input:
         cdna = "out/wget/ftp/ftp.ensembl.org/pub/{release_fasta_specie}/cdna/{specie_assembly}.cdna.all.fa.gz",
@@ -24,6 +24,8 @@ rule salmon_index_ensembl_with_decoys:
         dna = "out/wget/ftp/ftp.ensembl.org/pub/{release_fasta_specie}/dna/{specie_assembly}.dna.primary_assembly.fa.gz"
     output:
         directory("out/salmon/index_ensembl_with_decoys/{release_fasta_specie}/{specie_assembly}")
+    cache:
+        "omit-software"
     wildcard_constraints:
         release_fasta_specie="release-[0-9]+/fasta/[a-z_]+",
         specie_assembly="[A-Za-z0-9_.]+"
