@@ -1,26 +1,26 @@
 id	path
 # STAR index files
-staridx-GRCh38-ensembl	out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-ensembl/Genome
-staridx-GRCh38-merge-attr-ensembl	out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-merge-attr-ensembl/Genome
-staridx-GRCh38-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-merge-attr-retrieve-ensembl/Genome
-staridx-GRCh38-BP-ensembl	out/star/build_index/fa-genome-GRCh38-Blueprint_gtf-GRCh38-ensembl/Genome
-staridx-GRCh37-ensembl	out/star/build_index/fa-genome-GRCh37_gtf-GRCh37-ensembl/Genome
-staridx-hg19-ensembl	out/star/build_index/fa-genome-GRCh37_gtf-GRCh37-ensembl/Genome
-staridx-GRCm38-ensembl	out/star/build_index/fa-genome-GRCm38_gtf-GRCm38-ensembl/Genome
-staridx-hg19-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-GRCh37_gtf-GRCh37-merge-attr-retrieve-ensembl/Genome
-staridx-GRCm38-merge-attr-ensembl	out/star/build_index/fa-genome-GRCm38_gtf-GRCm38-merge-attr-ensembl/Genome
-staridx-GRCm38-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-GRCm38_gtf-GRCm38-merge-attr-retrieve-ensembl/Genome
-staridx-NCBIM37-ensembl	out/star/build_index/fa-genome-NCBIM37_gtf-NCBIM37-ensembl/Genome
-staridx-NCBIM37-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-NCBIM37_gtf-NCBIM37-merge-attr-retrieve-ensembl/Genome
-staridx-mm9-ensembl	out/star/build_index/fa-genome-NCBIM37_gtf-NCBIM37-ensembl/Genome
-staridx-mm9-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-NCBIM37_gtf-NCBIM37-merge-attr-retrieve-ensembl/Genome
-#staridx-dm6-ensembl	out/star/build_index/fa-genome-dm6-ucsc_gtf-dm6-ucsc/Genome
-staridx-BDGP6-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-BDGP6_gtf-BDGP6-merge-attr-retrieve-ensembl/Genome
-staridx-R64-1-1-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-R64-1-1_gtf-R64-1-1-merge-attr-retrieve-ensembl/Genome
+staridx-GRCh38-ensembl	out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-ensembl
+staridx-GRCh38-merge-attr-ensembl	out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-merge-attr-ensembl
+staridx-GRCh38-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-merge-attr-retrieve-ensembl
+staridx-GRCh38-BP-ensembl	out/star/build_index/fa-genome-GRCh38-Blueprint_gtf-GRCh38-ensembl
+staridx-GRCh37-ensembl	out/star/build_index/fa-genome-GRCh37_gtf-GRCh37-ensembl
+staridx-hg19-ensembl	out/star/build_index/fa-genome-GRCh37_gtf-GRCh37-ensembl
+staridx-GRCm38-ensembl	out/star/build_index/fa-genome-GRCm38_gtf-GRCm38-ensembl
+staridx-hg19-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-GRCh37_gtf-GRCh37-merge-attr-retrieve-ensembl
+staridx-GRCm38-merge-attr-ensembl	out/star/build_index/fa-genome-GRCm38_gtf-GRCm38-merge-attr-ensembl
+staridx-GRCm38-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-GRCm38_gtf-GRCm38-merge-attr-retrieve-ensembl
+staridx-NCBIM37-ensembl	out/star/build_index/fa-genome-NCBIM37_gtf-NCBIM37-ensembl
+staridx-NCBIM37-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-NCBIM37_gtf-NCBIM37-merge-attr-retrieve-ensembl
+staridx-mm9-ensembl	out/star/build_index/fa-genome-NCBIM37_gtf-NCBIM37-ensembl
+staridx-mm9-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-NCBIM37_gtf-NCBIM37-merge-attr-retrieve-ensembl
+#staridx-dm6-ensembl	out/star/build_index/fa-genome-dm6-ucsc_gtf-dm6-ucsc
+staridx-BDGP6-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-BDGP6_gtf-BDGP6-merge-attr-retrieve-ensembl
+staridx-R64-1-1-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-R64-1-1_gtf-R64-1-1-merge-attr-retrieve-ensembl
 # 2021-03-22
 # Add GRCm39 genome
-staridx-GRCm39-ensembl	out/star/build_index/fa-genome-GRCm39_gtf-GRCm39-ensembl/Genome
-staridx-GRCm39-merge-attr-ensembl	out/star/build_index/fa-genome-GRCm39_gtf-GRCm39-merge-attr-ensembl/Genome
-staridx-GRCm39-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-GRCm39_gtf-GRCm39-merge-attr-retrieve-ensembl/Genome
+staridx-GRCm39-ensembl	out/star/build_index/fa-genome-GRCm39_gtf-GRCm39-ensembl
+staridx-GRCm39-merge-attr-ensembl	out/star/build_index/fa-genome-GRCm39_gtf-GRCm39-merge-attr-ensembl
+staridx-GRCm39-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-GRCm39_gtf-GRCm39-merge-attr-retrieve-ensembl
 # Add Rat genome
-staridx-Rnor6-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-Rnor6_gtf-Rnor6-merge-attr-retrieve-ensembl/Genome
+staridx-Rnor6-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-Rnor6_gtf-Rnor6-merge-attr-retrieve-ensembl

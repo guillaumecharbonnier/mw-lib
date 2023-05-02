@@ -7,6 +7,10 @@ rule salmon_index:
         "out/{filler}.fa.gz"
     output:
         directory("out/salmon/index/{filler}")
+    params:
+        filler = "{filler}"
+    cache:
+        "omit-software"
     conda:
         "../envs/salmon.yaml"
     shell:
@@ -24,6 +28,9 @@ rule salmon_index_ensembl_with_decoys:
         dna = "out/wget/ftp/ftp.ensembl.org/pub/{release_fasta_specie}/dna/{specie_assembly}.dna.primary_assembly.fa.gz"
     output:
         directory("out/salmon/index_ensembl_with_decoys/{release_fasta_specie}/{specie_assembly}")
+    params:
+        release_fasta_specie = "{release_fasta_specie}",
+        specie_assembly = "{specie_assembly}"
     cache:
         "omit-software"
     wildcard_constraints:
@@ -59,6 +66,11 @@ rule salmon_index_ensembl_with_decoys_toplevel:
         dna = "out/wget/ftp/ftp.ensembl.org/pub/{release_fasta_specie}/dna/{specie_assembly}.dna.toplevel.fa.gz"
     output:
         directory("out/salmon/index_ensembl_with_decoys_toplevel/{release_fasta_specie}/{specie_assembly}")
+    params:
+        release_fasta_specie = "{release_fasta_specie}",
+        specie_assembly = "{specie_assembly}"
+    cache:
+        "omit-software"
     wildcard_constraints:
         release_fasta_specie="release-[0-9]+/fasta/[a-z_]+",
         specie_assembly="[A-Za-z0-9_.]+"
@@ -75,76 +87,3 @@ rule salmon_index_ensembl_with_decoys_toplevel:
 
         rm -f {output}/transcriptome_genome.fa.gz
         """
-
-
-
-rule salmon_quant_bam:
-    """
-    Warning: Uncomplete rule. Work todo
-    Test:
-        out/salmon/index/wget/http/ftp.ensembl.org/pub/release-103/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all
-    """
-    input:
-        index = lambda wildcards: mwconf['ids'][wildcards.index_id],
-        bam = "out/{filler}.bam"
-    output:
-        directory("out/{tool}{extra}_{index_id}/{filler}")
-    params:
-        extra = params_extra
-    wildcard_constraints:
-        tool = "salmon/quant_bam",
-        index_id = "salmon-[a-zA-Z0-9-]+"
-    threads:
-        4
-    conda:
-        "../envs/salmon.yaml"
-    shell:
-        "salmon quant -p {threads} -i {input.index} {params.extra} -a {input.bam} -o {output}"
-
-rule salmon_quant_fastq_pe:
-    """
-    Test:
-        out/salmon/quant_fastq_pe_-l_A_--validateMappings_salmon-index-GRCh38-ensembl-r102/sickle/pe_-t_sanger_-q_20/sra-tools/fastq-dump_pe/SRR4123954/quant.sf
-    """
-    input:
-        index = lambda wildcards: mwconf['ids'][wildcards.index_id],
-        fq1 = "out/{filler}_1.fastq.gz",
-        fq2 = "out/{filler}_2.fastq.gz"
-    output:
-        "out/{tool}{extra}_{index_id}/{filler}/quant.sf"
-        #directory("out/{tool}{extra}_{index_id}/{filler}")
-    params:
-        extra = params_extra
-    wildcard_constraints:
-        tool = "salmon/quant_fastq_pe",
-        index_id = "salmon-[a-zA-Z0-9-]+"
-    threads:
-        4
-    conda:
-        "../envs/salmon.yaml"
-    shell:
-        "salmon quant -p {threads} -i {input.index} {params.extra} -1 {input.fq1} -2 {input.fq2} -o `dirname {output}`"
-
-rule salmon_quant_fastq_se:
-    """
-    Test:
-        out/salmon/quant_fastq_se_-l_A_--validateMappings_--numGibbsSamples_20_--gcBias_salmon-index-GRCh38-ensembl-r102/sickle/se_-t_sanger_-q_20/sra-tools/fastq-dump_se/SRR1927116/quant.sf
-    """
-    input:
-        index = lambda wildcards: mwconf['ids'][wildcards.index_id],
-        fq = "out/{filler}.fastq.gz",
-    output:
-        "out/{tool}{extra}_{index_id}/{filler}/quant.sf"
-        #directory("out/{tool}{extra}_{index_id}/{filler}")
-    params:
-        extra = params_extra
-    wildcard_constraints:
-        tool = "salmon/quant_fastq_se",
-        index_id = "salmon-[a-zA-Z0-9-]+"
-    threads:
-        4
-    conda:
-        "../envs/salmon.yaml"
-    shell:
-        "salmon quant -p {threads} -i {input.index} {params.extra} -r {input.fq} -o `dirname {output}`"
-
