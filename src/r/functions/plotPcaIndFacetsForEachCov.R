@@ -31,6 +31,7 @@ plotUmapIndFacetsForEachCov <- function(
   d = d_umap,
   d_cov = d_covariates,
   n_row = 1,
+  labels = NULL,
   n_col = ncol(d_covariates)
 ) {
   d_umap <- data.table(
@@ -51,7 +52,11 @@ plotUmapIndFacetsForEachCov <- function(
       )
     )
     plot <- plot + scale_shape_manual(values=1:nlevels(factor(d_cov[[covariate_name]])))
-    plot <- plot + geom_point()
+    if (!is.null(labels)) {
+      plot <- plot + geom_text(aes(label = labels), size = 3)
+    } else {
+      plot <- plot + geom_point()
+    }
     #plot <- plot + ggtitle(NULL)
     plots[[covariate_name]] <- plot
   }

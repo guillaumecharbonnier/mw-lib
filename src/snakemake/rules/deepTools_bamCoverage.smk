@@ -1,3 +1,21 @@
+rule ln_deepTools_strands:
+    """
+    Aim:
+        This rule gathers both strands from deepTools bamCoverage --filterRNAstrand
+        to a single folder to make it easier to use in downstream analysis like IGV
+    """
+    input:
+        fwd = "out/deepTools/bamCoverage{extra}_--filterRNAstrand_forward/{filler}.bw",
+        rev = "out/deepTools/bamCoverage{extra}_--filterRNAstrand_reverse/{filler}.bw"
+    output:
+        fwd = "out/ln/deepTools_strands/deepTools/bamCoverage{extra}/{filler}_fwd.bw",
+        rev = "out/ln/deepTools_strands/deepTools/bamCoverage{extra}/{filler}_rev.bw"
+    conda:
+        "../envs/coreutils.yaml"
+    shell:
+        "ln -srf {input.fwd} {output.fwd} ; "
+        "ln -srf {input.rev} {output.rev}"
+
 rule deepTools_bamCoverage_extra:
     """
     Modified:

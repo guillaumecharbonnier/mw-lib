@@ -35,6 +35,7 @@ star/pe	standard	--outFilterMismatchNoverLmax 0.08 --outFilterMultimapNmax 1 --g
 sed/	rm-chr-in-fa	's/^>chr/>/'
 sed/	add-chr-in-fa	's/^>/>chr/'
 sed/	add-chr	'/^#/! s/^/chr/g'
+sed/	rm-chr-in-vcf	-e 's/^chr//g' -e 's/ID=chr/ID=/g'
 sed/	rm-first-exclam-in-fq	's/^!//'
 sed/	trim-fasta-header-from-rnaspades	-r "s/_g[0-9]+_i[0-9]+$//g"
 grep/	extract-indel-from-vcf	-E "^#|INDEL"

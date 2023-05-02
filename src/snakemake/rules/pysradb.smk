@@ -25,7 +25,9 @@ rule pysradb_download_gsm_se:
     shell:
         """
         (
-        SRR_IDS=`pysradb gsm-to-srr {wildcards.gsm} | cut -f2 -d " " | tail -n+2`
+	# Conda version for fasterqdump no more working properly because of security issue
+        source /etc/profile.d/sra-tools.sh
+	SRR_IDS=`pysradb gsm-to-srr {wildcards.gsm} | cut -f2 -d " " | tail -n+2`
         DOWNLOAD_DIR="out/pysradb_download_gsm_se/{wildcards.gsm}"
         rm -rf $DOWNLOAD_DIR
         mkdir -p $DOWNLOAD_DIR
@@ -66,10 +68,11 @@ rule pysradb_download_gsm_pe:
         rm -rf $DOWNLOAD_DIR
         mkdir -p $DOWNLOAD_DIR
         cd $DOWNLOAD_DIR
-        for ID in $SRR_IDS;
+       	# Conda version for fasterqdump no more working properly because of security issue
+        source /etc/profile.d/sra-tools.sh
+	for ID in $SRR_IDS;
         do
-            #fasterq-dump $ID
-            fastq-dump $ID
+            fasterq-dump $ID
         done
         gzip -c SRR*_1.fastq > ../{wildcards.gsm}_1.fastq.gz
         gzip -c SRR*_2.fastq > ../{wildcards.gsm}_2.fastq.gz
