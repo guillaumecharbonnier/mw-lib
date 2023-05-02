@@ -39,6 +39,9 @@ rule find_md5sum:
     """
     output:
         "out/find/md5sum/{filler}/md5sum.txt"
+    resources: high_io=1
+    # On Bigmemorix, this rule makes the system slow if run in parallel,
+    # So execute it with --resources high_io=1
     shell:
         """
         WDIR=`pwd`
