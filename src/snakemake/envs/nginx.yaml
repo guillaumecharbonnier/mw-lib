@@ -1,0 +1,8 @@
+name:
+  nginx
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - nginx
+  - rathole

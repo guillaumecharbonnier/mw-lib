@@ -33,6 +33,10 @@ rule fastq_screen_filter:
     """
     Created:
         2019-03-06 13:18:42
+    Note:
+        This rule was perfectly fine unless run on Bigmemorix on the sacapus mount point:
+        leading to errors:
+        Output directory 'out/fastq_screen/filter/sickle/se_-t_sanger_-q_20/ln/alias/sst/all_samples/fastq' is not writable, please adjust configuration.
     Aim:
         Obtaining reference genomes
     Doc:
@@ -67,4 +71,35 @@ rule fastq_screen_filter:
         "--conf {input.conf} --threads {threads} "
         "--outdir `dirname {output.txt}` {input.fastq} &> {log}"
 
+rule fastq_screen_tests:
+    input:
+        "out/fastq_screen/filter/sickle/se_-t_sanger_-q_20/ln/alias/sst/all_samples/fastq/TH134_CD34_H3K27ac_screen.txt"
 
+rule fastq_screen:
+    input:
+        fastq = "out/{filler}.fastq.gz",
+        conf = "out/sed/edit_fastq_screen_conf/fastq_screen/get_genomes/FastQ_Screen_Genomes/fastq_screen.conf"
+    output:
+        txt="out/{tool}{extra}/{filler}_screen.txt",
+        png="out/{tool}{extra}/{filler}_screen.png",
+        # html="out/{tool}{extra}/{filler}_screen.html"
+    log:
+        "out/{tool}{extra}/{filler}/log"
+    benchmark:
+        "out/{tool}{extra}/{filler}/benchmark.tsv"
+    params:
+        extra = params_extra,
+        # fastq_screen_config="fastq_screen.conf",
+        fastq_screen_config="out/sed/edit_fastq_screen_conf/fastq_screen/get_genomes/FastQ_Screen_Genomes/fastq_screen.conf",
+        subset=100000,
+        aligner='bowtie2'
+    wildcard_constraints:
+        tool = "fastq_screen/wrapper"
+    # input:
+    #     "samples/{sample}.fastq"
+    # output:
+    #     txt="qc/{sample}.fastq_screen.txt",
+    #     png="qc/{sample}.fastq_screen.png"
+    threads: 8
+    wrapper:
+        "v1.28.0/bio/fastq_screen"

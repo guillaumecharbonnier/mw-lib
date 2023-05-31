@@ -1,0 +1,8 @@
+name:
+  snakemake_7
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - snakemake = 7
