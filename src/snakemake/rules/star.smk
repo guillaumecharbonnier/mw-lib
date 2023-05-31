@@ -20,8 +20,7 @@ rule star_pe_extra:
         outdir = "out/star/pe_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}",
         extra = params_extra,
         extin = lambda wildcards: "--readFilesCommand zcat" if wildcards.extin == 'fastq.gz' else "",
-        extout = lambda wildcards: "--outSAMtype BAM SortedByCoordinate" if wildcards.extout == 'bam' else "",
-        genomedir = lambda wildcards: os.path.dirname(mwconf['ids'][wildcards.index_id])
+        extout = lambda wildcards: "--outSAMtype BAM SortedByCoordinate" if wildcards.extout == 'bam' else ""
     wildcard_constraints:
         tool="star/pe",
         gtf_id="gtf-[a-zA-Z0-9-]+",
@@ -38,7 +37,7 @@ rule star_pe_extra:
         mkdir -p {params.outdir}
         cd {params.outdir}
         STAR \
-            --genomeDir $WDIR/{params.genomedir} \
+            --genomeDir $WDIR/{input.index} \
             --readFilesIn $WDIR/{input.fwd} $WDIR/{input.rev} \
             --sjdbGTFfile $WDIR/{input.gtf} \
             --runThreadN {threads} \
@@ -72,7 +71,6 @@ rule star_se_extra:
         extra = params_extra,
         extin = lambda wildcards: "--readFilesCommand zcat" if wildcards.extin == 'fastq.gz' else "",
         extout = lambda wildcards: "--outSAMtype BAM SortedByCoordinate" if wildcards.extout == 'bam' else "",
-        genomedir = lambda wildcards: os.path.dirname(mwconf['ids'][wildcards.index_id])
     wildcard_constraints:
         tool="star/se",
         gtf_id="gtf-[a-zA-Z0-9-]+",
@@ -89,7 +87,7 @@ rule star_se_extra:
         mkdir -p {params.outdir}
         cd {params.outdir}
         STAR \
-            --genomeDir $WDIR/{params.genomedir} \
+            --genomeDir $WDIR/{input.index} \
             -c --readFilesIn $WDIR/{input.fwd}\
             --sjdbGTFfile $WDIR/{input.gtf} \
             --runThreadN {threads} \
