@@ -56,11 +56,13 @@ rule fastq_screen_filter:
     benchmark:
         "out/{tool}{extra}/{filler}/benchmark.tsv"
     params:
-        extra = params_extra
+        extra = params_extra,
+        # fastq_screen_config="fastq_screen.conf",
+        fastq_screen_config="out/sed/edit_fastq_screen_conf/fastq_screen/get_genomes/FastQ_Screen_Genomes/fastq_screen.conf",
+        subset=100000,
+        aligner='bowtie2'
     wildcard_constraints:
         tool = "fastq_screen/filter"
-    conda:
-        "../envs/fastq_screen.yaml"
     threads:
         MAX_THREADS
     shell:
@@ -75,7 +77,7 @@ rule fastq_screen_tests:
     input:
         "out/fastq_screen/filter/sickle/se_-t_sanger_-q_20/ln/alias/sst/all_samples/fastq/TH134_CD34_H3K27ac_screen.txt"
 
-rule fastq_screen:
+rule fastq_screen_wrapper:
     input:
         fastq = "out/{filler}.fastq.gz",
         conf = "out/sed/edit_fastq_screen_conf/fastq_screen/get_genomes/FastQ_Screen_Genomes/fastq_screen.conf"
@@ -83,6 +85,7 @@ rule fastq_screen:
         txt="out/{tool}{extra}/{filler}_screen.txt",
         png="out/{tool}{extra}/{filler}_screen.png",
         # html="out/{tool}{extra}/{filler}_screen.html"
+        #html is not exported in current wrapper version
     log:
         "out/{tool}{extra}/{filler}/log"
     benchmark:
