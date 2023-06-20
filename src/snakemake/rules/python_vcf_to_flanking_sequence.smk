@@ -11,7 +11,11 @@ rule python_vcf_to_flanking_sequence:
         py = "../mw-lib/src/python/vcf_to_flanking_sequence.py"
     output:
         fa = "out/python/vcf_to_flanking_sequence_{fa_genome_id}/{filler}.fasta"
+    log:
+        "out/python/vcf_to_flanking_sequence_{fa_genome_id}/{filler}.log"
+    conda:
+        "../envs/pysam.yaml"
     shell:
         """
-        {input.py} -v {input.vcf} -g {input.fa} > {output.fa}
+        {input.py} -v {input.vcf} -g {input.fa} > {output.fa} 2> {log}
         """
