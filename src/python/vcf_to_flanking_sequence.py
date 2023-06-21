@@ -122,3 +122,5 @@ for record in vcf:
             seq_upstream, record.alts[0], seq_downstream,
             sep=""
         )
+        seqname_counter += 1
+

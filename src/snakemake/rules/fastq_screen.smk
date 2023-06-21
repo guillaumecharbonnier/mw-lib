@@ -63,6 +63,8 @@ rule fastq_screen_filter:
         aligner='bowtie2'
     wildcard_constraints:
         tool = "fastq_screen/filter"
+    conda:
+        "../envs/fastq_screen.yaml"
     threads:
         MAX_THREADS
     shell:
@@ -98,11 +100,8 @@ rule fastq_screen_wrapper:
         aligner='bowtie2'
     wildcard_constraints:
         tool = "fastq_screen/wrapper"
-    # input:
-    #     "samples/{sample}.fastq"
-    # output:
-    #     txt="qc/{sample}.fastq_screen.txt",
-    #     png="qc/{sample}.fastq_screen.png"
+    conda:
+        "../envs/fastq_screen.yaml"
     threads: 8
     wrapper:
         "v1.28.0/bio/fastq_screen"

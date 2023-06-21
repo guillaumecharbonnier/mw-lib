@@ -116,6 +116,7 @@ rule tar_xvzf_Carrillo2017_blueprint_disease:
 rule tar_meme_motif_db:
     input:
         "out/wget/https/meme-suite.org/meme-software/Databases/motifs/motif_databases.12.21.tgz"
+        #"https://meme-suite.org/meme/meme-software/Databases/motifs/motif_databases.12.23.tgz"
     output:
         expand(
             "out/tar_meme/motif_databases/{filepath}",
@@ -123,8 +124,10 @@ rule tar_meme_motif_db:
             #filepath = [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_meme_motif_db.txt","r")]
             filepath = [x.strip() for x in open("../mw-lib/src/snakemake/lists/outputs_tar_meme_motif_db_lite.txt","r")]
         )
+    log:
+        "out/tar_meme/motif_databases/log"
     shell:
-        "tar -xvzf {input} --directory out/tar_meme"
+        "tar -xvzf {input} --directory out/tar_meme > {log}"
 
 rule tar_xvzf_danpos:
     """

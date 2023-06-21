@@ -39,6 +39,9 @@ samfile = pysam.AlignmentFile(args.sam, 'r')
 for chrom in samfile.references:
     vcf_out.header.add_line(f'##contig=<ID={chrom}>')
 
+# Create a list to store the VCF records
+vcf_records = []
+
 for read in samfile.fetch():
     # Skip reads without a CIGAR string
     if read.cigartuples is None:
@@ -91,8 +94,8 @@ for read in samfile.fetch():
             # Add the CIGAR string to the record
             record.info['CIGAR'] = read.cigarstring
 
-            # Write the record to the VCF file
-            vcf_out.write(record)
+            # Add the record to the list of VCF records
+            vcf_records.append(record)
         elif op == 2: # op == 2 corresponds to a deletion
             op_start = next_op_start
             op_end = next_op_start + length
@@ -114,8 +117,12 @@ for read in samfile.fetch():
             # Add the CIGAR string to the record
             record.info['CIGAR'] = read.cigarstring
 
-            # Write the record to the VCF file
-            vcf_out.write(record)
+            # Add the record to the list of VCF records
+            vcf_records.append(record)
 
-# Close the VCF file
-vcf_out.close()
+# Sort the list of VCF records by chromosome and position
+vcf_records.sort(key=lambda r: (r.chrom, r.pos))
+
+# Write the sorted records to the VCF file
+for record in vcf_records:
+    vcf_out.write(record)
