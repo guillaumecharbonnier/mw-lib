@@ -7,16 +7,18 @@ rule bwa_mem_pe:
     """
     input:
         index=expand("out/bwa/index/{{fa_genome_id}}.{ext}", ext=["amb","ann","bwt","pac","sa"]),
-        mate1="out/{filler}_1.fastq",
-        mate2="out/{filler}_2.fastq"
+        mate1="out/{filler}_1.{fq_ext}",
+        mate2="out/{filler}_2.{fq_ext}"
     output:
-        sam="out/bwa/mem_pe_{fa_genome_id}/{filler}.sam"
+        sam="out/bwa/mem_pe_{fq_ext}_{fa_genome_id}/{filler}.sam"
     params:
         idxbase="out/bwa/index/{fa_genome_id}"
     conda:
         "../envs/bwa.yaml"
     threads:
         MAX_THREADS
+    wildcard_constraints:
+        fq_ext="fastq|fq|fq.gz|fastq.gz"
     shell:
         """
         bwa \

@@ -51,8 +51,10 @@ rule snpsift_annotate_dbsnp:
     input:
         vcf="out/{filler}.vcf",
         # Update using latest release on 2023-06-18
-        dbsnp="out/wget/https/ftp.ncbi.nlm.nih.gov/snp/latest_release/VCF/GCF_000001405.40.gz",
-        dbsnp_tbi="out/wget/https/ftp.ncbi.nlm.nih.gov/snp/latest_release/VCF/GCF_000001405.40.gz.tbi"
+        # dbsnp="out/wget/https/ftp.ncbi.nlm.nih.gov/snp/latest_release/VCF/GCF_000001405.40.gz",
+        # dbsnp_tbi="out/wget/https/ftp.ncbi.nlm.nih.gov/snp/latest_release/VCF/GCF_000001405.40.gz.tbi"
+        dbsnp = "out/bcftools/annnotate_rename_dbsnp_chrs_refseq_to_simple/wget/https/ftp.ncbi.nlm.nih.gov/snp/latest_release/VCF/GCF_000001405.40.vcf.gz",
+        dbsnp_tbi = "out/bcftools/annnotate_rename_dbsnp_chrs_refseq_to_simple/wget/https/ftp.ncbi.nlm.nih.gov/snp/latest_release/VCF/GCF_000001405.40.vcf.gz.tbi"
         # dbsnp="out/wget/ftp/ftp.ncbi.nih.gov/snp/organisms/human_9606/VCF/00-All.vcf.gz",
         # dbsnp_tbi="out/wget/ftp/ftp.ncbi.nih.gov/snp/organisms/human_9606/VCF/00-All.vcf.gz.tbi"
     output:
