@@ -77,3 +77,35 @@ rule pbgzip_tabix_bed_legacy:
         ) &> {log}
         """
 
+
+
+rule tabix:
+    """
+    Created:
+        2023-06-25 10:26:50
+    Aim:
+        Testing some usecases where files were already pbgzipped, eg dbsnp vcf.gz
+    """
+    input:
+        gz = "out/{filler}.{ext}.gz",
+    output:
+        gz  = "out/tabix/{filler}.{ext}.gz",
+        tbi = "out/tabix/{filler}.{ext}.gz.tbi"
+    params:
+        tmp = "out/tabix/{filler}.{ext}"
+    log:
+              "out/tabix/{filler}.{ext}.log"
+    benchmark:
+              "out/tabix/{filler}.{ext}.benchmark.tsv"
+    conda:
+        "../envs/pbgzip_tabix.yaml"
+    wildcard_constraints:
+        ext="bed|sam|vcf|gff"
+    threads:
+        1
+    shell:
+        """
+        (ln -srf {input} {output}
+        tabix -p {wildcards.ext} {output.gz}
+        ) &> {log}
+        """

@@ -36,6 +36,10 @@ genome = pysam.FastaFile(args.genome)
 # define by how many bases the variant should be flanked
 flank = args.flank
 
+# Add a counter variable before the loop
+# This is used to create a unique sequence name for each variant
+seqname_counter = 1
+
 # iterate over each variant
 for record in vcf:
     # extract sequence
@@ -106,10 +110,10 @@ for record in vcf:
 
         # It is required to trim seqname else Fimo will crash (likely when string is > 100 char)
         # Trimming to 80 because it is already long enough
-        ref_seqname = '>' + str(record.chrom) + ':' + str(record.pos) + '_REF_' + record.ref
+        ref_seqname = f">Contig{seqname_counter}_{record.chrom}:{record.pos}_REF_{record.ref}"
         ref_seqname = (ref_seqname[:79] + '..') if len(ref_seqname) > 80 else ref_seqname
 
-        alt_seqname = '>' + str(record.chrom) + ':' + str(record.pos) + '_ALT_' + record.alts[0]
+        alt_seqname = f">Contig{seqname_counter}_{record.chrom}:{record.pos}_ALT_{record.alts[0]}"
         alt_seqname = (alt_seqname[:79] + '..') if len(alt_seqname) > 80 else alt_seqname
         print(
             ref_seqname, '\n',
@@ -118,3 +122,5 @@ for record in vcf:
             seq_upstream, record.alts[0], seq_downstream,
             sep=""
         )
+        seqname_counter += 1
+

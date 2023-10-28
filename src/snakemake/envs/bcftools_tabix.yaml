@@ -1,0 +1,11 @@
+name:
+  bcftools_tabix
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - samtools
+  - bcftools
+  - tabix
+  - coreutils
