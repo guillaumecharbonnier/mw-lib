@@ -51,3 +51,4 @@ bbnorm/pe	no-low-depth-filter	min=0
 umi-tools/extract_se	NEXTflex-Small-RNA-seq-v3	--extract-method=regex --bc-pattern="^(?P<umi_1>.{4}).+(?P<umi_2>.{4})$"
 snpsift/filter	no-id	"( na ID )"
 snpsift/filter	high-moderate-impact	"((ANN[*].IMPACT = 'HIGH') | (ANN[*].IMPACT = 'MODERATE'))"
+bcftools/view	keep-no-id	-i 'ID=="."'

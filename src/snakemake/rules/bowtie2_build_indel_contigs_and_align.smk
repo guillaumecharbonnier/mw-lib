@@ -164,11 +164,13 @@ rule bowtie2_build_flanked_indel_megahit_and_align_se:
         out/bowtie2/build_flanked_indel_megahit_and_align_se_GRCh38-ensembl-r100/ln/alias/sst/all_samples/fastq/802_BT11_H3K27ac.sam
     """
     input:
-        fasta="out/python/vcf_to_flanking_sequence_fa-genome-{genome_id}/python/extract_indels_from_sam_to_vcf_fa-genome-{genome_id}/bowtie2/se_fa_Abraham2017_{genome_id}/megahit/se{megahit_args}/{filler}.contigs.fasta",
+        # Before 2023-07-06, this was:
+        # fasta="out/python/vcf_to_flanking_sequence_fa-genome-{genome_id}/python/extract_indels_from_sam_to_vcf_fa-genome-{genome_id}/bowtie2/se_fa_Abraham2017_{genome_id}/megahit/se{megahit_args}/{filler}.contigs.fasta",
+        # After 2023-07-06, we only keep variants that are not in dbSNP (i.e. novel variants that could cause neoenhancer):
+        fasta = "out/python/vcf_to_flanking_sequence_fa-genome-{genome_id}/bcftools/view_vcf_to_vcf_keep-no-id/snpsift/annotate_dbsnp/python/extract_indels_from_sam_to_vcf_fa-genome-GRCh38-ensembl-r100/bowtie2/se_fa_Abraham2017_GRCh38-ensembl-r100/megahit/se{megahit_args}/{filler}.contigs.fasta",
         fastq="out/{filler}.fastq.gz"
     output:
-        sam      = "out/bowtie2/build_flanked_indel_megahit{megahit_args}_and_align_se_{genome_id}/{filler}.sam",
-        unmapped = "out/bowtie2_build_flanked_indel_megahit{megahit_args}_and_align_se_{genome_id}/{filler}.fastq.gz",
+        sam      = "out/bowtie2/build_flanked_indel_megahit{megahit_args}_and_align_se_{genome_id}/{filler}.sam"
     log:
         "out/bowtie2/build_flanked_indel_megahit{megahit_args}_and_align_se_{genome_id}/{filler}.log"
     params:
@@ -191,8 +193,10 @@ rule bowtie2_build_flanked_indel_megahit_and_align_se:
         bowtie2 -p {threads} -x {params.index}\
             --very-sensitive-local\
             -U {input.fastq} \
-            --un-gz {output.unmapped} \
-            -S {output.sam}
+            --no-unal -S {output.sam}
+
+        # We can the remove the index because it is specific of this sample
+        rm {params.index}*.bt2
         
         ) 2> {log}
         """
@@ -211,14 +215,17 @@ rule bowtie2_build_flanked_indel_megahit_and_align_pe:
         out/python/vcf_to_flanking_sequence_fa-genome-GRCh38-ensembl-r100/grep/extract-indel-from-vcf/bcftools/mpileup_fa-genome-GRCh38-ensembl-r100/samtools/index/samtools/sort/samtools/view_sam_to_bam/bowtie2/se_fa_Abraham2017_GRCh38-ensembl-r100/megahit/pe/ ln/alias/sst/all_samples/fastq/856_H3K27ac/final.contigs.fasta
     """
     input:
-        # fasta="out/python/vcf_to_flanking_sequence_fa-genome-{genome_id}/grep/extract-indel-from-vcf/bcftools/mpileup_fa-genome-{genome_id}/samtools/index/samtools/sort/samtools/view_sam_to_bam/bowtie2/se_fa_Abraham2017_{genome_id}/megahit/pe_--min-count_3_--no-mercy/{filler}/final.contigs.fasta",
-        # Trying to revert to the default megahit settings because there is not many calls with no-mercy
-        fasta="out/python/vcf_to_flanking_sequence_fa-genome-{genome_id}/python/extract_indels_from_sam_to_vcf_fa-genome-{genome_id}/bowtie2/se_fa_Abraham2017_{genome_id}/megahit/pe{megahit_args}/{filler}.contigs.fasta",
+        # # fasta="out/python/vcf_to_flanking_sequence_fa-genome-{genome_id}/grep/extract-indel-from-vcf/bcftools/mpileup_fa-genome-{genome_id}/samtools/index/samtools/sort/samtools/view_sam_to_bam/bowtie2/se_fa_Abraham2017_{genome_id}/megahit/pe_--min-count_3_--no-mercy/{filler}/final.contigs.fasta",
+        # # Trying to revert to the default megahit settings because there is not many calls with no-mercy
+        # fasta="out/python/vcf_to_flanking_sequence_fa-genome-{genome_id}/python/extract_indels_from_sam_to_vcf_fa-genome-{genome_id}/bowtie2/se_fa_Abraham2017_{genome_id}/megahit/pe{megahit_args}/{filler}.contigs.fasta",
+        # Before 2023-07-06, this was:
+        # fasta="out/python/vcf_to_flanking_sequence_fa-genome-{genome_id}/python/extract_indels_from_sam_to_vcf_fa-genome-{genome_id}/bowtie2/se_fa_Abraham2017_{genome_id}/megahit/pe{megahit_args}/{filler}.contigs.fasta",
+        # After 2023-07-06, we only keep variants that are not in dbSNP (i.e. novel variants that could cause neoenhancer):
+        fasta = "out/python/vcf_to_flanking_sequence_fa-genome-{genome_id}/bcftools/view_vcf_to_vcf_keep-no-id/snpsift/annotate_dbsnp/python/extract_indels_from_sam_to_vcf_fa-genome-GRCh38-ensembl-r100/bowtie2/se_fa_Abraham2017_GRCh38-ensembl-r100/megahit/pe{megahit_args}/{filler}.contigs.fasta",
         fastq_1="out/{filler}_1.fastq.gz",
         fastq_2="out/{filler}_2.fastq.gz"
     output:
-        sam      = "out/bowtie2/build_flanked_indel_megahit{megahit_args}_and_align_pe_{genome_id}/{filler}.sam",
-        unmapped = "out/bowtie2_build_flanked_indel_megahit{megahit_args}_and_align_pe_{genome_id}/{filler}.fastq.gz",
+        sam      = "out/bowtie2/build_flanked_indel_megahit{megahit_args}_and_align_pe_{genome_id}/{filler}.sam"
     log:
         "out/bowtie2/build_flanked_indel_megahit{megahit_args}_and_align_pe_{genome_id}/{filler}.log"
     params:
@@ -241,8 +248,10 @@ rule bowtie2_build_flanked_indel_megahit_and_align_pe:
         bowtie2 -p {threads} -x {params.index}\
             --very-sensitive-local\
             -1 {input.fastq_1} -2 {input.fastq_2}\
-            --un-gz {output.unmapped} \
-            -S {output.sam}
+            --no-unal -S {output.sam}
+
+        # We can the remove the index because it is specific of this sample
+        rm {params.index}*.bt2
         
         ) 2> {log}
         """
