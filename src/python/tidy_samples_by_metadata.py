@@ -152,7 +152,7 @@ def tidy_sample(
 
     # Move to search dir
     os.chdir(search_dir)
-    files = glob.glob("**/" + row['sample_name'] + "_*", recursive=True)
+    files = glob.glob("**/" + row['sample_name'] + ".*", recursive=True)
     os.chdir(cwd)
 
     if files == []:

@@ -8,7 +8,6 @@ rule rm_tmp:
     shell:
         """
         rm -rf \
-            out/cat \
             out/sort \
             out/unzip \
             out/gunzip \
@@ -16,5 +15,7 @@ rule rm_tmp:
             out/fastx_toolkit \
             out/java \
             #out/samtools
+            #out/cat \
+
         """
 

@@ -14,7 +14,10 @@ rule gtftk_retrieve:
     output:
         gtf="out/{tool}{extra}/{specie}.gtf"
     params:
-        extra = params_extra
+        extra = params_extra,
+        specie = "{specie}"
+    cache:
+        "omit-software"
     wildcard_constraints:
         tool="gtftk/retrieve",
         specie="[a-z]+_[a-z]+"

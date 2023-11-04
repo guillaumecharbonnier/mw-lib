@@ -1,0 +1,26 @@
+# Note that on Bigmemorix 2023-06-04, the install of this env required this:
+#  CONDA_CHANNEL_PRIORITY=flexible mamba env create -f /mnt/thymus/synoSalva/illumina_sequencing_data/mw/mw-lib/src/snakemake/envs/rkernel_fishpond.yaml
+# https://github.com/conda/conda-libmamba-solver/issues/206
+# https://github.com/mamba-org/mamba/issues/2533
+name:
+  rkernel_fishpond
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - jupyter
+  - r-irkernel
+  - r-base
+  - bioconductor-tximeta
+  - bioconductor-fishpond
+  # Got ERROR conda.core.link:_execute(745): An error occurred while installing package 'bioconda::bioconductor-org.mm.eg.db-3.16.0-r42hdfd78af_0'.
+  # I can install them later with biocmanager
+  # - bioconductor-org.hs.eg.db
+  # - bioconductor-org.mm.eg.db
+  - bioconductor-summarizedexperiment
+  - r-openxlsx
+  - r-data.table
+  - r-readr
+  - r-biocmanager
+

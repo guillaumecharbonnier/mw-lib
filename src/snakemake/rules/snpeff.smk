@@ -45,12 +45,18 @@ rule snpsift_annotate_dbsnp:
     Aim:
         Annotate a vcf with dbSnp. Notably, it will allow to identify novel from known variants in the vcf file.
     Test:
-        out/snpsift/annotate/platypus/callVariants_fa-genome-GRCh38/samtools/index/samtools/sort/samtools/view_sam_to_bam/bwa/mem_pe_fa-genome-GRCh38/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/803_H3K27ac.vcf
+        out/snpsift/annotate_dbsnp/platypus/callVariants_fa-genome-GRCh38/samtools/index/samtools/sort/samtools/view_sam_to_bam/bwa/mem_pe_fa-genome-GRCh38/gunzip/to-stdout/ln/alias/sst/all_samples/fastq/803_H3K27ac.vcf
+        out/snpsift/annotate_dbsnp/python/extract_indels_from_sam_to_vcf_fa-genome-GRCh38-ensembl-r100/bowtie2/se_fa_Abraham2017_GRCh38-ensembl-r100/megahit/se/ln/alias/sst/all_samples/fastq/802_BT11_H3K27ac.contigs.vcf
     """
     input:
         vcf="out/{filler}.vcf",
-        dbsnp="out/wget/ftp/ftp.ncbi.nih.gov/snp/organisms/human_9606/VCF/00-All.vcf.gz",
-        dbsnp_tbi="out/wget/ftp/ftp.ncbi.nih.gov/snp/organisms/human_9606/VCF/00-All.vcf.gz.tbi"
+        # Update using latest release on 2023-06-18
+        # dbsnp="out/wget/https/ftp.ncbi.nlm.nih.gov/snp/latest_release/VCF/GCF_000001405.40.gz",
+        # dbsnp_tbi="out/wget/https/ftp.ncbi.nlm.nih.gov/snp/latest_release/VCF/GCF_000001405.40.gz.tbi"
+        dbsnp = "out/bcftools/annnotate_rename_dbsnp_chrs_refseq_to_simple/wget/https/ftp.ncbi.nlm.nih.gov/snp/latest_release/VCF/GCF_000001405.40.vcf.gz",
+        dbsnp_tbi = "out/bcftools/annnotate_rename_dbsnp_chrs_refseq_to_simple/wget/https/ftp.ncbi.nlm.nih.gov/snp/latest_release/VCF/GCF_000001405.40.vcf.gz.tbi"
+        # dbsnp="out/wget/ftp/ftp.ncbi.nih.gov/snp/organisms/human_9606/VCF/00-All.vcf.gz",
+        # dbsnp_tbi="out/wget/ftp/ftp.ncbi.nih.gov/snp/organisms/human_9606/VCF/00-All.vcf.gz.tbi"
     output:
         vcf="out/{tool}{extra}/{filler}.vcf"
     log:

@@ -26,6 +26,7 @@ bowtie2/se	vsl	--very-sensitive-local
 bowtie2/se	Abraham2017	--rfg 1,1 -k 1 -q -f
 wget/	hg38-knownGene.bed	'https://genome.ucsc.edu/cgi-bin/hgTables?hgsid=709973581_ZCGTPs1mYBVNXPJvU9o0TABHdvIj&boolshad.hgta_printCustomTrackHeaders=0&hgta_ctName=tb_knownGene&hgta_ctDesc=table+browser+query+on+knownGene&hgta_ctVis=pack&hgta_ctUrl=&fbQual=whole&fbUpBases=200&fbExonBases=0&fbIntronBases=0&fbDownBases=200&hgta_doGetBed=get+BED'
 wget/	hg38-GENCODE-knownGene.bed	'https://genome.ucsc.edu/cgi-bin/hgTables?hgsid=709973581_ZCGTPs1mYBVNXPJvU9o0TABHdvIj&boolshad.hgta_printCustomTrackHeaders=0&hgta_ctName=tb_knownGene&hgta_ctDesc=table+browser+query+on+knownGene&hgta_ctVis=pack&hgta_ctUrl=&fbQual=whole&fbUpBases=200&fbExonBases=0&fbIntronBases=0&fbDownBases=200&hgta_doGetBed=get+BED'
+wget/	GSE231300-ENCFF826CKB-conservative-IDR-thresholded-peaks-GRCh38.bed.gz	"https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE231300&format=file&file=GSE231300%5FENCFF826CKB%5Fconservative%5FIDR%5Fthresholded%5Fpeaks%5FGRCh38%2Ebed%2Egz"
 phantompeakqualtools/bam_ctrl	idr	-npeak=300000 -savr -savp
 mysql/	ucsc-cpgIslandExt-mm10.bed	--user=genome -N --host=genome-mysql.cse.ucsc.edu -A -D mm10 -e "select chrom,chromStart,chromEnd,name,length,cpgNum,gcNum,perCpg,perGc,obsExp from cpgIslandExt"
 mysql/	ucsc-refgene-hg19.tsv	--user=genome -N --host=genome-mysql.cse.ucsc.edu -A -D hg19 -e "select * from refGene"
@@ -53,3 +54,4 @@ snpsift/filter	high-moderate-impact	"((ANN[*].IMPACT = 'HIGH') | (ANN[*].IMPACT 
 bcftools/setGT	low-qual-or-somatic-to-missing	-t q -n . -i'FMT/VAF<=0.45&FMT/VAF>0|FMT/GQ<20|FMT/DP<10'
 bcftools/setGT	low-qual-to-missing	-t q -n . -i'FMT/GQ<20|FMT/DP<10'
 bcftools/setGT	somatic-to-missing	-t q -n . -i'FMT/VAF<=0.45&FMT/VAF>0'
+bcftools/view	keep-no-id	-i 'ID=="."'

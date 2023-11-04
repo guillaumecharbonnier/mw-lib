@@ -20,8 +20,7 @@ rule star_pe_extra:
         outdir = "out/star/pe_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}",
         extra = params_extra,
         extin = lambda wildcards: "--readFilesCommand zcat" if wildcards.extin == 'fastq.gz' else "",
-        extout = lambda wildcards: "--outSAMtype BAM SortedByCoordinate" if wildcards.extout == 'bam' else "",
-        genomedir = lambda wildcards: os.path.dirname(mwconf['ids'][wildcards.index_id])
+        extout = lambda wildcards: "--outSAMtype BAM SortedByCoordinate" if wildcards.extout == 'bam' else ""
     wildcard_constraints:
         tool="star/pe",
         gtf_id="gtf-[a-zA-Z0-9-]+",
@@ -38,7 +37,7 @@ rule star_pe_extra:
         mkdir -p {params.outdir}
         cd {params.outdir}
         STAR \
-            --genomeDir $WDIR/{params.genomedir} \
+            --genomeDir $WDIR/{input.index} \
             --readFilesIn $WDIR/{input.fwd} $WDIR/{input.rev} \
             --sjdbGTFfile $WDIR/{input.gtf} \
             --runThreadN {threads} \
@@ -72,7 +71,6 @@ rule star_se_extra:
         extra = params_extra,
         extin = lambda wildcards: "--readFilesCommand zcat" if wildcards.extin == 'fastq.gz' else "",
         extout = lambda wildcards: "--outSAMtype BAM SortedByCoordinate" if wildcards.extout == 'bam' else "",
-        genomedir = lambda wildcards: os.path.dirname(mwconf['ids'][wildcards.index_id])
     wildcard_constraints:
         tool="star/se",
         gtf_id="gtf-[a-zA-Z0-9-]+",
@@ -89,7 +87,7 @@ rule star_se_extra:
         mkdir -p {params.outdir}
         cd {params.outdir}
         STAR \
-            --genomeDir $WDIR/{params.genomedir} \
+            --genomeDir $WDIR/{input.index} \
             -c --readFilesIn $WDIR/{input.fwd}\
             --sjdbGTFfile $WDIR/{input.gtf} \
             --runThreadN {threads} \
@@ -226,6 +224,11 @@ rule star_pe_index_outFilterMultimapNmax_legacy:
         ln -f Unmapped.out.mate2 $WDIR/{output.unmapped_pair2}
         """
 
+rule star_build_index_tests:
+    input:
+        "out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-merge-attr-retrieve-ensembl"
+        # "out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-merge-attr-retrieve-ensembl/Genome"
+
 rule star_build_index:
     """
     Modified:
@@ -238,18 +241,27 @@ rule star_build_index:
         EXITING because of fatal ERROR: could not make temporary directory: out/star/build_index/GRCh38/tmp
         SOLUTION: (i) please check the path and writing permissions
         (ii) if you specified --outTmpDir, and this directory exists - please remove it before running STAR
-    Test:
-        out/star/build_index/fa-genome-GRCh38-Blueprint_gtf-GRCh38-ensembl/Genome
     """
     input:
         gtf  = lambda wildcards: eval(mwconf['ids'][wildcards.gtf_id]),
         fa   = lambda wildcards: eval(mwconf['ids'][wildcards.fa_id])
     output:
-        genomeParameters = "out/star/build_index/{fa_id}_{gtf_id}/genomeParameters.txt",
-        genome           = "out/star/build_index/{fa_id}_{gtf_id}/Genome",
+        directory(
+            "out/star/build_index/{fa_id}_{gtf_id}"
+        )#,
+        # "out/star/build_index/{fa_id}_{gtf_id}/Genome"
+        # multiext(
+        #     "out/star/build_index/{fa_id}_{gtf_id}/",
+        #     "genomeParameters.txt",
+        #     "Genome"
+        # )
+        # genomeParameters = "out/star/build_index/{fa_id}_{gtf_id}/genomeParameters.txt",
+        # genome           = "out/star/build_index/{fa_id}_{gtf_id}/Genome",
     params:
         outdir           = "out/star/build_index/{fa_id}_{gtf_id}",
-        tmp              = "out/star/build_index/{fa_id}_{gtf_id}/tmp"
+        tmp              = "out/star/build_index/{fa_id}_{gtf_id}_tmp"
+    cache:
+        "omit-software"
     conda:
         "../envs/star.yaml"
     threads:
