@@ -1,0 +1,6 @@
+name: fumi_tools
+channels:
+  - ccb-sb
+dependencies:
+  - fumi_tools
+  - python

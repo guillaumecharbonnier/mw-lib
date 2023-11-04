@@ -14,6 +14,7 @@ fa-genome-hg38	["out/meta/index_fa/sed/add-chr-in-fa/cat/assembly_ensembl/GRCh38
 fa-genome-GRCh37	["out/cat/assembly_ensembl/GRCh37.fa"]
 fa-genome-NCBIM37	["out/sed/rm-chr-in-fa/cat/assembly_ensembl/NCBIM37.fa"]
 fa-genome-hg19-main-chr	["out/samtools/faidx/cat/cat-assembly-ensembl/hg19.fa"]
+fa-genome-hg19	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/grch37/current/fasta/homo_sapiens/dna/Homo_sapiens.GRCh37.dna.toplevel.fa"]
 fa-genome-GRCm38-main-chr	["out/cat/assembly_ensembl/GRCm38-main-chr.fa"]
 fa-genome-GRCh38-main-chr	["out/cat/assembly_ensembl/GRCh38-main-chr.fa"]
 fa-genome-GRCh38-Blueprint	["out/gunzip/to-stdout/wget/ftp/ftp.ebi.ac.uk/pub/databases/blueprint/reference/20150407_reference_files/GRCh38_no_alt_analysis_set.201503031.fa"]

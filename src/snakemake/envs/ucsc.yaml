@@ -9,6 +9,7 @@ dependencies:
   - ucsc-bedtobigbed
   - ucsc-bigbedtobed
   - ucsc-bigbedinfo
+  - ucsc-bigbedfilter
   - ucsc-bigbedsummary
   - ucsc-bigwigaverageoverbed
   - ucsc-fetchchromsizes

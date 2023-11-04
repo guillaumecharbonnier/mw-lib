@@ -1,0 +1,7 @@
+name:
+  nbconvert
+channels:
+  - conda-forge
+dependencies:
+  - nbconvert
+  - jupyter_contrib_nbextensions

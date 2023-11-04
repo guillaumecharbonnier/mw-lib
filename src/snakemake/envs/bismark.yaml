@@ -1,0 +1,8 @@
+name:
+  bismark
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bismark

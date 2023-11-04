@@ -1,0 +1,9 @@
+name:
+  methyldackel
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - methyldackel
+
