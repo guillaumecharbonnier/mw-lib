@@ -1,0 +1,11 @@
+name:
+  smash
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - pysam
+  - scipy
+  - numpy
+
