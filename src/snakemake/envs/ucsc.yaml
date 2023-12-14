@@ -9,7 +9,8 @@ dependencies:
   - ucsc-bedtobigbed
   - ucsc-bigbedtobed
   - ucsc-bigbedinfo
-  - ucsc-bigbedfilter
+# Commenting on 2023-11-12 because it is not found anymore on conda...
+#  - ucsc-bigbedfilter
   - ucsc-bigbedsummary
   - ucsc-bigwigaverageoverbed
   - ucsc-fetchchromsizes
