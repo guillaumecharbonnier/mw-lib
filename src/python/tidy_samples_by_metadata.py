@@ -60,7 +60,8 @@ def make_parser():
         nargs='+',
         type=str,
         help="The column names from the xlsx file to use to tidy.",
-        default=["exp", "chip_target","type","investigator","cell_type","donor_id","run"],
+        default=["exp", "chip_target","type","investigator","cell_type","donor_id"],
+        # "run" should not be added here becaused it is currently already added by the workflow
         required=False)
     
     parser_grp_main.add_argument(
