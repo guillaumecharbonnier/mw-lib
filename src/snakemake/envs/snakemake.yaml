@@ -7,6 +7,8 @@ channels:
 dependencies:
   - conda
   - snakemake
+  - zstandard # Add this on 2023-12-15 to fix this error when starting snakemake:
+  # _warnings.warn("Install zstandard Python bindings for .conda support")
   - rpy2
   - pandas
   - numpy
