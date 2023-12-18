@@ -37,6 +37,6 @@ rule bismark_pe:
     shell:
         """
         # bismark -q --pbat --prefix Meth_ctrl ./genomes/RRBS_methylated_control -1 MySample_R1_val_1.fastq -2 MySample_R2_val_2.fastq 
-        bismark {params.extra} -o $(dirname {output.bam}) $(dirname {input.ref}) -1 {input.fwd} -2 {input.rev}
+        bismark {params.extra} -o $(dirname {output.bam}) $(dirname {input.ref}) -1 {input.fwd} -2 {input.rev} &> {log}
         mv out/{wildcards.tool}{wildcards.extra}_{wildcards.fa_genome_id}/{wildcards.filler}_1_bismark_bt2_pe.bam {output.bam}
         """

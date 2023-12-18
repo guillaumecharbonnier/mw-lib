@@ -7,3 +7,4 @@ gtftk/retrieve	rattus_norvegicus,mus_musculus,homo_sapiens,drosophila_melanogast
 gtftk/merge_attr	merge_gene_id_name,gene_id,gene_name
 cite-seq_count	expected_cells,Results_HTO,Results_ADT
 trim_galore/pe	non_directional
+bismark/methylation_extractor	buffer_size
