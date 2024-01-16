@@ -33,6 +33,8 @@ mysql/	ucsc-refgene-hg19.tsv	--user=genome -N --host=genome-mysql.cse.ucsc.edu -
 mysql/	ucsc-desc-refgene-hg19.tsv	--user=genome -N --host=genome-mysql.cse.ucsc.edu -A -D hg19 -e "desc refGene"
 star/se	standard	--outFilterMismatchNoverLmax 0.08 --outFilterMultimapNmax 1 --genomeLoad NoSharedMemory
 star/pe	standard	--outFilterMismatchNoverLmax 0.08 --outFilterMultimapNmax 1 --genomeLoad NoSharedMemory
+star/se	arriba	--outFilterMismatchNoverLmax 0.08 --outFilterMultimapNmax 1 --genomeLoad NoSharedMemory --chimOutType WithinBAM --chimSegmentMin 10
+star/pe	arriba	--outFilterMismatchNoverLmax 0.08 --outFilterMultimapNmax 1 --genomeLoad NoSharedMemory --chimOutType WithinBAM --chimSegmentMin 10
 sed/	rm-chr-in-fa	's/^>chr/>/'
 sed/	add-chr-in-fa	's/^>/>chr/'
 sed/	add-chr	'/^#/! s/^/chr/g'
