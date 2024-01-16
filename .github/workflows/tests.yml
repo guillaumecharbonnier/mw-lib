@@ -12,19 +12,19 @@ jobs:
         #repository: my-org/main
         path: mw-lib
     - name: Light unit tests
-      uses: snakemake/snakemake-github-action@v1.23.0
+      uses: snakemake/snakemake-github-action@v1.25.1
       with:
         directory: 'mw-lib'
         snakefile: 'mw-lib/Snakefile'
         args: '--cores 1 --use-conda light_unit_tests'
     - name: Heavy unit tests
-      uses: snakemake/snakemake-github-action@v1.23.0
+      uses: snakemake/snakemake-github-action@v1.25.1
       with:
         directory: 'mw-lib'
         snakefile: 'mw-lib/Snakefile'
         args: '--cores 1 --use-conda --dag heavy_unit_tests'
     - name: Integration tests
-      uses: snakemake/snakemake-github-action@v1.23.0
+      uses: snakemake/snakemake-github-action@v1.25.1
       with:
         directory: 'mw-lib'
         snakefile: 'mw-lib/Snakefile'
