@@ -28,6 +28,8 @@ rule sra_tools_fastq_dump_se_extra:
         ext="fastq|fastq.gz"
     conda:
         "../envs/sra-tools.yaml"
+    resources:
+        fastqdump_token=1
     threads:
         1
     shell:
@@ -66,6 +68,8 @@ rule sra_tools_fastq_dump_pe_extra:
         "../envs/sra-tools.yaml"
     threads:
         1
+    resources:
+        fastqdump_token=1
     shell:
         "fastq-dump --split-files {params} --outdir `dirname {output[0]}` {wildcards.srr}"
 
