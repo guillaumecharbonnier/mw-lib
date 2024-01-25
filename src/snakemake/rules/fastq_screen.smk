@@ -89,7 +89,7 @@ rule fastq_screen_wrapper:
         # html="out/{tool}{extra}/{filler}_screen.html"
         #html is not exported in current wrapper version
     log:
-        "out/{tool}{extra}/{filler}/log"
+        "out/{tool}{extra}/{filler}.log"
     benchmark:
         "out/{tool}{extra}/{filler}/benchmark.tsv"
     params:
@@ -104,4 +104,6 @@ rule fastq_screen_wrapper:
         "../envs/fastq_screen.yaml"
     threads: 8
     wrapper:
-        "v1.28.0/bio/fastq_screen"
+        "https://github.com/guillaumecharbonnier/snakemake-wrappers/raw/fix-fastq_screen-wrapper/bio/fastq_screen"
+        # wrapper below had a regex issue I try to fix in the wrapper above
+        # "v1.28.0/bio/fastq_screen"
