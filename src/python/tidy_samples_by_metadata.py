@@ -45,14 +45,23 @@ def make_parser():
         default="inp-dir",
         required=False
     )
+    # Replacing this arg with csv one
+    #parser_grp_main.add_argument(
+    #    "-x",
+    #    "--xlsx",
+    #    type=str,
+    #    help="The xlsx file containing the metadata to use to find samples and tidy them.",
+    #    default="Sequencing_summary.xlsx",
+    #    required=False)
 
     parser_grp_main.add_argument(
-        "-x",
-        "--xlsx",
+        "-c",
+        "--csv",
         type=str,
-        help="The xlsx file containing the metadata to use to find samples and tidy them.",
-        default="Sequencing_summary.xlsx",
+        help="The csv file containing the metadata to use to find samples and tidy them.",
+        default="Sequency_summary.csv",
         required=False)
+
 
     parser_grp_main.add_argument(
         "-b",
@@ -86,7 +95,8 @@ def make_parser():
 def tidy_samples(
     inp_dir=None,
     out_dir=None,
-    xlsx=None,
+    #xlsx=None,
+    csv=None,
     by_metadata=None,
     by_merge_metadata=None,
     remove_out_dir=None
@@ -110,7 +120,8 @@ def tidy_samples(
         os.makedirs(out_dir)
 
     # Read the xlsx file with pandas
-    samples = pd.read_excel(xlsx, sheet_name="samples", dtype=str)
+    #samples = pd.read_excel(xlsx, sheet_name="samples", dtype=str)
+    samples = pd.read_csv(csv)
 
     # df = df.dropna(subset = "sample_name")
     samples.fillna("NA", inplace=True)
