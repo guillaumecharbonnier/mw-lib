@@ -37,6 +37,8 @@ rule wget_protocol_extra:
     wildcard_constraints:
         tool="wget/",
         protocol="http|https|ftp"
+    resources:
+        wget_token=1
     shell:
         "wget {params.extra} --output-file={log} --output-document={output} {wildcards.protocol}://{wildcards.path}"
 
@@ -66,5 +68,7 @@ rule wget_extra:
         "../envs/wget.yaml"
     wildcard_constraints:
         tool="wget/"
+    resources:
+        wget_token=1
     shell:
         "wget --output-file={log} --output-document={output} {params.extra}"
