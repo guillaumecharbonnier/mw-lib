@@ -16,19 +16,24 @@ colorblind_palette_15 <- c(
 # )
 
 vecAnnoToColForComplexHeatmap <- function(x) {
-  y <- sort(unique(x))
-  if (length(y) > 15) {
-    warning("More than 15 different levels. Annotation heatmap will be unreadable")
-  }
-  if (length(y) > 8) {
-    pal = colorblind_palette_15
+  if (is.numeric(x)) {
+    return(NULL)
   } else {
-    pal = colorblind_palette_8
+    # For discrete variables, assign a unique color to each unique value
+    y <- sort(unique(x))
+    if (length(y) > 15) {
+      warning("More than 15 different levels. Annotation heatmap will be unreadable")
+    }
+    if (length(y) > 8) {
+      pal = colorblind_palette_15
+    } else {
+      pal = colorblind_palette_8
+    }
+    colors = structure(
+      pal[1:length(y)],
+      names = as.character(y)
+    )
   }
-  colors = structure(
-    pal[1:length(y)],
-    names = as.character(y)
-  )
   return(colors)
 }
 
@@ -40,5 +45,7 @@ dfAnnoToColForComplexHeatmap <- function(
     as.list(df),
     vecAnnoToColForComplexHeatmap
   )
+  # we remove the NULL elements
+  anno_col <- anno_col[sapply(anno_col, Negate(is.null))]
   return(anno_col)
 }
