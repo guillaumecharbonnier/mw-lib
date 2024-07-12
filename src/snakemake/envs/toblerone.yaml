@@ -1,0 +1,17 @@
+name:
+  toblerone
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bedtools
+  - numpy
+  # Below to run scripts/get_bed.py
+  # - bs4
+  # - requests
+  - mysql-connector-python 
+  - mysql
+  - pandas
+
+

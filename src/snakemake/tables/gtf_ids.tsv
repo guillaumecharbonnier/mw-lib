@@ -9,6 +9,7 @@ gtf-GRCh38-ensembl	["out/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-1
 gtf-GRCh38-merge-attr-ensembl-r95	["out/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/homo_sapiens/Homo_sapiens.GRCh38.95.gtf"]
 gtf-GRCh38-merge-attr-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-102/gtf/homo_sapiens/Homo_sapiens.GRCh38.102.gtf"]
 gtf-GRCh38-merge-attr-retrieve-ensembl	["out/gtftk/merge_attr_gene_id_gene_name/gtftk/retrieve_-r_102/homo_sapiens.gtf"]
+gtf-GRCh38-retrieve-ensembl	["out/gtftk/retrieve_-r_102/homo_sapiens.gtf"]
 gtf-hg38-ensembl	["out/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/homo_sapiens/Homo_sapiens.GRCh38.95.gtf"]
 gtf-mm10	["out/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/mus_musculus/Mus_musculus.GRCm38.95.gtf"]
 gtf-mm10-main-chr	["out/awk/extract_main_chr/sed/add_chr/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-95/gtf/mus_musculus/Mus_musculus.GRCm38.95.gtf"]

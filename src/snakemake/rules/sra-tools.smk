@@ -41,7 +41,8 @@ rule sra_tools_fasterq_dump_pe:
         out/sra-tools/fasterq-dump_pe/GSM4421303_2.fastq.gz
     """
     output:
-        fastq="out/sra-tools/fasterq-dump_pe/{id}_2.fastq.gz"
+        R1 = "out/sra-tools/fasterq-dump_pe/{id}_1.fastq.gz",
+        R2 = "out/sra-tools/fasterq-dump_pe/{id}_2.fastq.gz"
     log:
         "out/sra-tools/fasterq-dump_pe/{id}.log"
     benchmark:

@@ -69,7 +69,7 @@ def make_parser():
         nargs='+',
         type=str,
         help="The column names from the xlsx file to use to tidy.",
-        default=["exp", "chip_target","type","investigator","cell_type","donor_id"],
+        default=["exp", "chip_target","type","Sample_Project","investigator","cell_type","donor_id"],
         # "run" should not be added here becaused it is currently already added by the workflow
         required=False)
     
@@ -78,6 +78,7 @@ def make_parser():
         "--by-merge-metadata",
         nargs="+",
         type=str,
+        default = None, 
         help='The columns names from the xlsx file to merge to use to tidy. Call one time for each needed merge. Example: -m "exp" "chip_target" -m "exp" "type"',
         action='append'
     )
@@ -126,16 +127,15 @@ def tidy_samples(
     # df = df.dropna(subset = "sample_name")
     samples.fillna("NA", inplace=True)
 
-    # Iterate over by_merge_metadata to create the merged columns
-    for merge_metadata in by_merge_metadata:
-        # Combine merge_metadata strings into one
-        merged_metadata_column = "_".join(merge_metadata)
-
-        # Combine the columns into one
-        samples[merged_metadata_column] = samples[merge_metadata].astype(str).apply('_'.join, axis=1)
-
-        # Append the merged column name to by_metadata
-        by_metadata.append(merged_metadata_column)
+    # Iterate over by_merge_metadata to create the merged columns if not None
+    if by_merge_metadata is not None:
+        for merge_metadata in by_merge_metadata:
+            # Combine merge_metadata strings into one
+            merged_metadata_column = "_".join(merge_metadata)
+            # Combine the columns into one
+            samples[merged_metadata_column] = samples[merge_metadata].astype(str).apply('_'.join, axis=1)
+            # Append the merged column name to by_metadata
+            by_metadata.append(merged_metadata_column)
     
     # Currently bugged function
     # check_inclusion(samples)

@@ -1,0 +1,8 @@
+name:
+  arriba
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - arriba

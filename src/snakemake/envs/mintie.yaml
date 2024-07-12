@@ -1,0 +1,9 @@
+name:
+  mintie
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - mintie
+  - bpipe=0.9.12

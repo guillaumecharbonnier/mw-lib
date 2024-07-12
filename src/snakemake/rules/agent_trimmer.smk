@@ -25,6 +25,7 @@ rule agent_trim_pe:
         mbc = "out/{tool}{extra}/{filler}.txt.gz",
         properties = "out/{tool}{extra}/{filler}.properties",
     params:
+        outprefix = "out/{tool}{extra}/{filler}",
         extra = params_extra
     wildcard_constraints:
         tool = "agent/trim"
@@ -32,34 +33,12 @@ rule agent_trim_pe:
         "../envs/agent.yaml"
     shell:
         """
-        OUTDIR=`dirname {output.fq1}`
-        FQ1=$OUTDIR/`basename {input.fq1}`
-        FQ2=$OUTDIR/`basename {input.fq2}`
+        {input.agent} trim -fq1 {input.fq1} -fq2 {input.fq2} -out {params.outprefix} {params.extra}
 
-        # Input fastq symlink are dereferenced in the output directory
-        # else agent will put output files into symlink targets.
-        cp -rL {input.fq1} $FQ1
-        cp -rL {input.fq2} $FQ2
-
-        OUTPREFIX=out/{wildcards.tool}{wildcards.extra}/{wildcards.filler}
-
-        # Output files from previous run should be removed
-        # as the regex `mv` below should match only one file each.
-        rm -f \
-            ${{OUTPREFIX}}_1.fastq*_Cut_0.fastq.gz \
-            ${{OUTPREFIX}}_2.fastq*_Cut_0.fastq.gz \
-            ${{OUTPREFIX}}_N*_MBC_0.txt.gz \
-            ${{OUTPREFIX}}_N*_STATS_0.properties
-
-        {input.agent} trim -fq1 $FQ1 -fq2 $FQ2 {params.extra}
-
-        rm -f $FQ1 $FQ2
-
-        # Timestamped output files from agent are simplified
-        mv ${{OUTPREFIX}}_2.fastq*_Cut_0.fastq.gz {output.fq2}
-        mv ${{OUTPREFIX}}_1.fastq*_Cut_0.fastq.gz {output.fq1}
-        mv ${{OUTPREFIX}}_N*_MBC_0.txt.gz {output.mbc}
-        mv ${{OUTPREFIX}}_N*_STATS_0.properties {output.properties}
+        mv {params.outprefix}_R1.fastq.gz {output.fq1}
+        mv {params.outprefix}_R2.fastq.gz {output.fq2}
+        mv {params.outprefix}_MBC.txt.gz {output.mbc}
+        mv {params.outprefix}_STATS.properties {output.properties}
         """
 
 rule agent_trim_2_lanes_pe:
