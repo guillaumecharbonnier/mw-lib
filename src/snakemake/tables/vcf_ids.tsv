@@ -1,2 +1,4 @@
 id	path
-vcf-SMaSH-snps-GRCh38	["https://raw.githubusercontent.com/rbundschuh/SMaSH/master/snps_GRCh38.vcf"]
+vcf-SMaSH-snps-GRCh38	["out/python/add_vcf_header/wget/https/raw.githubusercontent.com/rbundschuh/SMaSH/master/snps_GRCh38.vcf"]
+vcf-SMaSH-snps-hg19	["out/python/add_vcf_header/wget/https/raw.githubusercontent.com/rbundschuh/SMaSH/master/snps_hg19.vcf"]
+vcf-GRCh38-TP73-alleles	["out/sed/rm-chr-in-vcf/ipynb/retrieve_SNP_of_TP73_files/filtered_data.vcf"]
