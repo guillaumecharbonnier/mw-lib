@@ -50,8 +50,6 @@ rule danpos_wiq:
         cd {params.outdir}
         danpos.py wiq chrominfo wig_to_wiq.wig --reference reference.wig
 
-        ln -f wiq_result/wig_to_wiq.qnor.wig $WDIR/{output.wig}
-
-        #TODO: remove this comment when the rule is working:
+        mv wiq_result/wig_to_wiq.qnor.wig $WDIR/{output.wig}
         rm -rf $WDIR/{params.outdir} ) &> {log}
         """
