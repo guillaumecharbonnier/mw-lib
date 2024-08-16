@@ -34,26 +34,31 @@ def filter_reads(bamfile, snv_chrom, snv_pos, snv_allele):
                 filtered_reads.add(read.query_name)
     return filtered_reads
 
-bamfile = pysam.AlignmentFile("out/samtools/index/samtools/sort/samtools/view_sam_to_bam_-q_30/bowtie2/pe_GRCh38/sickle/pe_-t_sanger_-q_20/ln/alias/sst/all_samples/fastq/ATOJ7_CB548.bam", "rb")
-snv_chrom = "chr14"  # replace with your SNV chromosome
-snv_pos = 22448641  # replace with your SNV position (1-based)
-snv_allele = "A"  # replace with your SNV allele
-
-filtered_reads = filter_reads(bamfile, snv_chrom, snv_pos, snv_allele)
-
 # Create output dir
 import os
-outdir = "out/py/filter_snv_allele"
+outdir = "out/py/filter_snv_allele/picard/MarkDuplicates_--REMOVE_DUPLICATES_true/ln/alias/sst/all_samples/GRCh38/bam/"
 os.makedirs(outdir, exist_ok=True)
 
-outfilepath = os.path.join(outdir, "ATOJ7_CB548.bam")
+# Define treatments
+treatments = [
+    {"filename": "ATOJ7_CB548.bam", "snv_chrom": "chr14", "snv_pos": 22448641, "snv_allele": "A"},
+    {"filename": "ATOJ7_CB743.bam", "snv_chrom": "chr14", "snv_pos": 22448641, "snv_allele": "G"},
+    # Add more treatments as needed
+]
 
-# Write all reads except the filtered ones to a new BAM file
-outfile = pysam.AlignmentFile(outfilepath, "wb", header=bamfile.header)
-for read in bamfile.fetch():
-    if read.query_name not in filtered_reads:
-        outfile.write(read)
-outfile.close()
+for treatment in treatments:
+    print(f"Filtering reads for {treatment['filename']}...")
+    bamfile = pysam.AlignmentFile(f"out/samtools/index/picard/MarkDuplicates_--REMOVE_DUPLICATES_true/ln/alias/sst/all_samples/GRCh38/bam/{treatment['filename']}", "rb")
+    outfilepath = os.path.join(outdir, treatment['filename'])
 
-# Index the new BAM file
-pysam.index(outfilepath)
+    filtered_reads = filter_reads(bamfile, treatment['snv_chrom'], treatment['snv_pos'], treatment['snv_allele'])
+
+    # Write all reads except the filtered ones to a new BAM file
+    outfile = pysam.AlignmentFile(outfilepath, "wb", header=bamfile.header)
+    for read in bamfile.fetch():
+        if read.query_name not in filtered_reads:
+            outfile.write(read)
+    outfile.close()
+
+    # Index the new BAM file
+    pysam.index(outfilepath)
