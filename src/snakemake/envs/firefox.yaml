@@ -2,6 +2,6 @@ name:
   firefox
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
   - firefox

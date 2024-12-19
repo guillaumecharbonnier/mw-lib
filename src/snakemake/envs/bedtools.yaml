@@ -3,7 +3,7 @@ name:
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - bedtools
   - coreutils # recent basename needed in rule bedtools_unionbedg

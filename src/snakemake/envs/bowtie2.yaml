@@ -2,7 +2,7 @@ name: bowtie2
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - bowtie2
   - tbb == 2020.2 #temp fix: https://github.com/bioconda/bioconda-recipes/pull/27174

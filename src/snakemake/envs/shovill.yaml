@@ -2,7 +2,7 @@ name: shovill
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - shovill
   - coreutils

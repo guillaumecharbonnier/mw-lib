@@ -3,7 +3,7 @@ name:
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
   - gwerbin
   - dan_blanchard
   - guillaumecharbonnier

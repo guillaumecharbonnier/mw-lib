@@ -6,7 +6,7 @@ name:
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - r-rcolorbrewer
   - r-ggplot2

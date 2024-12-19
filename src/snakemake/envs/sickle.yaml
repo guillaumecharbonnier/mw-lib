@@ -2,7 +2,7 @@ name: sickle
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - sickle-trim
 

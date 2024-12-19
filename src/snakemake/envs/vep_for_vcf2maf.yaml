@@ -2,7 +2,7 @@ name: vep_for_vcf2maf
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   # Versions below from: https://gist.github.com/ckandoth/61c65ba96b011f286220fa4832ad2bc0
   - ensembl-vep==102.0

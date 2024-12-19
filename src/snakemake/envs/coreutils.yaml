@@ -2,6 +2,6 @@ name:
   coreutils
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
   - coreutils

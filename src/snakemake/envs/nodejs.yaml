@@ -2,6 +2,6 @@ name:
   nodejs
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
   - nodejs

@@ -2,7 +2,7 @@ name: rseqc
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - rseqc
 

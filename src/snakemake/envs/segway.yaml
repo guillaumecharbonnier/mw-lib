@@ -2,7 +2,7 @@ name: segway
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - segway
 

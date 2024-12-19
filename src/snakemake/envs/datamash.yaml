@@ -2,7 +2,7 @@ name:
   datamash
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
   - datamash
 

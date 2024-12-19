@@ -2,7 +2,7 @@ name: circexplorer3
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - circexplorer2
   - hisat2

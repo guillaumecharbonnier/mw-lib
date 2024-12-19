@@ -2,7 +2,7 @@ name: pysradb_sra-tools
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - pysradb
   - sra-tools

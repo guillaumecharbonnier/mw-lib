@@ -3,7 +3,7 @@ name:
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - wiggletools
   - ucsc-wigtobigwig # Needed because wiggletools output wig even from bigwig

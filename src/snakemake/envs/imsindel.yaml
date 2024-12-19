@@ -4,6 +4,6 @@ channels:
   - guillaumecharbonnier
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - imsindel

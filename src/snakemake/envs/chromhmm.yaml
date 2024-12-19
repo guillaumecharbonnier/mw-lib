@@ -3,6 +3,6 @@ name:
 channels:
   - bioconda
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
   - chromhmm

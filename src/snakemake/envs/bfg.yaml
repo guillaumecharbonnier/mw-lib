@@ -2,6 +2,6 @@ name:
   bfg
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
   - bfg

@@ -2,6 +2,6 @@ name: openbabel
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - openbabel

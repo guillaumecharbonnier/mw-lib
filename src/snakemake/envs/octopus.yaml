@@ -2,6 +2,6 @@ name: octopus
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - octopus

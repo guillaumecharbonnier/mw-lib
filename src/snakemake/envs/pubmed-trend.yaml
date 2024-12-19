@@ -2,7 +2,7 @@ name:
   pubmed-trend
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
   - r-xml
   - r-plyr

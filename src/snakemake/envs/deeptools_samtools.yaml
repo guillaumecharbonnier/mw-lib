@@ -4,7 +4,7 @@ name:
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - deeptools
   - samtools

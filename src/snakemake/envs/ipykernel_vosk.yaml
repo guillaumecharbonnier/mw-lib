@@ -2,7 +2,7 @@ name: ipykernel_vosk
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - ipykernel
   - ffmpeg 

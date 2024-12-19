@@ -2,7 +2,7 @@ name: dear
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
   - guillaumecharbonnier
 dependencies:
   - r-argparser

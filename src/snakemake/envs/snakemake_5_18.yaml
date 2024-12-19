@@ -3,7 +3,7 @@ name:
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - conda
   - snakemake = 5.18 # 5.19 breaks the symlink use in some rules, eg samtools index leads to ChildIO error

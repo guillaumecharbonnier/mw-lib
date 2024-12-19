@@ -3,7 +3,7 @@ name:
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - biofluff
   - openssl <1.1 # Temporary workaround (https://github.com/bioconda/bioconda-recipes/issues/17212https://github.com/bioconda/bioconda-recipes/issues/17212)

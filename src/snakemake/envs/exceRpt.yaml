@@ -1,6 +1,6 @@
 name: exceRpt
 channels:
-  - defaults
+  - nodefaults
   - bioconda
   - conda-forge
   - dranew

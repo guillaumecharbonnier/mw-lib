@@ -1,9 +1,11 @@
 name:
-  methyldackel
+  bsgenova
 channels:
   - conda-forge
   - bioconda
   - nodefaults
 dependencies:
-  - methyldackel
+  - python >= 3.8
+  - numpy >= 1.18
+  - pysam >= 0.18
 

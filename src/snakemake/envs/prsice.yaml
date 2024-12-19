@@ -1,9 +1,10 @@
 name:
-  methyldackel
+  prsice
 channels:
   - conda-forge
   - bioconda
+  - dnachun
   - nodefaults
 dependencies:
-  - methyldackel
-
+  - prsice
+  # - r-irkernel

@@ -2,7 +2,7 @@ name:
   nginx
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
   - nginx
   - rathole

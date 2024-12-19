@@ -2,7 +2,7 @@ name: gfold
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - gfold
   - samtools

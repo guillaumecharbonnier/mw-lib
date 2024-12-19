@@ -3,7 +3,7 @@ name:
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - r-rmarkdown
   - pandoc=1.19 #requirement to render R Markdown.

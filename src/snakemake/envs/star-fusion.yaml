@@ -2,6 +2,6 @@ name: star-fusion
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - star-fusion

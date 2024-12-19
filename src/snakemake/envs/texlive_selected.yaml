@@ -6,7 +6,7 @@ channels:
   #- bioconda
   - pkgw/label/superseded
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
   - texlive-core 
   - texlive-selected

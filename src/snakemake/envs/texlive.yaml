@@ -5,7 +5,7 @@ name:
 channels:
   #- bioconda
   - conda-forge
-    #  - defaults
+    #  - nodefaults
   - nodefaults
 dependencies:
   - texlive-core 

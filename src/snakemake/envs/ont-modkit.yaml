@@ -1,9 +1,8 @@
 name:
-  methyldackel
+  ont-modkit
 channels:
   - conda-forge
   - bioconda
   - nodefaults
 dependencies:
-  - methyldackel
-
+  - ont-modkit

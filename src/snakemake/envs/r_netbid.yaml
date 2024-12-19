@@ -3,7 +3,7 @@ name:
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 # From: https://jyyulab.github.io/NetBID/docs/pre_request
 dependencies:
   - r-devtools

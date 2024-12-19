@@ -3,7 +3,7 @@ name:
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
   - guillaumecharbonnier
 dependencies:
   - pblat

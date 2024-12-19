@@ -2,7 +2,7 @@ name: mindthegap
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - mindthegap
 

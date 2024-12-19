@@ -2,7 +2,7 @@ name: nucleoatac
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - nucleoatac
 

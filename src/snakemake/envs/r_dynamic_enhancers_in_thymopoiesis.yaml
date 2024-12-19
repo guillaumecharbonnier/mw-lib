@@ -3,7 +3,7 @@ name:
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   #- r-dbscan # I want to try optics clustering.
   #- r-crayon # Trying colored output in terminal.

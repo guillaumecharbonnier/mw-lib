@@ -2,7 +2,7 @@ name: spades
 channels:
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - spades
   - coreutils

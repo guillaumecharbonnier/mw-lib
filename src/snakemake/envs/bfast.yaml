@@ -4,6 +4,6 @@ channels:
   - BioBuilds
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - bfast
