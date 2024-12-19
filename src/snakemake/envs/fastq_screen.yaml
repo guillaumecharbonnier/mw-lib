@@ -1,9 +1,10 @@
 name:
   fastq_screen
 channels:
-  - guillaumecharbonnier
   - conda-forge
   - bioconda
-  - defaults
+  - nodefaults
 dependencies:
   - fastq-screen
+  - perl-gdgraph # required to generate png output and avoid this error
+                 # Perl module GD::Graph::bars not installed, skipping charts
