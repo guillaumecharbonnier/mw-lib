@@ -51,13 +51,6 @@ rule bcftools_mpileup_fagenome_bamlist:
         """
 
 
-
-
-
-
-
-
-
 rule samtools_mpileup_fagenome:
     """
     Note:
