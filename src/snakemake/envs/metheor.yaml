@@ -1,0 +1,9 @@
+name:
+  metheor
+channels:
+  - dohlee
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - metheor

@@ -40,3 +40,4 @@ fa-genome-Rnor6	["out/cat/assembly_ensembl/Rnor6.fa"]
 # Addition of genomes for spatial transcriptomics
 fa_genome_GRCh38_dna_primary_assembly_for_spaceranger	["out/tar/xvzf_genome_cellranger/wget/https/cf.10xgenomics.com/supp/spatial-exp/refdata-gex-GRCh38-2020-A"]
 fa_genome_GRCm38_dna_primary_assembly_for_spaceranger	["out/tar/xvzf_genome_cellranger/wget/https/cf.10xgenomics.com/supp/spatial-exp/refdata-gex-mm10-2020-A"]
+fa-genome-hs1	["out/samtools/faidx/ucsc/twoBitToFa/wget/https/hgdownload.soe.ucsc.edu/goldenPath/hs1/bigZips/hs1.fa"]

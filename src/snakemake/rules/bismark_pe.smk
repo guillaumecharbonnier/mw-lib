@@ -16,9 +16,13 @@ rule bismark_tests:
             genome = ["fa-genome-GRCh38-main-chr", "fa-genome-RRBS-v2-methylated-control", "fa-genome-RRBS-v2-unmethylated-control"]
         )
 
-
-
 rule bismark_pe:
+    """
+    Run bismark on paired-end reads.
+
+    Example for Diagenode RRBS V2:
+        # bismark -q --pbat --prefix Meth_ctrl ./genomes/RRBS_methylated_control -1 MySample_R1_val_1.fastq -2 MySample_R2_val_2.fastq 
+    """
     input:
         fwd = "out/{filler}_1.fastq.gz",
         rev = "out/{filler}_2.fastq.gz",
@@ -29,14 +33,22 @@ rule bismark_pe:
     log:
         "out/{tool}{extra}_{fa_genome_id}/{filler}.log"
     params:
-        extra = params_extra
+        extra = params_extra,
+        tmp_dir = "out/{tool}{extra}_{fa_genome_id}/{filler}_tmp"
     conda:
         "../envs/bismark.yaml"
     wildcard_constraints:
-        tool = "bismark/pe",
+        tool = "bismark/pe"
+    resources:
+        high_io = 1,
+        ram = 40 # This is without using the --multicore option for human genome.
+    threads: 
+        2 # Bismark will run multiple tasks in parallel even without settings --multicore. See https://www.bioinformatics.babraham.ac.uk/projects/bismark/Bismark_User_Guide.pdf
     shell:
         """
-        # bismark -q --pbat --prefix Meth_ctrl ./genomes/RRBS_methylated_control -1 MySample_R1_val_1.fastq -2 MySample_R2_val_2.fastq 
-        bismark {params.extra} -o $(dirname {output.bam}) $(dirname {input.ref}) -1 {input.fwd} -2 {input.rev} &> {log}
+        bismark {params.extra} \
+            -o $(dirname {output.bam}) $(dirname {input.ref}) \
+            --temp_dir {params.tmp_dir} \
+            -1 {input.fwd} -2 {input.rev} &> {log}
         mv out/{wildcards.tool}{wildcards.extra}_{wildcards.fa_genome_id}/{wildcards.filler}_1_bismark_bt2_pe.bam {output.bam}
         """
