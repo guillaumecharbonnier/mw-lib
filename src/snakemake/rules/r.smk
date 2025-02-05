@@ -208,38 +208,38 @@ rule r_rmarkdown_dynamic_enhancers_in_thymopoiesis:
         Rscript {input.script} -r {output.Rmd}
         """
 
-
-rule r_rmarkdown_dynamic_consensus_mhsc_tcells_rgreat_revigo:
-    """
-    Created:
-        2018-07-24 16:55:58
-    Aim:
-        Compile Rmd files with rmarkdown library.
-        Dynamic allow to track all files produced by knitr for this Rmd.
-    Test:
-        out/r/rmarkdown_dynamic/consensus_mhsc_t-cells_rgreat_revigo.html
-    """
-    input:
-        Rmd="src/rmd/consensus_mhsc_t-cells_rgreat_revigo.Rmd",
-        #Rmd="src/rmd/{filler}.Rmd",
-        Rscript="opt/miniconda/envs/r/bin/Rscript",
-        #Rscript="opt/miniconda/envs/rgreat_revigo/bin/Rscript",
-        script="src/r/script/rmarkdown.R"
-    output:
-        files= dynamic("out/r/rmarkdown_dynamic/consensus_mhsc_t-cells_rgreat_revigo{files}")
-        #files= dynamic("out/r/rmarkdown_dynamic/consensus_mhsc_tcells_rgreat_revigo_files/figure-html/{doc}")
-    params:
-        Rmd  = "out/r/rmarkdown_dynamic/consensus_mhsc_t-cells_rgreat_revigo.Rmd",
-        html = "out/r/rmarkdown_dynamic/consensus_mhsc_t-cells_rgreat_revigo.html",
-    shell:
-        """
-        set +u; source opt/miniconda/bin/activate r; set -u
-        # cp because I do not want to flood src directory with cache files.
-        cp {input.Rmd} {params.Rmd}
-        ln -sf ../../../out out/r/rmarkdown_dynamic/out
-        Rscript {input.script} -r {params.Rmd}
-        #{input.Rscript} {input.script} -r {params.Rmd}
-        """
+# Dynamic is removed from snakemake v8.
+# rule r_rmarkdown_dynamic_consensus_mhsc_tcells_rgreat_revigo:
+#     """
+#     Created:
+#         2018-07-24 16:55:58
+#     Aim:
+#         Compile Rmd files with rmarkdown library.
+#         Dynamic allow to track all files produced by knitr for this Rmd.
+#     Test:
+#         out/r/rmarkdown_dynamic/consensus_mhsc_t-cells_rgreat_revigo.html
+#     """
+#     input:
+#         Rmd="src/rmd/consensus_mhsc_t-cells_rgreat_revigo.Rmd",
+#         #Rmd="src/rmd/{filler}.Rmd",
+#         Rscript="opt/miniconda/envs/r/bin/Rscript",
+#         #Rscript="opt/miniconda/envs/rgreat_revigo/bin/Rscript",
+#         script="src/r/script/rmarkdown.R"
+#     output:
+#         files= dynamic("out/r/rmarkdown_dynamic/consensus_mhsc_t-cells_rgreat_revigo{files}")
+#         #files= dynamic("out/r/rmarkdown_dynamic/consensus_mhsc_tcells_rgreat_revigo_files/figure-html/{doc}")
+#     params:
+#         Rmd  = "out/r/rmarkdown_dynamic/consensus_mhsc_t-cells_rgreat_revigo.Rmd",
+#         html = "out/r/rmarkdown_dynamic/consensus_mhsc_t-cells_rgreat_revigo.html",
+#     shell:
+#         """
+#         set +u; source opt/miniconda/bin/activate r; set -u
+#         # cp because I do not want to flood src directory with cache files.
+#         cp {input.Rmd} {params.Rmd}
+#         ln -sf ../../../out out/r/rmarkdown_dynamic/out
+#         Rscript {input.script} -r {params.Rmd}
+#         #{input.Rscript} {input.script} -r {params.Rmd}
+#         """
 
 rule r_bookdown:
     """

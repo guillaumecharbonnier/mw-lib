@@ -26,7 +26,7 @@ rule phantompeakqualtools_bam_noctrl:
         "../envs/phantompeakqualtools.yaml"
     shell:
         "run_spp.R -c={input.bam} {params} -odir=`dirname {output.tsv}` -out={output.tsv}; "
-        "ln {output.tsv} {output.multiqc}"
+        "ln -srf {output.tsv} {output.multiqc}"
 
 rule phantompeakqualtools_bam_ctrl:
     """

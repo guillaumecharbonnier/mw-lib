@@ -93,18 +93,18 @@ rule bowtie2_paired_end_extra:
         index_part=input_bowtie2_index_parts
     output:
         sam                = temp("out/{tool}{extra}_{index}/{filler}.sam"),
-        unmapped_single    = "out/{tool}{extra}_{index}/{filler}/unmapped/single.fastq.gz",
-        unmapped_pair1     = "out/{tool}{extra}_{index}/{filler}/unmapped/pair.fastq.1.gz",
-        unmapped_pair2     = "out/{tool}{extra}_{index}/{filler}/unmapped/pair.fastq.2.gz",
+        unmapped_single    = "out/{tool}{extra}_{index}/{filler}/unmapped_single.fastq.gz",
+        unmapped_pair1     = "out/{tool}{extra}_{index}/{filler}/unmapped_pair.fastq.1.gz",
+        unmapped_pair2     = "out/{tool}{extra}_{index}/{filler}/unmapped_pair.fastq.2.gz",
         # alias because the defaul{tool}{extra}_{index}t extension for un_{extra}mapped is not convenient for 'fastq' suffix handling.
-        ln_unmapped_single = "out/{tool}{extra}_{index}/{filler}/unmapped_single.fastq.gz",
-        ln_unmapped_pair1  = "out/{tool}{extra}_{index}/{filler}/unmapped_pair1.fastq.gz",
-        ln_unmapped_pair2  = "out/{tool}{extra}_{index}/{filler}/unmapped_pair2.fastq.gz"
+        # ln_unmapped_single = "out/{tool}{extra}_{index}/{filler}/unmapped_single.fastq.gz",
+        # ln_unmapped_pair1  = "out/{tool}{extra}_{index}/{filler}/unmapped_pair1.fastq.gz",
+        # ln_unmapped_pair2  = "out/{tool}{extra}_{index}/{filler}/unmapped_pair2.fastq.gz"
     log:
         "out/{tool}{extra}_{index}/{filler}.log"
     params:
         extra = params_extra,
-        unmapped_pair_base = "out/{tool}{extra}_{index}/{filler}/unmapped/pair.fastq.gz",
+        unmapped_pair_base = "out/{tool}{extra}_{index}/{filler}/unmapped_pair.fastq.gz",
         index=params_bowtie2_index_base_path
     conda:
         "../envs/bowtie2.yaml"
@@ -122,8 +122,7 @@ rule bowtie2_paired_end_extra:
             {params.extra}\
             2> {log}
 
-        ln -srf {output.unmapped_single} {output.ln_unmapped_single}
-        ln -srf {output.unmapped_pair1} {output.ln_unmapped_pair1}
-        ln -srf {output.unmapped_pair2} {output.ln_unmapped_pair2}
         """
-
+        # ln -srf {output.unmapped_single} {output.ln_unmapped_single}
+        # ln -srf {output.unmapped_pair1} {output.ln_unmapped_pair1}
+        # ln -srf {output.unmapped_pair2} {output.ln_unmapped_pair2}

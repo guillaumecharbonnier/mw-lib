@@ -1072,54 +1072,54 @@ rule bedtools_intersect_thymus_stage_common_peaks_hg38_merged:
         """
 
 
-rule test_dynamic:
-    input:
-        bed_combination= dynamic("out/bedtools/multiinter_thymus_peaks_hg38_merged/{combination}.bed")
+# rule test_dynamic:
+#     input:
+#         bed_combination= dynamic("out/bedtools/multiinter_thymus_peaks_hg38_merged/{combination}.bed")
 
-rule bedtools_multiinter_thymus_peaks_hg38_merged_dynamic:
-    """
-    Created:
-        2018-03-19 10:46:58
-    Aim:
-        Creating thymus stage common peaks from macs2 peaks.
-        Here working with merged samples.
-        Dynamic working but not completely satisfying.
-    Test:
-        out/bedtools/multiinter_thymus_peaks_hg38_merged/multiinter.bed
-    """
-    input:
-        bedtools="opt/bedtools2/bin/bedtools",
-        bed_all  ="out/bedtools/intersect_exclude_from_macs2_peaks_in_input_hg38/bedtools/merge/sort/coordinates_bed/cat/hg38-macs2-peaks-H3K27ac-thymus-merged.bed",
-        bed_cd34 = "out/sort/coordinates_bed/macs2/callpeak_format-BAM_gsize-hs_nomodel/ln/alias/experiments/hg38_H3K27ac_thymus/CD34_over_input_peaks.narrowPeak",
-        bed_ec   = "out/sort/coordinates_bed/macs2/callpeak_format-BAM_gsize-hs_nomodel/ln/alias/experiments/hg38_H3K27ac_thymus/EC_over_input_peaks.narrowPeak",
-        bed_lc   = "out/sort/coordinates_bed/macs2/callpeak_format-BAM_gsize-hs_nomodel/ln/alias/experiments/hg38_H3K27ac_thymus/LC_over_input_peaks.narrowPeak",
-        bed_sp4  = "out/sort/coordinates_bed/macs2/callpeak_format-BAM_gsize-hs_nomodel/ln/alias/experiments/hg38_H3K27ac_thymus/SP4_over_input_peaks.narrowPeak",
-        bed_sp8  = "out/sort/coordinates_bed/macs2/callpeak_format-BAM_gsize-hs_nomodel/ln/alias/experiments/hg38_H3K27ac_thymus/SP8_over_input_peaks.narrowPeak"
-    output:
-        bed_combination= dynamic("out/bedtools/multiinter_thymus_peaks_hg38_merged/{combination}.bed")
-    params:
-        outdir = "out/bedtools/multiinter_thymus_peaks_hg38_merged",
-        bed_multiinter = "out/bedtools/multiinter_thymus_peaks_hg38_merged/multiinter.bed",
-        bed_all        = "out/bedtools/multiinter_thymus_peaks_hg38_merged/all_f0.5.bed",
-        #bed_not_common = "out/bedtools/multiinter_thymus_peaks_hg38_merged/not_common.bed",
-        #bed_cd34       = "out/bedtools/multiinter_thymus_peaks_hg38_merged/CD34.bed",
-        #bed_ec         = "out/bedtools/multiinter_thymus_peaks_hg38_merged/EC.bed",
-        #bed_lc         = "out/bedtools/multiinter_thymus_peaks_hg38_merged/LC.bed",
-        #bed_sp4        = "out/bedtools/multiinter_thymus_peaks_hg38_merged/SP4.bed",
-        #bed_sp8        = "out/bedtools/multiinter_thymus_peaks_hg38_merged/SP8.bed",
-    shell:
-        """
-        {input.bedtools} multiinter -i {input.bed_cd34} {input.bed_ec} {input.bed_lc} {input.bed_sp4} {input.bed_sp8} > {params.bed_multiinter}
-        {input.bedtools} intersect -a {input.bed_all} -b {params.bed_multiinter} -wa -wb -f 0.5 > {params.bed_all}
+# rule bedtools_multiinter_thymus_peaks_hg38_merged_dynamic:
+#     """
+#     Created:
+#         2018-03-19 10:46:58
+#     Aim:
+#         Creating thymus stage common peaks from macs2 peaks.
+#         Here working with merged samples.
+#         Dynamic working but not completely satisfying.
+#     Test:
+#         out/bedtools/multiinter_thymus_peaks_hg38_merged/multiinter.bed
+#     """
+#     input:
+#         bedtools="opt/bedtools2/bin/bedtools",
+#         bed_all  ="out/bedtools/intersect_exclude_from_macs2_peaks_in_input_hg38/bedtools/merge/sort/coordinates_bed/cat/hg38-macs2-peaks-H3K27ac-thymus-merged.bed",
+#         bed_cd34 = "out/sort/coordinates_bed/macs2/callpeak_format-BAM_gsize-hs_nomodel/ln/alias/experiments/hg38_H3K27ac_thymus/CD34_over_input_peaks.narrowPeak",
+#         bed_ec   = "out/sort/coordinates_bed/macs2/callpeak_format-BAM_gsize-hs_nomodel/ln/alias/experiments/hg38_H3K27ac_thymus/EC_over_input_peaks.narrowPeak",
+#         bed_lc   = "out/sort/coordinates_bed/macs2/callpeak_format-BAM_gsize-hs_nomodel/ln/alias/experiments/hg38_H3K27ac_thymus/LC_over_input_peaks.narrowPeak",
+#         bed_sp4  = "out/sort/coordinates_bed/macs2/callpeak_format-BAM_gsize-hs_nomodel/ln/alias/experiments/hg38_H3K27ac_thymus/SP4_over_input_peaks.narrowPeak",
+#         bed_sp8  = "out/sort/coordinates_bed/macs2/callpeak_format-BAM_gsize-hs_nomodel/ln/alias/experiments/hg38_H3K27ac_thymus/SP8_over_input_peaks.narrowPeak"
+#     output:
+#         bed_combination= dynamic("out/bedtools/multiinter_thymus_peaks_hg38_merged/{combination}.bed")
+#     params:
+#         outdir = "out/bedtools/multiinter_thymus_peaks_hg38_merged",
+#         bed_multiinter = "out/bedtools/multiinter_thymus_peaks_hg38_merged/multiinter.bed",
+#         bed_all        = "out/bedtools/multiinter_thymus_peaks_hg38_merged/all_f0.5.bed",
+#         #bed_not_common = "out/bedtools/multiinter_thymus_peaks_hg38_merged/not_common.bed",
+#         #bed_cd34       = "out/bedtools/multiinter_thymus_peaks_hg38_merged/CD34.bed",
+#         #bed_ec         = "out/bedtools/multiinter_thymus_peaks_hg38_merged/EC.bed",
+#         #bed_lc         = "out/bedtools/multiinter_thymus_peaks_hg38_merged/LC.bed",
+#         #bed_sp4        = "out/bedtools/multiinter_thymus_peaks_hg38_merged/SP4.bed",
+#         #bed_sp8        = "out/bedtools/multiinter_thymus_peaks_hg38_merged/SP8.bed",
+#     shell:
+#         """
+#         {input.bedtools} multiinter -i {input.bed_cd34} {input.bed_ec} {input.bed_lc} {input.bed_sp4} {input.bed_sp8} > {params.bed_multiinter}
+#         {input.bedtools} intersect -a {input.bed_all} -b {params.bed_multiinter} -wa -wb -f 0.5 > {params.bed_all}
 
-        for CLASS in `cut -f8 {params.bed_all} | sort -u`
-        do
-            echo $CLASS
-            awk -v CLASS="$CLASS" 'BEGIN {{OFS="\\t"}}; ($8 == CLASS) {{print $0}}' {params.bed_all} > {params.outdir}/$CLASS.bed
-        done
+#         for CLASS in `cut -f8 {params.bed_all} | sort -u`
+#         do
+#             echo $CLASS
+#             awk -v CLASS="$CLASS" 'BEGIN {{OFS="\\t"}}; ($8 == CLASS) {{print $0}}' {params.bed_all} > {params.outdir}/$CLASS.bed
+#         done
 
-        rm -f {params.bed_multiinter} {params.bed_all}
-        """
+#         rm -f {params.bed_multiinter} {params.bed_all}
+#         """
 
 
 

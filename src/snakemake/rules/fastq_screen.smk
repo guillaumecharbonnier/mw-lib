@@ -49,7 +49,8 @@ rule fastq_screen_filter:
         conf = "out/sed/edit_fastq_screen_conf/fastq_screen/get_genomes/FastQ_Screen_Genomes/fastq_screen.conf"
     output:
         txt="out/{tool}{extra}/{filler}_screen.txt",
-        png="out/{tool}{extra}/{filler}_screen.png",
+        # Png is not generated with default conda fastq_screen installation
+        # png="out/{tool}{extra}/{filler}_screen.png",
         html="out/{tool}{extra}/{filler}_screen.html"
     log:
         "out/{tool}{extra}/{filler}/log"
