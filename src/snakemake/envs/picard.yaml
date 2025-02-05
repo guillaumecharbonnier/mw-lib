@@ -1,8 +1,8 @@
 name:
   picard
 channels:
-  - bioconda
   - conda-forge
+  - bioconda
   - nodefaults
 dependencies:
   - picard

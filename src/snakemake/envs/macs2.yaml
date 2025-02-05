@@ -4,5 +4,5 @@ channels:
   - bioconda
   - nodefaults
 dependencies:
-  - macs2
+  - macs2 =2.2.7 #having error with current 2.2.9.1: lib/python3.11/site-packages/MACS2/IO/ScoreTrack.cpython-311-x86_64-linux-gnu.so: undefined symbol: __log_finite 
 
