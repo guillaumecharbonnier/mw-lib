@@ -24,16 +24,18 @@ rule salmon_index_refseq_with_decoys:
         rna = expand(
             "out/wget/https/ftp.ncbi.nlm.nih.gov/refseq/H_sapiens/mRNA_Prot/human.{number}.rna.fna.gz",
             number=range(1, 17)  # Specify the range of numbers from 1 to 16
-        )
+        ),
         dna = "out/wget/ftp/ftp.ensembl.org/pub/release-102/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz"
     output:
         directory("out/salmon/index_refseq_with_decoys/homo_sapiens")
+    conda:
+        "../envs/salmon.yaml"
     shell:
         """
         mkdir -p {output}
         cat {input} > {output}/transcriptome_genome.fa.gz
 
-        zcat {input.dna} | grep "^>" | cut -d " " -f 1 | sed "s/>//g" > {output}/decoys.txt
+        zgrep "^>" {input.dna} | cut -d " " -f 1 | sed "s/>//g" > {output}/decoys.txt
 
         salmon index -t {output}/transcriptome_genome.fa.gz -d {output}/decoys.txt -i {output}
 

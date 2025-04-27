@@ -127,6 +127,9 @@ def tidy_samples(
     # df = df.dropna(subset = "sample_name")
     samples.fillna("NA", inplace=True)
 
+    # Remove the '.0' suffix from the 'run' column
+    samples['run'] = samples['run'].astype(str).str.replace('.0', '', regex=False)
+
     # Iterate over by_merge_metadata to create the merged columns if not None
     if by_merge_metadata is not None:
         for merge_metadata in by_merge_metadata:

@@ -31,8 +31,8 @@ rule danpos_wiq:
     conda:
         "../envs/danpos.yaml"
     wildcard_constraints:
-        wig_to_wiq = "[a-zA-Z0-9_-]+",
-        reference = "[a-zA-Z0-9_-]+"
+        wig_to_wiq = "[a-zA-Z0-9_+-]+",
+        reference = "[a-zA-Z0-9_+-]+"
     threads:
         1
     priority:
