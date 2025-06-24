@@ -1,0 +1,11 @@
+name:
+  jbrowser
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  # From https://jbrowse.org/jb2/docs/quickstart_web/#prerequisites
+  - nodejs
+  - samtools
+  - tabix
