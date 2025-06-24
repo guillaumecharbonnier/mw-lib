@@ -1,6 +1,7 @@
 id	path
 # STAR index files
 staridx-GRCh38-ensembl	out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-ensembl
+staridx-GRCh38-ensembl-r110	out/star/build_index/fa-genome-GRCh38-ensembl-r110_gtf-GRCh38-ensembl-r110
 staridx-GRCh38-merge-attr-ensembl	out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-merge-attr-ensembl
 staridx-GRCh38-merge-attr-retrieve-ensembl	out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-merge-attr-retrieve-ensembl
 staridx-GRCh38-BP-ensembl	out/star/build_index/fa-genome-GRCh38-Blueprint_gtf-GRCh38-ensembl

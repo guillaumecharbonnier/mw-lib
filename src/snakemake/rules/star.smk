@@ -1,3 +1,86 @@
+rule tests_star_scipio:
+    input:
+        expand(
+            "out/star/scipio_staridx-GRCh38-ensembl-r110_gtf-GRCh38-ensembl-r110/ln/alias/sst/all_samples/fastq/{sample}.bam",
+            sample = [
+                "HSC_BplusFLT3_Scipio",
+                "HSC_BplusGCSF_Scipio",
+                "HSC_BplusMCSF_Scipio",
+                "HSC_B_Scipio",
+                "MLP_BplusFLT3_Scipio",
+                "MLP_B_Scipio"
+            ]
+        )
+
+rule star_scipio:
+    """
+    Created:
+        2025-02-19 16:12:59
+    Aim:
+        Apply STARsolo according to Scipio guidelines: Scipio-bioscience_Cytonaut-Local-UserGuide_v1.3.pdf
+    Test:
+        out/star/scipio_staridx-GRCh38-ensembl-r110_gtf-GRCh38-ensembl-r110/ln/alias/sst/all_samples/fastq/MLP_B_Scipio.bam
+    """
+    input:
+        fwd = "out/{filler}_1.fastq.gz",
+        rev = "out/{filler}_2.fastq.gz",
+        white_list = "out/sh/generate_scipio_white_list/{filler}_1.white_list.tsv",
+        index = lambda wildcards: mwconf['ids'][wildcards.index_id],
+        gtf   = lambda wildcards: eval(mwconf['ids'][wildcards.gtf_id])
+    output:
+        bam    = "out/{tool}{extra}_{index_id}_{gtf_id}/{filler}.bam",
+        log    = "out/{tool}{extra}_{index_id}_{gtf_id}/{filler}/Log.final.out"
+    log:
+        "out/{tool}{extra}_{index_id}_{gtf_id}/{filler}.log"
+    params:
+        outdir = "out/{tool}{extra}_{index_id}_{gtf_id}/{filler}",
+        # Adding tmp dir here because I get FIFO error when outdir is inside the rclone mounted folder.
+        tmpdir = "/tmp/{tool}{extra}_{index_id}_{gtf_id}/{filler}",
+        extra = params_extra
+    wildcard_constraints:
+        tool="star/scipio",
+        gtf_id="gtf-[a-zA-Z0-9-]+",
+        star_index_id="staridx-[a-zA-Z0-9-]+"
+    conda:
+        "../envs/star.yaml"
+    threads:
+        24
+    shell:
+        """
+        ( WDIR=`pwd`
+        # Clean tmp dir and outdir if previous execution was interrupted
+        rm -rf {params.tmpdir} {params.outdir}
+        mkdir -p {params.outdir} `dirname {params.tmpdir}`
+        cd {params.outdir}
+        STAR \
+            --genomeDir $WDIR/{input.index} \
+            --readFilesIn $WDIR/{input.rev} $WDIR/{input.fwd} \
+            --sjdbGTFfile $WDIR/{input.gtf} \
+            --runThreadN {threads} \
+            --readFilesCommand zcat \
+            --outFilterMultimapNmax 10 \
+            --outTmpDir {params.tmpdir} \
+            --twopassMode Basic --quantMode GeneCounts \
+            --outSAMtype BAM SortedByCoordinate --outSAMunmapped Within \
+            --outSAMattributes NH HI nM AS CR UR CB UB GX GN sS sQ sM \
+            --soloType CB_UMI_Simple --soloFeatures Gene --soloCBmatchWLtype Exact \
+            --soloUMIfiltering MultiGeneUMI_CR --soloUMIdedup 1MM_CR \
+            --soloCBwhitelist $WDIR/{input.white_list} --soloCBstart 1 \
+            --soloCBlen 12 --soloUMIstart 13 --soloUMIlen 13 \
+            {params.extra}
+
+            # --soloBarcodeReadLength 31 
+            # was inside the Scipio guideline but it is weird according of the other arguments.
+            # Testing without it to see if it avoid critical error
+
+
+            # Need to check relevance of this:
+            # --outFileNamePrefix %sample_name%_ 
+
+        mv Aligned.sortedByCoord.out.bam $WDIR/{output.bam}
+        rm -rf {params.outdir}/_STARgenome) &> {log}
+        """
+
 rule star_pe_extra:
     """
     Modified:
@@ -18,6 +101,7 @@ rule star_pe_extra:
         "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}.log"
     params:
         outdir = "out/star/pe_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}",
+        tmpdir = "/tmp/star/pe_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}",
         extra = params_extra,
         extin = lambda wildcards: "--readFilesCommand zcat" if wildcards.extin == 'fastq.gz' else "",
         extout = lambda wildcards: "--outSAMtype BAM SortedByCoordinate" if wildcards.extout == 'bam' else ""
@@ -34,13 +118,16 @@ rule star_pe_extra:
     shell:
         """
         ( WDIR=`pwd`
-        mkdir -p {params.outdir}
+        rm -rf {params.tmpdir} {params.outdir}
+        mkdir -p {params.outdir} `dirname {params.tmpdir}`
+
         cd {params.outdir}
         STAR \
             --genomeDir $WDIR/{input.index} \
             --readFilesIn $WDIR/{input.fwd} $WDIR/{input.rev} \
             --sjdbGTFfile $WDIR/{input.gtf} \
             --runThreadN {threads} \
+            --outTmpDir {params.tmpdir} \
             {params.extin} {params.extout} {params.extra}
         mv Aligned.sortedByCoord.out.bam $WDIR/{output.bam}
         rm -rf {params.outdir}/_STARgenome ) &> {log}
@@ -68,6 +155,7 @@ rule star_se_extra:
         log    = "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}/Log.final.out"
     params:
         outdir = "out/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}",
+        tmpdir = "/tmp/{tool}_{extin}_to_{extout}{extra}_{index_id}_{gtf_id}/{filler}",
         extra = params_extra,
         extin = lambda wildcards: "--readFilesCommand zcat" if wildcards.extin == 'fastq.gz' else "",
         extout = lambda wildcards: "--outSAMtype BAM SortedByCoordinate" if wildcards.extout == 'bam' else "",
@@ -84,13 +172,15 @@ rule star_se_extra:
     shell:
         """
         WDIR=`pwd`
-        mkdir -p {params.outdir}
+        rm -rf {params.tmpdir} {params.outdir}
+        mkdir -p {params.outdir} `dirname {params.tmpdir}`
         cd {params.outdir}
         STAR \
             --genomeDir $WDIR/{input.index} \
             -c --readFilesIn $WDIR/{input.fwd}\
             --sjdbGTFfile $WDIR/{input.gtf} \
             --runThreadN {threads} \
+            --outTmpDir {params.tmpdir} \
             {params.extin} {params.extout} {params.extra}
         mv Aligned.sortedByCoord.out.bam $WDIR/{output.bam}
         rm -rf {params.outdir}/_STARgenome
@@ -226,7 +316,8 @@ rule star_pe_index_outFilterMultimapNmax_legacy:
 
 rule star_build_index_tests:
     input:
-        "out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-merge-attr-retrieve-ensembl"
+        "out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-merge-attr-retrieve-ensembl",
+        "out/star/build_index/fa-genome-GRCh38-ensembl-r110_gtf-GRCh38-merge-attr-retrieve-ensembl-r110"
         # "out/star/build_index/fa-genome-GRCh38_gtf-GRCh38-merge-attr-retrieve-ensembl/Genome"
 
 rule star_build_index:
