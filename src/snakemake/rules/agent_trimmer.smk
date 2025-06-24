@@ -22,8 +22,9 @@ rule agent_trim_pe:
     output:
         fq1 = "out/{tool}{extra}/{filler}_1.fastq.gz",
         fq2 = "out/{tool}{extra}/{filler}_2.fastq.gz",
-        mbc = "out/{tool}{extra}/{filler}.txt.gz",
-        properties = "out/{tool}{extra}/{filler}.properties",
+        mbc = "out/{tool}{extra}/{filler}.txt.gz"#,
+        # properties seems to be not generated anymore in latest versions of AGeNT
+        #properties = "out/{tool}{extra}/{filler}.properties",
     params:
         outprefix = "out/{tool}{extra}/{filler}",
         extra = params_extra
@@ -33,13 +34,32 @@ rule agent_trim_pe:
         "../envs/agent.yaml"
     shell:
         """
-        {input.agent} trim -fq1 {input.fq1} -fq2 {input.fq2} -out {params.outprefix} {params.extra}
-
+        bash {input.agent} trim -fq1 {input.fq1} -fq2 {input.fq2} -out {params.outprefix} {params.extra}
+        # Try to add a sleep here to avoid some issue with rclone VFS
+        #timeout=120
+        #interval=2
+        #elapsed=0
+        #
+        #while [ $elapsed -lt $timeout ]; do
+        #    if [ -f "{params.outprefix}_R1.fastq.gz" ] && [ -f "{params.outprefix}_R2.fastq.gz" ] && \
+        #       [ -f "{params.outprefix}_MBC.txt.gz" ] && [ -f "{params.outprefix}_STATS.properties" ]; then
+        #        break
+        #    fi
+        #    sleep $interval
+        #    elapsed=$((elapsed + interval))
+        #done
+        #
+        #if [ $elapsed -ge $timeout ]; then
+        #    echo "Timeout: Output files did not appear within $timeout seconds." >&2
+        #    exit 1
+        #fi
+        
+        # Then move files if they are available:
         mv {params.outprefix}_R1.fastq.gz {output.fq1}
         mv {params.outprefix}_R2.fastq.gz {output.fq2}
         mv {params.outprefix}_MBC.txt.gz {output.mbc}
-        mv {params.outprefix}_STATS.properties {output.properties}
         """
+        # mv {params.outprefix}_STATS.properties {output.properties}
 
 rule agent_trim_2_lanes_pe:
     """
