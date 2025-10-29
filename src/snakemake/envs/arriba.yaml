@@ -5,4 +5,6 @@ channels:
   - bioconda
   - nodefaults
 dependencies:
-  - arriba
+  # Pinning version to get consistent annotations between hosts for TALL
+  # but more recent version should work too for independent projects
+  - arriba = 2.4.0 
