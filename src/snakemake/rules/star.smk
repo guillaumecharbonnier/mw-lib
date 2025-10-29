@@ -52,6 +52,10 @@ rule star_scipio:
         rm -rf {params.tmpdir} {params.outdir}
         mkdir -p {params.outdir} `dirname {params.tmpdir}`
         cd {params.outdir}
+
+        # without ulimit increases, writes in tmp folder fails on TurbineB
+        ulimit -n 65536
+
         STAR \
             --genomeDir $WDIR/{input.index} \
             --readFilesIn $WDIR/{input.rev} $WDIR/{input.fwd} \
@@ -66,13 +70,17 @@ rule star_scipio:
             --soloType CB_UMI_Simple --soloFeatures Gene --soloCBmatchWLtype Exact \
             --soloUMIfiltering MultiGeneUMI_CR --soloUMIdedup 1MM_CR \
             --soloCBwhitelist $WDIR/{input.white_list} --soloCBstart 1 \
+            --soloBarcodeReadLength 0 \
             --soloCBlen 12 --soloUMIstart 13 --soloUMIlen 13 \
             {params.extra}
 
             # --soloBarcodeReadLength 31 
             # was inside the Scipio guideline but it is weird according of the other arguments.
             # Testing without it to see if it avoid critical error
-
+            # when trying on run 1 or 2, I get another error
+            # EXITING because of FATAL ERROR in input read file: the total length of barcode sequence is 26 not equal to expected 25
+            # So I added --soloBarcodeReadLength 0 as suggested in the error
+            # Totally unsure it is appropriate though...
 
             # Need to check relevance of this:
             # --outFileNamePrefix %sample_name%_ 
