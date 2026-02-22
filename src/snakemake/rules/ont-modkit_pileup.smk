@@ -14,7 +14,7 @@ rule ont_modkit_pileup_extra:
         bai="out/{filler}.bam.bai",
         fa= lambda wildcards: eval(mwconf['ids'][wildcards.fa_genome_id])
     output:
-        bed="out/{tool}{extra}_{fa_genome_id}/{filler}.bed"
+        bed="out/{tool}{extra}_{fa_genome_id}/{filler}.bed.gz"
     log:
             "out/{tool}{extra}_{fa_genome_id}/{filler}.log"
     benchmark:
@@ -29,5 +29,5 @@ rule ont_modkit_pileup_extra:
         MAX_THREADS
     shell:
         """
-        modkit pileup {params.extra} --threads {threads} --ref {input.fa} --log {log} {input.bam} {output.bed}
+        modkit pileup {params.extra} --threads {threads} --ref {input.fa} --log {log} {input.bam} - | bgzip > {output.bed}
         """

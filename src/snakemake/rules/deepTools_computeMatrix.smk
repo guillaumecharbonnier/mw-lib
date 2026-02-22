@@ -14,13 +14,13 @@ rule deepTools_computeMatrix_extra:
     """
     input:
         bw  = lambda wildcards: eval(mwconf['ids'][wildcards.bw_list_id]),
-        bed = lambda wildcards: eval(mwconf['ids'][wildcards.bed_list_id])
+        regions = lambda wildcards: eval(mwconf['ids'][wildcards.regions_list_id])
     output:
-        matrix = "out/{tool}{extra}_{bed_list_id}_{bw_list_id}.txt.gz"
+        matrix = "out/{tool}{extra}_{regions_list_id}_{bw_list_id}.txt.gz"
     log:
-                 "out/{tool}{extra}_{bed_list_id}_{bw_list_id}.log"
+                 "out/{tool}{extra}_{regions_list_id}_{bw_list_id}.log"
     benchmark:
-                 "out/{tool}{extra}_{bed_list_id}_{bw_list_id}.benchmark.tsv"
+                 "out/{tool}{extra}_{regions_list_id}_{bw_list_id}.benchmark.tsv"
     params:
         extra = params_extra
     conda:
@@ -28,11 +28,11 @@ rule deepTools_computeMatrix_extra:
     wildcard_constraints:
         tool="deepTools/computeMatrix",
         bw_list_id = "bw-[a-zA-Z0-9-]+",
-        bed_list_id = "bed-[a-zA-Z0-9-]+"
+        regions_list_id = "(bed|gtf)-[a-zA-Z0-9-]+"
     threads:
         MAX_THREADS
     shell:
-        "computeMatrix {params.extra} --regionsFileName {input.bed} "
+        "computeMatrix {params.extra} --regionsFileName {input.regions} "
         "--scoreFileName {input.bw} --outFileName {output.matrix} "
         "--numberOfProcessors {threads} &> {log}"
 

@@ -5,6 +5,7 @@ opt/
 log/
 bkp/
 shr/
+inp/
 inp/me/
 .snakemake/
 .nextflow/

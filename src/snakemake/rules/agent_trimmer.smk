@@ -29,6 +29,8 @@ rule agent_trim_pe:
         extra = params_extra
     wildcard_constraints:
         tool = "agent/trim"
+    resources:
+    	high_io = 1
     conda:
         "../envs/agent.yaml"
     shell:
@@ -73,6 +75,8 @@ rule agent_trim_2_lanes_pe:
         extra = params_extra
     wildcard_constraints:
         tool = "agent/trim_2_lanes"
+    resources:
+    	high_io = 1
     conda:
         "../envs/agent.yaml"
     shell:

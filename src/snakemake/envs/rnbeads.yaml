@@ -1,0 +1,13 @@
+name:
+  rnbeads
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - r-ggplot2 <3.4 # https://github.com/epigen/RnBeads/issues/71
+  - bioconductor-rnbeads
+  - bioconductor-rnbeads.hg19
+  - bioconductor-rnbeads.hg38
+  - bioconductor-watermelon
+

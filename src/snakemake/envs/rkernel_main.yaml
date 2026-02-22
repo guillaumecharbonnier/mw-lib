@@ -1,0 +1,49 @@
+# A new environment for R kernel to share with the team
+name:
+  rkernel_main
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - jupyter
+  - bioconductor-biomart
+  - bioconductor-chipseeker
+  - bioconductor-complexheatmap
+  - bioconductor-deseq2
+  - bioconductor-ensdb.hsapiens.v86
+  - bioconductor-ensembldb
+  - bioconductor-genomicranges
+  - bioconductor-org.hs.eg.db
+  - bioconductor-rtracklayer
+  - bioconductor-summarizedexperiment
+  - bioconductor-txdb.hsapiens.ucsc.hg19.knowngene
+  - bioconductor-txdbmaker
+  - bioconductor-fishpond
+  - bioconductor-tximeta
+  - bioconductor-rnbeads
+  - bioconductor-rnbeads.hg19
+  - bioconductor-rnbeads.hg38
+  - bioconductor-watermelon
+  - r-base
+  - r-arrow
+  - r-devtools
+  - r-biocmanager
+  - r-circlize
+  - r-data.table
+  - r-dplyr
+  - r-extrafont
+  - r-ggbeeswarm
+  - r-ggpubr
+  - r-ggrepel
+  - r-irkernel
+  - r-openxlsx
+  - r-rcolorbrewer
+  - r-readr
+  - r-readxl
+  - r-stringr
+  - r-tibble
+  - r-tidyr
+    #- r-tools # Not available in current channels
+  - r-vcfr
+  - r-xml2

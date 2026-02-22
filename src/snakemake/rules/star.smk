@@ -31,6 +31,9 @@ rule star_pe_extra:
         "../envs/star.yaml"
     threads:
         8
+    resources:
+        high_io = 1,
+        ram = 40
     shell:
         """
         ( WDIR=`pwd`
@@ -81,6 +84,9 @@ rule star_se_extra:
         "../envs/star.yaml"
     threads:
         8
+    resources:
+        high_io = 1,
+        ram = 40
     shell:
         """
         WDIR=`pwd`
