@@ -10,6 +10,8 @@ fa-genome-GRCm39	["out/cat/assembly_ensembl/GRCm39.fa"]
 fa-genome-GRCh38	["out/meta/index_fa/cat/assembly_ensembl/GRCh38.fa"]
 fa-genome-GRCh38-NCBI	["out/tar/xvzf_igenome/Homo_sapiens/NCBI/GRCh38/Sequence/WholeGenomeFasta/genome.fa"]
 fa-genome-GRCh38-ensembl-r100	["out/meta/index_fa/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-100/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna_sm.toplevel.fa"]
+# r110 is added to follow Asteria Cytonaut local guidelines
+fa-genome-GRCh38-ensembl-r110	["out/meta/index_fa/gunzip/to-stdout/wget/ftp/ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa"]
 fa-genome-hg38	["out/meta/index_fa/sed/add-chr-in-fa/cat/assembly_ensembl/GRCh38.fa"]
 fa-genome-GRCh37	["out/cat/assembly_ensembl/GRCh37.fa"]
 fa-genome-NCBIM37	["out/sed/rm-chr-in-fa/cat/assembly_ensembl/NCBIM37.fa"]

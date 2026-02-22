@@ -1,0 +1,9 @@
+# Cytonaut requirements
+# Will likely be splitted into star and cite-seq-count envs later
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - star == 2.7.10b
+  - cite-seq-count
