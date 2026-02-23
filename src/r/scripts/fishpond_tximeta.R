@@ -66,3 +66,22 @@ gse <- summarizeToGene(se)
 
 saveRDS(gse, file.path(outdir, "genes.rds"))
 message("Saved: ", file.path(outdir, "genes.rds"))
+
+# Export count matrices as CSV.gz (row metadata + counts, one row per feature)
+se_rd <- tryCatch({
+    rd <- as.data.frame(rowData(se))
+    rd[, sapply(rd, is.atomic), drop = FALSE]
+}, error = function(e) data.frame(row.names = rownames(se)))
+
+se_counts <- cbind(se_rd, as.data.frame(assay(se, "counts")))
+fwrite(se_counts, file.path(outdir, "transcripts_counts.csv.gz"))
+message("Saved: ", file.path(outdir, "transcripts_counts.csv.gz"))
+
+gse_rd <- tryCatch({
+    rd <- as.data.frame(rowData(gse))
+    rd[, sapply(rd, is.atomic), drop = FALSE]
+}, error = function(e) data.frame(row.names = rownames(gse)))
+
+gse_counts <- cbind(gse_rd, as.data.frame(assay(gse, "counts")))
+fwrite(gse_counts, file.path(outdir, "genes_counts.csv.gz"))
+message("Saved: ", file.path(outdir, "genes_counts.csv.gz"))

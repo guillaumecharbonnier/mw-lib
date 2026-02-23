@@ -1,17 +1,13 @@
 name:
   r_fishpond
 channels:
-  - bioconda
   - conda-forge
+  - bioconda
   - nodefaults
 dependencies:
-  - bioconductor-tximeta
-  - bioconductor-fishpond
+  - bioconductor-fishpond =2.8.0
+  - bioconductor-tximeta =1.20.1
   - bioconductor-org.hs.eg.db
-  - bioconductor-org.mm.eg.db
   - bioconductor-summarizedexperiment
-  - r-openxlsx
   - r-data.table
-  - r-readr
-  - r-biocmanager
 
