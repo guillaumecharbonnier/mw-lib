@@ -6,23 +6,37 @@ Aim:
       - gene-level SummarizedExperiment      (genes.rds)
 
 Usage:
-    Register a coldata TSV in mwconf['ids'] under a chosen <coldata_id> key.
-    The TSV must have two tab-separated columns:
-        name    sample label (used as column name in the SE)
-        file    path to the corresponding salmon quant.sf
+    mapper.py populates mwconf['ids'][coldata_id] with a list of
+    "sample_name\\tquant_sf_path" strings for each RNA exp group (GRCh38).
+    The rules below write the coldata TSV and run the R script.
 
-    Then request:
+    Alternatively, register a list of "name\\tfile" strings manually in
+    mwconf['ids'] under a chosen <coldata_id> key and request:
         out/fishpond/tximeta_GRCh38_ensembl/<coldata_id>/transcripts.rds
         out/fishpond/tximeta_GRCh38_ensembl/<coldata_id>/genes.rds
 """
 
 
-def _fishpond_tximeta_quant_files(wildcards):
-    """Return the list of quant.sf paths declared in the coldata TSV."""
-    coldata_path = mwconf['ids'][wildcards.coldata_id]
-    with open(coldata_path) as fh:
-        reader = csv.DictReader(fh, delimiter='\t')
-        return [row['file'] for row in reader]
+rule fishpond_coldata_from_ids:
+    """
+    Created:
+        2026-02-22
+    Aim:
+        Write a coldata TSV (columns: name, file) from the list of
+        "name\\tfile" strings stored in mwconf['ids'][coldata_id].
+        Populated automatically by mapper.py for each RNA exp group.
+    """
+    output:
+        "out/fishpond/coldata/{coldata_id}.tsv"
+    wildcard_constraints:
+        coldata_id = r"[-a-zA-Z0-9_]+"
+    run:
+        import os
+        os.makedirs(os.path.dirname(output[0]), exist_ok=True)
+        with open(output[0], 'w') as fh:
+            fh.write("name\tfile\n")
+            for entry in mwconf['ids'][wildcards.coldata_id]:
+                fh.write(entry + "\n")
 
 
 rule fishpond_tximeta_GRCh38_ensembl:
@@ -33,19 +47,24 @@ rule fishpond_tximeta_GRCh38_ensembl:
         Import salmon quant.sf files (human GRCh38, Ensembl release detected
         automatically from salmon index metadata) with tximeta, add SYMBOL IDs,
         scale inferential replicates, and summarise to gene level.
-    Input coldata_id:
-        Key in mwconf['ids'] that points to a TSV with 'name' and 'file' columns.
+    coldata_id:
+        Key in mwconf['ids'] whose value is a list of "name\\tfile" strings.
+        Populated automatically by mapper.py for RNA exp groups.
     Test:
-        out/fishpond/tximeta_GRCh38_ensembl/my_coldata_id/transcripts.rds
-        out/fishpond/tximeta_GRCh38_ensembl/my_coldata_id/genes.rds
+        out/fishpond/tximeta_GRCh38_ensembl/coldata-GRCh38-myexp/transcripts.rds
+        out/fishpond/tximeta_GRCh38_ensembl/coldata-GRCh38-myexp/genes.rds
+        out/fishpond/tximeta_GRCh38_ensembl/coldata-GRCh38-myexp/transcripts_counts.csv.gz
+        out/fishpond/tximeta_GRCh38_ensembl/coldata-GRCh38-myexp/genes_counts.csv.gz
     """
     input:
-        coldata  = lambda wildcards: mwconf['ids'][wildcards.coldata_id],
-        quant_sf = _fishpond_tximeta_quant_files,
-        script   = "src/r/scripts/fishpond_tximeta.R"
+        coldata  = "out/fishpond/coldata/{coldata_id}.tsv",
+        quant_sf = lambda wildcards: [e.split('\t')[1] for e in mwconf['ids'][wildcards.coldata_id]],
+        script   = "../mw-lib/src/r/scripts/fishpond_tximeta.R"
     output:
-        transcripts = "out/fishpond/tximeta_GRCh38_ensembl/{coldata_id}/transcripts.rds",
-        genes       = "out/fishpond/tximeta_GRCh38_ensembl/{coldata_id}/genes.rds"
+        transcripts        = "out/fishpond/tximeta_GRCh38_ensembl/{coldata_id}/transcripts.rds",
+        genes              = "out/fishpond/tximeta_GRCh38_ensembl/{coldata_id}/genes.rds",
+        transcripts_counts = "out/fishpond/tximeta_GRCh38_ensembl/{coldata_id}/transcripts_counts.csv.gz",
+        genes_counts       = "out/fishpond/tximeta_GRCh38_ensembl/{coldata_id}/genes_counts.csv.gz"
     params:
         outdir   = "out/fishpond/tximeta_GRCh38_ensembl/{coldata_id}",
         bfc_path = "out/TximetaBFC"
