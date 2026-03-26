@@ -7,6 +7,11 @@ plotPcaIndFacetsForEachCov <- function(
                                                n_row = 1,
                                                n_col = ncol(d_covariates),
                                                axes_to_plot = c(1, 2)) {
+  # Align d_cov to active PCA individuals (handles spectator designs where
+  # d_cov may contain supplementary samples not used in prcomp)
+  if (!is.null(rownames(d$x)) && !is.null(rownames(d_cov))) {
+    d_cov <- d_cov[rownames(d$x), , drop = FALSE]
+  }
   plots <- list()
   for (covariate_name in names(d_cov)) {
     plot <- fviz_pca_ind(
