@@ -47,7 +47,7 @@ rule awk_extract_n_reads_supporting_indel_from_idxstat:
     shell:
         """
         echo "contig	length	n_reads_supporting_indel" > {output}
-        awk 'BEGIN{{FS=OFS="\\t"}}{{ if ($1 ~ "_alt$") {{print $1, $2, $3}} }}' {input} >> {output}
+        awk 'BEGIN{{FS=OFS="\\\\t"}}{{ if ($1 ~ "_alt$") {{print $1, $2, $3}} }}' {input} >> {output}
         """
 
 rule awk_indel_workflow_sam_to_fasta:
@@ -89,7 +89,7 @@ rule awk_indel_workflow_sam_to_fasta:
         """
         #awk 'BEGIN{{FS=OFS="\\t"}}{{if ($1 !/^@/ && $6 ~ /I/ ) {{print $3, $4, $6, $10 }} }} ' {input} | \
         #sort -u | awk 'BEGIN{{FS=OFS="\\t"}}{{print ">" $1 "_" $2 "_" $3 "\\n" $4}}' > {output} 2> {log}
-        awk '{{if ($1 !/^@/ && $6 ~ /I/ ) {{print ">" $3 "_" $4 "_" $6 "_" NR "_alt\\n" $10 }} }} ' {input} > {output} 2> {log}
+        awk '{{if ($1 !/^@/ && $6 ~ /I/ ) {{print ">" $3 "_" $4 "_" $6 "_" NR "_alt\\\\n" $10 }} }} ' {input} > {output} 2> {log}
         """
 
 #if line do not start with '@',
@@ -113,7 +113,7 @@ rule awk_trim_sam_query_name:
         "out/awk/trim_sam_query_name/{filler}.sam"
     shell:
         """
-        awk 'BEGIN{{OFS=FS="\\t"}} {{$1=substr($1,1,250)}}1' {input} > {output}
+        awk 'BEGIN{{OFS=FS="\\\\t"}} {{$1=substr($1,1,250)}}1' {input} > {output}
         """
 
 rule awk_trim_fasta_seq_name:
@@ -132,7 +132,7 @@ rule awk_trim_fasta_seq_name:
         "out/awk/trim_fasta_seq_name/{filler}.fasta"
     shell:
         """
-        awk 'BEGIN{{OFS=FS="\\t"}} {{if ($0 ~ /^>/) {{$0=substr($0,1,250)}} }} {{print $0}}' {input} > {output}
+        awk 'BEGIN{{OFS=FS="\\\\t"}} {{if ($0 ~ /^>/) {{$0=substr($0,1,250)}} }} {{print $0}}' {input} > {output}
         """
 
 rule awk_extract_cluster:
@@ -177,7 +177,7 @@ rule awk_collapse_Carrillo2017_11_states_to_5:
     shell:
         """
         awk '
-            BEGIN{{FS=OFS="\\t"}}
+            BEGIN{{FS=OFS="\\\\t"}}
             {{
             if ($4 == "E1" || $4 == "E2") {{ $4 = "T" }}
             if ($4 == "E3" || $4 == "E4" || $4 == "E5" || $4 == "E6") {{ $4 = "H" }}
@@ -222,7 +222,7 @@ rule awk_tfbsConsSites_to_gtf:
         "out/awk/tfbsConsSites_to_gtf.benchmark.tsv"
     shell:
         """
-        awk -v q='"' 'BEGIN{{FS=OFS="\\t"}} {{gsub("V.", "", $5); gsub("_.+$", "", $5); print $2, "tfbsConsSites", "gene", $3, $4, $8, $7, ".", "gene_id " q NR q "; tf_id " q $5 q}}' {input} > {output} 2> {log}
+        awk -v q='"' 'BEGIN{{FS=OFS="\\\\t"}} {{gsub("V.", "", $5); gsub("_.+$", "", $5); print $2, "tfbsConsSites", "gene", $3, $4, $8, $7, ".", "gene_id " q NR q "; tf_id " q $5 q}}' {input} > {output} 2> {log}
         """
 
 rule awk_fix_bed9_thick_cols:
@@ -239,7 +239,7 @@ rule awk_fix_bed9_thick_cols:
         bed="out/awk/fix_bed9_thick_cols/{filler}.bed"
     shell:
         """
-        awk 'BEGIN{{FS=OFS="\\t"}} {{print $1,$2,$3, $4, $5, $6, $2, $3, $9}}' {input.bed} > {output.bed}
+        awk 'BEGIN{{FS=OFS="\\\\t"}} {{print $1,$2,$3, $4, $5, $6, $2, $3, $9}}' {input.bed} > {output.bed}
         """
 
 rule awk_rename_bed_name:
@@ -255,7 +255,7 @@ rule awk_rename_bed_name:
         bed="out/awk/rename_bed_name/{filler}.bed"
     shell:
         """
-        awk 'BEGIN{{FS=OFS="\\t"}} {{print $1,$2,$3, NR, $5, $6}}' {input.bed} > {output.bed}
+        awk 'BEGIN{{FS=OFS="\\\\t"}} {{print $1,$2,$3, NR, $5, $6}}' {input.bed} > {output.bed}
         """
 
 rule awk_remove_bed_name:
@@ -274,7 +274,7 @@ rule awk_remove_bed_name:
         bed="out/awk/remove_bed_name/{filler}.bed"
     shell:
         """
-        awk 'BEGIN{{FS=OFS="\\t"}} {{$4="."; print}}' {input.bed} > {output.bed}
+        awk 'BEGIN{{FS=OFS="\\\\t"}} {{$4="."; print}}' {input.bed} > {output.bed}
         """
 
 

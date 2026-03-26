@@ -76,7 +76,7 @@ rule awk_extract_sam_cigar_for_contig_stats:
     shell:
         """
         # Tsv is a subset to make stats on cigar string in R
-        awk 'BEGIN{{FS=OFS="\\t"}}{{if ( $1 ~ !/^@/ ) {{print $3":"$4,$6,$10}} }} ' {input.sam} > {output.tsv}
+        awk 'BEGIN{{FS=OFS="\\\\t"}}{{if ( $1 ~ !/^@/ ) {{print $3":"$4,$6,$10}} }} ' {input.sam} > {output.tsv}
         """
 
 rule awk_extract_sam_with_indel:
@@ -98,7 +98,7 @@ rule awk_extract_sam_with_indel:
     shell:
         """
         # Tsv is a subset to make stats on cigar string in R
-        gawk -v BED={output.bed} -v FASTA={output.fasta} 'BEGIN{{FS=OFS="\\t"}}{{if ( $1 ~ !/^@/ && $6 ~ /[ID]/ ) {{
+        gawk -v BED={output.bed} -v FASTA={output.fasta} 'BEGIN{{FS=OFS="\\\\t"}}{{if ( $1 ~ !/^@/ && $6 ~ /[ID]/ ) {{
             CONTIG_CHROMOSOME=$3 ;
             CONTIG_START=$4 ;
             CONTIG_SEQUENCE=$10 ;
@@ -188,13 +188,13 @@ rule awk_aggregate_fa_genome_and_sam_contigs_with_inserts_gt_3b:
     shell:
         """
         # Only keeping insertions strictly greater than 3 to keep alternate contig number low as insertion below this length seems to be correctly called by GATK and Platypus on the reference assembly.
-        awk 'BEGIN{{FS=OFS="\\t"}}{{if ($1 ~ /^@/ ) {{print $0}} else if ( $6 ~ /[0-9]{{2,}}I|[4-9]I/ ) {{$1=$3 ":" $4 "_" $6 "_" NR "_alt"; print $0}} }} ' {input.sam} > {output.sam}
+        awk 'BEGIN{{FS=OFS="\\\\t"}}{{if ($1 ~ /^@/ ) {{print $0}} else if ( $6 ~ /[0-9]{{2,}}I|[4-9]I/ ) {{$1=$3 ":" $4 "_" $6 "_" NR "_alt"; print $0}} }} ' {input.sam} > {output.sam}
 
         # alt is just the same as sam but this suffix is required by bwa index.
         ln {output.sam} {output.alt}
         
         cat {input.fasta} > {output.fasta}
-        awk '{{if ($1 !/^@/ && $6 ~ /I/ ) {{print ">" $3 ":" $4 "_" $6 "_" NR "_alt\\n" $10 }} }} ' {output.sam} >> {output.fasta}
+        awk '{{if ($1 !/^@/ && $6 ~ /I/ ) {{print ">" $3 ":" $4 "_" $6 "_" NR "_alt\\\\n" $10 }} }} ' {output.sam} >> {output.fasta}
         """
 
 rule awk_aggregate_fa_genome_and_sam_contigs_with_indel_gt_3b:
