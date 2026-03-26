@@ -72,6 +72,11 @@ Practical recommendations
 - Ensure the working directory when running the top-level Snakefile matches expected relative paths (often repository root or mw-lib/ depending on invocation). Document the recommended run location in project README.
 - Use out/ for all generated files so downstream report consumers always know where to look and cleaning is straightforward: rm -rf out/
 
+- Prefer running Snakemake from within the conda environment defined at ../mw-lib/src/snakemake/envs/snakemake.yml. Create or update the environment and activate it (example):
+  conda env create -f ../mw-lib/src/snakemake/envs/snakemake.yml -n mw-snakemake
+  conda activate mw-snakemake
+  Then run snakemake from the activated environment (or use conda run -n mw-snakemake snakemake ...). This ensures consistent tool versions and reproducible runs.
+
 Troubleshooting
 
 - If includes fail, check the relative glob patterns in mw-lib/Snakefile and confirm sibling mw-* directories exist and are accessible.
