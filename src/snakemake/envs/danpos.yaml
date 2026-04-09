@@ -1,9 +1,8 @@
 name:
   danpos
 channels:
-  - bioconda
   - conda-forge
-  - nodefaults
+  - bioconda
 dependencies:
   - danpos
   - samtools < 1
