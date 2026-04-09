@@ -4,7 +4,7 @@
 # "[\w_-]+" short for "[a-zA-Z0-9_-]+"
 
 wildcard_constraints:
-    extra = "[^\/]*",
+    extra = "[^\\/]*",
     #extra = "[a-zA-Z0-9-_:.]*", # extra should be allowed to be empty. (. and : for ffmpeg)
     #extra = ".*",
     # IDs

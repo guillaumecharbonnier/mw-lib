@@ -7,7 +7,7 @@ selectPcaKeyFeatures <- function(
     n_pc_to_use <- sum(cumsum(d$sdev) < sum(d$sdev) / frac_of_var)
   }
   rank_by_pc <- apply(
-    d$rotation[,1:n_pc_to_use],
+    d$rotation[, 1:n_pc_to_use, drop = FALSE],
     2,
     rank
   )
@@ -22,6 +22,10 @@ selectPcaKeyFeatures <- function(
     x = rank_by_pc,
     y = d$sdev[1:n_pc_to_use]
   )
+  res <- as.matrix(res)
+  if (is.null(rownames(res))) {
+    rownames(res) <- names(rank_by_pc[[1]])
+  }
 
   unique(rownames(res)[rowSums(res) > 0])
 }

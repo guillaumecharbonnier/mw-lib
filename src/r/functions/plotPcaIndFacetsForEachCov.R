@@ -1,21 +1,5 @@
-color_palettes <- list()
-color_palettes$Immunophenotype.Code <- c(
-    "Cortical" = "#A2C8EA",
-    "ETP" = "#990000",
-    "IM" = "#BC8FA1",
-    "Mature AB" = "#8DB73F",
-    "Mature GD" = "#D9EAD3",
-    "Thymocyte" = "#444444"
-)
-
-color_palettes$Onco.T.Simple <- c(
-    "HOXA" = "#FFA500",
-    "TLX1" = "#B97FB1",
-    "TLX3" = "#985399",
-    "Cis-TAL1" = "#66B2B2",
-    "NEG" = "#939393",
-    "Thymocyte" = "#444444"
-)
+# Note: color_palettes is defined in manual_palettes.R (sourced earlier).
+# Do NOT redefine it here as it would override the comprehensive palette from manual_palettes.R.
 
 plotPcaIndFacetsForEachCov <- function(
                                                d = d_pca,
@@ -23,6 +7,11 @@ plotPcaIndFacetsForEachCov <- function(
                                                n_row = 1,
                                                n_col = ncol(d_covariates),
                                                axes_to_plot = c(1, 2)) {
+  # Align d_cov to active PCA individuals (handles spectator designs where
+  # d_cov may contain supplementary samples not used in prcomp)
+  if (!is.null(rownames(d$x)) && !is.null(rownames(d_cov))) {
+    d_cov <- d_cov[rownames(d$x), , drop = FALSE]
+  }
   plots <- list()
   for (covariate_name in names(d_cov)) {
     plot <- fviz_pca_ind(
@@ -34,6 +23,10 @@ plotPcaIndFacetsForEachCov <- function(
       legend.title = covariate_name
     )
     plot <- plot + ggtitle(NULL)
+    # Apply custom colors from manual_palettes.R if available for this covariate
+    if (covariate_name %in% names(color_palettes)) {
+      plot <- plot + scale_color_manual(values = color_palettes[[covariate_name]])
+    }
     plots[[covariate_name]] <- plot
   }
 

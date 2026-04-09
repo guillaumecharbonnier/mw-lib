@@ -78,7 +78,7 @@ rule bwa_samse:
         """
         bwa\
             samse\
-            -r "@RG\\tID:IHaveNoIdea\\tSM:ofWhatToPutHere"\
+            -r "@RG\\\\tID:IHaveNoIdea\\\\tSM:ofWhatToPutHere"\
             {params.prefix}\
             {input.sai}\
             {input.fastq} > {output.sam}

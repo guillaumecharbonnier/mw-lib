@@ -1,3 +1,7 @@
+import os
+import re
+import glob
+
 def latex_input_dependencies(wildcards):
     """
     Created:
@@ -137,7 +141,7 @@ def latex_includegraphics_dependencies_test(wildcards):
                 if m1:
                     path = m1.group(1)
                     print(path)
-                    if path == '\snakemakeInput':
+                    if path == '\\snakemakeInput':
                         print('snakemakeInput')
                     else:
                         paths.append(path)
@@ -194,7 +198,7 @@ def latex_includegraphics_dependencies(wildcards):
             if m1:
                 path = m1.group(1)
                 print(path)
-                if path == '\snakemakeInput':
+                if path == '\\snakemakeInput':
                     print('snakemakeInput')
                 else:
                     paths.append(path)

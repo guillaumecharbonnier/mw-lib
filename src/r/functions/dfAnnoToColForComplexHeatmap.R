@@ -41,9 +41,21 @@ dfAnnoToColForComplexHeatmap <- function(
   df,
   pal = NULL
 ) {
-  anno_col <- lapply(
+  # Use color_palettes from global environment if available and pal not explicitly provided
+  if (is.null(pal) && exists("color_palettes", envir = .GlobalEnv)) {
+    pal <- get("color_palettes", envir = .GlobalEnv)
+  }
+  anno_col <- mapply(
+    function(col_data, col_name) {
+      # Prefer manual palette entry if available
+      if (!is.null(pal) && col_name %in% names(pal)) {
+        return(pal[[col_name]])
+      }
+      vecAnnoToColForComplexHeatmap(col_data)
+    },
     as.list(df),
-    vecAnnoToColForComplexHeatmap
+    names(df),
+    SIMPLIFY = FALSE
   )
   # we remove the NULL elements
   anno_col <- anno_col[sapply(anno_col, Negate(is.null))]

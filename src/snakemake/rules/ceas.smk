@@ -320,8 +320,8 @@ rule tmp_ceas_test_ebed:
 
 rule test_extract_features_from_ceas_features:
     input:
-        sqlite3="",
-        refgene=""
+        sqlite3=[],
+        refgene=[]
     output:
     shell:"""
     """
@@ -445,14 +445,14 @@ rule parse_ceas_barplot_data:
     # Percentage values for reference genome
     ## Chromosomes
     sed -n '36,36 p' $FIRST_SAMPLE | sed 's/^text(x=c(/Genome,/g' | sed 's/),y=mp.*$//g' | sed 's/ //g' >> {params.outdir}/chr.csv
-    ##  Promoters (remember to escape [] in sed)
-    sed -n '50,50 p' $FIRST_SAMPLE | sed 's/^text(x=mp\[1,\],y=c(/Genome,/g' | sed 's/),label=c(.*$//g' | sed 's/ //g' >> {params.outdir}/prom.csv
+    ## Promoters (remember to escape [] in sed)
+    sed -n '50,50 p' $FIRST_SAMPLE | sed 's/^text(x=mp\\\\[1,\\\\],y=c(/Genome,/g' | sed 's/),label=c(.*$//g' | sed 's/ //g' >> {params.outdir}/prom.csv
     ## Bidirectional promoters
-    sed -n '61,61 p' $FIRST_SAMPLE | sed 's/^text(x=mp\[1,\],y=c(/Genome,/g' | sed 's/),label=c(.*$//g' | sed 's/ //g' >> {params.outdir}/bidirprom.csv
+    sed -n '61,61 p' $FIRST_SAMPLE | sed 's/^text(x=mp\\\\[1,\\\\],y=c(/Genome,/g' | sed 's/),label=c(.*$//g' | sed 's/ //g' >> {params.outdir}/bidirprom.csv
     ## Downstream
-    sed -n '71,71 p' $FIRST_SAMPLE | sed 's/^text(x=mp\[1,\],y=c(/Genome,/g' | sed 's/),label=c(.*$//g' | sed 's/ //g' >> {params.outdir}/downstream.csv
+    sed -n '71,71 p' $FIRST_SAMPLE | sed 's/^text(x=mp\\\\[1,\\\\],y=c(/Genome,/g' | sed 's/),label=c(.*$//g' | sed 's/ //g' >> {params.outdir}/downstream.csv
     ## Gene
-    sed -n '82,82 p' $FIRST_SAMPLE | sed 's/^text(x=mp\[1,\],y=c(/Genome,/g' | sed 's/),label=c(.*$//g' | sed 's/ //g' >> {params.outdir}/gene.csv
+    sed -n '82,82 p' $FIRST_SAMPLE | sed 's/^text(x=mp\\\\[1,\\\\],y=c(/Genome,/g' | sed 's/),label=c(.*$//g' | sed 's/ //g' >> {params.outdir}/gene.csv
 
     # Labels for reference genome
     sed -n '36,36 p' $FIRST_SAMPLE | sed 's/^.*label=c(/Genome,/g' | sed 's/),pos=4.*$//g' | sed 's/ //g' | sed 's/%/% /g' >> {params.outdir}/chr_lab.csv
@@ -474,13 +474,13 @@ rule parse_ceas_barplot_data:
         ## Chromosomes
         sed -n '37,37 p' $SAMPLE | sed "s/^text(x=c(/$NAME,/g" | sed 's/),y=mp.*$//g' | sed 's/ //g' >> {params.outdir}/chr.csv
         ## Promoters (labels are on multiple lines for samples)
-        sed -n '51,51 p' $SAMPLE | sed "s/^text(x=mp\[2,\],y=c(/$NAME,/g" | sed 's/),label=.*$//g' | sed 's/ //g' >> {params.outdir}/prom.csv
+        sed -n '51,51 p' $SAMPLE | sed "s/^text(x=mp\\\\[2,\\\\],y=c(/$NAME,/g" | sed 's/),label=.*$//g' | sed 's/ //g' >> {params.outdir}/prom.csv
         ## Bidirectional promoters
-        sed -n '62,62 p' $SAMPLE | sed "s/^text(x=mp\[2,\],y=c(/$NAME,/g" | sed 's/),label=.*$//g' | sed 's/ //g' >> {params.outdir}/bidirprom.csv
+        sed -n '62,62 p' $SAMPLE | sed "s/^text(x=mp\\\\[2,\\\\],y=c(/$NAME,/g" | sed 's/),label=.*$//g' | sed 's/ //g' >> {params.outdir}/bidirprom.csv
         ## Downstream
-        sed -n '72,72 p' $SAMPLE | sed "s/^text(x=mp\[2,\],y=c(/$NAME,/g" | sed 's/),label=.*$//g' | sed 's/ //g' >> {params.outdir}/downstream.csv
+        sed -n '72,72 p' $SAMPLE | sed "s/^text(x=mp\\\\[2,\\\\],y=c(/$NAME,/g" | sed 's/),label=.*$//g' | sed 's/ //g' >> {params.outdir}/downstream.csv
         ## Gene
-        sed -n '83,83 p' $SAMPLE | sed "s/^text(x=mp\[2,\],y=c(/$NAME,/g" | sed 's/),label=.*$//g' | sed 's/ //g' >> {params.outdir}/gene.csv
+        sed -n '83,83 p' $SAMPLE | sed "s/^text(x=mp\\\\[2,\\\\],y=c(/$NAME,/g" | sed 's/),label=.*$//g' | sed 's/ //g' >> {params.outdir}/gene.csv
 
         # Labels for sample using NAME
         ## Chromosomes
@@ -498,8 +498,8 @@ rule parse_ceas_barplot_data:
     paste --delimiters ',' {params.outdir}/chr.csv {params.outdir}/prom.csv {params.outdir}/bidirprom.csv {params.outdir}/downstream.csv {params.outdir}/gene.csv > {output.csv}
     paste --delimiters ',' {params.outdir}/chr_lab.csv {params.outdir}/prom_lab.csv {params.outdir}/bidirprom_lab.csv {params.outdir}/downstream_lab.csv {params.outdir}/gene_lab.csv > {output.csv_lab}
 
-    sed 's/,/\\t/g' {output.csv} > {output.tsv}
-    sed 's/,/\\t/g' {output.csv_lab} > {output.tsv_lab}
+    sed 's/,/\\\\t/g' {output.csv} > {output.tsv}
+    sed 's/,/\\\\t/g' {output.csv_lab} > {output.tsv_lab}
     """
 
 rule merge_ceas_r_pie_data:
@@ -523,10 +523,10 @@ rule merge_ceas_r_pie_data:
     grep "pie(.*ChIP" {input.ceas_r} >> {output.merge_r}
     
     # Retrieving sample names.
-    cat {output.merge_r} | sed 's/\(.*\)_positions.R.*$/\\1/' | awk -F"/" '{{print $(NF)}}' > {output.merge_r}_names.tmp
+    cat {output.merge_r} | sed 's/\\(.*\\)_positions.R.*$/\\\\1/' | awk -F"/" '{{print $(NF)}}' > {output.merge_r}_names.tmp
     
     # Retrieving data from labels in R code.
-    cat {output.merge_r} | sed 's/^.*labels=c(\(.*\)),main.*$/\\1/' | sed 's/["% ]//g' > {output.merge_r}_data.tmp
+    cat {output.merge_r} | sed 's/^.*labels=c(\\(.*\\)),main.*$/\\\\1/' | sed 's/["% ]//g' > {output.merge_r}_data.tmp
     
     # Printing labels
     echo "Class,Prom <1kb,Prom 1-2kb,Prom 2-3kb,DS <1kb,DS 1-2kb,DS 2-3kb,5'UTR,3'UTR,Cod.exons,Introns,Intergenic" > {output.csv}

@@ -192,16 +192,25 @@ rule arriba_draw_fusions:
         """
         ARRIBA_FILES=$CONDA_PREFIX/var/lib/arriba
 
-        # Using arriba_fa_id we can decide which suffix to use for cytobands and protein_domains:
-
+        # Using arriba_fa_id we can decide which suffix to use for blacklist, known_fusions and protein_domains:
         if [[ {wildcards.arriba_fa_id} == *"GRCh38"* ]] || [[ {wildcards.arriba_fa_id} == *"hg38"* ]]; then
-            STEM="_hg38_GRCh38_v2.5.0"
+            BASE="_hg38_GRCh38"
         elif [[ {wildcards.arriba_fa_id} == *"GRCh37"* ]] || [[ {wildcards.arriba_fa_id} == *"hg19"* ]]; then
-            STEM="_hg19_hs37d5_GRCh37_v2.5.0"
+            BASE="_hg19_hs37d5_GRCh37"
         else
             echo "Invalid arriba_fa_id"
             exit 1
         fi
+        
+        # Auto-detect the version from available files in ARRIBA_FILES
+        BLACKLIST_FILE=$(ls $ARRIBA_FILES/blacklist${{BASE}}_v*.tsv.gz 2>/dev/null | head -n1)
+        if [[ -z "$BLACKLIST_FILE" ]]; then
+            echo "Error: No blacklist file found matching pattern: $ARRIBA_FILES/blacklist${{BASE}}_v*.tsv.gz"
+            exit 1
+        fi
+        
+        # Extract the full stem (including version) from the detected file
+        STEM=$(basename "$BLACKLIST_FILE" .tsv.gz | sed "s/blacklist//")
 
         cd {params.outdir}
 
