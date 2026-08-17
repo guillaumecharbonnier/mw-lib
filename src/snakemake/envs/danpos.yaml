@@ -1,10 +1,10 @@
 name:
   danpos
 channels:
-  - bioconda
   - conda-forge
+  - bioconda
   - nodefaults
 dependencies:
-  - danpos
-  - samtools < 1
-  - coreutils
+  - r-base
+  - rpy2 >=3.3.3
+  - danpos3
