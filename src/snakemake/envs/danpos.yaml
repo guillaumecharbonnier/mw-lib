@@ -3,7 +3,6 @@ name:
 channels:
   - conda-forge
   - bioconda
-  - nodefaults
 dependencies:
   - r-base
   - rpy2 >=3.3.3
