@@ -45,7 +45,6 @@ rule crossmap_bed_sam_gff_gtf_vcf:
         2523 out/bedtools/merge_-d_12/sort/coordinates_bed/crossmap/hg38_to_hg19/inp/bed/atac/cd34_sort.bed
         2523 out/bedtools/merge_-d_13/sort/coordinates_bed/crossmap/hg38_to_hg19/inp/bed/atac/cd34_sort.bed
         2523 out/bedtools/merge_-d_14/sort/coordinates_bed/crossmap/hg38_to_hg19/inp/bed/atac/cd34_sort.bed
-
     Todo:
         I should add exception for bigwig when ext is 'bw'.
     Note:
@@ -74,6 +73,7 @@ rule crossmap_bed_sam_gff_gtf_vcf:
         out/crossmap/hg19_to_hg38/gunzip/to-stdout/wget/https/www.genboree.org/EdaccData/Current-Release/experiment-sample/Bisulfite-Seq/Mobilized_CD34_Primary_Cells/BI.Mobilized_CD34_Primary_Cells.Bisulfite-Seq.RO_01549.wig
         out/crossmap/bed_hg38_to_hg19/r/dynamic_enchancers_in_thymopoiesis/dClust/rowFeature-no_rmsk_mxy__no_donor_effect__distal/sortingMethod-kmeans_centers-8_nstart-100_itermax-200000_algorithm-Lloyd/sortingFeature-cpg_meth_call/subSortingMethod-kmeans_centers-8_nstart-100_itermax-200000_algorithm-Lloyd/subSortingFeature-H3K27ac_peaks.ATAC_peaks/cluster-1.bed
         out/crossmap/chain-mm10-to-mm9/cut/_-f1-6/macs2/callpeak_--broad/samtools/index/samtools/sort/samtools/view_sam_to_bam_-q_30/bowtie2/se_mm10/sickle/se_-t_sanger_-q_30/sra-tools/fastq-dump_se/SRR3126243_over_SRR3126242_peaks.bed
+	out/crossmap/chain-hg19-to-hs1/RnBeads/reports_3_runs/tracks_and_tables_data/sites/trackHub_bigWig/hg19/rnbeads_sample_0151.bigWig
     """
     input:
         chain = lambda wildcards: mwconf['ids'][wildcards.chain_id],
@@ -81,11 +81,31 @@ rule crossmap_bed_sam_gff_gtf_vcf:
     output:
         coord = "out/crossmap/{chain_id}/{filler}.{ext}"
     wildcard_constraints:
-        ext = "bed|bigwig|gff|vcf|wig"
+        ext = "bed|gff|vcf|wig"
     conda:
         "../envs/crossmap.yaml"
     shell:
-        "CrossMap.py {wildcards.ext} {input.chain} {input.coord} {output.coord}"
+        "CrossMap {wildcards.ext} {input.chain} {input.coord} {output.coord}"
+
+rule crossmap_bigWig:
+    """
+    Aim:
+        Specific rule for bigwig files.
+    Test:
+    """
+    input:
+        chain = lambda wildcards: mwconf['ids'][wildcards.chain_id],
+        coord = "out/{filler}.bigWig"
+    output:
+        coord = "out/crossmap/bigWig_{chain_id}/{filler}.bw"
+    conda:
+        "../envs/crossmap.yaml"
+    shell:
+        """
+        CrossMap bigwig {input.chain} {input.coord} {output.coord}
+        # Because crossmap expects to be given the prefix and not the output bw filename:
+        mv {output.coord}.bw {output.coord}
+        """
 
 rule crossmap_wig:
     """

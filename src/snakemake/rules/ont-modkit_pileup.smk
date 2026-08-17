@@ -19,6 +19,7 @@ rule ont_modkit_pileup_extra:
             "out/{tool}{extra}_{fa_genome_id}/{filler}.log"
     benchmark:
             "out/{tool}{extra}_{fa_genome_id}/{filler}.benchmark.tsv"
+    priority:5
     params:
         extra = params_extra
     conda:
