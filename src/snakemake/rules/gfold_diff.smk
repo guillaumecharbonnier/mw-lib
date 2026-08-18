@@ -54,8 +54,8 @@ rule gfold_diff_with_replicates:
     shell:
         """
         # Remove suffix and replace spaces by commas.
-        tsv1_list=`echo '{input.tsv1}' | sed 's/\.tsv//g' | tr ' ' ','`
-        tsv2_list=`echo '{input.tsv2}' | sed 's/\.tsv//g' | tr ' ' ','`
+        tsv1_list=`echo '{input.tsv1}' | sed 's/\\.tsv//g' | tr ' ' ','`
+        tsv2_list=`echo '{input.tsv2}' | sed 's/\\.tsv//g' | tr ' ' ','`
 
         echo $tsv1_list
 

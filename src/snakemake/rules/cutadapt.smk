@@ -25,7 +25,7 @@ rule cutadapt_single_end_extra:
         extra = params_extra
     wildcard_constraints:
         tool="cutadapt/se",
-        ext="(fasta|fa|fna|fastq|fq)(\.gz|\.bz2|\.xz|)"
+        ext="(fasta|fa|fna|fastq|fq)(\\.gz|\\.bz2|\\.xz|)"
     conda:
         "../envs/cutadapt.yaml"
     threads:

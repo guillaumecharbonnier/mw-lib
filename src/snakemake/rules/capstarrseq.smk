@@ -296,7 +296,7 @@ rule capstarrseq_merge_all_data:
             #group_labels <- sapply(
             #    strsplit(
             #        group_files,
-            #        "\\\."
+            #        "\\\\."
             #    ),
             #    function(x){{
             #        nb = length(x) ;

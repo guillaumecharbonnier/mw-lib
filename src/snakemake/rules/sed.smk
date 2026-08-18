@@ -160,7 +160,7 @@ rule sed_gene_name_to_uppercase_in_gtf_legacy:
         gtf="out/sed/gene_name_to_uppercase_in_gtf/{filler}.gtf"
     shell:
         """
-        sed 's/gene_name "\([a-zA-Z0-9]*\)"/gene_name "\\U\\1"/g' {input.gtf} > {output.gtf}
+        sed 's/gene_name "\\([a-zA-Z0-9]*\\)"/gene_name "\\U\\1"/g' {input.gtf} > {output.gtf}
         """
 
 ruleorder: sed_remove_first_and_last_line_legacy > sed_extra

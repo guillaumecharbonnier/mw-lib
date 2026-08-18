@@ -563,16 +563,16 @@ rule deepTools_plotHeatmap_sortRegions_sortUsing_averageTypeSummaryPlot_colorLis
         sortUsing="mean|median|max|min|sum|region_length",
         averageTypeSummaryPlot="mean|median|min|max|sum|std",
         colorList_id="[a-zA-Z]+",
-        zMin="[0-9-\.]+",
-        zMax="[0-9-\.]+",
+        zMin="[0-9-\\.]+",
+        zMax="[0-9-\\.]+",
         heatmapHeight="[0-9]+", #Plot height in cm. The default value is 28. The minimum value is 3 and the maximum is 100.
         heatmapWidth="[0-9]+", #Plot width in cm. The default value is 4 The minimum value is 1 and the maximum is 100.
         whatToShow_id="phc|ph|h|hc", # write a function to map these to path compliant ids.
         xAxisLabel_id="[a-zA-Z-]+", # write a function to map these to path compliant ids.
         startLabel_id="[a-zA-Z0-9-]+", #  write a function to map these to path compliant ids.
         endLabel_id="[a-zA-Z0-9-]+", #  write a function to map these to path compliant ids.
-        yMin="[0-9-\.]+",
-        yMax="[0-9-\.]+",
+        yMin="[0-9-\\.]+",
+        yMax="[0-9-\\.]+",
     shell:
         """
         {input.plotHeatmap} \
@@ -677,16 +677,16 @@ rule deepTools_plotHeatmap_kmeans_sortRegions_sortUsing_averageTypeSummaryPlot_c
         sortUsing="mean|median|max|min|sum|region_length",
         averageTypeSummaryPlot="mean|median|min|max|sum|std",
         colorList_id="[a-zA-Z]+",
-        zMin="[0-9-\.]+",
-        zMax="[0-9-\.]+",
+        zMin="[0-9-\\.]+",
+        zMax="[0-9-\\.]+",
         heatmapHeight="[0-9]+", #Plot height in cm. The default value is 28. The minimum value is 3 and the maximum is 100.
         heatmapWidth="[0-9]+", #Plot width in cm. The default value is 4 The minimum value is 1 and the maximum is 100.
         whatToShow_id="phc|ph|h|hc", # write a function to map these to path compliant ids.
         xAxisLabel_id="[a-zA-Z-]+", # write a function to map these to path compliant ids.
         startLabel_id="[a-zA-Z0-9-]+", #  write a function to map these to path compliant ids.
         endLabel_id="[a-zA-Z0-9-]+", #  write a function to map these to path compliant ids.
-        yMin="[0-9-\.]+",
-        yMax="[0-9-\.]+",
+        yMin="[0-9-\\.]+",
+        yMax="[0-9-\\.]+",
     shell:
         """
         {input.plotHeatmap} \
@@ -739,15 +739,15 @@ rule deepTools_plotHeatmap_kmeans_sortRegions_sortUsing_averageTypeSummaryPlot_c
         sortUsing="mean|median|max|min|sum|region_length",
         averageTypeSummaryPlot="mean|median|min|max|sum|std",
         colorList_id="[a-zA-Z]+",
-        zMin="[0-9-\.]+",
-        zMax="[0-9-\.]+",
+        zMin="[0-9-\\.]+",
+        zMax="[0-9-\\.]+",
         heatmapHeight="[0-9]+", #Plot height in cm. The default value is 28. The minimum value is 3 and the maximum is 100.
         heatmapWidth="[0-9]+", #Plot width in cm. The default value is 4 The minimum value is 1 and the maximum is 100.
         whatToShow_id="phc|ph|h|hc", # write a function to map these to path compliant ids.
         xAxisLabel_id="[a-zA-Z-]+", # write a function to map these to path compliant ids.
         refPointLabel_id="[a-zA-Z0-9-]+", #  write a function to map these to path compliant ids.
-        yMin="[0-9-\.]+",
-        yMax="[0-9-\.]+",
+        yMin="[0-9-\\.]+",
+        yMax="[0-9-\\.]+",
     shell:
         """
         {input.plotHeatmap} \
@@ -798,15 +798,15 @@ rule deepTools_plotHeatmap_hclust_sortRegions_sortUsing_averageTypeSummaryPlot_c
         sortUsing="mean|median|max|min|sum|region_length",
         averageTypeSummaryPlot="mean|median|min|max|sum|std",
         colorList_id="[a-zA-Z]+",
-        zMin="[0-9-\.]+",
-        zMax="[0-9-\.]+",
+        zMin="[0-9-\\.]+",
+        zMax="[0-9-\\.]+",
         heatmapHeight="[0-9]+", #Plot height in cm. The default value is 28. The minimum value is 3 and the maximum is 100.
         heatmapWidth="[0-9]+", #Plot width in cm. The default value is 4 The minimum value is 1 and the maximum is 100.
         whatToShow_id="phc|ph|h|hc", # write a function to map these to path compliant ids.
         xAxisLabel_id="[a-zA-Z-]+", # write a function to map these to path compliant ids.
         refPointLabel_id="[a-zA-Z0-9-]+", #  write a function to map these to path compliant ids.
-        yMin="[0-9-\.]+",
-        yMax="[0-9-\.]+",
+        yMin="[0-9-\\.]+",
+        yMax="[0-9-\\.]+",
     shell:
         """
         {input.plotHeatmap} \

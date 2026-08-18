@@ -8,7 +8,7 @@ rule awk_extract_rows_matching_col_content:
         "out/awk/extract_rows_matching_col{col}_content/{filler}/{content}.bed"
     wildcard_constraints:
         col="[0-9]+",
-        content="[\w_-]+"
+        content="[\\w_-]+"
     shell:
         """
         awk '${wildcards.col} == "{wildcards.content}"' {input} > {output}
@@ -965,7 +965,7 @@ rule awk_extract_genes_from_gtftk_convert:
     Created:
         2017-09-27 17:23:12
     Modified:
-        2018-11-01 09:53:45 - The pattern has changed in recente pygtftk version, so '|\?' is used instead of '|\.'.
+        2018-11-01 09:53:45 - The pattern has changed in recente pygtftk version, so '|\\?' is used instead of '|\\.'.
     Aim:
         When converting gtf to bed, "gtftk convert" produces one line per gene and one line for each transcript. If this bed file has to be given to deepTools, it is better to keep only the line with the gene coordinate. Such lines have their bed name ending with "|." which is convenient.
 
@@ -978,7 +978,7 @@ rule awk_extract_genes_from_gtftk_convert:
         bed="out/awk/extract_genes_from_gtftk_convert/{filler}.bed"
     shell:
         """
-        awk 'BEGIN{{FS=OFS="\\t"}} $4 ~ /^*|\?$/ {{print $0}}' {input.bed} | sed 's/|\.//g' > {output.bed}
+        awk 'BEGIN{{FS=OFS="\\t"}} $4 ~ /^*|\\?$/ {{print $0}}' {input.bed} | sed 's/|\\.//g' > {output.bed}
         """
 
 rule awk_extract_gfold_signif_threshold:

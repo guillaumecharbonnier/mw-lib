@@ -38,7 +38,7 @@ rule snakemake_flowcharts_legacy:
         dot {output.dag_dot} -Tpdf -o {output.dag_pdf}
         dot {output.dag_dot} -Tpng -o {output.dag_png}
 
-        cat {output.dag_dot} | perl -pe 's/graph\[/graph\[rankdir='LR', /' > {output.rot_dag_dot}
+        cat {output.dag_dot} | perl -pe 's/graph\\[/graph\\[rankdir='LR', /' > {output.rot_dag_dot}
         dot {output.rot_dag_dot} -Tpdf -o {output.rot_dag_pdf}
         dot {output.rot_dag_dot} -Tpng -o {output.rot_dag_png}
         """

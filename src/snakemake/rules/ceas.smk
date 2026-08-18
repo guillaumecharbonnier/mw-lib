@@ -469,7 +469,7 @@ rule parse_ceas_barplot_data:
     for SAMPLE in {input.ceas_r}
     do
         # Get sample name for table
-        NAME=`sed -n '18,18 p' $SAMPLE | sed -e 's/pdf("\(.*\)_positions.pdf.*$/\\1/'`
+        NAME=`sed -n '18,18 p' $SAMPLE | sed -e 's/pdf("\\(.*\\)_positions.pdf.*$/\\1/'`
         # Percentage values for sample using NAME
         ## Chromosomes
         sed -n '37,37 p' $SAMPLE | sed "s/^text(x=c(/$NAME,/g" | sed 's/),y=mp.*$//g' | sed 's/ //g' >> {params.outdir}/chr.csv

@@ -470,7 +470,7 @@ rule macs2_callpeak_broad_qvalue_format_gsize_legacy:
     wildcard_constraints:
         format="BAM|BAMPE|AUTO|SAM|BED|ELAND|ELANDMULTI|ELANDEXPORT|BOWTIE|BEDPE",
         gsize="mm|hs|ce|dm|[0-9]+",
-        qvalue="0\.[0-9]+"
+        qvalue="0\\.[0-9]+"
     shell:"""
     {input.macs} callpeak \
         --treatment {input.bam_chip} \

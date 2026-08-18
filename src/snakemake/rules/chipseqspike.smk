@@ -153,11 +153,11 @@ rule chipseqspike_gff_csv:
 
 
         awk 'BEGIN {{FS=OFS=","}}; {{
-            gsub(/out\/.*\//,"endo_",$2);
-            gsub(/out\/.*\//,"exo_",$3);
-            gsub(/out\/.*\//,"inp_",$4);
-            gsub(/out\/.*\//,"endo_",$5);
-            gsub(/out\/.*\//,"inp_",$6);
+            gsub(/out\\/.*\\//,"endo_",$2);
+            gsub(/out\\/.*\\//,"exo_",$3);
+            gsub(/out\\/.*\\//,"inp_",$4);
+            gsub(/out\\/.*\\//,"endo_",$5);
+            gsub(/out\\/.*\\//,"inp_",$6);
 
             print}}' {input.csv} > {output.csv}
 

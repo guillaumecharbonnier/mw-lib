@@ -28,7 +28,7 @@ rule bedtools_unionbedg:
         "../envs/bedtools.yaml"
     shell:
         """
-        NAMES=`basename -a {input} | sed 's/\.[a-z]*$//'`
+        NAMES=`basename -a {input} | sed 's/\\.[a-z]*$//'`
         echo $NAMES
         bedtools unionbedg {params.extra} -i {input.bed_list} -names $NAMES> {output.bed}
         """

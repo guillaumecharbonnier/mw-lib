@@ -50,8 +50,8 @@ rule ffmpeg_vcodec_acodec_ss_t:
     wildcard_constraints:
         vcodec="copy", #look doc someday to add other arguments.
         acodec="copy",
-        ss="[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}",
-        t="[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}",
+        ss="[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}",
+        t="[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}",
         ext="mp4|webm" #maybe more
     conda:
         "../envs/ffmpeg.yaml"

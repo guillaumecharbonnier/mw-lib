@@ -130,8 +130,8 @@ rule tin_bam_list:
         OUTDIR=`dirname {output.summary}`
         echo $OUTDIR 
         cd $OUTDIR
-        BAM_LIST=`echo "{input.bam}" | sed 's/out/..\/../g' | tr ' ' ','`
-        BED_FILE=`echo "{input.bed}" | sed 's/out/..\/../'`
+        BAM_LIST=`echo "{input.bam}" | sed 's/out/..\\/../g' | tr ' ' ','`
+        BED_FILE=`echo "{input.bed}" | sed 's/out/..\\/../'`
         tin.py -i $BAM_LIST -r $BED_FILE
         # Find a better way to get the first file
         FIRST_FILE=({input.bam})

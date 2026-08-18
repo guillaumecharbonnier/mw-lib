@@ -86,7 +86,7 @@ rule tectonic_softlink_nodep:
         Produce pdf from latex file.
         Tested as a replacement for texlive_pdflatex.
         No dependencies are required here. 
-        Use it in conjonction with \IfFileExists to get a compiled document with missing plots. 
+        Use it in conjonction with \\IfFileExists to get a compiled document with missing plots. 
         Useful when you need to preview the document and some plots are currently being produced.
     Test:
         "out/tectonic/beamer/nut_spike.pdf"
@@ -167,7 +167,7 @@ rule tectonic_hardlink_no_dep:
         Useful for plots you want to explore.
         Plots with long paths may not open on Windows due to FS path size limitations.
         No dependencies are required here. 
-        Use it in conjonction with \IfFileExists to get a compiled document with missing plots. 
+        Use it in conjonction with \\IfFileExists to get a compiled document with missing plots. 
         Useful when you need to preview the document and some plots are currently being produced.    Test:
         "out/tectonic_hardlink/beamer/sss/001_ChIP-seq_H3K27ac_Thymocytes/main.pdf"
     """

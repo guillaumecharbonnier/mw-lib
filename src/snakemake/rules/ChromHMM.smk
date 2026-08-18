@@ -51,7 +51,7 @@ rule ChromHMM_BinarizeBed_cellmarkfiletable_chrominfo_extra:
         extra = params_extra
     wildcard_constraints:
         tool="ChromHMM/BinarizeBed",
-        cellmarkfiletable_id="[\w-]+",
+        cellmarkfiletable_id="[\\w-]+",
     conda:
         "../envs/chromhmm.yaml"
     shell:

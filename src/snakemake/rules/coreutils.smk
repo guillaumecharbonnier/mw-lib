@@ -49,8 +49,8 @@ rule coreutiles_yaml_to_gprofiler_list:
         "../envs/coreutils.yaml"
     shell:
         """
-        cat {input.yaml} | sed  's/^\([^-]\)/> \\1/' | tr '\\n' ' ' | sed -e 's/>/\\n>/g' -e 's/:/:\\n/g' -e 's/ - / /g' > {output.txt}
-        cat {input.yaml} | sed 's/^\([^-]\)/> \\1/' | tr '\\n' ' ' | sed -e 's/> /\\n/g' -e 's/:/\\t/g' -e 's/ - / /g' > {output.tsv}
+        cat {input.yaml} | sed  's/^\\([^-]\\)/> \\1/' | tr '\\n' ' ' | sed -e 's/>/\\n>/g' -e 's/:/:\\n/g' -e 's/ - / /g' > {output.txt}
+        cat {input.yaml} | sed 's/^\\([^-]\\)/> \\1/' | tr '\\n' ' ' | sed -e 's/> /\\n/g' -e 's/:/\\t/g' -e 's/ - / /g' > {output.tsv}
         """
 
 rule coreutils_extract_min_dist_from_great:
