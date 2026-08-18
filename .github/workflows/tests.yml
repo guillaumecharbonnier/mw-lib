@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         #repository: my-org/main
         path: mw-lib
@@ -22,10 +22,10 @@ jobs:
       with:
         directory: 'mw-lib'
         snakefile: 'mw-lib/Snakefile'
-        args: '--cores 1 --use-conda --dag heavy_unit_tests'
+        args: '--cores 1 --use-conda --dag dot heavy_unit_tests'
     - name: Integration tests
       uses: snakemake/snakemake-github-action@v1.25.1
       with:
         directory: 'mw-lib'
         snakefile: 'mw-lib/Snakefile'
-        args: '--cores 1 --use-conda --dag integration_tests'
+        args: '--cores 1 --use-conda --dag dot integration_tests'
